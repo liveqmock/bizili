@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 所依赖的JBoss的模组，就可以不需要再项目中引入jar包了 -->
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.0">
+     <deployment>
+         <dependencies>
+<!--      org.hibernate依赖了infinispan，所以不需要再引入       <module name="org.infinispan"/> -->
+            <module name="org.hibernate"/>
+<!--             <module name="org.jboss.as.clustering.infinispan"/>
+<module name="org.jboss.as.jpa.hibernate" slot="4"/> slot指的是版本-->
+         </dependencies>
+     </deployment> 
+</jboss-deployment-structure>

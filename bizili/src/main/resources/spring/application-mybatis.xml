@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.1.xsd"
+	default-autowire="byName">
+	
+	<bean id="skmbwSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="skmbwDataSource" />
+		<!--指定MyBatis的基本配置文件路径-->
+		<property name="configLocation" value="classpath:/mybatis/mybatis-config-skmbw.xml"/>
+		<!--指定Mapper映射文件的位置 ，如果映射文件与相应的接口同名，且在同一路径下，
+		可以不配置该选项。或者在mybatis基本配置文件中配置，不在此处配置-->
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:/mybatis/skmbw/*Mapper.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!--注册Mapper方式一，分别为每个mapper进行配置，比较繁琐，不推荐
+	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.vteba.mapper.UserMapper"/>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	</bean>-->
+	
+
+	<!-- 注册Mapper方式二：也可不指定特定mapper，而使用自动扫描包的方式来注册各种Mapper ，配置如下-->
+	<bean id="skmbwMapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 如果只指定了basePackage属性，扫描全部借口 -->
+		<property name="basePackage" value="com.vteba.user,com.vteba.common,com.vteba.hr,com.vteba.oa" />
+		<property name="markerInterface" value="com.vteba.persister.jdbc.mybatis.mapper.BaseMapper"/><!-- 扫描该接口的子接口 -->
+		<property name="annotationClass" value="com.vteba.persister.jdbc.mybatis.annotation.DaoMapper"/><!-- 扫描被该注解标注的接口 -->
+		<property name="sqlSessionFactoryBeanName" value="skmbwSqlSessionFactory"/>
+	</bean>
+	
+	<!-- mybatis配置
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" /> -->
+		<!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置
+		<property name="typeAliasesPackage" value="org.springside.examples.showcase.entity" /> -->
+		<!-- 显式指定Mapper文件位置 
+		<property name="mapperLocations" value="classpath:/mybatis/*Mapper.xml" />
+	</bean>-->
+	<!-- 扫描basePackage下所有以@Mapper标识的 接口
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.skmbw" />
+		<property name="annotationClass" value="com.vteba.annotation.Mapper"/>
+	</bean>-->
+	
+	<bean id="biziliSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="biziliDataSource" />
+		<!--指定MyBatis的基本配置文件路径-->
+		<property name="configLocation" value="classpath:/mybatis/mybatis-config-bizili.xml"/>
+		<!--指定Mapper映射文件的位置 -->
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:/mybatis/bizili/*Mapper.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="biziliMapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.vteba.finance" /><!-- 如果只指定了basePackage属性，扫描全部借口 -->
+		<property name="markerInterface" value="com.vteba.persister.jdbc.mybatis.mapper.BaseMapper"/><!-- 扫描该接口的子接口 -->
+		<property name="annotationClass" value="com.vteba.persister.jdbc.mybatis.annotation.DaoMapper"/><!-- 扫描被该注解标注的接口 -->
+		<property name="sqlSessionFactoryBeanName" value="biziliSqlSessionFactory"/>
+	</bean>
+	
+	<bean id="supplychainSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="biziliDataSource" />
+		<!--指定MyBatis的基本配置文件路径-->
+		<property name="configLocation" value="classpath:/mybatis/mybatis-config-supplychain.xml"/>
+		<!--指定Mapper映射文件的位置 -->
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:/mybatis/supplychain/*Mapper.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="supplychainMapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.vteba.supplychain" /><!-- 如果只指定了basePackage属性，扫描全部借口 -->
+		<property name="markerInterface" value="com.vteba.persister.jdbc.mybatis.mapper.BaseMapper"/><!-- 扫描该接口的子接口 -->
+		<property name="annotationClass" value="com.vteba.persister.jdbc.mybatis.annotation.DaoMapper"/><!-- 扫描被该注解标注的接口 -->
+		<property name="sqlSessionFactoryBeanName" value="supplychainSqlSessionFactory"/>
+	</bean>
+</beans>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+	<!--上，中，下，三列模板-->
+    <definition name="default-three-template" template="/WEB-INF/tiles/default-three-layout.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="header" value="/WEB-INF/tiles/three-header.jsp"/>
+        <put-attribute name="content" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/tiles/three-footer.jsp"/>
+    </definition>
+    <!--上，中（左右），下，三列模板-->
+    <definition name="default-four-template" template="/WEB-INF/tiles/default-four-layout.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="header" value="/WEB-INF/tiles/four-header.jsp"/>
+        <put-attribute name="left" value="/WEB-INF/tiles/four-left.jsp"/>
+        <put-attribute name="content" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/tiles/four-footer.jsp"/>
+    </definition>
+	<!--上，中，下，三列模板-->
+    <definition name="index-three-template" template="/WEB-INF/tiles/default-three-layout.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="header" value="/WEB-INF/tiles/four-header.jsp"/>
+        <put-attribute name="content" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/tiles/four-footer.jsp"/>
+    </definition>
+    
+    <!-- 以下是具体的视图 -->
+    
+    <!-- 权限管理 -->
+    <definition name="users.empUser.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="用户管理"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/user/empUser/empUser-{1}-{2}.jsp"/>
+    </definition>    
+    <definition name="users.roles.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="角色管理"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/user/roles/roles-{1}-{2}.jsp"/>
+    </definition>
+    <definition name="users.authorities.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="权限管理"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/user/authorities/auth-{1}-{2}.jsp"/>
+    </definition>
+    <definition name="users.resources.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="资源管理"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/user/resources/resource-{1}-{2}.jsp"/>
+    </definition>
+    
+    <!-- 菜单 -->
+    <definition name="common.module.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="模组"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/common/module/module-{1}-{2}.jsp"/>
+    </definition>   
+    <definition name="common.platform.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="工作平台"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/common/platform/{1}-{2}.jsp"/>
+    </definition>
+    
+    <!-- 凭证管理 -->
+    <definition name="account.subject.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="会计凭证"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/finance/account/subject/subject-{1}-{2}.jsp"/>
+    </definition>
+    <definition name="account.certificate.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="会计凭证"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/finance/account/certificate/certificate-{1}-{2}.jsp"/>
+    </definition>
+    
+    <!-- 财务帐表 -->
+    <definition name="table.accountsummary.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="财务报表-凭证汇总表"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/finance/table/accountsummary/accountsummary-{1}-{2}.jsp"/>
+    </definition>
+    <definition name="table.accountbalance.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="财务报表-科目余额表"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/finance/table/accountbalance/accountbalance-{1}-{2}.jsp"/>
+    </definition>
+    <definition name="table.detailaccount.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="财务报表-明细账"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/finance/table/detailaccount/detailaccount-{1}-{2}.jsp"/>
+    </definition>
+    <definition name="table.ledger.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="财务报表-总账"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/finance/table/ledger/ledger-{1}-{2}.jsp"/>
+    </definition>
+    <definition name="table.dailyaccount.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="财务报表-日记账"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/finance/table/dailyaccount/dailyaccount-{1}-{2}.jsp"/>
+    </definition>
+    <definition name="table.trialbalance.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="财务报表-试算平衡表"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/finance/table/trialbalance/trialbalance-{1}-{2}.jsp"/>
+    </definition>
+    
+    <!-- 系统设定 -->
+    <definition name="setting.systemparam.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="系统设置-参数设置"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/finance/setting/systemparam/systemparam-{1}-{2}.jsp"/>
+    </definition>
+    <definition name="setting.coderule.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="系统设置-编码规则"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/finance/setting/coderule/coderule-{1}-{2}.jsp"/>
+    </definition>
+    
+    <!-- 三大报表 -->
+    <definition name="report.assetsliabilities.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="报表-资产负债表"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/finance/report/assetsliabilities/assetsliabilities-{1}-{2}.jsp"/>
+    </definition>
+    <definition name="report.profit.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="报表-利润表"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/finance/report/profit/profit-{1}-{2}.jsp"/>
+    </definition>
+    <definition name="report.cashflow.*.*" extends="default-four-template">
+    	<put-attribute name="title" value="报表-现金流量表"/>
+    	<put-attribute name="content" value="/WEB-INF/jsp/finance/report/cashflow/cashflow-{1}-{2}.jsp"/>
+    </definition>
+    
+    <!-- 固定资产 -->
+<!--     <definition name="assets.assetstype.*.*" extends="default-four-template"> -->
+<!--     	<put-attribute name="title" value="固定资产-资产分类"/> -->
+<!--     	<put-attribute name="content" value="/WEB-INF/jsp/finance/assets/assetstype/assetstype-{1}-{2}.jsp"/> -->
+<!--     </definition> -->
+<!--     <definition name="assets.assetsmanage.*.*" extends="default-four-template"> -->
+<!--     	<put-attribute name="title" value="固定资产-资产管理"/> -->
+<!--     	<put-attribute name="content" value="/WEB-INF/jsp/finance/assets/assetsmanage/assetsmanage-{1}-{2}.jsp"/> -->
+<!--     </definition> -->
+</tiles-definitions>
+

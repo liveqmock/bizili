@@ -1,0 +1,106 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/inc/taglib.inc"%>
+<%@ taglib prefix="vte" uri="/WEB-INF/tld/" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>      
+    <title>权限管理</title>
+
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	$('#queryButton').click(function(){
+    		$("#queryForm").submit();
+    	});
+    });
+    </script>
+  </head> 
+  <body>
+	<div id="epMcContent">
+		<div class="epMcCtContent">
+			<h3 class="bordFont bigFont">权限管理</h3>
+			<div class="tab">
+				<ul class="tabMenu none bordFont floatUl normalFont">
+					<li class="first"><a href="<c:url value="/users/authorities-initial.htm"/>" class="current">权限列表</a>
+					</li>
+					<li><a href="<c:url value="/users/authorities-input.htm?init=true"/>">新增权限</a></li>
+				</ul>
+				<div class="">
+					<form action="authorities-initial.htm" id="queryForm" name="queryForm" method="post">
+						<table class="bugSteel first" style="border-top: 0;">
+							<tr>
+								<td class="twof">&nbsp;&nbsp;权限名</td>
+								<td class="twef">
+								<input type="text" name="authName" class="tf" />
+								</td>
+								<td class="twof">说明</td>
+								<td class="twef">
+								<input type="text" name="authDesc" class="tf" />
+								</td>
+								<td class="twof">使用中</td>
+								<td class="twef">
+								<select id="enabled" name="enabled" style="width:120px;">
+										<option value="">--请选择--</option>
+										<option value="1">是</option>
+										<option value="0">否</option>
+								</select>
+								</td>
+								<td class="twof">排序</td><td class="fotf"><select style="width:90px;" name="page.orderBy"><option value="authName">权限名</option><option value="authDesc">描述</option><option value="moduleId">模组</option></select>-<select style="width:70px;" name="page.ascDesc"><option value="asc">升序</option><option value="desc">降序</option></select></td>
+								<td class="twof"></td>
+								<td class="twef">
+								<input type="button" value="查询" class="determination" id="queryButton" style="margin-right:20px;" />
+									<input type="reset" value="清除" class="cancellation" />
+								</td>
+							</tr>
+						</table>
+					
+					<table class="tableSteel">
+              <tr class="title" style="border-right:1px #bfd2ed solid;">
+                <td class="twof"></td>
+                <td class="fouf">序号</td>
+                <td class="fivf">权限名</td>
+                <td class="fivf">描述</td>
+                
+                <td class="fivf">默认URL</td>
+                <td class="sixf">归属</td>
+                
+                <td class="fivf">模组</td>
+                <td class="sixf">动作</td>
+                <td class="fivf">拥有资源</td>
+                <td class="fivf" style="border-right:1px #09f solid">操作</td>
+              </tr>
+              <c:forEach items="${listResult}" var="auth" varStatus="st">
+              <tr style="${st.count%2==0?'background:#f3f3f3':''}">
+                <td class="twof"><input type="checkbox" /></td>
+                <td class="fouf">${auth.authId }</td>
+                <td class="sixf">${auth.authName }</td>
+                <td class="fivf">${auth.authDesc }</td>
+                
+                <td class="sixf">${auth.enabled }</td>
+                <td class="fouf"><c:if test="${auth.userId eq null}">系统</c:if><c:if test="${auth.userId ne null}">${auth.userId}</c:if></td>
+                <td class="sixf">${auth.moduleId}</td>
+                <td class="sixf">${auth.action}</td>
+                <td class="sixf">${auth.urls}</td>
+                <td class="fivf"><input type="button" class="pageCutSmallBtnDel" id="input4" value="删除" /></td>
+              </tr>
+              </c:forEach>
+            </table>
+					<div>
+						<input type="checkbox" class="pageCutSmallCheckbox" />
+							<label for="#"> 全选 </label> <input type="button"
+							class="pageCutSmallButton" id="" value="发布到店铺" />
+					</div>
+					<div id="page">
+						<p>
+						<vte:pages hasForm="true" beanName="page" formName="queryForm"/>
+						</p>
+					</div>
+					</form>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="heiTenpx"></div>
+		</div>
+		<div class="heiTenpx"></div>
+	</div>
+</body>
+</html>

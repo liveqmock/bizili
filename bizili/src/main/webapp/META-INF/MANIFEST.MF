@@ -1,0 +1,1 @@
+Dependencies: org.infinispan,org.hibernate,org.jboss.as.jpa.hibernate:4

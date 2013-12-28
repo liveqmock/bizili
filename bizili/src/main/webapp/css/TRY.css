@@ -1,0 +1,31 @@
+﻿@charset "utf-8";
+/*tab menu*/
+ul.tabMenu{
+	height:25px;
+	position:relative;
+	border-bottom:1px #ccc solid;
+}
+ul.tabMenu li{
+	background:url('../images/btbj3.png') repeat-x;
+	border-bottom:0;
+	margin-right:5px;
+}
+ul.tabMenu li.first{
+	margin-left:16px;
+}
+ul.tabMenu li a:link,ul.tabMenu li a:visited{
+	height:24px;
+	background-color:#e9f2f8;
+	border:1px #ccc solid;
+}
+ul.tabMenu li a:hover{
+	background:url('../images/btbj7.png') repeat-x;
+	color:#069;
+	border-bottom:1px white solid;
+}
+ul.tabMenu li a.current{
+	background:url('../images/btbj7.png') repeat-x;
+	border-bottom:1px white solid;
+	color:#069;
+}
+/*end tab menu*/

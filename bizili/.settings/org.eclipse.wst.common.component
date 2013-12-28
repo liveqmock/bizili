@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="bizili">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <!-- 是否部署在根路径 -->
+	    <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+	    <property name="java-output-path" value="/target/classes"/>
+        <property name="context-root" value="bizili"/>
+        <property name="component.exclusion.patterns" value="WEB-INF/web.xml"/>
+<!--         <property name="component.exclusion.patterns" value="WEB-INF/web.xml"/> -->
+  	</wb-module>
+</project-modules>

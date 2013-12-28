@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<resultMap type="ClassEntity" id="classResultMap"> 
+    <id property="classID" column="CLASS_ID" /> 
+    <result property="className" column="CLASS_NAME" /> 
+    <result property="classYear" column="CLASS_YEAR" /> 
+    <association property="teacherEntity" column="TEACHER_ID"  select="getTeacher"/> 
+    <collection property="studentList" column="CLASS_ID" javaType="ArrayList" ofType="StudentEntity" select="getStudentByClassID"/> 
+</resultMap>
+<!-- 
+<resultMap id="authorResult" type="Author">
+	<id property="id" column="author_id"/>
+	<result property="username" column="author_username"/>
+	<result property="password" column="author_password"/>
+	<result property="email" column="author_email"/>
+	<result property="bio" column="author_bio"/>
+</resultMap> -->
+
+<mapper namespace="org.hyn.maper.UserMapper">
+	<insert id="insertUser" parameterType="org.hyn.bean.User">
+		insert into user(name,age) values(#{name},#{age}) 
+    </insert>
+	<select id="getUser" resultType="org.hyn.bean.User"
+		parameterType="java.lang.String">
+		select * from user where name=#{name} 
+       </select>
+	<!-- 当使用该Mybatis与Spring整合的时候，该文件必须和相应的Mapper接口文件同名，并在同一路径下 -->
+</mapper>

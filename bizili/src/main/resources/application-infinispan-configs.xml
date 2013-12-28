@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infinispan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="urn:infinispan:config:5.1"
+            xsi:schemaLocation="urn:infinispan:config:5.1 http://www.infinispan.org/schemas/infinispan-config-5.1.xsd">
+   <global>
+      <transport
+            transportClass="org.infinispan.remoting.transport.jgroups.JGroupsTransport"
+            clusterName="application-infinispan-cluster"
+            distributedSyncTimeout="20000"
+            strictPeerToPeer="false">
+         <!-- Note that the JGroups transport uses sensible defaults if no configuration property is defined. -->
+         <properties>
+            <!--<property name="configurationFile" value="jgroups-tcp.xml"/>-->
+            <property name="configurationFile"
+                      value="${hibernate.cache.infinispan.jgroups_cfg:tcp.xml}"/>
+         </properties>
+         <!-- See the JGroupsTransport javadocs for more flags -->
+      </transport>
+      <!-- Domain already registered org.infinispan when trying to register: type=CacheManager,name="DefaultCacheManager" -->
+      <globalJmxStatistics enabled="false" allowDuplicateDomains="true"/>
+   </global>
+
+   <default>
+<!--       Used to register JMX statistics in any available MBean server -->
+      <jmxStatistics enabled="false"/>
+   </default>
+
+   <!-- Default configuration is appropriate for entity/collection caching. -->
+   <namedCache name="query-statement">
+      <clustering mode="invalidation">
+         <stateTransfer fetchInMemoryState="false" timeout="20000"/>
+         <sync replTimeout="20000"/>
+      </clustering>
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <!-- Eviction configuration.  WakeupInterval defines how often the eviction thread runs, in milliseconds.  
+           0 means the eviction thread will never run.  A separate executor is used for eviction in each cache. -->
+      <eviction maxEntries="10000" strategy="LRU"/>
+      <expiration maxIdle="100000" wakeUpInterval="5000"/>
+      <lazyDeserialization enabled="true"/>
+      <transaction transactionMode="TRANSACTIONAL" autoCommit="false"
+                   lockingMode="OPTIMISTIC"/>
+   </namedCache>
+
+</infinispan>

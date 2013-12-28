@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0" metadata-complete="true">
+	
+	<!-- tiles配置文件位置，放到WEB-INF下面，多个以逗号分隔，以/开头，tiles.xml无需放在这里。
+	如果只有一个tiles.xml文件，无需此参数，直接放到WEB-INF下即可 -->
+	<context-param>
+		<param-name>tilesDefinitionLocation</param-name>
+		<param-value>/WEB-INF/tiles/tiles-assets.xml</param-value>
+	</context-param>
+	
+	<!-- 
+	<context-param>
+		<param-name>spring.profiles.active</param-name>
+		<param-value>btm</param-value>
+	</context-param> -->
+	
+	<!-- jboss environment -->
+<!-- 	<context-param> -->
+<!-- 		<param-name>contextConfigLocation</param-name> -->
+<!-- 		<param-value>classpath:spring/application-context.xml</param-value> -->
+<!-- 	</context-param> -->
+	
+	<!-- jetty jotm environment
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:spring/application-jotm.xml</param-value>
+	</context-param>-->
+	
+	<!-- atomikos environment
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:spring/application-atomikos.xml</param-value>
+	</context-param>-->
+	
+	<!-- btm environment-->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:spring/application-btm.xml</param-value>
+	</context-param>
+	
+	<!--延长action中属性的生命周期，包括自定义属性，以便在jsp页面中进行访问，不让action(FilterDispatcher)自己清除。
+	由 ActionContextCleanUp后续的过滤器来清除,保证了一系列的Filter链访问正确的ActionContext.
+	ActionContextCleanUp,@deprecated
+	<filter>
+		<filter-name>struts-cleanup</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ActionContextCleanUp</filter-class>
+	</filter>-->
+
+	<!-- 配置struts2核心过滤器@deprecated
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
+	</filter>-->
+	<!--  -->
+	<filter>
+		<filter-name>strutsPrepareExecute</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+	
+	<!-- 使用struts cleanup，一般是在整合其他filter时使用 @deprecated
+	<filter-mapping>
+		<filter-name>struts-cleanup</filter-name>
+		<url-pattern>*.htm</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>-->
+	<!-- 
+	<filter>
+		<filter-name>strutsPrepare</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareFilter</filter-class>
+	</filter> -->
+	
+	
+	<!--Spring Secutiry3 委托拦截器代理-->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- 
+	<filter>
+		<filter-name>strutsExecute</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsExecuteFilter</filter-class>
+	</filter> -->
+    
+	<!-- 
+	<filter-mapping>
+		<filter-name>strutsPrepare</filter-name>
+		<url-pattern>*.htm</url-pattern> 
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping> -->
+	
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>CXFServlet</servlet-name> -->
+<!-- 		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>CXFServlet</servlet-name> -->
+<!-- 		<url-pattern>/services/*</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+	
+	<!-- 使用struts2核心过滤器拦截所有请求 
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>*.htm</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>-->
+	
+	<!-- 
+	<filter-mapping>
+		<filter-name>strutsExecute</filter-name>
+		<url-pattern>*.htm</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>--> 
+	<!--struts2核心拦截器-->
+	<filter-mapping>
+		<filter-name>strutsPrepareExecute</filter-name>
+		<url-pattern>*.htm</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+	<!--spring 容器监听器-->
+	
+	<!-- DWR -->
+	<servlet>
+    <servlet-name>dwr</servlet-name>
+    <servlet-class>org.directwebremoting.spring.DwrSpringServlet</servlet-class>
+      <init-param>
+        <param-name>debug</param-name>
+        <param-value>false</param-value>
+      </init-param>
+	</servlet>
+	
+	<servlet-mapping>
+    	<servlet-name>dwr</servlet-name>
+    	<url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping>
+	
+	<!--spring刷新Introspector防止内存泄露-->
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
+	
+	<listener>
+		<listener-class>com.vteba.web.ognl.OgnlMethodAccessorListener</listener-class>
+	</listener>
+	
+	<listener>
+		<listener-class>com.vteba.config.listener.ApplicationInitializeListener</listener-class>
+	</listener>
+	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<!-- tiles 监听器 -->
+	<listener>
+		<listener-class>com.vteba.web.tiles.YinleiTilesListener</listener-class>
+	</listener>
+	
+	<!-- spring security session 失效 -->
+	<listener>
+		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+	</listener>
+	
+	<servlet>
+		<servlet-name>empUserServlet</servlet-name>
+		<servlet-class>com.vteba.user.servlet.EmpUserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>empUserServlet</servlet-name>
+		<url-pattern>/empUserServlet</url-pattern>
+	</servlet-mapping>
+	
+	<filter>
+		<filter-name>characterEncodingFilter</filter-name>
+		<filter-class>com.vteba.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+	        <param-name>charset</param-name>
+	        <param-value>UTF-8</param-value>
+      	</init-param>
+      	<init-param>
+	        <param-name>forceEncoding</param-name>
+	        <param-value>true</param-value>
+      	</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+<!-- 	<filter> -->
+<!--       	<filter-name>encodingFilter</filter-name> -->
+<!--       	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class> -->
+<!--       	<init-param> -->
+<!--        		<param-name>encoding</param-name> -->
+<!--        		<param-value>utf-8</param-value> -->
+<!--       	</init-param> -->
+<!--    	</filter> -->
+<!--    	<filter-mapping> -->
+<!--       	<filter-name>encodingFilter</filter-name> -->
+<!--       	<url-pattern>/*</url-pattern> -->
+<!--    	</filter-mapping> -->
+	
+	<!-- session 30分钟失效 -->
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	<welcome-file-list>
+    	<welcome-file>index.jsp</welcome-file>
+  	</welcome-file-list>
+</web-app>

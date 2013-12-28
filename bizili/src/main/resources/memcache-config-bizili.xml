@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	说明：
+	1、只读缓存，事务模式建议使用NONE
+	2、(非严格)读写缓存，建议使用LOCAL/JTA
+	3、事务缓存，建议使用JTA
+	4、需要严格的两阶段提交事务时，使用XA
+	5、NONE性能最好，XA最差，LOCAL略好于JTA但在同一个数量级上
+ -->
+<memcacheConfiguration>
+	<!-- 事务提供者，缺省使用hibernate的事务提供者，建议缺省 -->
+	<transactionProviderClass>com.vteba.cache.memcached.transaction.manager.DefaultTransactionManagerLookup</transactionProviderClass>
+  	<cacheList>
+    	<cache>
+    		<!-- 缓存名字，要唯一并且要和hibernate实体bean上注解配置的名字要一致 -->
+      		<cacheName>com.vteba.finance.account.model.Subject</cacheName>
+      		<!-- 该缓存的事务模式 -->
+      		<txMode>NONE</txMode>
+      		<!-- 内存移除算法 -->
+      		<memoryEvictPolicy>LRU</memoryEvictPolicy>
+    	</cache>
+    	<cache>
+      		<cacheName>com.vteba.finance.setting.model.SystemParameter</cacheName>
+      		<txMode>LOCAL</txMode>
+      		<memoryEvictPolicy>LRU</memoryEvictPolicy>
+    	</cache>
+    	<cache>
+      		<cacheName>com.vteba.finance.account.model.CommonSum</cacheName>
+      		<txMode>LOCAL</txMode>
+      		<memoryEvictPolicy>LRU</memoryEvictPolicy>
+    	</cache>
+    	<cache>
+      		<cacheName>com.vteba.finance.account.model.AccountPeriod</cacheName>
+      		<txMode>LOCAL</txMode>
+      		<memoryEvictPolicy>LRU</memoryEvictPolicy>
+    	</cache>
+    	
+  	</cacheList>
+  	
+</memcacheConfiguration>

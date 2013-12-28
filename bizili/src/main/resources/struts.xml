@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!--编码字符集-->
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<!--开启动态方法调用，不推荐.推荐使用通配符方式，指定method属性
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />--> 
+	<!--开发者模式，更多的堆栈调试信息，生产环境应关闭-->
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.action.extension" value="htm" />
+	<constant name="struts.freemarker.templatesCache" value="true" />
+	<constant name="struts.multipart.saveDir" value="/tmp"/>
+<!-- 	<constant name="struts.allowed.action.names" value="[a-z]*[A-Z]*[0-9]*[.\-_!/]*" /> -->
+	<constant name="struts.allowed.action.names" value="[a-zA-Z]*[-]*[a-zA-Z]*[0-9]*" />
+	<!-- struts常量配置 -->
+	<!-- 
+    <constant name="struts.i18n.reload" value="false" />
+    <constant name="struts.configuration.xml.reload" value="false" />
+    <constant name="struts.custom.i18n.resources" value="globalMessages" />
+    <constant name="struts.freemarker.manager.classname" value="customFreemarkerManager" />
+    <constant name="struts.serve.static" value="true" />
+    <constant name="struts.serve.static.browserCache" value="false" />-->
+	<!--导入其他的struts配置文件
+    <include file="struts-user-tiles.xml"/>-->
+    
+	<!--配置继承tiles-default包的package默认结果类型为tiles-->
+	<package name="tiles-default" extends="struts-default">
+        <result-types>
+            <result-type name="tiles" class="com.vteba.web.tiles.YinleiTilesResult" default="true"/>
+        </result-types>
+    </package>
+    
+    <!-- 用户模组 --> 
+	<package name="users" extends="tiles-default">
+		<action name="empUser-*" class="com.vteba.user.web.EmpUserAction" method="{1}">
+			<result name="success">users.empUser.{1}.success</result>
+		</action>
+		<action name="roles-*" class="com.vteba.user.web.RolesAction" method="{1}">
+			<result name="success">users.roles.{1}.success</result>
+			<result name="list" type="dispatcher">/WEB-INF/jsp/user/roles/roles-list.jsp</result>
+			<result name="detail" type="dispatcher">/WEB-INF/jsp/user/roles/rolesAuth-list.jsp</result>
+		</action>
+		<action name="authorities-*" class="com.vteba.user.web.AuthoritiesAction" method="{1}">
+			<result name="success">users.authorities.{1}.success</result>
+		</action>
+		<action name="resources-*" class="com.vteba.user.web.AuthResourcesAction" method="{1}">
+			<result name="success">users.resources.{1}.success</result>
+			<result name="detail">users.resources.detail</result>
+			<result name="list" type="dispatcher">/WEB-INF/jsp/user/resources/resource-list.jsp</result>
+		</action>
+		<action name="randomNumber" class="com.vteba.common.web.RandomNumberAction">
+   			<result type="stream">
+    			<param name="contentType">image/jpeg</param>
+    			<param name="inputName">inputStream</param>
+   			</result>
+  		</action>
+	</package>
+	<package name="common" extends="tiles-default">
+		<action name="platform-*" class="com.vteba.common.web.PlatformAction" method="{1}">
+			<result name="success">common.platform.{1}.success</result>
+		</action>
+		<action name="module-*" class="com.vteba.common.web.ModuleAction" method="{1}">
+			<result name="success">common.module.{1}.success</result>
+		</action>
+		<action name="sessionTimeout" class="com.vteba.common.web.SessionTimeoutAction" method="initial">
+			<result name="success" type="dispatcher">/sessionTimeout.jsp</result>
+		</action>
+	</package>
+	<package name="user" extends="struts-default">
+		<action name="userLogin" class="com.vteba.user.web.UserLoginAction" method="initial">
+			<result name="success">/login.jsp</result>
+		</action>
+		<!-- 
+		<action name="subject-importExcel2" class="com.vteba.user.web.UserLoginAction" method="importExcel">
+			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg</param>
+           		<param name="maximumSize">400000000</param>
+         	</interceptor-ref>
+        	<param name="savePath">/upload</param>
+			<result name="success" type="dispatcher">/login.jsp</result>
+		</action> -->
+	</package>
+	<!-- 会计凭证 --> 
+	<package name="account" extends="tiles-default">
+		<global-results>
+			<result name="invalid.token" type="dispatcher">/accessDenied.jsp</result>
+		</global-results>
+		 
+		<action name="subject-importExcel" class="com.vteba.finance.account.web.AccountSubjectAction" method="importExcel">
+			<result name="success">account.subject.importExcel.success</result>
+		</action>
+		<action name="subject-*" class="com.vteba.finance.account.web.AccountSubjectAction" method="{1}">
+        	<param name="savePath">/upload</param>
+			<result name="success">account.subject.{1}.success</result>
+			<result name="list" type="dispatcher">/WEB-INF/jsp/finance/account/subject/subject-list.jsp</result>
+		</action>
+		<action name="certificate-*" class="com.vteba.finance.account.web.AccountCertAction" method="{1}">
+			<result name="success">account.certificate.{1}.success</result>
+			<!-- <interceptor-ref name="token"/>
+			<interceptor-ref name="defaultStack"/> -->
+		</action>
+	</package>
+	<!-- 财务报表 --> 
+	<package name="table" extends="tiles-default">
+		<!-- 凭证汇总表 -->
+		<action name="accountsummary-*" class="com.vteba.finance.table.web.AccountSummaryAction" method="{1}">
+			<result name="success">table.accountsummary.{1}.success</result>
+		</action>
+		<!-- 科目余额表 -->
+		<action name="accountbalance-*" class="com.vteba.finance.table.web.AccountBalanceAction" method="{1}">
+			<result name="success">table.accountbalance.{1}.success</result>
+		</action>
+		<!-- 明细账 -->
+		<action name="detailaccount-*" class="com.vteba.finance.table.web.DetailAccountAction" method="{1}">
+			<result name="success">table.detailaccount.{1}.success</result>
+		</action>
+		<!-- 总账 -->
+		<action name="ledger-*" class="com.vteba.finance.table.web.LedgerAction" method="{1}">
+			<result name="success">table.ledger.{1}.success</result>
+		</action>
+		<!-- 日记账 -->
+		<action name="dailyaccount-*" class="com.vteba.finance.table.web.DailyAccountAction" method="{1}">
+			<result name="success">table.dailyaccount.{1}.success</result>
+		</action>
+		<!--试算平衡表 -->
+		<action name="trialbalance-*" class="com.vteba.finance.table.web.TrialBalanceAction" method="{1}">
+			<result name="success">table.trialbalance.{1}.success</result>
+		</action>
+	</package>
+	<!--系统设置 --> 
+	<package name="setting" extends="tiles-default">
+		<!--系统参数设定 -->
+		<action name="systemparam-*" class="com.vteba.finance.setting.web.SystemParamAction" method="{1}">
+			<result name="success">setting.systemparam.{1}.success</result>
+		</action>
+		<!--编码规则-->
+		<action name="coderule-*" class="com.vteba.finance.setting.web.CodeRuleAction" method="{1}">
+			<result name="success">setting.coderule.{1}.success</result>
+		</action>
+	</package>
+	
+	<!--三大报表--> 
+	<package name="report" extends="tiles-default">
+		<!--资产负债表 -->
+		<action name="assetsliabilities-*" class="com.vteba.finance.report.web.AssetsLiabilitiesAction" method="{1}">
+			<result name="success">report.assetsliabilities.{1}.success</result>
+		</action>
+		<!--利润表 -->
+		<action name="profit-*" class="com.vteba.finance.report.web.ProfitAction" method="{1}">
+			<result name="success">report.profit.{1}.success</result>
+		</action>
+		<!--现金流量表 -->
+		<action name="cashflow-*" class="com.vteba.finance.report.web.CashFlowAction" method="{1}">
+			<result name="success">report.cashflow.{1}.success</result>
+		</action>
+	</package>
+	
+	<!--固定资产--> 
+	<package name="assets" extends="tiles-default">
+		<!--资产分类  -->
+		<action name="assetstype-*" class="com.vteba.finance.assets.web.AssetsTypeAction" method="{1}">
+			<result name="success">assets.assetstype.{1}.success</result>
+		</action>
+		<!--资产管理 -->
+		<action name="assetsmanage-*" class="com.vteba.finance.assets.web.AssetsManageAction" method="{1}">
+			<result name="success">assets.assetsmanage.{1}.success</result>
+		</action>
+		
+	</package>
+</struts>

@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:spring="http://www.infinispan.org/schemas/spring" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.1.xsd http://www.infinispan.org/schemas/spring http://www.infinispan.org/schemas/infinispan-spring-5.0.xsd"
+	default-autowire="byName">
+		
+	<import resource="application-oxm-jibx.xml"/>
+	<import resource="application-cache-memcache.xml"/>
+	<import resource="application-cache-infinispan.xml"/>
+	<import resource="application-mybatis.xml"/>
+	<import resource="application-scheduler.xml"/>
+	<import resource="application-security.xml"/>
+<!-- 	<import resource="classpath:cxf/application-soap-server.xml"/> -->
+	
+	<!--扫描@Required,@Autowired等注解,自动装配bean-->
+	<context:annotation-config/>
+	<!-- spring cache -->
+	<cache:annotation-driven cache-manager="memcacheBasedCacheManager"/>
+	<!--自动扫描的基包,包含子包,可以使用切点表达式指定更精确一点。多个用逗号分隔-->
+	<context:component-scan base-package="com.vteba"/>
+	
+	<!--读取jndi数据库连接配置属性文件-->
+	<bean id="propertyConfigurer" class="com.vteba.config.spring.EncryptPropHolderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:jndi.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="skmbwDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="${jdbc.skmbwDataSource}" />
+	</bean>
+	
+	<bean id="biziliDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="${jdbc.biziliDataSource}" />
+	</bean>
+	
+	<bean id="supplychainDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="${jdbc.supplychainDataSource}" />
+	</bean>
+	
+	<!--基于annotation配置Hibernate sessionFactory-->
+	<bean id="biziliSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="biziliDataSource" />
+		<property name="packagesToScan">
+    		<list>
+     			<value>com.vteba.finance.assets.model</value>
+     			<value>com.vteba.finance.currency.model</value>
+     			<value>com.vteba.finance.account.model</value>
+     			<value>com.vteba.finance.report.model</value>
+     			<value>com.vteba.finance.setting.model</value>
+     			<value>com.vteba.finance.table.model</value>
+     			<value>com.vteba.finance.receivables.model</value>
+     			<value>com.vteba.finance.payables.model</value>
+    		</list>
+   		</property>
+		<property name="namingStrategy">
+			<bean class="org.hibernate.cfg.ImprovedNamingStrategy" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.jdbc.batch_size">${hibernate.jdbc.batch_size}</prop>
+				<prop key="hibernate.jdbc.fetch_size">50</prop>
+				<prop key="hibernate.default_batch_fetch_size">50</prop>
+				<prop key="hibernate.jdbc.use_reflection_optimizer">true</prop>
+				<prop key="hibernate.jdbc.use_scrollable_resultset">false</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<prop key="hibernate.use_sql_comments">true</prop>
+				<!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
+				<prop key="hibernate.max_fetch_depth">3</prop>
+				<prop key="javax.persistence.validation.mode">none</prop>
+				
+				<!-- the below three configration is the XaTransaction configration -->
+				<prop key="hibernate.current_session_context_class">jta</prop>
+				<prop key="hibernate.transaction.factory_class">org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory</prop>
+				<prop key="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform</prop>
+				
+				<prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
+                <!-- <prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
+                <prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
+                <prop key="net.sf.ehcache.configurationResourceName">${ehcache.configFileName.bizili}</prop> -->
+                
+                <prop key="hibernate.cache.use_query_cache">false</prop>
+                <prop key="hibernate.cache.infinispan.cachemanager">java:jboss/infinispan/hibernate</prop>
+<!--                 <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.infinispan.InfinispanRegionFactory</prop> -->
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.infinispan.JndiInfinispanRegionFactory</prop>
+<!-- 				<prop key="hibernate.cache.region.factory_class">org.jboss.as.jpa.hibernate4.infinispan.InfinispanRegionFactory</prop> -->
+                <prop key="hibernate.cache.infinispan.cfg">infinispan-configs.xml</prop>
+                <prop key="hibernate.cache.use_structured_entries">${hibernate.cache.use_structured_entries}</prop>
+                
+                <!-- hibernate multiTenancy -->
+                <prop key="hibernate.multiTenancy">SCHEMA</prop>
+                <!-- <prop key="hibernate.multi_tenant_connection_provider">com.vteba.service.connections.internal.MultiTenantConnectionProviderImpl</prop> -->
+                <prop key="hibernate.connection.datasource">java:jboss/biziliDataSource</prop>
+				<prop key="hibernate.tenant_identifier_resolver">com.vteba.service.multitenant.CurrentTenantIdentifierResolverImpl</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!--基于annotation配置Hibernate sessionFactory-->
+	<bean id="skmbwSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="skmbwDataSource" />
+		<property name="packagesToScan">
+    		<list>
+     			<value>com.vteba.common.model</value>
+     			<value>com.vteba.user.model</value>
+     			<value>com.vteba.oa.attendance.model</value>
+     			<value>com.vteba.oa.cost.model</value>
+     			<value>com.vteba.hr.wage.model</value>
+     			<value>com.vteba.hr.organization.model</value>
+    		</list>
+   		</property>
+		<property name="namingStrategy">
+			<bean class="org.hibernate.cfg.ImprovedNamingStrategy" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.jdbc.batch_size">50</prop>
+				<prop key="hibernate.jdbc.fetch_size">50</prop>
+				<prop key="hibernate.default_batch_fetch_size">50</prop>
+				<prop key="hibernate.jdbc.use_reflection_optimizer">true</prop>
+				<prop key="hibernate.jdbc.use_scrollable_resultset">false</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<prop key="hibernate.use_sql_comments">true</prop>
+				<!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
+				<prop key="hibernate.max_fetch_depth">3</prop>
+				<prop key="javax.persistence.validation.mode">none</prop>
+				
+				<!-- the below three configration is the XaTransaction configration -->
+				<prop key="hibernate.current_session_context_class">jta</prop>
+				<prop key="hibernate.transaction.factory_class">org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory</prop>
+				<prop key="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform</prop>
+				
+				<prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
+                <prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
+<!--                 <prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop> -->
+<!--                 <prop key="net.sf.ehcache.configurationResourceName">${ehcache.configFileName.skmbw}</prop> -->
+				<prop key="hibernate.cache.infinispan.cachemanager">java:jboss/infinispan/hibernate</prop>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.infinispan.JndiInfinispanRegionFactory</prop>
+                <prop key="hibernate.cache.use_structured_entries">${hibernate.cache.use_structured_entries}</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!--based annotation config Hibernate sessionFactory-->
+	<bean id="supplychainSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="supplychainDataSource" />
+		<property name="packagesToScan">
+    		<list>
+     			<value>com.vteba.supplychain.inventory.model</value>
+     			<value>com.vteba.supplychain.purchase.model</value>
+     			<value>com.vteba.supplychain.sell.model</value>
+     			<value>com.vteba.supplychain.accounting.model</value>
+    		</list>
+   		</property>
+		<property name="namingStrategy">
+			<bean class="org.hibernate.cfg.ImprovedNamingStrategy" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.jdbc.batch_size">50</prop>
+				<prop key="hibernate.jdbc.fetch_size">50</prop>
+				<prop key="hibernate.default_batch_fetch_size">50</prop>
+				<prop key="hibernate.jdbc.use_reflection_optimizer">true</prop>
+				<prop key="hibernate.jdbc.use_scrollable_resultset">false</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<prop key="hibernate.use_sql_comments">true</prop>
+				<!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
+				<prop key="hibernate.max_fetch_depth">3</prop>
+				<prop key="javax.persistence.validation.mode">none</prop>
+				
+				<!-- the below three configration is the XaTransaction configration -->
+				<prop key="hibernate.current_session_context_class">jta</prop>
+				<prop key="hibernate.transaction.factory_class">org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory</prop>
+				<prop key="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform</prop>
+				
+				<prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
+                <prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
+                <prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
+                <prop key="net.sf.ehcache.configurationResourceName">${ehcache.configFileName.supplychain}</prop>
+                <prop key="hibernate.cache.use_structured_entries">${hibernate.cache.use_structured_entries}</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- SpringJdbcTemplate -->
+	<bean id="biziliJdbcTemplate" class="com.vteba.persister.jdbc.spring.SpringJdbcTemplate">
+		<property name="dataSource" ref="biziliDataSource"/>
+	</bean>
+	<bean id="skmbwJdbcTemplate" class="com.vteba.persister.jdbc.spring.SpringJdbcTemplate">
+		<property name="dataSource" ref="skmbwDataSource"/>
+	</bean>
+	<bean id="supplychainJdbcTemplate" class="com.vteba.persister.jdbc.spring.SpringJdbcTemplate">
+		<property name="dataSource" ref="supplychainDataSource"/>
+	</bean>
+	
+	<!--单个Hibernate SessionFactory的Transaction manager
+	<bean id="transactionManagerXa" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="skmbwSessionFactory" />
+	</bean>-->
+    
+    <!--这个id的值不能是transactionManager-->
+    <bean id="xaTtransactionManager" class="org.springframework.transaction.jta.JtaTransactionManager"/>
+    
+    <!--使用这种方式设置JTA是OK的
+    <tx:jta-transaction-manager >
+    	<alias name="transactionManagerXa" alias="transactionManagerXa"/>
+    </tx:jta-transaction-manager>-->
+	<!--使用annotation定义事务 
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />-->
+	
+	<!-- 开启AOP监听 只对当前配置文件有效proxy-target-class="true"将使用cglib代理
+	<aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="true"/> -->
+	
+	<!-- 开启注解事务 只对当前配置文件有效
+  	<tx:annotation-driven transaction-manager="transactionManagerXa"/> -->
+	
+	<!--切面事务-->
+	<tx:advice id="transactionAdvice" transaction-manager="xaTtransactionManager"> 
+		<tx:attributes>
+			<tx:method name="get*" propagation="REQUIRED" read-only="true"/>
+			<tx:method name="query*" propagation="REQUIRED" read-only="true"/>
+			<tx:method name="list*" propagation="REQUIRED" read-only="true"/>
+			<tx:method name="find*" propagation="REQUIRED" read-only="true"/>
+			<tx:method name="load*" propagation="REQUIRED" read-only="true"/> 
+			<tx:method name="unique*" propagation="REQUIRED" read-only="true"/>
+			<tx:method name="save*" propagation="REQUIRED"/>
+			<tx:method name="add*" propagation="REQUIRED"/>
+			<tx:method name="persist*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="insert*" propagation="REQUIRED"/>
+			<tx:method name="remove*" propagation="REQUIRED"/>
+			<tx:method name="create*" propagation="REQUIRED"/>
+			<tx:method name="execute*" propagation="REQUIRED"/>
+			<tx:method name="auto*" propagation="REQUIRED"/>
+			<tx:method name="batch*" propagation="REQUIRED"/>
+			<tx:method name="check*" propagation="REQUIRED"/>
+			<tx:method name="calculate*" propagation="REQUIRED"/>
+			<tx:method name="handle*" propagation="REQUIRED"/>
+			<tx:method name="decide*" propagation="REQUIRED"/>
+			<tx:method name="*" propagation="REQUIRED" isolation="DEFAULT" timeout="6000" rollback-for="java.lang.Exception"/>
+		</tx:attributes> 
+	</tx:advice>
+	<!-- expose-proxy="true" -->
+	<aop:config><!--为指定包下所有类的所有方法应用事务切点-->
+		<aop:pointcut expression="execution(* com.vteba.*.*.impl.*.*(..))" id="serviceTxMethodPointCut"/>
+		<aop:pointcut expression="execution(* com.vteba.finance.*.service.impl.*.*(..))" id="financeTxMethodPointCut"/>
+		<aop:pointcut expression="execution(* com.vteba.*.*.remote.*.*(..))" id="remoteTxMethodPointCut"/>		
+		<aop:advisor advice-ref="transactionAdvice" pointcut-ref="serviceTxMethodPointCut"/>
+		<aop:advisor advice-ref="transactionAdvice" pointcut-ref="financeTxMethodPointCut"/>
+		<aop:advisor advice-ref="transactionAdvice" pointcut-ref="remoteTxMethodPointCut"/>
+	</aop:config>
+
+	<!-- 以下是perf4j的性能监控，正式环境去掉
+	<aop:aspectj-autoproxy/>
+	<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+	    <property name="beanNames">
+	        <list>
+	            <value>*ServiceImpl</value>
+	        </list>
+	    </property>
+	    <property name="interceptorNames">
+	        <list>
+	            <value>perf4jInterceptor</value>
+	        </list>
+	    </property>
+	</bean> -->
+	
+	<bean id="schemaInterceptor" class="com.vteba.service.multitenant.interceptor.DetermineSchemaInterceptor"/>
+	<!--schema拦截器定义 -->
+	<aop:config><!-- proxy-target-class="true"使用cglib代理 expose-proxy="true"将该aop暴漏给AopContext，供查询-->
+		<aop:pointcut expression="execution(* com.vteba.*.dao.*.impl.*.*(..)) or execution(* com.vteba.*.*.dao.impl.*.*(..)) or execution(* com.vteba.*.dao.impl.*.*(..))" id="schemaPointcut"/>
+		<aop:advisor advice-ref="schemaInterceptor" pointcut-ref="schemaPointcut" />
+	</aop:config>
+	
+	<bean id="freeMarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+	  <property name="templateLoaderPath" value="classpath:mailTemplate"/>
+	  <property name="freemarkerSettings">
+	      <props>
+	          <prop key="template_update_delay">18000</prop> 
+	          <prop key="default_encoding">UTF-8</prop>
+	          <prop key="locale">zh_CN</prop>
+	      </props>
+	  </property>
+	</bean>
+	
+	<!--以下为ajax DWR配置，使用annotation-->
+	<dwr:configuration/>
+	<!--扫描读取注解加载的类-->
+	<dwr:annotation-scan scanRemoteProxy="true" base-package="com.skmbw"/>
+	<!--把util.js,engine.js映射为dwrController-->
+	<dwr:url-mapping/>
+	<!--部署时把debug设为false-->
+	<dwr:controller id="dwrController" debug="true"/>
+	
+	<!-- 
+	<beans profile="jboss">
+		
+	</beans> -->
+	
+	<!-- Infinispan CacheManager 管理工具类 -->
+<!-- 	<bean id="infinispanCacheManager" class="com.vteba.cache.infinispan.CacheManager"> -->
+<!-- 		<property name="cacheManager" ref="defaultInfinispanCacheManager"/> -->
+<!-- 	</bean> -->
+	
+</beans>

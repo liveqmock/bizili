@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache name="hibernate_bizili" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ehcache.xsd">
+    <diskStore path="java.io.tmpdir/hibernate/bizili/"/>
+    
+    <!-- rmiUrls中配置其他节点的ip：port/cacheName -->
+    <cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory" 
+    properties="hostName=localhost,
+    port=4567,
+    socketTimeoutMillis=2000,
+    peerDiscovery=manual,
+    rmiUrls=//localhost:4567/defaultCaches"
+    />
+    
+    <!--default cache-->
+    <defaultCache name="defaultCaches"
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            overflowToDisk="true"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+            <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+        	properties="replicateAsynchronously=true,replicatePuts=true, 
+			replicateUpdates=true,replicateUpdatesViaCopy=false,replicateRemovals=true "/>
+    </defaultCache>
+    
+    <cacheManagerPeerListenerFactory      
+        class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"      
+        properties="hostName=localhost,port=40000, socketTimeoutMillis=120000" />
+    
+    <!--自动发现peer，同时组播地址可以指定 D 类 IP 地址空间，范围从 224.0.1.0 到 238.255.255.255 中的任何一个地址。 
+    <cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+    properties="peerDiscovery=automatic, multicastGroupAddress=230.0.0.1,
+    multicastGroupPort=4446, timeToLive=32"
+	/>-->
+	
+	<cache name="SystemCache" 
+	maxElementsInMemory="500" 
+	eternal="false" 
+	timeToIdleSeconds="600" 
+	timeToLiveSeconds="3600" 
+	overflowToDisk="false">
+	<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+        	properties="replicateAsynchronously=true,replicatePuts=true, 
+			replicateUpdates=true,replicateUpdatesViaCopy=false,replicateRemovals=true "/>
+	</cache>
+	
+    <!-- entity cache -->
+    <cache name="com.vteba.finance.setting.model.SystemParameter" maxElementsInMemory="500" eternal="false" timeToIdleSeconds="600" timeToLiveSeconds="3600" overflowToDisk="false"/>
+    <cache name="com.vteba.finance.account.model.CommonSum" maxElementsInMemory="500" eternal="false" timeToIdleSeconds="600" timeToLiveSeconds="3600" overflowToDisk="false"></cache>
+    <cache name="com.vteba.finance.account.model.Subject" maxElementsInMemory="500" eternal="false" timeToIdleSeconds="600" timeToLiveSeconds="3600" overflowToDisk="false"></cache>
+    <cache name="com.vteba.finance.account.model.AccountPeriod" maxElementsInMemory="50" eternal="false" timeToIdleSeconds="600" timeToLiveSeconds="3600" overflowToDisk="false"></cache>
+</ehcache>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.vteba.user.dao.UserMapper">
+	<!--简单的映射(单实体)直接使用resultType=""即可，复杂的映射要定义resultMap-->
+	<!-- 
+	<resultMap id="teamDetailMap" type="Team">
+		<id property="id" column="team_id" />
+		<result property="name" column="team_name" />
+		<association property="master" column="master_id" javaType="User">
+			<id property="id" column="master_id" />
+			<result property="name" column="master_name" />
+			<result property="email" column="master_email" />
+		</association>
+		<collection property="userList" javaType="User">
+			<id property="id" column="user_id" />
+			<result property="name" column="user_name" />
+			<result property="email" column="user_email" />
+		</collection>
+	</resultMap> -->
+	<!--id要和DAO中的方法名一致-->
+	<select id="get" parameterType="int" resultType="EmpUser">
+		select u.user_id,u.name,u.email,u.pass from emp_user u where u.user_id=#{id}
+	</select>
+
+	<!-- 查询用户,演示: 1.输入用map传入多个参数 2.<where>语句, 智能添加where和and关键字 3.输出直接映射对象
+	<select id="search" parameterType="map" resultType="User">
+		select id, name, email,
+		login_name as loginName,
+		team_id as "team.id"
+		from ss_user
+		<where>
+			<if test="loginName != null">
+				login_name=#{loginName}
+			</if>
+			<if test="name != null">
+				and name=#{name}
+			</if>
+		</where>
+	</select> -->
+
+	<!-- 插入用户： 1.由数据库生成id并赋值到user对象 2.输入用对象, 嵌套属性表达式#{team.id} 
+	<insert id="save" parameterType="EmpUser" useGeneratedKeys="true" keyProperty="userId">
+		insert into ss_user (
+		login_name, name, password, email, team_id)
+		values (
+		#{loginName}, #{name}, #{password}, #{email},
+		#{team.id})
+	</insert>-->
+	
+	<!-- 删除用户 -->
+	<delete id="delete" parameterType="int">
+	     delete from emp_user where user_id = #{id}
+	</delete>
+</mapper> 
