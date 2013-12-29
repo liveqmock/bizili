@@ -32,7 +32,7 @@
 										<option value="CNY">人民币</option>
 								</select>
 								</td>
-								<td style="width:30px;"><input type="button" value="查询" class="determination" id="queryButton" </td>
+								<td style="width:30px;"><input type="button" value="查询" class="determination" id="queryButton" /></td>
 							</tr><!-- 
 							<tr><td class="twof"></td>
 								<td class="fivf"></td>
