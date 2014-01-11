@@ -69,4 +69,10 @@ public class MemCache implements Cache {
 		// TODO Auto-generated method stub
 	}
 
+	@Override
+	public <T> T get(Object key, Class<T> type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

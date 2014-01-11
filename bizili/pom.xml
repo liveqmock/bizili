@@ -11,12 +11,12 @@
   
   <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <spring-version>3.2.3.RELEASE</spring-version>
+      <spring-version>4.0.0.RELEASE</spring-version>
       <spring-security-version>3.1.4.RELEASE</spring-security-version>
-      <struts2-version>2.3.15.1</struts2-version>
+      <struts2-version>2.3.16</struts2-version>
       <tiles-version>2.2.2</tiles-version>
       <tiles3>3.0.1</tiles3>
-      <hibernate-version>4.2.4.Final</hibernate-version>
+      <hibernate-version>4.3.0.Final</hibernate-version>
       <jibx-version>1.2.4.5</jibx-version>
       <cxf-version>2.7.4</cxf-version>
       <activemq-version>5.8.0</activemq-version>

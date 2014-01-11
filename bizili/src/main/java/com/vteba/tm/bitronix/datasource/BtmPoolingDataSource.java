@@ -5,10 +5,10 @@ import java.sql.SQLException;
 
 import javax.sql.XADataSource;
 
+import org.hibernate.engine.jdbc.connections.spi.AbstractMultiTenantConnectionProvider;
+import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
+import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.hibernate.service.UnknownUnwrapTypeException;
-import org.hibernate.service.jdbc.connections.spi.AbstractMultiTenantConnectionProvider;
-import org.hibernate.service.jdbc.connections.spi.ConnectionProvider;
-import org.hibernate.service.jdbc.connections.spi.MultiTenantConnectionProvider;
 
 import bitronix.tm.resource.jdbc.PoolingDataSource;
 
