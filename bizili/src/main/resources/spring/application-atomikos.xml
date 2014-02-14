@@ -20,7 +20,7 @@
 	<!-- auto scan bean base package , 可以有多个值，以逗号分开-->
 	<context:component-scan base-package="com.skmbw"/>
 	
-	<bean id="propertyConfig" class="com.vteba.config.spring.EncryptPropHolderConfigurer">
+	<bean id="propertyConfig" class="com.vteba.config.spring.EncryptPropHolder">
 		<property name="locations">
 			<list>
 				<value>classpath:jndi.properties</value>
