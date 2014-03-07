@@ -6,10 +6,10 @@
 	
 	<!-- tiles配置文件位置，放到WEB-INF下面，多个以逗号分隔，以/开头，tiles.xml无需放在这里。
 	如果只有一个tiles.xml文件，无需此参数，直接放到WEB-INF下即可 -->
-	<context-param>
-		<param-name>tilesDefinitionLocation</param-name>
-		<param-value>/WEB-INF/tiles/tiles-assets.xml</param-value>
-	</context-param>
+<!-- 	<context-param> -->
+<!-- 		<param-name>tilesDefinitionLocation</param-name> -->
+<!-- 		<param-value>/WEB-INF/tiles/tiles-assets.xml</param-value> -->
+<!-- 	</context-param> -->
 	
 	<!-- 
 	<context-param>
@@ -126,13 +126,13 @@
 		<dispatcher>INCLUDE</dispatcher>
 	</filter-mapping>--> 
 	<!--struts2核心拦截器-->
-	<filter-mapping>
-		<filter-name>strutsPrepareExecute</filter-name>
-		<url-pattern>*.htm</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>INCLUDE</dispatcher>
-	</filter-mapping>
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>strutsPrepareExecute</filter-name> -->
+<!-- 		<url-pattern>*.htm</url-pattern> -->
+<!-- 		<dispatcher>REQUEST</dispatcher> -->
+<!-- 		<dispatcher>FORWARD</dispatcher> -->
+<!-- 		<dispatcher>INCLUDE</dispatcher> -->
+<!-- 	</filter-mapping> -->
 	<!--spring 容器监听器-->
 	
 	<!-- DWR -->
@@ -151,13 +151,13 @@
 	</servlet-mapping>
 	
 	<!--spring刷新Introspector防止内存泄露-->
-	<listener>
-		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
-	</listener>
+<!-- 	<listener> -->
+<!-- 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class> -->
+<!-- 	</listener> -->
 	
-	<listener>
-		<listener-class>com.vteba.web.ognl.OgnlMethodAccessorListener</listener-class>
-	</listener>
+<!-- 	<listener> -->
+<!-- 		<listener-class>com.vteba.web.ognl.OgnlMethodAccessorListener</listener-class> -->
+<!-- 	</listener> -->
 	
 	<listener>
 		<listener-class>com.vteba.config.listener.ApplicationInitializeListener</listener-class>
@@ -168,23 +168,23 @@
 	</listener>
 	
 	<!-- tiles 监听器 -->
-	<listener>
-		<listener-class>com.vteba.web.tiles.YinleiTilesListener</listener-class>
-	</listener>
+<!-- 	<listener> -->
+<!-- 		<listener-class>com.vteba.web.tiles.YinleiTilesListener</listener-class> -->
+<!-- 	</listener> -->
 	
 	<!-- spring security session 失效 -->
 	<listener>
 		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
 	</listener>
 	
-	<servlet>
-		<servlet-name>empUserServlet</servlet-name>
-		<servlet-class>com.vteba.user.servlet.EmpUserServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>empUserServlet</servlet-name>
-		<url-pattern>/empUserServlet</url-pattern>
-	</servlet-mapping>
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>empUserServlet</servlet-name> -->
+<!-- 		<servlet-class>com.vteba.user.servlet.EmpUserServlet</servlet-class> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>empUserServlet</servlet-name> -->
+<!-- 		<url-pattern>/empUserServlet</url-pattern> -->
+<!-- 	</servlet-mapping> -->
 	
 	<filter>
 		<filter-name>characterEncodingFilter</filter-name>
@@ -217,10 +217,73 @@
 <!--       	<url-pattern>/*</url-pattern> -->
 <!--    	</filter-mapping> -->
 	
+	<!-- 以下静态资源交给默认servlet处理 -->
+	<servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.jpg</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.jpeg</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.png</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.gif</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.bmp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.ico</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.flv</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.swf</url-pattern> 
+    </servlet-mapping>
+	
 	<!-- session 30分钟失效 -->
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
+	
+	<servlet>
+        <servlet-name>springmvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring/application-springmvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+	<servlet-mapping>
+        <servlet-name>springmvc</servlet-name>
+        <url-pattern>*.htm</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>springmvc</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+	
 	<welcome-file-list>
     	<welcome-file>index.jsp</welcome-file>
   	</welcome-file-list>
