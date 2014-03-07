@@ -5,6 +5,9 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.vteba.finance.account.service.IAccountPeriodService;
 import com.vteba.finance.report.model.Profit;
 import com.vteba.finance.report.service.IProfitService;
@@ -16,17 +19,22 @@ import com.vteba.web.action.BaseAction;
  * @author yinlei 
  * date 2012-7-25 下午4:41:04
  */
+@Controller
+@RequestMapping("/profit")
 public class ProfitAction extends BaseAction<Profit> {
-	private static final long serialVersionUID = 3089914964324259265L;
 	private Profit model = new Profit();
 	private IProfitService profitServiceImpl;
 	private IAccountPeriodService accountPeriodServiceImpl;
 	
-	@Override
 	public Profit getModel() {
 		return model;
 	}
 
+	public void setModel(Profit model) {
+		this.model = model;
+	}
+
+	@RequestMapping("/initial")
 	@Override
 	public String initial() throws Exception {
 		ReflectUtils.emptyToNull(model);
@@ -37,7 +45,7 @@ public class ProfitAction extends BaseAction<Profit> {
 		Map<String, Object> param = new LinkedHashMap<String, Object>();
 		param.put("rowNumber", "asc");
 		listResult = profitServiceImpl.getListByPropertyEqual(Profit.class, model, param);
-		return SUCCESS;
+		return "profit/initial";
 	}
 	
 	@Inject

@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.joda.time.DateTime;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.finance.account.model.AccountPeriod;
 import com.vteba.finance.account.service.IAccountPeriodService;
@@ -22,17 +24,18 @@ import com.vteba.web.action.BaseAction;
  * @author yinlei 
  * date 2012-7-25 下午4:39:37
  */
+@Controller
+@RequestMapping("/assetsLiabilities")
 public class AssetsLiabilitiesAction extends BaseAction<AssetsLiabilities> {
-	private static final long serialVersionUID = 8576066909465256384L;
 	private AssetsLiabilities model = new AssetsLiabilities();
 	private IAssetsLiabilitiesService assetsLiabilitiesServiceImpl;
 	private IAccountPeriodService accountPeriodServiceImpl;
 	
-	@Override
 	public AssetsLiabilities getModel() {
 		return model;
 	}
 
+	@RequestMapping("/initial")
 	@Override
 	public String initial() throws Exception {
 		ReflectUtils.emptyToNull(model);
@@ -43,7 +46,7 @@ public class AssetsLiabilitiesAction extends BaseAction<AssetsLiabilities> {
 		Map<String, Object> param = new LinkedHashMap<String, Object>();
 		param.put("orders", "asc");
 		listResult = assetsLiabilitiesServiceImpl.getListByPropertyEqual(AssetsLiabilities.class, model, param);
-		return SUCCESS;
+		return "assetsLiabilities/initial";
 	}
 	
 	/**

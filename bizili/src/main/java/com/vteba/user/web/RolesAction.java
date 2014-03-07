@@ -7,6 +7,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.common.constant.CommonConst;
 import com.vteba.persister.generic.Page;
@@ -20,9 +22,10 @@ import com.vteba.web.action.BaseAction;
  * @author yinlei 
  * date 2012-6-24 下午11:20:29
  */
+@Controller
+@RequestMapping("/user/roles")
 public class RolesAction extends BaseAction<Roles> {
 
-	private static final long serialVersionUID = -3689396818802009554L;
 	private Roles model = new Roles();
 	private List<Roles> roleList = new ArrayList<Roles>();
 	private IRolesService rolesServiceImpl;
@@ -42,12 +45,12 @@ public class RolesAction extends BaseAction<Roles> {
 		this.roleAuthServiceImpl = roleAuthServiceImpl;
 	}
 
-	@Override
 	public Roles getModel() {
 		return model;
 	}
 
 	@Override
+	@RequestMapping("/initial")
 	public String initial() throws Exception {
 		Page<Roles> pages = new Page<Roles>();
 		Roles entity = new Roles();
@@ -55,7 +58,7 @@ public class RolesAction extends BaseAction<Roles> {
 		pages = rolesServiceImpl.queryForPageByModel(page, entity);
 		listResult = pages.getResult();
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
-		return SUCCESS;
+		return "user/roles/roles-initial-success";
 	}
 	
 	/**
@@ -63,9 +66,10 @@ public class RolesAction extends BaseAction<Roles> {
 	 * @author yinlei
 	 * date 2012-6-24 下午11:22:12
 	 */
+	@RequestMapping("/input")
 	public String input() throws Exception {
 		if (isInit()) {
-			return SUCCESS;
+			return "user/roles/roles-input-success";
 		}
 		for (Roles entity : roleList) {
 			if (StringUtils.isNotEmpty(entity.getRoleName())) {
@@ -73,7 +77,7 @@ public class RolesAction extends BaseAction<Roles> {
 				rolesServiceImpl.save(entity);
 			}
 		}
-		return SUCCESS;
+		return "user/roles/roles-input-success";
 	}
 	
 	/**
@@ -81,22 +85,24 @@ public class RolesAction extends BaseAction<Roles> {
 	 * @author yinlei
 	 * date 2012-6-24 下午11:21:42
 	 */
+	@RequestMapping("/roleAuthList")
 	public String roleAuthList() throws Exception {
 		String hql = "select a from RoleAuth a where a.roleId = ?1 ";
 		list = roleAuthServiceImpl.getEntityListByHql(hql, model.getRoleId());
-		return DETAIL;
+		return "user/roles/roleAuth-list";
 	}
 	
 	/**
 	 * 供选择角色时查询用
 	 */
+	@RequestMapping("/list")
 	public String list() throws Exception {
 		Roles entity = new Roles();
 		entity.setRoleName(model.getRoleName());
 		entity.setRoleDesc(model.getRoleDesc());
 		entity.setPriority(1);
 		listResult = rolesServiceImpl.getListByPropertyLike(Roles.class, entity);
-		return LIST;
+		return "user/roles/roles-list";
 	}
 
 	public List<Roles> getRoleList() {

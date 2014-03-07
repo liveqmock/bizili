@@ -1,5 +1,8 @@
 package com.vteba.common.web;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.vteba.common.constant.CommonConst;
 import com.vteba.common.service.IModuleMenuService;
 import com.vteba.security.spring.SecurityContextHolderUtils;
@@ -11,24 +14,20 @@ import com.vteba.web.action.BaseAction;
  * @author yinlei
  * date 2012-7-15 下午3:41:08
  */
+@Controller
+@RequestMapping("/common")
 public class PlatformAction extends BaseAction<EmpUser> {
 
-	private static final long serialVersionUID = 655140884138631009L;
-	private EmpUser model = new EmpUser();
 	private IModuleMenuService moduleMenuServiceImpl;
-	
-	@Override
-	public EmpUser getModel() {
-		return model;
-	}
 
 	@Override
+	@RequestMapping("/platform-initial")
 	public String initial() throws Exception {
 		EmpUser user = SecurityContextHolderUtils.getCurrentUserInfo();
 		if (user != null) {
 			setAttributeToSession(CommonConst.CONTEXT_USER, user);
 		}
-		return SUCCESS;
+		return "common/platform/initial-success";
 	}
 
 	public IModuleMenuService getModuleMenuServiceImpl() {

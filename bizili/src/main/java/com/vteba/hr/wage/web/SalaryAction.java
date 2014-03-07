@@ -10,17 +10,15 @@ import com.vteba.web.action.BaseAction;
  */
 public class SalaryAction extends BaseAction<Salary> {
 
-	private static final long serialVersionUID = 3599055400038802489L;
 	private Salary model = new Salary();
 	
-	@Override
 	public Salary getModel() {
 		return model;
 	}
 
 	@Override
 	public String initial() throws Exception {
-		return SUCCESS;
+		return "";
 	}
 
 }

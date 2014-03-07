@@ -204,6 +204,17 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
+	<!-- 获得和当前线程绑定的请求上下文 -->
+	<filter>
+		<filter-name>requestContextFilter</filter-name>
+		<filter-class>com.vteba.web.filter.RequestContextFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>requestContextFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 <!-- 	<filter> -->
 <!--       	<filter-name>encodingFilter</filter-name> -->
 <!--       	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class> -->

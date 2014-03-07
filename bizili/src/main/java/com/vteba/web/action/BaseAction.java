@@ -11,23 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.ModelDriven;
 import com.vteba.common.constant.CommonConst;
 import com.vteba.persister.generic.Page;
+import com.vteba.service.context.RequestContextHolder;
 
 /**
  * 公共action，提供一些常用方法及变量定义。
  * @author yinlei 
  * date 2012-5-5 下午9:37:30
  */
-public abstract class  BaseAction<T> extends ActionSupport implements ModelDriven<T> {
-	private static final long serialVersionUID = 1740766986180297938L;
+public abstract class  BaseAction<T> {
 	private static final Random RANDOM = new Random();
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	protected T entity;
@@ -66,7 +62,7 @@ public abstract class  BaseAction<T> extends ActionSupport implements ModelDrive
 	/**
 	 * 当前action路径
 	 */
-	protected String currentActionPath = ServletActionContext.getRequest().getServletPath();
+	protected String currentActionPath = RequestContextHolder.getRequest().getServletPath();
 	/**
 	 * 初始化，减少action method 数目，有利于控制跳转
 	 */
@@ -195,8 +191,7 @@ public abstract class  BaseAction<T> extends ActionSupport implements ModelDrive
 	 * date 2012-7-5 下午9:38:26
 	 */
 	protected void setAttributeToRequest(String name, Object value) {
-		ActionContext ctx = ActionContext.getContext();
-		ctx.put(name, value);
+		getHttpServletRequest().setAttribute(name, value);
 	}
 	
 	/**
@@ -206,8 +201,7 @@ public abstract class  BaseAction<T> extends ActionSupport implements ModelDrive
 	 * date 2012-7-5 下午10:19:33
 	 */
 	protected Object getRequestParamater(String name) {
-		ActionContext ctx = ActionContext.getContext();
-		return ctx.get(name);
+		return getHttpServletRequest().getAttribute(name);
 	}
 	
 	/**
@@ -218,9 +212,7 @@ public abstract class  BaseAction<T> extends ActionSupport implements ModelDrive
 	 * date 2012-7-5 下午10:05:32
 	 */
 	protected void setAttributeToSession(String name, Object value) {
-		ActionContext ctx = ActionContext.getContext();
-		Map<String, Object> session = ctx.getSession();
-		session.put(name, value);
+		getHttpSession().setAttribute(name, value);
 	}
 	
 	/**
@@ -230,8 +222,7 @@ public abstract class  BaseAction<T> extends ActionSupport implements ModelDrive
 	 * date 2012-7-5 下午10:21:44
 	 */
 	protected Object getSessionParameter(String name) {
-		Map<String, Object> session = ActionContext.getContext().getSession();
-		return session.get(name);
+		return getHttpSession().getAttribute(name);
 	}
 	
 	/**
@@ -259,10 +250,9 @@ public abstract class  BaseAction<T> extends ActionSupport implements ModelDrive
 	 * date 2012-7-5 下午8:39:35
 	 */
 	protected boolean isTokenValueOK(){
-        Map<String, Object> session = ActionContext.getContext().getSession();
-        String token = (String) session.get(CommonConst.TOKEN_NAME);
+        String token = (String) getHttpSession().getAttribute(CommonConst.TOKEN_NAME);
         if (tokenName != null && tokenName.equals(token)) {
-            session.remove(CommonConst.TOKEN_NAME);//移除旧的session值
+            getHttpSession().removeAttribute(CommonConst.TOKEN_NAME);//移除旧的session值
             setTokenValue();//添加新的session值，供下次form提交使用
             return true;
         }
@@ -270,15 +260,15 @@ public abstract class  BaseAction<T> extends ActionSupport implements ModelDrive
 	}
 	
 	public HttpServletResponse getHttpServletResponse() {
-		return ServletActionContext.getResponse();
+		return RequestContextHolder.getResponse();
 	}
 	
 	public HttpServletRequest getHttpServletRequest() {
-		return ServletActionContext.getRequest();
+		return RequestContextHolder.getRequest();
 	}
 	
 	public HttpSession getHttpSession() {
-		return ServletActionContext.getRequest().getSession();
+		return RequestContextHolder.getRequest().getSession();
 	}
 	
 	/**
@@ -300,20 +290,20 @@ public abstract class  BaseAction<T> extends ActionSupport implements ModelDrive
 	 * 直接输出json。
 	 */
 	public void renderJson(String json) {
-		response(ServletActionContext.getResponse(), json, "application/json;charset=UTF-8");
+		response(RequestContextHolder.getResponse(), json, "application/json;charset=UTF-8");
 	}
 
 	/**
 	 * 直接输出纯HTML。
 	 */
 	public void renderHtml(String text) {
-		response(ServletActionContext.getResponse(), text, "text/html;charset=UTF-8");
+		response(RequestContextHolder.getResponse(), text, "text/html;charset=UTF-8");
 	}
 
 	/**
 	 * 直接输出纯字符串。约定：返回1，刷新页面；返回文本，alert。
 	 */
 	public void renderText(String text) {
-		response(ServletActionContext.getResponse(), text, "application/plain;charset=UTF-8");
+		response(RequestContextHolder.getResponse(), text, "application/plain;charset=UTF-8");
 	}
 }

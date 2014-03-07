@@ -1,5 +1,8 @@
 package com.vteba.finance.assets.web;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.vteba.finance.assets.model.AssetsType;
 import com.vteba.web.action.BaseAction;
 
@@ -8,20 +11,21 @@ import com.vteba.web.action.BaseAction;
  * @author yinlei
  * date 2012-9-1
  */
+@Controller
+@RequestMapping("/assetsType")
 public class AssetsTypeAction extends BaseAction<AssetsType> {
 	
-	private static final long serialVersionUID = 4891486026620377842L;
 	private AssetsType model = new AssetsType();
 	
-	@Override
 	public AssetsType getModel() {
 		return model;
 	}
 
+	@RequestMapping("/initial")
 	@Override
 	public String initial() throws Exception {
 		
-		return SUCCESS;
+		return "assetsType/initial";
 	}
 
 }

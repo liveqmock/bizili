@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.vteba.common.constant.CommonConst;
 import com.vteba.finance.account.model.CertTotal;
 import com.vteba.finance.account.model.Certificate;
@@ -18,8 +21,9 @@ import com.vteba.web.action.BaseAction;
  * @author yinlei 
  * date 2012-6-24 下午11:08:36
  */
+@Controller
+@RequestMapping("/account")
 public class AccountCertAction extends BaseAction<CertTotal> {
-	private static final long serialVersionUID = -7906004344694917026L;
 	private CertTotal model = new CertTotal();
 	
 	/**
@@ -34,11 +38,15 @@ public class AccountCertAction extends BaseAction<CertTotal> {
 		this.certTotalServiceImpl = certTotalServiceImpl;
 	}
 
-	@Override
 	public CertTotal getModel() {
 		return model;
 	}
 
+	public void setModel(CertTotal model) {
+		this.model = model;
+	}
+
+	@RequestMapping("/initial")
 	@Override
 	public String initial() throws Exception {
 		Page<CertTotal> pages = new Page<CertTotal>();
@@ -46,7 +54,7 @@ public class AccountCertAction extends BaseAction<CertTotal> {
 		pages = certTotalServiceImpl.queryForPageByModel(page, model);
 		listResult = pages.getResult();
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
-		return SUCCESS;
+		return "/finance/account/certificate/initial";
 	}
 	
 	/**
@@ -55,15 +63,16 @@ public class AccountCertAction extends BaseAction<CertTotal> {
 	 * @author yinlei
 	 * date 2012-7-5 下午9:07:05
 	 */
+	@RequestMapping("/input")
 	public String input() throws Exception {
 		if (isInit()) {
 			setTokenValue();
-			return SUCCESS;
+			return "";
 		}
 		if (isTokenValueOK()) {
 			certTotalServiceImpl.saveCertAndDetail(model, certList);//保存凭证汇总和凭证明细
 		}
-		return SUCCESS;
+		return "/finance/account/certificate/input";
 	}
 
 	public List<Certificate> getCertList() {

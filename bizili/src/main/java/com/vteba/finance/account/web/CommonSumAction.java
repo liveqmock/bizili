@@ -2,6 +2,9 @@ package com.vteba.finance.account.web;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.vteba.finance.account.model.CommonSum;
 import com.vteba.finance.account.service.ICommonSumService;
 import com.vteba.web.action.BaseAction;
@@ -11,8 +14,9 @@ import com.vteba.web.action.BaseAction;
  * @author yinlei 
  * date 2012-7-5 下午11:02:32
  */
+@Controller
+@RequestMapping("/commonSum")
 public class CommonSumAction extends BaseAction<CommonSum> {
-	private static final long serialVersionUID = 7417186516058078996L;
 	private CommonSum model = new CommonSum();
 	private ICommonSumService commonSumServiceImpl;
 	
@@ -25,14 +29,13 @@ public class CommonSumAction extends BaseAction<CommonSum> {
 		this.commonSumServiceImpl = commonSumServiceImpl;
 	}
 
-	@Override
 	public CommonSum getModel() {
 		return model;
 	}
 
 	@Override
 	public String initial() throws Exception {
-		return SUCCESS;
+		return "";
 	}
 
 }

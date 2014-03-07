@@ -7,6 +7,8 @@ import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.common.constant.CommonConst;
 import com.vteba.persister.generic.Page;
@@ -27,9 +29,10 @@ import com.vteba.web.action.BaseAction;
  * @author yinlei 
  * date 2012-6-24 下午11:20:12
  */
+@Controller
+@RequestMapping("/user/empUser")
 public class EmpUserAction extends BaseAction<EmpUser> {
 
-	private static final long serialVersionUID = -3473274748591692803L;
 	private EmpUser model = new EmpUser();
 	private IEmpUserService empUserServiceImpl;
 	private IRolesService rolesServiceImpl;
@@ -61,7 +64,6 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 		this.model = model;
 	}
 	
-	@Override
 	public EmpUser getModel() {
 		return model;
 	}
@@ -73,7 +75,7 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 		pages = empUserServiceImpl.queryForPageByModel(page, model);
 		listResult = pages.getResult();
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
-		return SUCCESS;
+		return "user/empUser/empUser-initial-success";
 	}
 	
 	public String input() throws Exception {
@@ -82,7 +84,7 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 			if (model.getUserId() != null) {
 				entity = empUserServiceImpl.loadEmpUser(model.getUserId());
 			}
-			return SUCCESS;
+			return "user/empUser/empUser-input-success";
 		}
 		if (isTokenValueOK()) {//保存或更新
 //			EmpUser user = new EmpUser();
@@ -101,10 +103,10 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 			model.setCreateDate(new Date());
 			int ret = empUserServiceImpl.saveUserAndRole(model);
 			if (ret == 1) {
-				return SUCCESS;
+				return "user/empUser/empUser-input-success";
 			}
 		}
-		return ERROR;
+		return "";
 	}
 	
 	public void delete() throws Exception {
@@ -122,6 +124,7 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 		
 	}
 	
+	@RequestMapping("/roles")
 	public String roles() throws Exception {
 		Page<Roles> rolesPage = new Page<Roles>();
 		rolesPage.setPageNo(page.getPageNo());//因为page封装的默认是T EmpUser
@@ -161,7 +164,7 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 		pageResult = rolesServiceImpl.queryForPageBySql(rolesPage, sql.toString(), objects);
 		list = pageResult.getResult();
 		setAttributeToRequest(CommonConst.PAGE_NAME, pageResult);
-		return SUCCESS;
+		return "user/empUser/empUser-roles-success";
 	}
 	
 	public String authority() throws Exception {
@@ -175,7 +178,7 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 		
 		pageResult = authoritiesServiceImpl.queryForPageBySql(authPage, sql.toString(), "");
 		
-		return SUCCESS;
+		return "";
 	}
 
 	public List<Long> getIds() {

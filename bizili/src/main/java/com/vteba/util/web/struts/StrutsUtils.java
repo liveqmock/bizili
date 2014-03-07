@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.struts2.ServletActionContext;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.vteba.service.context.RequestContextHolder;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.util.web.ServletUtils;
 
@@ -28,14 +28,14 @@ public class StrutsUtils {
 	 * 取得HttpSession的简化函数.
 	 */
 	public static HttpSession getSession() {
-		return ServletActionContext.getRequest().getSession();
+		return RequestContextHolder.getRequest().getSession();
 	}
 
 	/**
 	 * 取得HttpSession的简化函数.
 	 */
 	public static HttpSession getSession(boolean isNew) {
-		return ServletActionContext.getRequest().getSession(isNew);
+		return RequestContextHolder.getRequest().getSession(isNew);
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class StrutsUtils {
 	 * 取得HttpRequest的简化函数.
 	 */
 	public static HttpServletRequest getRequest() {
-		return ServletActionContext.getRequest();
+		return RequestContextHolder.getRequest();
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class StrutsUtils {
 	 * 取得HttpResponse的简化函数.
 	 */
 	public static HttpServletResponse getResponse() {
-		return ServletActionContext.getResponse();
+		return RequestContextHolder.getResponse();
 	}
 
 	// -- 绕过jsp/freemaker直接输出文本的函数 --//
@@ -192,7 +192,7 @@ public class StrutsUtils {
 			}
 		}
 
-		HttpServletResponse response = ServletActionContext.getResponse();
+		HttpServletResponse response = RequestContextHolder.getResponse();
 
 		// 设置headers参数
 		String fullContentType = contentType + ";charset=" + encoding;

@@ -9,13 +9,15 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.struts2.ServletActionContext;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.common.constant.CommonConst;
 import com.vteba.common.constant.FileConst;
 import com.vteba.finance.account.model.Subject;
 import com.vteba.finance.account.service.ISubjectService;
 import com.vteba.persister.generic.Page;
+import com.vteba.service.context.RequestContextHolder;
 import com.vteba.util.common.ExcelExportUtils;
 import com.vteba.util.common.ExcelImportUtils;
 import com.vteba.util.reflection.ReflectUtils;
@@ -27,8 +29,9 @@ import com.vteba.web.action.BaseAction;
  * @author yinlei 
  * date 2012-6-24 下午11:05:28
  */
+@Controller
+@RequestMapping("/account")
 public class AccountSubjectAction extends BaseAction<Subject> {
-	private static final long serialVersionUID = 8869320614370120027L;
 	private Subject model = new Subject();
 	private ISubjectService subjectServiceImpl;
 	private List<Subject> subjectList = new ArrayList<Subject>();
@@ -47,11 +50,15 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 		this.subjectServiceImpl = subjectServiceImpl;
 	}
 
-	@Override
 	public Subject getModel() {
 		return model;
 	}
 
+	public void setModel(Subject model) {
+		this.model = model;
+	}
+
+	@RequestMapping("/initial")
 	@Override
 	public String initial() throws Exception {
 		Page<Subject> pages = new Page<Subject>();
@@ -65,7 +72,7 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 		pages = subjectServiceImpl.queryForPageByModel(page, model);
 		listResult = pages.getResult();
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
-		return SUCCESS;
+		return "account/initial";
 	}
 	
 	/**
@@ -73,10 +80,11 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 	 * @author yinlei
 	 * date 2012-6-25 下午2:42:39
 	 */
+	@RequestMapping("/input")
 	public String input() throws Exception {
 		if (isInit()) {
 			setTokenValue();
-			return SUCCESS;
+			return "account/input";
 		}
 		if (isTokenValueOK()) {
 			boolean ret = subjectServiceImpl.saveSubject(model);
@@ -84,7 +92,7 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 				setAttributeToRequest("msg", "新增会计科目成功。");
 			}
 		}
-		return SUCCESS;
+		return "account/input";
 	}
 	
 	/**
@@ -92,9 +100,10 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 	 * @author yinlei
 	 * date 2012-6-26 下午3:09:17
 	 */
+	@RequestMapping("/list")
 	public String list() throws Exception {
 		mapResult = subjectServiceImpl.getSubjectTreeList();
-		return LIST;
+		return "account/list";
 	}
 	
 	/**
@@ -102,10 +111,11 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 	 * @author yinlei
 	 * date 2012-7-8 下午10:12:17
 	 */
+	@RequestMapping("/importExcel")
 	public String importExcel() throws Exception {
 		if (isInit()) {
 			setTokenValue();
-			return SUCCESS;
+			return "";
 		}
 		if (isTokenValueOK()) {
 			FileInputStream fis = new FileInputStream(getUploadFile());
@@ -121,7 +131,7 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 				}
 			}
 		}
-		return SUCCESS;
+		return "";
 	}
 	
 	/**
@@ -129,6 +139,7 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 	 * @author yinlei
 	 * date 2012-6-25 下午1:36:49
 	 */
+	@RequestMapping("/export")
 	public String export() throws Exception {
 		List<Object[]> dataList = new ArrayList<Object[]>();
 		String[] title = {};
@@ -181,7 +192,7 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 	}
 
 	public String getSavePath() {
-		return ServletActionContext.getServletContext().getRealPath(savePath);
+		return RequestContextHolder.getRequest().getServletContext().getRealPath(savePath);
 	}
 
 	public void setSavePath(String savePath) {
