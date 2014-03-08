@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -50,7 +51,7 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 	}
 
 	@RequestMapping("/subject-initial")
-	public String initial(Subject model) throws Exception {
+	public String initial(Subject model, Map<String, Object> maps) throws Exception {
 		Page<Subject> pages = new Page<Subject>();
 		ReflectUtils.emptyToNull(model);
 		//排序
@@ -61,6 +62,7 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 		subjectServiceImpl.test();
 		pages = subjectServiceImpl.queryForPageByModel(page, model);
 		listResult = pages.getResult();
+		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
 		return "account/subject/subject-initial-success";
 	}
@@ -91,8 +93,9 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 	 * date 2012-6-26 下午3:09:17
 	 */
 	@RequestMapping("/subject-list")
-	public String list() throws Exception {
+	public String list(Map<String, Object> maps) throws Exception {
 		mapResult = subjectServiceImpl.getSubjectTreeList();
+		maps.put("mapResult", mapResult);
 		return "account/subject/subject-list";
 	}
 	

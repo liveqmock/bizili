@@ -1,10 +1,29 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<%@ page language="java" pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/inc/taglib.inc"%>
-<%@ include file="/WEB-INF/inc/constants.inc"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-cn" />
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
-  <head>      
-    <title>新增会计科目</title>
+<head><title>新增会计科目</title>
+<style type="text/css">
+img {border-width: 0px 0px 0px 0px}
+#middel{
+	width:1340px;
+}
+#left{
+	float:left;
+}
+
+#content{
+	width:1200px;
+}
+#footer{
+	width:1340px;
+}
+</style>
+<%@ include file="/WEB-INF/inc/taglib.inc" %>
+<%@ include file="/WEB-INF/inc/constants.inc" %>
+<%@ include file="/WEB-INF/inc/script.inc" %>
+<%@ include file="/WEB-INF/inc/style.inc" %>
 <style type="text/css">
 table.singleIncreasesResources{
 	width:1235px;
@@ -230,9 +249,18 @@ input.iptBuySteelAdd{
     	});
 	});
 	</script>
-  </head> 
-  <body>
-  <div id="epMcContent" class="epMcCtContent" style="margin-top:10px;margin-bottom:10px;">
+</head>
+<body>
+<div id="container">
+	<div id="header">
+		<jsp:include page="/WEB-INF/tiles/four-header.jsp" />
+	</div>
+	<div id="middel">
+		<div id="left">
+			<jsp:include page="/WEB-INF/tiles/four-left.jsp" />
+		</div>
+		<div id="content">
+			<div id="epMcContent" class="epMcCtContent" style="margin-top:10px;margin-bottom:10px;">
 	<h3 class="bordFont bigFont">会计科目</h3>
 	<form name="saveSubForm" id="saveSubForm" action="subject-input.htm" method="post">
 	<input type="hidden" id="message" value="${msg}">
@@ -305,6 +333,12 @@ input.iptBuySteelAdd{
 	<input type="button" class="determination" id="saveSubject" value="保存" />
 	<input type="reset" class="cancellation" id="" value="取消" />
 	</form>
+</div>
+		</div>
+	</div>
+	<div id="footer">
+		<jsp:include page="/WEB-INF/tiles/four-footer.jsp" />
+	</div>
 </div>
 
 </body>

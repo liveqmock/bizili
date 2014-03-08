@@ -46,6 +46,9 @@ public class RequestContextFilter extends OncePerRequestFilter {
 		ServletWebRequest servletWebRequest = new ServletWebRequest(request, response);
 		initContextHolders(request, servletWebRequest);
 		
+		String path = RequestContextHolder.getRequest().getServletPath();
+		request.setAttribute("currentActionPath", path);
+		
 		try {
 			filterChain.doFilter(request, response);
 		}

@@ -77,12 +77,12 @@ public class RolesAction extends BaseAction<Roles> {
 	 * @author yinlei
 	 * date 2012-6-24 下午11:21:42
 	 */
-	@RequestMapping("/roleAuth-list")
+	@RequestMapping("/roles-roleAuthList")
 	public String roleAuthList(Roles model, Map<String, Object> maps) throws Exception {
 		String hql = "select a from RoleAuth a where a.roleId = ?1 ";
 		list = roleAuthServiceImpl.getEntityListByHql(hql, model.getRoleId());
 		maps.put("list", list);
-		return "user/roles/roleAuth-list";
+		return "user/roles/rolesAuth-list";
 	}
 	
 	/**

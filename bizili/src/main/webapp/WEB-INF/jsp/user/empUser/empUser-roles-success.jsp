@@ -1,9 +1,29 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<%@ page language="java" pageEncoding="UTF-8"%>
-<%@ include file="../../../inc/taglib.inc"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-cn" />
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
-<head>
-<title>用户管理</title>
+<head><title>我的角色</title>
+<style type="text/css">
+img {border-width: 0px 0px 0px 0px}
+#middel{
+	width:1340px;
+}
+#left{
+	float:left;
+}
+
+#content{
+	width:1200px;
+}
+#footer{
+	width:1340px;
+}
+</style>
+<%@ include file="/WEB-INF/inc/taglib.inc" %>
+<%@ include file="/WEB-INF/inc/constants.inc" %>
+<%@ include file="/WEB-INF/inc/script.inc" %>
+<%@ include file="/WEB-INF/inc/style.inc" %>
 <script type="text/javascript">
 $(document).ready(function(){
 	$('#queryButton').click(function(){
@@ -14,9 +34,18 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<div id="epMcContent" style="margin-bottom:10px;">
+<div id="container">
+	<div id="header">
+		<jsp:include page="/WEB-INF/tiles/four-header.jsp" />
+	</div>
+	<div id="middel">
+		<div id="left">
+			<jsp:include page="/WEB-INF/tiles/four-left.jsp" />
+		</div>
+		<div id="content">
+			<div id="epMcContent" style="margin-bottom:10px;">
 	<div class="epMcCtContent">
-	<h3 class="bordFont bigFont">用户管理</h3>
+	<h3 class="bordFont bigFont">我的角色</h3>
 	<div class="tab">
 				<ul class="tabMenu none bordFont floatUl normalFont">
 					<li class="first"><a href="<c:url value="/users/empUser-initial.htm"/>">用户列表</a></li>
@@ -107,5 +136,12 @@ $(document).ready(function(){
 	</div>
 	</div>
 	</div>
+		</div>
+	</div>
+	<div id="footer">
+		<jsp:include page="/WEB-INF/tiles/four-footer.jsp" />
+	</div>
+</div>
+
 </body>
 </html>

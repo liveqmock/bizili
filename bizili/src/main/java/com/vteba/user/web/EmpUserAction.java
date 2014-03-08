@@ -100,9 +100,10 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 				return "user/empUser/empUser-input-success";
 			}
 		}
-		return "";
+		return "user/empUser/empUser-input-success";
 	}
 	
+	@RequestMapping("delete")
 	public void delete() throws Exception {
 		try {
 			empUserServiceImpl.deleteEntityBatch(ids);

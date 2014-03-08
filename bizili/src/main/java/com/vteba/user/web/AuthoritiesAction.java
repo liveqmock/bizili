@@ -44,7 +44,7 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 		listResult = pages.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
-		return "user/authorities/authorities-initial-success";
+		return "user/authorities/auth-initial-success";
 	}
 	
 	/**
@@ -60,7 +60,7 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 			return "user/authorities/authorities-input";
 		}
 		authoritiesServiceImpl.save(model);
-		return "user/authorities/authorities-input-success";
+		return "user/authorities/auth-input-success";
 	}
 
 }

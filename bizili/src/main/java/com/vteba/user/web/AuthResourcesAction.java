@@ -45,7 +45,7 @@ public class AuthResourcesAction extends BaseAction<AuthResource> {
 		listResult = pages.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
-		return "users/resources/resources-initial-success";
+		return "user/resources/resource-initial-success";
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class AuthResourcesAction extends BaseAction<AuthResource> {
 	@RequestMapping("/resources-input")
 	public String input() throws Exception {
 		if (isInit()) {
-			return "users/resources/resources-input-success";
+			return "user/resources/resource-input-success";
 		}
 		for (AuthResource model : authList) {
 			if (StringUtils.isNotEmpty(model.getResourceUrl()) && StringUtils.isNotEmpty(model.getResourceType())) {
@@ -64,7 +64,7 @@ public class AuthResourcesAction extends BaseAction<AuthResource> {
 			}
 		}
 		setAttributeToRequest("msg", "新增资源成功。");
-		return "users/resources/resources-input-success";
+		return "user/resources/resource-input-success";
 	}
 	
 	public String edit() throws Exception {
@@ -90,7 +90,7 @@ public class AuthResourcesAction extends BaseAction<AuthResource> {
 		listResult = pages.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
-		return "users/resources/resources-list-success";
+		return "user/resources/resource-list";
 	}
 	
 	/**********setter and getter********/

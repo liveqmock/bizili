@@ -141,10 +141,9 @@ public abstract class  BaseAction<T> {
 	
 	public String getCurrentActionPath() {
 		if (currentActionPath == null) {
-			return RequestContextHolder.getRequest().getServletPath();
-		} else {
-			return currentActionPath;
+			currentActionPath = RequestContextHolder.getRequest().getServletPath();
 		}
+		return currentActionPath;
 	}
 
 	public void setCurrentActionPath(String currentActionPath) {
