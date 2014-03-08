@@ -5,6 +5,9 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.vteba.finance.table.model.AccountBalance;
 import com.vteba.finance.table.service.IAccountBalanceService;
 import com.vteba.user.dao.UserDao;
@@ -18,17 +21,13 @@ import com.vteba.web.action.BaseAction;
  * @author yinlei 
  * date 2012-7-2 下午5:45:17
  */
+@Controller
+@RequestMapping("/table")
 public class AccountBalanceAction extends BaseAction<AccountBalance> {
-	private static final long serialVersionUID = -2550367439805944712L;
 	
-	private AccountBalance model = new AccountBalance();
 	private IAccountBalanceService accountBalanceServiceImpl;
 	
-	public void setModel(AccountBalance model) {
-		this.model = model;
-	}
-	
-	@Inject//test
+	@Inject //mybatis
 	private UserDao userDao;
 	
 	@Inject
@@ -37,13 +36,8 @@ public class AccountBalanceAction extends BaseAction<AccountBalance> {
 		this.accountBalanceServiceImpl = accountBalanceServiceImpl;
 	}
 
-	@Override
-	public AccountBalance getModel() {
-		return model;
-	}
-
-	@Override
-	public String initial() throws Exception {
+	@RequestMapping("/accountbalance-initial")
+	public String initial(AccountBalance model) throws Exception {
 		System.out.println(getHttpServletRequest().getParameter("name"));
 		long s = System.currentTimeMillis();
 		@SuppressWarnings("unused")
@@ -86,7 +80,7 @@ public class AccountBalanceAction extends BaseAction<AccountBalance> {
 		setAttributeToRequest("yearCredit", yearCredit);
 		setAttributeToRequest("endDebit", endDebit);
 		setAttributeToRequest("endCredit", endCredit);
-		return SUCCESS;
+		return "table/accountbalance/accountbalance-initial-success";
 	}
 
 }

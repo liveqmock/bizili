@@ -11,25 +11,14 @@
 		
 	<!-- 开启controller注解支持 -->
     <!-- 如果base-package=com.vteba 则注解事务不起作用,读源码,可以使用切点表达式，精确指定 -->
-    <context:component-scan base-package="com.vteba.*.action,com.vteba.*.*.action">
+    <context:component-scan base-package="com.vteba.*.web,com.vteba.*.*.web">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 	
 	<!-- 会自动注册了validator和ConversionService  -->
     <mvc:annotation-driven validator="validator" conversion-service="formattingConversionService">
-    	<mvc:message-converters register-defaults="true">
-    		<bean class="com.vteba.web.servlet.converter.json.FastJsonHttpMessageConverter"/>
-    		<bean class="com.vteba.web.servlet.converter.xml.JibxXmlHttpMessageConverter">
-    			<property name="xmlServiceImpl" ref="xmlServiceImpl"/>
-    		</bean>
-<!-- 			<bean class="com.vteba.web.servlet.converter.json.MappingJackson2HttpMessageConverter"/> -->
-<!--     		<bean class="org.springframework.http.converter.StringHttpMessageConverter"> -->
-<!-- 				<property name="writeAcceptCharset" value="false"/> -->
-<!-- 			</bean> -->
-<!-- 			<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/> -->
-<!-- 			<bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/> -->
-<!-- 			<bean class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter"/> -->
-    	</mvc:message-converters>
+<!--     	<mvc:message-converters register-defaults="true"> -->
+<!--     	</mvc:message-converters> -->
     </mvc:annotation-driven>
     
     <!-- 以下 validator和ConversionService Bean，使用 mvc:annotation-driven配置时，自动注册-->

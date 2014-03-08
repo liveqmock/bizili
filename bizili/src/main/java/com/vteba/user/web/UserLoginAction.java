@@ -20,7 +20,6 @@ public class UserLoginAction extends BaseAction<EmpUser> {
 	private boolean expired;//超过并发session数，session失效
 	private boolean authError;//验证失败
 	
-	private EmpUser model;
 	private IEmpUserService empUserServiceImpl;
 	
 	public IEmpUserService getEmpUserServiceImpl() {
@@ -33,7 +32,6 @@ public class UserLoginAction extends BaseAction<EmpUser> {
 	}
 
 	@RequestMapping("/userLogin")
-	@Override
 	public String initial() throws Exception {
 		if (isInit()) {
 			return "login";
@@ -59,14 +57,6 @@ public class UserLoginAction extends BaseAction<EmpUser> {
 
 	public void setAuthError(boolean authError) {
 		this.authError = authError;
-	}
-
-	public EmpUser getModel() {
-		return model;
-	}
-	
-	public void setModel(EmpUser model) {
-		this.model = model;
 	}
 
 }

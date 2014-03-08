@@ -2,6 +2,7 @@ package com.vteba.user.web;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -30,10 +31,9 @@ import com.vteba.web.action.BaseAction;
  * date 2012-6-24 下午11:20:12
  */
 @Controller
-@RequestMapping("/user/empUser")
+@RequestMapping("/users")
 public class EmpUserAction extends BaseAction<EmpUser> {
 
-	private EmpUser model = new EmpUser();
 	private IEmpUserService empUserServiceImpl;
 	private IRolesService rolesServiceImpl;
 	private IAuthoritiesService authoritiesServiceImpl;
@@ -60,25 +60,19 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 		this.shaPasswordEncoder = shaPasswordEncoder;
 	}
 	
-	public void setModel(EmpUser model) {
-		this.model = model;
-	}
-	
-	public EmpUser getModel() {
-		return model;
-	}
-
-	@Override
-	public String initial() throws Exception {
+	@RequestMapping("/empUser-initial")
+	public String initial(EmpUser model, Map<String, Object> maps) throws Exception {
 		Page<EmpUser> pages = new Page<EmpUser>();
 		ReflectUtils.emptyToNull(model);
 		pages = empUserServiceImpl.queryForPageByModel(page, model);
 		listResult = pages.getResult();
+		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
 		return "user/empUser/empUser-initial-success";
 	}
 	
-	public String input() throws Exception {
+	@RequestMapping("/empUser-input")
+	public String input(EmpUser model) throws Exception {
 		if (isInit()) {//初始化或者编辑
 			setTokenValue();
 			if (model.getUserId() != null) {
@@ -124,8 +118,8 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 		
 	}
 	
-	@RequestMapping("/roles")
-	public String roles() throws Exception {
+	@RequestMapping("/empUser-roles")
+	public String roles(EmpUser model, Map<String, Object> maps) throws Exception {
 		Page<Roles> rolesPage = new Page<Roles>();
 		rolesPage.setPageNo(page.getPageNo());//因为page封装的默认是T EmpUser
 		rolesPage.setPageSize(page.getPageSize());
@@ -163,6 +157,7 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 		Object[] objects = ObjectUtils.deleteNullValue(values);
 		pageResult = rolesServiceImpl.queryForPageBySql(rolesPage, sql.toString(), objects);
 		list = pageResult.getResult();
+		maps.put("list", list);
 		setAttributeToRequest(CommonConst.PAGE_NAME, pageResult);
 		return "user/empUser/empUser-roles-success";
 	}

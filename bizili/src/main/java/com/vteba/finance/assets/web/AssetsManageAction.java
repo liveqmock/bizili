@@ -12,23 +12,13 @@ import com.vteba.web.action.BaseAction;
  * 2012-9-1
  */
 @Controller
-@RequestMapping("/assetsManage")
+@RequestMapping("/assets")
 public class AssetsManageAction extends BaseAction<Assets> {
 
-	private Assets model;
-	
-	public Assets getModel() {
-		return model;
-	}
-
-	public void setModel(Assets model) {
-		this.model = model;
-	}
-
-	@Override
-	public String initial() throws Exception {
+	@RequestMapping("/assetsmanage-initial")
+	public String initial(Assets model) throws Exception {
 		
-		return "assetsManage/initial";
+		return "assets/assetsmanage/assetsmanage-initial-success";
 	}
 
 }

@@ -5,6 +5,9 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.vteba.finance.table.model.DetailAccount;
 import com.vteba.finance.table.service.IDetailAccountService;
 import com.vteba.util.reflection.ReflectUtils;
@@ -15,15 +18,10 @@ import com.vteba.web.action.BaseAction;
  * @author yinlei 
  * date 2012-7-16 下午8:09:32
  */
+@Controller
+@RequestMapping("/table")
 public class DetailAccountAction extends BaseAction<DetailAccount> {
-	private static final long serialVersionUID = -3826789376048217133L;
-	private DetailAccount model = new DetailAccount();
 	private IDetailAccountService detailAccountServiceImpl;
-	
-	@Override
-	public DetailAccount getModel() {
-		return model;
-	}
 	
 	@Inject
 	public void setDetailAccountServiceImpl(
@@ -31,8 +29,8 @@ public class DetailAccountAction extends BaseAction<DetailAccount> {
 		this.detailAccountServiceImpl = detailAccountServiceImpl;
 	}
 
-	@Override
-	public String initial() throws Exception {
+	@RequestMapping("/detailaccount-initial")
+	public String initial(DetailAccount model, Map<String, Object> maps) throws Exception {
 		ReflectUtils.emptyToNull(model);
 		model.setSubjectCode("2711");
 		Map<String, String> param = new LinkedHashMap<String, String>();
@@ -41,7 +39,8 @@ public class DetailAccountAction extends BaseAction<DetailAccount> {
 		param.put("subjectCode", "asc");
 		param.put("summary", "desc");
 		listResult = detailAccountServiceImpl.getListByPropertyEqual(DetailAccount.class, model, param);
-		return SUCCESS;
+		maps.put("listResult", listResult);
+		return "table/detailaccount/detailaccount-initial-success";
 	}
 
 }

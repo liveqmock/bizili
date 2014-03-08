@@ -20,7 +20,6 @@ public class PlatformAction extends BaseAction<EmpUser> {
 
 	private IModuleMenuService moduleMenuServiceImpl;
 
-	@Override
 	@RequestMapping("/platform-initial")
 	public String initial() throws Exception {
 		EmpUser user = SecurityContextHolderUtils.getCurrentUserInfo();

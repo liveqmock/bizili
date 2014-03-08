@@ -1,6 +1,11 @@
 package com.vteba.finance.table.web;
 
+import java.util.Map;
+
 import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.finance.account.model.Subject;
 import com.vteba.finance.table.model.DailyAccount;
@@ -15,23 +20,18 @@ import com.vteba.web.action.BaseAction;
  * @author yinlei 
  * date 2012-7-18 下午8:17:40
  */
+@Controller
+@RequestMapping("/table")
 public class DailyAccountAction extends BaseAction<DailyAccount> {
-	private static final long serialVersionUID = -4283546911874579870L;
-	private DailyAccount model = new DailyAccount();
 	private IDailyAccountService dailyAccountServiceImpl;
-	private String types;//日记账类型
-	
-	@Override
-	public DailyAccount getModel() {
-		return model;
-	}
+	//private String types;//日记账类型
 
-	@Override
-	public String initial() throws Exception {
+	@RequestMapping("/dailyaccount-initial")
+	public String initial(DailyAccount model, String types, Map<String, Object> maps) throws Exception {
 		ReflectUtils.emptyToNull(model);
-		if (getTypes() == null || getTypes().equals("cash")) {
+		if (types == null || types.equals("cash")) {
 			model.setType("1001");
-		} else if(getTypes().equals("bank")) {
+		} else if(types.equals("bank")) {
 			model.setType("100201");
 		}
 		String period = ObjectUtils.toDateString("yyyy-MM");
@@ -75,21 +75,22 @@ public class DailyAccountAction extends BaseAction<DailyAccount> {
 			yearSum.setBalanceDirection(Subject.DIR_DEBIT);
 			listResult.add(index + 1, yearSum);
 		}
-		return SUCCESS;
+		maps.put("listResult", listResult);
+		return "table/dailyaccount/dailyaccount-initial-success";
 	}
-
+                                                    
 	@Inject
 	public void setDailyAccountServiceImpl(
 			IDailyAccountService dailyAccountServiceImpl) {
 		this.dailyAccountServiceImpl = dailyAccountServiceImpl;
 	}
 
-	public String getTypes() {
-		return types;
-	}
-
-	public void setTypes(String types) {
-		this.types = types;
-	}
+//	public String getTypes() {
+//		return types;
+//	}
+//
+//	public void setTypes(String types) {
+//		this.types = types;
+//	}
 
 }

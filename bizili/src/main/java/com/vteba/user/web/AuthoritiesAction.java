@@ -1,6 +1,11 @@
 package com.vteba.user.web;
 
+import java.util.Map;
+
 import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.common.constant.CommonConst;
 import com.vteba.common.service.IModuleMenuService;
@@ -14,16 +19,12 @@ import com.vteba.web.action.BaseAction;
  * @author yinlei 
  * date 2012-6-24 下午11:19:32
  */
+@Controller
+@RequestMapping("/users")
 public class AuthoritiesAction extends BaseAction<Authorities> {
 
-	private static final long serialVersionUID = 5871784291810811995L;
-	private Authorities model = new Authorities();
 	private IAuthoritiesService authoritiesServiceImpl;
 	private IModuleMenuService moduleMenuServiceImpl;
-	
-	public void setModel(Authorities model) {
-		this.model = model;
-	}
 	
 	@Inject
 	public void setAuthoritiesServiceImpl(IAuthoritiesService authoritiesServiceImpl) {
@@ -35,19 +36,15 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 		this.moduleMenuServiceImpl = moduleMenuServiceImpl;
 	}
 
-	@Override
-	public Authorities getModel() {
-		return model;
-	}
-
-	@Override
-	public String initial() throws Exception {
+	@RequestMapping("/authorities-initial")
+	public String initial(Authorities model, Map<String, Object> maps) throws Exception {
 		Page<Authorities> pages = new Page<Authorities>();
 		Authorities entity = new Authorities();
 		pages = authoritiesServiceImpl.queryForPageByModel(page, entity);
 		listResult = pages.getResult();
+		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
-		return SUCCESS;
+		return "user/authorities/authorities-initial-success";
 	}
 	
 	/**
@@ -55,14 +52,15 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 	 * @author yinlei
 	 * date 2012-6-24 下午11:24:45
 	 */
-	public String input() throws Exception {
+	@RequestMapping("/authorities-input")
+	public String input(Authorities model) throws Exception {
 		if (isInit()) {
 			String hql = "select a from ModuleMenu a where a.enable = true";
 			list = moduleMenuServiceImpl.getEntityListByHql(hql);
-			return SUCCESS;
+			return "user/authorities/authorities-input";
 		}
 		authoritiesServiceImpl.save(model);
-		return SUCCESS;
+		return "user/authorities/authorities-input-success";
 	}
 
 }

@@ -3,6 +3,7 @@ package com.vteba.user.web;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -23,17 +24,12 @@ import com.vteba.web.action.BaseAction;
  * date 2012-6-24 下午11:20:29
  */
 @Controller
-@RequestMapping("/user/roles")
+@RequestMapping("/users")
 public class RolesAction extends BaseAction<Roles> {
 
-	private Roles model = new Roles();
 	private List<Roles> roleList = new ArrayList<Roles>();
 	private IRolesService rolesServiceImpl;
 	private IRoleAuthService roleAuthServiceImpl;
-	
-	public void setModel(Roles model) {
-		this.model = model;
-	}
 	
 	@Inject
 	public void setRolesServiceImpl(IRolesService rolesServiceImpl) {
@@ -45,18 +41,14 @@ public class RolesAction extends BaseAction<Roles> {
 		this.roleAuthServiceImpl = roleAuthServiceImpl;
 	}
 
-	public Roles getModel() {
-		return model;
-	}
-
-	@Override
-	@RequestMapping("/initial")
-	public String initial() throws Exception {
+	@RequestMapping("/roles-initial")
+	public String initial(Page<Roles> page, Map<String, Object> maps) throws Exception {
 		Page<Roles> pages = new Page<Roles>();
 		Roles entity = new Roles();
 		entity.setPriority(1);
 		pages = rolesServiceImpl.queryForPageByModel(page, entity);
 		listResult = pages.getResult();
+		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
 		return "user/roles/roles-initial-success";
 	}
@@ -66,7 +58,7 @@ public class RolesAction extends BaseAction<Roles> {
 	 * @author yinlei
 	 * date 2012-6-24 下午11:22:12
 	 */
-	@RequestMapping("/input")
+	@RequestMapping("/roles-input")
 	public String input() throws Exception {
 		if (isInit()) {
 			return "user/roles/roles-input-success";
@@ -85,23 +77,25 @@ public class RolesAction extends BaseAction<Roles> {
 	 * @author yinlei
 	 * date 2012-6-24 下午11:21:42
 	 */
-	@RequestMapping("/roleAuthList")
-	public String roleAuthList() throws Exception {
+	@RequestMapping("/roleAuth-list")
+	public String roleAuthList(Roles model, Map<String, Object> maps) throws Exception {
 		String hql = "select a from RoleAuth a where a.roleId = ?1 ";
 		list = roleAuthServiceImpl.getEntityListByHql(hql, model.getRoleId());
+		maps.put("list", list);
 		return "user/roles/roleAuth-list";
 	}
 	
 	/**
 	 * 供选择角色时查询用
 	 */
-	@RequestMapping("/list")
-	public String list() throws Exception {
+	@RequestMapping("/roles-list")
+	public String list(Roles model, Map<String, Object> maps) throws Exception {
 		Roles entity = new Roles();
 		entity.setRoleName(model.getRoleName());
 		entity.setRoleDesc(model.getRoleDesc());
 		entity.setPriority(1);
 		listResult = rolesServiceImpl.getListByPropertyLike(Roles.class, entity);
+		maps.put("listResult", listResult);
 		return "user/roles/roles-list";
 	}
 

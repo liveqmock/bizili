@@ -13,20 +13,7 @@
             <param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
         </layout>
     </appender>
-    <!-- Perf4J appenders -->
-    <!--AsyncCoalescingStatisticsAppender收集StopWatch的日志信息并传送到下游的文件appenders。-->
-    <appender name="CoalescingStatistics" class="org.perf4j.log4j.AsyncCoalescingStatisticsAppender">
-        <!--TimeSlice配置多少时间间隔去做一次汇总写入文件中, 默认值是 60000 ms-->
-        <param name="TimeSlice" value="60000"/>
-        <appender-ref ref="fileAppender"/>
-    </appender>
-    <!--把汇总的perf4j的日志信息写到perfStats.log文件中去 -->
-    <appender name="fileAppender" class="org.apache.log4j.FileAppender">
-        <param name="File" value="e:\perfStats.log"/>
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%m%n"/>
-        </layout>
-    </appender>
+
     <!-- 
     <logger name="org.apache" additivity="true">
     	<level value="WARN"/>
@@ -95,11 +82,7 @@
 <!--     	<appender-ref ref="console"/> -->
     </logger>
     <!-- Loggers -->
-    <!--配置perf4j logger Additivity设置成false主要因为是不想让代码运行时间的日志输出给上游appenders，即不要在控制台输出。-->
-    <logger name="org.perf4j.TimingLogger" additivity="false">
-        <level value="INFO"/>
-        <appender-ref ref="CoalescingStatistics"/>
-    </logger>
+
     <!--Root logger打印所有日志，但不包含perf4j的信息。原因是在TimingLogger配置中设置了additivity为false-->
     <root>
         <level value="INFO"/>

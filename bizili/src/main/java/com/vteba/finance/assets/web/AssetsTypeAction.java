@@ -12,20 +12,13 @@ import com.vteba.web.action.BaseAction;
  * date 2012-9-1
  */
 @Controller
-@RequestMapping("/assetsType")
+@RequestMapping("/assets")
 public class AssetsTypeAction extends BaseAction<AssetsType> {
-	
-	private AssetsType model = new AssetsType();
-	
-	public AssetsType getModel() {
-		return model;
-	}
 
-	@RequestMapping("/initial")
-	@Override
+	@RequestMapping("/assetstype-initial")
 	public String initial() throws Exception {
 		
-		return "assetsType/initial";
+		return "assets/assetstype/assetstype-initial-success";
 	}
 
 }

@@ -5,6 +5,9 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.vteba.finance.table.model.Ledger;
 import com.vteba.finance.table.service.ILedgerService;
 import com.vteba.util.reflection.ReflectUtils;
@@ -15,23 +18,18 @@ import com.vteba.web.action.BaseAction;
  * @author yinlei 
  * date 2012-7-16 下午8:09:20
  */
+@Controller
+@RequestMapping("/table")
 public class LedgerAction extends BaseAction<Ledger> {
-	private static final long serialVersionUID = 4573100017972310047L;
-	private Ledger model = new Ledger();
 	private ILedgerService ledgerServiceImpl;
-	
-	@Override
-	public Ledger getModel() {
-		return model;
-	}
 	
 	@Inject
 	public void setLedgerServiceImpl(ILedgerService ledgerServiceImpl) {
 		this.ledgerServiceImpl = ledgerServiceImpl;
 	}
 
-	@Override
-	public String initial() throws Exception {
+	@RequestMapping("/ledger-initial")
+	public String initial(Ledger model, Map<String, Object> maps) throws Exception {
 		ReflectUtils.emptyToNull(model);
 		if (model.getLevel() == null) {
 			model.setLevel(1);
@@ -41,7 +39,8 @@ public class LedgerAction extends BaseAction<Ledger> {
 		order.put("createDate", "asc");
 		order.put("summary", "desc");
 		listResult = ledgerServiceImpl.getListByPropertyEqual(Ledger.class, model, order);
-		return SUCCESS;
+		maps.put("listResult", listResult);
+		return "/table/ledger/ledger-initial-success";
 	}
 
 }

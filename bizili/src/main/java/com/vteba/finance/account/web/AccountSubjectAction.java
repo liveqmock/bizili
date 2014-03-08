@@ -32,7 +32,6 @@ import com.vteba.web.action.BaseAction;
 @Controller
 @RequestMapping("/account")
 public class AccountSubjectAction extends BaseAction<Subject> {
-	private Subject model = new Subject();
 	private ISubjectService subjectServiceImpl;
 	private List<Subject> subjectList = new ArrayList<Subject>();
 	
@@ -50,17 +49,8 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 		this.subjectServiceImpl = subjectServiceImpl;
 	}
 
-	public Subject getModel() {
-		return model;
-	}
-
-	public void setModel(Subject model) {
-		this.model = model;
-	}
-
-	@RequestMapping("/initial")
-	@Override
-	public String initial() throws Exception {
+	@RequestMapping("/subject-initial")
+	public String initial(Subject model) throws Exception {
 		Page<Subject> pages = new Page<Subject>();
 		ReflectUtils.emptyToNull(model);
 		//排序
@@ -72,7 +62,7 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 		pages = subjectServiceImpl.queryForPageByModel(page, model);
 		listResult = pages.getResult();
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
-		return "account/initial";
+		return "account/subject/subject-initial-success";
 	}
 	
 	/**
@@ -80,11 +70,11 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 	 * @author yinlei
 	 * date 2012-6-25 下午2:42:39
 	 */
-	@RequestMapping("/input")
-	public String input() throws Exception {
+	@RequestMapping("/subject-input")
+	public String input(Subject model) throws Exception {
 		if (isInit()) {
 			setTokenValue();
-			return "account/input";
+			return "account/subject/subject-input-success";
 		}
 		if (isTokenValueOK()) {
 			boolean ret = subjectServiceImpl.saveSubject(model);
@@ -92,7 +82,7 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 				setAttributeToRequest("msg", "新增会计科目成功。");
 			}
 		}
-		return "account/input";
+		return "account/subject/subject-input-success";
 	}
 	
 	/**
@@ -100,10 +90,10 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 	 * @author yinlei
 	 * date 2012-6-26 下午3:09:17
 	 */
-	@RequestMapping("/list")
+	@RequestMapping("/subject-list")
 	public String list() throws Exception {
 		mapResult = subjectServiceImpl.getSubjectTreeList();
-		return "account/list";
+		return "account/subject/subject-list";
 	}
 	
 	/**
@@ -111,11 +101,11 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 	 * @author yinlei
 	 * date 2012-7-8 下午10:12:17
 	 */
-	@RequestMapping("/importExcel")
+	@RequestMapping("/subject-importExcel")
 	public String importExcel() throws Exception {
 		if (isInit()) {
 			setTokenValue();
-			return "";
+			return "account/subject/subject-importExcel-success";
 		}
 		if (isTokenValueOK()) {
 			FileInputStream fis = new FileInputStream(getUploadFile());
@@ -131,7 +121,7 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 				}
 			}
 		}
-		return "";
+		return "account/subject/subject-importExcel-success";
 	}
 	
 	/**

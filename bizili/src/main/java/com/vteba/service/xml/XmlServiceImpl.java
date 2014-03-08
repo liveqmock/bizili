@@ -5,8 +5,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamResult;
@@ -23,14 +21,14 @@ import org.springframework.oxm.xstream.XStreamMarshaller;
  * @author yinlei
  * date 2013-7-28 下午8:17:01
  */
-@Named
+//@Named
 public class XmlServiceImpl {
 	private static Logger logger = LoggerFactory.getLogger(XmlServiceImpl.class);
 	
-	@Inject
+//	@Inject
 	private JibxMarshallerFactory jibxMarshallerFactory;
 	
-	@Inject
+//	@Inject
 	private XStreamMarshaller xstreamMarshaller;
 	
 	/**

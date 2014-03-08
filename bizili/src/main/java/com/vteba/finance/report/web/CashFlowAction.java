@@ -19,28 +19,19 @@ import com.vteba.web.action.BaseAction;
  * date 2012-7-27 下午1:09:11
  */
 @Controller
-@RequestMapping("/cashflow")
+@RequestMapping("/report")
 public class CashFlowAction extends BaseAction<CashFlow> {
 	
-	private CashFlow model = new CashFlow();
 	private ICashFlowService cashFlowServiceImpl;
 	
-	public CashFlow getModel() {
-		return model;
-	}
-
-	public void setModel(CashFlow model) {
-		this.model = model;
-	}
-
-	@RequestMapping("/initial")
-	@Override
-	public String initial() throws Exception {
+	@RequestMapping("/cashflow-initial")
+	public String initial(CashFlow model, Map<String, Object> maps) throws Exception {
 		ReflectUtils.emptyToNull(model);
 		Map<String, Object> param = new LinkedHashMap<String, Object>();
 		param.put("orders", "asc");
 		listResult = cashFlowServiceImpl.getListByPropertyEqual(CashFlow.class, model, param);
-		return "cashflow/initial";
+		maps.put("listResult", listResult);
+		return "report/cashflow/cashflow-initial-success";
 	}
 	
 	@Inject

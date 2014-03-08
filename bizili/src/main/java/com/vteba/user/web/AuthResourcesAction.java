@@ -2,10 +2,13 @@ package com.vteba.user.web;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.common.constant.CommonConst;
 import com.vteba.persister.generic.Page;
@@ -19,29 +22,20 @@ import com.vteba.web.action.BaseAction;
  * @author yinlei 
  * date 2012-6-24 下午11:19:54
  */
+@Controller
+@RequestMapping("/users")
 public class AuthResourcesAction extends BaseAction<AuthResource> {
 
-	private static final long serialVersionUID = -2620615490931609228L;
-	private AuthResource model = new AuthResource();
 	private IAuthResourceService authResourceServiceImpl;
 	private List<AuthResource> authList = new ArrayList<AuthResource>();
-	
-	public void setModel(AuthResource model) {
-		this.model = model;
-	}
 	
 	@Inject
 	public void setAuthResourceServiceImpl(IAuthResourceService authResourceServiceImpl) {
 		this.authResourceServiceImpl = authResourceServiceImpl;
 	}
 
-	@Override
-	public AuthResource getModel() {
-		return model;
-	}
-
-	@Override
-	public String initial() throws Exception {
+	@RequestMapping("/resources-initial")
+	public String initial(AuthResource model, Map<String, Object> maps) throws Exception {
 		Page<AuthResource> pages = new Page<AuthResource>();
 		if (!(model.getEnable() == null && model.getResourceName() == null
 				&& model.getResourceType() == null && model.getResourceUrl() == null)) {
@@ -49,8 +43,9 @@ public class AuthResourcesAction extends BaseAction<AuthResource> {
 		}
 		pages = authResourceServiceImpl.queryForPageByModel(page, model);
 		listResult = pages.getResult();
+		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
-		return SUCCESS;
+		return "users/resources/resources-initial-success";
 	}
 	
 	/**
@@ -58,9 +53,10 @@ public class AuthResourcesAction extends BaseAction<AuthResource> {
 	 * @author yinlei
 	 * date 2012-6-24 下午11:34:05
 	 */
+	@RequestMapping("/resources-input")
 	public String input() throws Exception {
 		if (isInit()) {
-			return SUCCESS;
+			return "users/resources/resources-input-success";
 		}
 		for (AuthResource model : authList) {
 			if (StringUtils.isNotEmpty(model.getResourceUrl()) && StringUtils.isNotEmpty(model.getResourceType())) {
@@ -68,12 +64,12 @@ public class AuthResourcesAction extends BaseAction<AuthResource> {
 			}
 		}
 		setAttributeToRequest("msg", "新增资源成功。");
-		return SUCCESS;
+		return "users/resources/resources-input-success";
 	}
 	
 	public String edit() throws Exception {
 		
-		return SUCCESS;
+		return "";
 	}
 	
 	public String update() throws Exception {
@@ -86,13 +82,15 @@ public class AuthResourcesAction extends BaseAction<AuthResource> {
 	 * @author yinlei
 	 * date 2012-6-24 下午11:33:30
 	 */
-	public String list() throws Exception {
+	@RequestMapping("resources-list")
+	public String list(AuthResource model, Map<String, Object> maps) throws Exception {
 		Page<AuthResource> pages = new Page<AuthResource>();
 		page.setPageSize(20);
 		pages = authResourceServiceImpl.queryForPageByModel(page, model);
 		listResult = pages.getResult();
+		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
-		return LIST;
+		return "users/resources/resources-list-success";
 	}
 	
 	/**********setter and getter********/

@@ -20,23 +20,13 @@ import com.vteba.web.action.BaseAction;
  * date 2012-7-25 下午4:41:04
  */
 @Controller
-@RequestMapping("/profit")
+@RequestMapping("/report")
 public class ProfitAction extends BaseAction<Profit> {
-	private Profit model = new Profit();
 	private IProfitService profitServiceImpl;
 	private IAccountPeriodService accountPeriodServiceImpl;
-	
-	public Profit getModel() {
-		return model;
-	}
 
-	public void setModel(Profit model) {
-		this.model = model;
-	}
-
-	@RequestMapping("/initial")
-	@Override
-	public String initial() throws Exception {
+	@RequestMapping("/profit-initial")
+	public String initial(Profit model, Map<String, Object> maps) throws Exception {
 		ReflectUtils.emptyToNull(model);
 		if (model.getAccountPeriod() == null) {//默认查当前会计期间
 			String accountPeriod = accountPeriodServiceImpl.getCurrentPeriod();
@@ -45,7 +35,8 @@ public class ProfitAction extends BaseAction<Profit> {
 		Map<String, Object> param = new LinkedHashMap<String, Object>();
 		param.put("rowNumber", "asc");
 		listResult = profitServiceImpl.getListByPropertyEqual(Profit.class, model, param);
-		return "profit/initial";
+		maps.put("listResult", listResult);
+		return "report/profit/profit-initial-success";
 	}
 	
 	@Inject

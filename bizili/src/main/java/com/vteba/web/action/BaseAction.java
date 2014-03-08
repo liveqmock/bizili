@@ -62,7 +62,7 @@ public abstract class  BaseAction<T> {
 	/**
 	 * 当前action路径
 	 */
-	protected String currentActionPath = RequestContextHolder.getRequest().getServletPath();
+	protected String currentActionPath;// = RequestContextHolder.getRequest().getServletPath();
 	/**
 	 * 初始化，减少action method 数目，有利于控制跳转
 	 */
@@ -140,7 +140,11 @@ public abstract class  BaseAction<T> {
 	}
 	
 	public String getCurrentActionPath() {
-		return currentActionPath;
+		if (currentActionPath == null) {
+			return RequestContextHolder.getRequest().getServletPath();
+		} else {
+			return currentActionPath;
+		}
 	}
 
 	public void setCurrentActionPath(String currentActionPath) {
@@ -174,14 +178,14 @@ public abstract class  BaseAction<T> {
 		this.entity = entity;
 	}
 
-	public String execute() throws Exception{
-		return this.initial();
-	}
+//	public String execute() throws Exception{
+//		return this.initial();
+//	}
 	
 	/**
 	 * action default method，常作为查询使用，或初始化。
 	 */
-	public abstract String initial() throws Exception;
+//	public abstract String initial(T model) throws Exception;
 	
 	/**
 	 * 将value保存到request。

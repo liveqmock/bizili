@@ -24,8 +24,6 @@ import com.vteba.web.action.BaseAction;
 @Controller
 @RequestMapping("/account")
 public class AccountCertAction extends BaseAction<CertTotal> {
-	private CertTotal model = new CertTotal();
-	
 	/**
 	 * 封装凭证明细
 	 */
@@ -38,23 +36,14 @@ public class AccountCertAction extends BaseAction<CertTotal> {
 		this.certTotalServiceImpl = certTotalServiceImpl;
 	}
 
-	public CertTotal getModel() {
-		return model;
-	}
-
-	public void setModel(CertTotal model) {
-		this.model = model;
-	}
-
-	@RequestMapping("/initial")
-	@Override
-	public String initial() throws Exception {
+	@RequestMapping("/certificate-initial")
+	public String initial(CertTotal model) throws Exception {
 		Page<CertTotal> pages = new Page<CertTotal>();
 		ReflectUtils.emptyToNull(model);
 		pages = certTotalServiceImpl.queryForPageByModel(page, model);
 		listResult = pages.getResult();
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
-		return "/finance/account/certificate/initial";
+		return "/account/certificate/certificate-initial-success";
 	}
 	
 	/**
@@ -63,16 +52,16 @@ public class AccountCertAction extends BaseAction<CertTotal> {
 	 * @author yinlei
 	 * date 2012-7-5 下午9:07:05
 	 */
-	@RequestMapping("/input")
-	public String input() throws Exception {
+	@RequestMapping("/certificate-input")
+	public String input(CertTotal model) throws Exception {
 		if (isInit()) {
 			setTokenValue();
-			return "";
+			return "account/certificate/certificate-input-success";
 		}
 		if (isTokenValueOK()) {
 			certTotalServiceImpl.saveCertAndDetail(model, certList);//保存凭证汇总和凭证明细
 		}
-		return "/finance/account/certificate/input";
+		return "account/certificate/certificate-input-success";
 	}
 
 	public List<Certificate> getCertList() {
