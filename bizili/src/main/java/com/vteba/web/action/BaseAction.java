@@ -304,9 +304,9 @@ public abstract class  BaseAction<T> {
 	}
 
 	/**
-	 * 直接输出纯字符串。约定：返回1，刷新页面；返回文本，alert。
+	 * 直接输出纯字符串。
 	 */
 	public void renderText(String text) {
-		response(RequestContextHolder.getResponse(), text, "application/plain;charset=UTF-8");
+		response(RequestContextHolder.getResponse(), text, "text/plain;charset=UTF-8");
 	}
 }
