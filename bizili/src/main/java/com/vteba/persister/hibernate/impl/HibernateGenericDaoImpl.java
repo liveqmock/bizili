@@ -501,8 +501,8 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
     
 	public Long getSequenceLongValue(String sequenceName) {
 		String sql = "select nextValue('" + sequenceName + "')";		
-		Object obj = getUniqueResultBySql(sql, (Class<?>)null);
-		return Long.valueOf(obj.toString());
+		Long seq = getUniqueResultBySql(sql, Long.class);
+		return seq;
 	}
 	
 	protected Page<T> queryForPage(Page<T> page, Criterion... criterions) {

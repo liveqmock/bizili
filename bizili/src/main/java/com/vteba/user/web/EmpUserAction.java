@@ -72,11 +72,12 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 	}
 	
 	@RequestMapping("/empUser-input")
-	public String input(EmpUser model) throws Exception {
+	public String input(EmpUser model, Map<String, Object> maps) throws Exception {
 		if (isInit()) {//初始化或者编辑
 			setTokenValue();
 			if (model.getUserId() != null) {
-				entity = empUserServiceImpl.loadEmpUser(model.getUserId());
+				EmpUser user = empUserServiceImpl.loadEmpUser(model.getUserId());
+				maps.put("entity", user);
 			}
 			return "user/empUser/empUser-input-success";
 		}

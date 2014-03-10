@@ -21,6 +21,8 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 /**
  * 凭证明细汇总
@@ -116,6 +118,7 @@ public class CertTotal implements java.io.Serializable {
 		this.creditAmount = creditAmount;
 	}
 
+	@DateTimeFormat(iso = ISO.DATE)
 	@Temporal(TemporalType.DATE)
 	@Column(name = "create_date", length = 10)
 	public Date getCreateDate() {

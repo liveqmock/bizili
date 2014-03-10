@@ -231,6 +231,10 @@
 	<!-- 以下静态资源交给默认servlet处理 -->
 	<servlet-mapping>
         <servlet-name>default</servlet-name>
+        <url-pattern>*.html</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>default</servlet-name>
         <url-pattern>*.js</url-pattern>
     </servlet-mapping>
     <servlet-mapping>

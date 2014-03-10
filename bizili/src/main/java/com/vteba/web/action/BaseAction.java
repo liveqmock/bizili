@@ -2,7 +2,8 @@ package com.vteba.web.action;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -13,10 +14,17 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 
 import com.vteba.common.constant.CommonConst;
 import com.vteba.persister.generic.Page;
 import com.vteba.service.context.RequestContextHolder;
+import com.vteba.web.editer.DoubleEditor;
+import com.vteba.web.editer.FloatEditor;
+import com.vteba.web.editer.IntegerEditor;
+import com.vteba.web.editer.LongEditor;
 
 /**
  * 公共action，提供一些常用方法及变量定义。
@@ -26,7 +34,7 @@ import com.vteba.service.context.RequestContextHolder;
 public abstract class  BaseAction<T> {
 	private static final Random RANDOM = new Random();
 	protected Logger logger = LoggerFactory.getLogger(getClass());
-	protected T entity;
+//	protected T entity;
 	/**
 	 * 存放任意对象list到view中
 	 */
@@ -35,10 +43,10 @@ public abstract class  BaseAction<T> {
 	 * 存放action的泛型参数的对象list到view中
 	 */
 	protected List<T> listResult;
-	/**
-	 * 封装页面的数据，即view到action中
-	 */
-	protected List<T> formList = new ArrayList<T>();
+//	/**
+//	 * 封装页面的数据，即view到action中
+//	 */
+//	protected List<T> formList = new ArrayList<T>();
 	/**
 	 * 存放多个对象到view中
 	 */
@@ -67,13 +75,22 @@ public abstract class  BaseAction<T> {
 	 * 初始化，减少action method 数目，有利于控制跳转
 	 */
 	private boolean init;
-	/**
-	 * 防止表单重复提交，不使用struts2自带的
-	 */
-	protected String tokenName;
+//	/**
+//	 * 防止表单重复提交，不使用struts2自带的
+//	 */
+//	protected String tokenName;
 	
 	public static final String DETAIL = "detail";
 	public static final String LIST = "list";
+	
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
+		binder.registerCustomEditor(int.class, new IntegerEditor());
+		binder.registerCustomEditor(long.class, new LongEditor());
+		binder.registerCustomEditor(double.class, new DoubleEditor());
+		binder.registerCustomEditor(float.class, new FloatEditor());
+	}
 	
 	public List<?> getList() {
 		return list;
@@ -89,14 +106,6 @@ public abstract class  BaseAction<T> {
 
 	public void setListResult(List<T> listResult) {
 		this.listResult = listResult;
-	}
-
-	public List<T> getFormList() {
-		return formList;
-	}
-
-	public void setFormList(List<T> formList) {
-		this.formList = formList;
 	}
 
 	public Map<String, Object> getMap() {
@@ -161,31 +170,6 @@ public abstract class  BaseAction<T> {
 		this.init = init;
 	}
 
-	public String getTokenName() {
-		return tokenName;
-	}
-
-	public void setTokenName(String tokenName) {
-		this.tokenName = tokenName;
-	}
-
-	public T getEntity() {
-		return entity;
-	}
-
-	public void setEntity(T entity) {
-		this.entity = entity;
-	}
-
-//	public String execute() throws Exception{
-//		return this.initial();
-//	}
-	
-	/**
-	 * action default method，常作为查询使用，或初始化。
-	 */
-//	public abstract String initial(T model) throws Exception;
-	
 	/**
 	 * 将value保存到request。
 	 * @param name
@@ -254,6 +238,7 @@ public abstract class  BaseAction<T> {
 	 */
 	protected boolean isTokenValueOK(){
         String token = (String) getHttpSession().getAttribute(CommonConst.TOKEN_NAME);
+        String tokenName = getHttpServletRequest().getParameter("tokenName");
         if (tokenName != null && tokenName.equals(token)) {
             getHttpSession().removeAttribute(CommonConst.TOKEN_NAME);//移除旧的session值
             setTokenValue();//添加新的session值，供下次form提交使用

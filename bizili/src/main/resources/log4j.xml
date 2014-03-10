@@ -29,7 +29,7 @@
     	<level value="INFO"/>
 <!--     	<appender-ref ref="console"/> -->
     </logger> 
-    <logger name="com.skmbw" additivity="true">
+    <logger name="com.vteba" additivity="true">
     	<level value="DEBUG"/>
 <!--     	<appender-ref ref="console"/> -->
     </logger>
@@ -67,6 +67,9 @@
     <logger name="org.springframework" additivity="true">
     	<level value="INFO"/>
 <!--     	<appender-ref ref="R"/> -->
+    </logger>
+    <logger name="org.springframework.web" additivity="true">
+    	<level value="DEBUG"/>
     </logger>
     <!-- 
     <logger name="com.atomikos" additivity="true">
