@@ -17,8 +17,6 @@ import com.vteba.web.action.BaseAction;
 @Controller
 @RequestMapping("/user")
 public class UserLoginAction extends BaseAction<EmpUser> {
-	private boolean expired;//超过并发session数，session失效
-	private boolean authError;//验证失败
 	
 	private IEmpUserService empUserServiceImpl;
 	
@@ -43,20 +41,22 @@ public class UserLoginAction extends BaseAction<EmpUser> {
 		return "login";
 	}
 	
+	//超过并发session数，session失效
 	public boolean isExpired() {
-		return expired;
+		String expired = getHttpServletRequest().getParameter("expired");
+		if (expired != null && expired.equals("true")) {
+			return true;
+		}
+		return false;
 	}
 
-	public void setExpired(boolean expired) {
-		this.expired = expired;
-	}
-
+	//验证失败
 	public boolean isAuthError() {
-		return authError;
-	}
-
-	public void setAuthError(boolean authError) {
-		this.authError = authError;
+		String authError = getHttpServletRequest().getParameter("authError");
+		if (authError != null && authError.equals("true")) {
+			return true;
+		}
+		return false;
 	}
 
 }

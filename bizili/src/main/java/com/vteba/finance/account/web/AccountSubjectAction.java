@@ -24,7 +24,7 @@ import com.vteba.util.common.ExcelImportUtils;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.util.web.struts.StrutsUtils;
 import com.vteba.web.action.BaseAction;
-import com.vteba.web.action.FormBean;
+import com.vteba.web.action.PageBean;
 
 /**
  * 会计科目action
@@ -52,7 +52,7 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 	}
 
 	@RequestMapping("/subject-initial")
-	public String initial(Subject model, FormBean<Subject> formBean, Map<String, Object> maps) throws Exception {
+	public String initial(Subject model, PageBean<Subject> formBean, Map<String, Object> maps) throws Exception {
 		Page<Subject> pages = new Page<Subject>();
 		ReflectUtils.emptyToNull(model);
 		//排序

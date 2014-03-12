@@ -16,6 +16,7 @@ import com.vteba.user.model.AuthResource;
 import com.vteba.user.service.IAuthResourceService;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.PageBean;
 
 /**
  * 资源管理action
@@ -35,13 +36,13 @@ public class AuthResourcesAction extends BaseAction<AuthResource> {
 	}
 
 	@RequestMapping("/resources-initial")
-	public String initial(AuthResource model, Map<String, Object> maps) throws Exception {
+	public String initial(AuthResource model, PageBean<AuthResource> pageBean, Map<String, Object> maps) throws Exception {
 		Page<AuthResource> pages = new Page<AuthResource>();
 		if (!(model.getEnable() == null && model.getResourceName() == null
 				&& model.getResourceType() == null && model.getResourceUrl() == null)) {
 			ReflectUtils.emptyToNull(model);
 		}
-		pages = authResourceServiceImpl.queryForPageByModel(page, model);
+		pages = authResourceServiceImpl.queryForPageByModel(pageBean.getPage(), model);
 		listResult = pages.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);

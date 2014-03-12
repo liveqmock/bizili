@@ -157,10 +157,10 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 			}
 		}
 		Object[] objects = ObjectUtils.deleteNullValue(values);
-		pageResult = rolesServiceImpl.queryForPageBySql(rolesPage, sql.toString(), objects);
-		list = pageResult.getResult();
+		rolesServiceImpl.queryForPageBySql(rolesPage, sql.toString(), objects);
+		List<Roles> list = rolesPage.getResult();
 		maps.put("list", list);
-		setAttributeToRequest(CommonConst.PAGE_NAME, pageResult);
+		setAttributeToRequest(CommonConst.PAGE_NAME, rolesPage);
 		return "user/empUser/empUser-roles-success";
 	}
 	
@@ -173,7 +173,7 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 		
 		StringBuilder sql = new StringBuilder("");
 		
-		pageResult = authoritiesServiceImpl.queryForPageBySql(authPage, sql.toString(), "");
+		authoritiesServiceImpl.queryForPageBySql(authPage, sql.toString(), "");
 		
 		return "";
 	}

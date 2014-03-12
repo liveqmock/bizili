@@ -8,7 +8,7 @@ import com.vteba.persister.generic.Page;
  * @author yinlei
  * 2014-3-10 下午1:58:45
  */
-public class FormBean<T> {
+public class PageBean<T> {
 	private Page<T> page = new Page<T>();
 
 	public Page<T> getPage() {

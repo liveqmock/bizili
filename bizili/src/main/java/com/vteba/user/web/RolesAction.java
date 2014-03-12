@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.common.constant.CommonConst;
 import com.vteba.persister.generic.Page;
+import com.vteba.user.model.RoleAuth;
 import com.vteba.user.model.Roles;
 import com.vteba.user.service.IRoleAuthService;
 import com.vteba.user.service.IRolesService;
@@ -80,7 +81,7 @@ public class RolesAction extends BaseAction<Roles> {
 	@RequestMapping("/roles-roleAuthList")
 	public String roleAuthList(Roles model, Map<String, Object> maps) throws Exception {
 		String hql = "select a from RoleAuth a where a.roleId = ?1 ";
-		list = roleAuthServiceImpl.getEntityListByHql(hql, model.getRoleId());
+		List<RoleAuth> list = roleAuthServiceImpl.getEntityListByHql(hql, model.getRoleId());
 		maps.put("list", list);
 		return "user/roles/rolesAuth-list";
 	}

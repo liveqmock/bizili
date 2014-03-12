@@ -1,5 +1,6 @@
 package com.vteba.user.web;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.common.constant.CommonConst;
+import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
 import com.vteba.persister.generic.Page;
 import com.vteba.user.model.Authorities;
@@ -53,10 +55,11 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 	 * date 2012-6-24 下午11:24:45
 	 */
 	@RequestMapping("/authorities-input")
-	public String input(Authorities model) throws Exception {
+	public String input(Authorities model, Map<String, Object> maps) throws Exception {
 		if (isInit()) {
 			String hql = "select a from ModuleMenu a where a.enable = true";
-			list = moduleMenuServiceImpl.getEntityListByHql(hql);
+			List<ModuleMenu> list = moduleMenuServiceImpl.getEntityListByHql(hql);
+			maps.put("list", list);
 			return "user/authorities/authorities-input";
 		}
 		authoritiesServiceImpl.save(model);
