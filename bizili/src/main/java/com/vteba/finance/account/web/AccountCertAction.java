@@ -2,6 +2,7 @@ package com.vteba.finance.account.web;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -43,12 +44,13 @@ public class AccountCertAction extends BaseAction<CertTotal> {
 	}
 	
 	@RequestMapping("/certificate-initial")
-	public String initial(CertTotal model, PageBean<CertTotal> pageBean) throws Exception {
+	public String initial(CertTotal model, PageBean<CertTotal> pageBean, Map<String, Object> maps) throws Exception {
 		Page<CertTotal> pages = new Page<CertTotal>();
 		ReflectUtils.emptyToNull(model);
 		page = pageBean.getPage();
 		pages = certTotalServiceImpl.queryForPageByModel(page, model);
 		listResult = pages.getResult();
+		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
 		return "/account/certificate/certificate-initial-success";
 	}

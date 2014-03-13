@@ -71,6 +71,12 @@
     <logger name="org.springframework.web" additivity="true">
     	<level value="DEBUG"/>
     </logger>
+    <logger name="com.google.code.yanf4j" additivity="true">
+    	<level value="ERROR"/>
+    </logger>
+    <logger name="net.rubyeye.xmemcached" additivity="true">
+    	<level value="ERROR"/>
+    </logger>
     <!-- 
     <logger name="com.atomikos" additivity="true">
     	<level value="WARN"/>

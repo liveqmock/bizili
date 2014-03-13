@@ -22,10 +22,12 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.internal.CriteriaImpl;
 import org.hibernate.transform.ResultTransformer;
+import org.hibernate.type.LongType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.vteba.annotation.common.OK;
+import com.vteba.common.constant.Sequence;
 import com.vteba.common.exception.BaseException;
 import com.vteba.common.model.AstModel;
 import com.vteba.persister.generic.Page;
@@ -426,8 +428,12 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 			throw new BaseException("clazz 参数不是原生类型或封转类，或String，或Date，或大数值。");
 		}
 		SQLQuery query = createSqlQuery(sql, null, values);
-		String[] columns = ColumnAliasParser.getInstance().parseColumnAlias(sql, true);
-		query.addScalar(columns[0], MatchType.matchResultType(clazz));
+		if (sql.indexOf(Sequence.FUN_NAME) > -1) {//sequence
+			query.addScalar("seq", LongType.INSTANCE);
+		} else {
+			String[] columns = ColumnAliasParser.getInstance().parseColumnAlias(sql, true);
+			query.addScalar(columns[0], MatchType.matchResultType(clazz));
+		}
 		List<X> list = query.list();
 		if (list == null) {
 			list = Collections.emptyList();
@@ -500,8 +506,8 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 	}
     
 	public Long getSequenceLongValue(String sequenceName) {
-		String sql = "select nextValue('" + sequenceName + "')";		
-		Long seq = getUniqueResultBySql(sql, Long.class);
+		String sql = "select nextValue('" + sequenceName + "') seq";
+		Long seq = sqlQueryForObject(sql, Long.class);
 		return seq;
 	}
 	
