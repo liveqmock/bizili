@@ -938,6 +938,12 @@
 	  </exclusions>
 	</dependency>
 	
+	<dependency>
+		<groupId>com.alibaba</groupId>
+		<artifactId>druid</artifactId>
+		<version>1.0.3</version>
+	</dependency>
+	
 	<!-- json parse -->
 	<dependency>
 	  <groupId>com.alibaba</groupId>

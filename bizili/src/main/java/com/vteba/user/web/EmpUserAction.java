@@ -24,6 +24,7 @@ import com.vteba.util.common.ObjectUtils;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.util.web.struts.StrutsUtils;
 import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.PageBean;
 
 /**
  * 用户管理action
@@ -61,10 +62,12 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 	}
 	
 	@RequestMapping("/empUser-initial")
-	public String initial(EmpUser model, Map<String, Object> maps) throws Exception {
+	public String initial(EmpUser model, PageBean<EmpUser> pageBean, Map<String, Object> maps) throws Exception {
 		Page<EmpUser> pages = new Page<EmpUser>();
-		ReflectUtils.emptyToNull(model);
-		pages = empUserServiceImpl.queryForPageByModel(page, model);
+		long dd = System.nanoTime();
+		ReflectUtils.emptyToNulls(model);
+		System.out.println(System.nanoTime() - dd);
+		pages = empUserServiceImpl.queryForPageByModel(pageBean.getPage(), model);
 		listResult = pages.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);

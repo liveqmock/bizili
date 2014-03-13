@@ -29,7 +29,7 @@ public class AsmUtils {
     /**
      * 获得AsmUtils单例
      */
-    public static AsmUtils getInstance() {
+    public static AsmUtils get() {
         return instance;
     } 
     

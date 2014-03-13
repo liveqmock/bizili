@@ -21,7 +21,8 @@ import com.vteba.util.web.struts.StrutsUtils;
  * date 2012-5-7 上午10:28:19
  */
 public class ReflectUtils {
-	private static Logger logger = LoggerFactory.getLogger(ReflectUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(ReflectUtils.class);
+	
 	/**
 	 * 调用对象obj的某一属性的Getter方法
 	 * @param obj 包含某一属性的对象
@@ -264,6 +265,24 @@ public class ReflectUtils {
 		Class<?> clazz = object.getClass();
 		String hql = toBuildHql(clazz, object);
 		return hql;
+	}
+	
+	/**
+	 * 如果对象的String属性值为""，则将其转换为null
+	 * @param object 要转换的对象
+	 */
+	public static void emptyToNulls(Object object){
+		MethodAccess methodAccess = AsmUtils.get().createMethodAccess(object.getClass());
+		String[] methodNames = methodAccess.getMethodNames();
+		for (String methodName : methodNames) {
+			if (methodName.startsWith("get")) {
+				Object value = methodAccess.invoke(object, methodName);
+				if (value != null && value.equals("")) {
+					methodAccess.invoke(object, "set" + methodName.substring(3), new Object[]{ null });
+				}
+			}
+		}
+		
 	}
 	
 	protected static void convertStringToNull(Class<?> clazz, Object obj)

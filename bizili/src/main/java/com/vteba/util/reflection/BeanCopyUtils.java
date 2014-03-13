@@ -66,7 +66,7 @@ public class BeanCopyUtils {
      * @param toMap 目标Map
      */
     public void beanToMap(Object fromBean, Map<String, Object> toMap) {
-        MethodAccess methodAccess = AsmUtils.getInstance().createMethodAccess(fromBean.getClass());
+        MethodAccess methodAccess = AsmUtils.get().createMethodAccess(fromBean.getClass());
         String[] methodNames = methodAccess.getMethodNames(); 
         for (String methodName : methodNames){ 
             if (methodName.startsWith("get")){ 
@@ -82,7 +82,7 @@ public class BeanCopyUtils {
      * @param fromMap 源Map
      */
     public void mapToBean(Object toBean, Map<String, Object> fromMap) { 
-        MethodAccess methodAccess = AsmUtils.getInstance().createMethodAccess(toBean.getClass());
+        MethodAccess methodAccess = AsmUtils.get().createMethodAccess(toBean.getClass());
         for (Map.Entry<String, Object> entry : fromMap.entrySet()){ 
             StringBuilder methodName = new StringBuilder("set").append(StringUtils.capitalize(entry.getKey())); 
             methodAccess.invoke(toBean, methodName.toString(), entry.getValue()); 

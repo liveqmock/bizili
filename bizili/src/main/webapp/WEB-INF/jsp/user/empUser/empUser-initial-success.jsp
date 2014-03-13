@@ -112,7 +112,7 @@ img {border-width: 0px 0px 0px 0px}
  
  //修改实体
  function editUser(id) {
-	 window.location.href = 'empUser-input.htm?init=true&model.userId='+id;
+	 window.location.href = 'empUser-input.htm?init=true&userId='+id;
  }
  
  //单条删除实体

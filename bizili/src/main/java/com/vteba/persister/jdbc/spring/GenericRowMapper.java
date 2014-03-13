@@ -29,8 +29,8 @@ public class GenericRowMapper<T> implements RowMapper<T> {
 	public GenericRowMapper(Class<T> resultClass, String sql) {
 		this.resultClass = resultClass;
 		this.sql = sql;
-		constructorAccess = AsmUtils.getInstance().createConstructorAccess(this.resultClass);
-		methodAccess = AsmUtils.getInstance().createMethodAccess(this.resultClass);
+		constructorAccess = AsmUtils.get().createConstructorAccess(this.resultClass);
+		methodAccess = AsmUtils.get().createMethodAccess(this.resultClass);
 		RowMapInfo rowMapInfo = RowMapInfoCache.getInstance().get(this.sql);
 		if (rowMapInfo != null) {
 			columnCount = rowMapInfo.getColumnCount();

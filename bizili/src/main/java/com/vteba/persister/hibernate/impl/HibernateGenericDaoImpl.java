@@ -83,7 +83,7 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 	public <E> List<E> getListByHql(String hql, Class<E> resultClass, Object... values){
 		Query query = createQuery(hql, values);
 		if (resultClass != null) {
-			query.setResultTransformer(new AliasedResultTransformer(resultClass, hql));
+			query.setResultTransformer(new AliasedResultTransformer(resultClass, hql, true));
 		}
 		List<E> list = query.list();
 		if (list == null) {
@@ -95,7 +95,7 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 	public <E> List<E> getListByNamedHql(String namedQuery, Class<E> resultClass, Object... values){
 		Query query = createNamedQuery(namedQuery, values);
 		if (resultClass != null) {
-			query.setResultTransformer(new AliasedResultTransformer(resultClass, query.getQueryString()));
+			query.setResultTransformer(new AliasedResultTransformer(resultClass, query.getQueryString(), true));
 		}
 		List<E> list = query.list();
 		if (list == null) {
@@ -238,11 +238,13 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 	 */
 	protected void setResultTransformer(SQLQuery sqlQuery, Class<?> resultClass, String sql) {
 		if (resultClass != null) {
-			AliasedResultTransformer transformer = new AliasedResultTransformer(resultClass, sql);
+			AliasedResultTransformer transformer = new AliasedResultTransformer(resultClass, sql, false);
 			Class<?>[][] argsTypes = transformer.getArgsTypes();
 			String[] columnAlias = transformer.getColumnAlias();
 			for (int j = 0; j < columnAlias.length; j++) {
-				sqlQuery.addScalar(columnAlias[j], MatchType.matchResultType(argsTypes[j][0]));
+				if (columnAlias[j] != null) {
+					sqlQuery.addScalar(columnAlias[j], MatchType.matchResultType(argsTypes[j][0]));
+				}
 			}
 			sqlQuery.setResultTransformer(transformer);
 		}
@@ -401,7 +403,7 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 		} else {
 			query = createQuery(hql, values);
 		}
-		query.setResultTransformer(new AliasedResultTransformer(resultClass, hql));
+		query.setResultTransformer(new AliasedResultTransformer(resultClass, hql, true));
 		return (X) query.uniqueResult();
 	}
 	
