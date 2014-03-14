@@ -119,7 +119,8 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 		rolesPage.setAscDesc(page.getAscDesc());
 		
 		EmpUser user = SecurityContextHolderUtils.getCurrentUserInfo();
-		StringBuilder sql = new StringBuilder(" select distinct rr.* from emp_user uu,user_role ur,roles rr ");
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select distinct rr.* from emp_user uu,user_role ur,roles rr ");
 		sql.append(" where uu.user_id = ur.user_id ");
 		sql.append(" and ur.role_id = rr.role_id ");
 		

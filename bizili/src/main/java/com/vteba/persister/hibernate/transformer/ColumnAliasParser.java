@@ -25,7 +25,7 @@ public class ColumnAliasParser {
 	 * @author yinlei
 	 * date 2013-6-12 下午10:22:04
 	 */
-	public static ColumnAliasParser getInstance() {
+	public static ColumnAliasParser get() {
 		return instance;
 	}
 	
@@ -92,7 +92,7 @@ public class ColumnAliasParser {
 	}
 	
 	public boolean isQueryAll(String sql) {
-		String[] columnAlias = ColumnAliasParser.getInstance().parseColumnAlias(sql, true);
+		String[] columnAlias = ColumnAliasParser.get().parseColumnAlias(sql, true);
 		
 		int start = sql.indexOf("from") + 4;
 		int end = sql.indexOf("where");
@@ -113,7 +113,7 @@ public class ColumnAliasParser {
 			}
 		}
 		if (queryAll) {
-			ColumnAliasParser.getInstance().clear(sql);
+			ColumnAliasParser.get().clear(sql);
 		}
 		return queryAll;
 	}

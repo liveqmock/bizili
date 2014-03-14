@@ -53,7 +53,7 @@ public class AliasedResultTransformer extends AliasedTupleSubsetResultTransforme
 			this.sqlQueryAll = statement.isSqlQueryAll();
 		} else {
 			if (hql) {
-				this.hqlQueryAll = ColumnAliasParser.getInstance().isQueryAll(sql);
+				this.hqlQueryAll = ColumnAliasParser.get().isQueryAll(sql);
 				if (hqlQueryAll) {
 					QueryStatement stmt = new QueryStatement();
 					stmt.setHqlQueryAll(hqlQueryAll);
@@ -92,7 +92,7 @@ public class AliasedResultTransformer extends AliasedTupleSubsetResultTransforme
 					}
 					putSqlCache(sql);
 				} else {// hql/sql基于别名的转换
-					this.columnAlias = ColumnAliasParser.getInstance().parseColumnAlias(sql, true);
+					this.columnAlias = ColumnAliasParser.get().parseColumnAlias(sql, true);
 					String[] tempMethodNames = this.methodAccess.getMethodNames();
 					this.methodIndexs = new int[columnAlias.length];
 					this.argsTypes = new Class<?>[columnAlias.length][];
@@ -130,32 +130,7 @@ public class AliasedResultTransformer extends AliasedTupleSubsetResultTransforme
 	public Object transformTuple(Object[] tuple, String[] aliases) {
 		if (hqlQueryAll) {
 			return (tuple.length == 1 ? tuple[0] : tuple);
-		} //else if (sqlQueryAll) {
-//            this.columnAlias = aliases;
-//  
-//            // 没有解析过，将解析  
-//            if (methodIndexs == null || methodIndexs.length <= 0) {
-//                this.methodIndexs = new int[columnAlias.length];
-//                this.argsTypes = new Class<?>[columnAlias.length][];
-//                Class<?>[][] tempArgsTypes = this.methodAccess.getParameterTypes();
-//                for (int i = 0; i < aliases.length; i++) {
-//                    String methodName = "set" + CamelCaseUtils.toCapitalizeCamelCase(aliases[i]);
-//                    try {
-//                        methodIndexs[i] = methodAccess.getIndex(methodName);
-//                        argsTypes[i] = tempArgsTypes[methodIndexs[i]];
-//                    } catch (IllegalArgumentException e) {
-//                        logger.info("方法[" + methodName + "]不存在，可能是Entity关联栏位。" + e.getMessage());
-//                    }
-//                }
-//                QueryStatement stmt = new QueryStatement();
-//                stmt.setArgsTypes(argsTypes);
-//                stmt.setColumnAlias(columnAlias);
-//                stmt.setMethodIndexs(methodIndexs);
-//                stmt.setHqlQueryAll(hqlQueryAll);
-//                stmt.setSqlQueryAll(sqlQueryAll);
-//                QueryStatementCache.getInstance().put(sql, stmt);
-//            }
-//        }
+		}
 
 		Object entity = constructorAccess.newInstance();
 		for (int i = 0; i < aliases.length; i++) {
