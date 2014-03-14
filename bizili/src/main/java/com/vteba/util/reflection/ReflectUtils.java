@@ -22,6 +22,8 @@ import com.vteba.util.web.struts.StrutsUtils;
  */
 public class ReflectUtils {
 	private static final Logger logger = LoggerFactory.getLogger(ReflectUtils.class);
+	private static final String GET = "get";
+	private static final String SET = "set";
 	
 	/**
 	 * 调用对象obj的某一属性的Getter方法
@@ -31,7 +33,7 @@ public class ReflectUtils {
 	 */
 	public static Object invokeGetterMethod(Object obj, String propertyName) {
 		MethodAccess methodAccess = MethodAccess.get(obj.getClass());
-		String getterMethodName = "get" + StringUtils.capitalize(propertyName);//首字母大写
+		String getterMethodName = GET + StringUtils.capitalize(propertyName);//首字母大写
 		return methodAccess.invoke(obj, getterMethodName, (Object[])null);
 	}
 	/**
@@ -42,7 +44,7 @@ public class ReflectUtils {
 	 */
 	public static void invokeSetterMethod(Object obj, String propertyName, Object value) {
 		MethodAccess methodAccess = MethodAccess.get(obj.getClass());
-		String getterMethodName = "set" + StringUtils.capitalize(propertyName);//首字母大写
+		String getterMethodName = SET + StringUtils.capitalize(propertyName);//首字母大写
 		methodAccess.invoke(obj, getterMethodName, value);
 	}
 
@@ -274,14 +276,31 @@ public class ReflectUtils {
 	public static void emptyToNulls(Object object){
 		MethodAccess methodAccess = AsmUtils.get().createMethodAccess(object.getClass());
 		String[] methodNames = methodAccess.getMethodNames();
-		for (String methodName : methodNames) {
-			if (methodName.startsWith("get")) {
-				Object value = methodAccess.invoke(object, methodName);
-				if (value != null && value.equals("")) {
-					methodAccess.invoke(object, "set" + methodName.substring(3), new Object[]{ null });
+		Class<?>[][] paramTypes = methodAccess.getParameterTypes();
+		int i = 0;
+		for (Class<?>[] paramType : paramTypes) {
+			if (paramType.length > 0) {
+				Class<?> clazz = paramType[0];
+				if (clazz == String.class) {
+					String methodName = methodNames[i];
+					if (methodName.startsWith(SET)) {
+						Object value = methodAccess.invoke(object, GET + methodName.substring(3));
+						if (value != null && value.equals("")) {
+							methodAccess.invoke(object, methodName, new Object[]{ null });
+						}
+					}
 				}
 			}
+			i++;
 		}
+//		for (String methodName : methodNames) {
+//			if (methodName.startsWith("get")) {
+//				Object value = methodAccess.invoke(object, methodName);
+//				if (value != null && value.equals("")) {
+//					methodAccess.invoke(object, "set" + methodName.substring(3), new Object[]{ null });
+//				}
+//			}
+//		}
 		
 	}
 	
@@ -304,7 +323,7 @@ public class ReflectUtils {
 			Object value = null;
 			try {
 				value = field.get(obj);
-				if (value != null && value.toString().equals("")) {
+				if (value != null && value.equals("")) {
 					field.set(obj, null);
 				} else if (value != null && value.toString().equals("false")) {
 					String param = StrutsUtils.getParameter(name);
@@ -316,8 +335,6 @@ public class ReflectUtils {
 				throw convertExceptionToUnchecked(e);
 			}
 		}
-		//Class<?> superClazz = clazz.getSuperclass();
-		//convertStringToNull(superClazz, obj);
 	}
 	
 	protected static String toBuildHql(Class<?> clazz, Object obj) throws RuntimeException {

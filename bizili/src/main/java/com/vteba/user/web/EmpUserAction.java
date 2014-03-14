@@ -64,9 +64,7 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 	@RequestMapping("/empUser-initial")
 	public String initial(EmpUser model, PageBean<EmpUser> pageBean, Map<String, Object> maps) throws Exception {
 		Page<EmpUser> pages = new Page<EmpUser>();
-		long dd = System.nanoTime();
 		ReflectUtils.emptyToNulls(model);
-		System.out.println(System.nanoTime() - dd);
 		pages = empUserServiceImpl.queryForPageByModel(pageBean.getPage(), model);
 		listResult = pages.getResult();
 		maps.put("listResult", listResult);
@@ -85,18 +83,7 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 			return "user/empUser/empUser-input-success";
 		}
 		if (isTokenValueOK()) {//保存或更新
-//			EmpUser user = new EmpUser();
-//			user.setCreateDate(new Date());
-//			//user.setDescription(model.getDescription());
-//			user.setName(model.getName());
 			String encodePass = shaPasswordEncoder.encodePassword(model.getPass(), model.getName());
-//			user.setPass(encodePass);
-//			user.setUserAccount(model.getUserAccount());
-//			user.setEnable(model.getEnable());
-//			//user.setDomain(model.getDomain());
-//			user.setEmail(model.getEmail());
-//			user.setUsername(model.getUsername());//封装了用户的权限
-//			user.setTenantIdentifier(model.getTenantIdentifier());
 			model.setPass(encodePass);
 			model.setCreateDate(new Date());
 			int ret = empUserServiceImpl.saveUserAndRole(model);
@@ -107,7 +94,7 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 		return "user/empUser/empUser-input-success";
 	}
 	
-	@RequestMapping("delete")
+	@RequestMapping("/delete")
 	public void delete() throws Exception {
 		try {
 			empUserServiceImpl.deleteEntityBatch(ids);
