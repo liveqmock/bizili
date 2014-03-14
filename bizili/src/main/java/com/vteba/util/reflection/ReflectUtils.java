@@ -167,16 +167,6 @@ public class ReflectUtils {
 	}
 
 	/**
-	 * 通过反射，获得Class定义中声明的父类的泛型参数的类型，如无法找到，返回Object.class
-	 * 如：public UserDao extends HibernateDao&ltUser&gt
-	 * @param clazz 泛型参数所在的类的class，如：HibernateDao.class
-	 * @return 第一个泛型参数的类型，如果没有找到返回Object.class
-	 */
-	public static Class<? extends Object> getSuperClassGenericType(Class<? extends Object> clazz) {
-		return getSuperClassGenericType(clazz, 0);
-	}
-	
-	/**
 	 * 反射，获得Class定义中声明的泛型参数的类型，如无法找到，返回null
 	 * 如：public UserDao&ltUser&gt
 	 * @param clazz 泛型参数所在的类的class，如：UserDao.class
@@ -184,33 +174,6 @@ public class ReflectUtils {
 	 */
 	public static <T> Class<T>  getClassGenericType(Class<? extends Object> clazz) {
 		return getClassGenericType(clazz, 0);
-	}
-	/**
-	 * 通过反射，获得Class定义中声明的父类的泛型参数的类型，如无法找到，返回Object.class.
-	 * 如public UserDao extends HibernateDao&ltUser, Long&gt
-	 * @param 泛型参数所在的类的class
-	 * @param index 第几个泛型参数，从 0开始
-	 * @return 泛型参数类型，没有返回Objec.class
-	 */
-	public static Class<? extends Object> getSuperClassGenericType(Class<? extends Object> clazz, int index) {
-		Type genType = clazz.getGenericSuperclass();
-		if (!(genType instanceof ParameterizedType)) {
-			logger.info(clazz.getSimpleName() + "'s superclass not ParameterizedType");
-			return Object.class;
-		}
-		Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
-		if (index >= params.length || index < 0) {
-			logger.info("Index: " + index + ", Size of " + clazz.getSimpleName() + "'s Parameterized Type: "
-					+ params.length);
-			return Object.class;
-		}
-		if (!(params[index] instanceof Class)) {
-			logger.info(clazz.getSimpleName() + " not set the actual class on superclass generic parameter");
-			return Object.class;
-		}
-		@SuppressWarnings("unchecked")
-		Class<? extends Object> ret = (Class<? extends Object>) params[index];
-		return ret;
 	}
 	
 	/**
@@ -293,15 +256,6 @@ public class ReflectUtils {
 			}
 			i++;
 		}
-//		for (String methodName : methodNames) {
-//			if (methodName.startsWith("get")) {
-//				Object value = methodAccess.invoke(object, methodName);
-//				if (value != null && value.equals("")) {
-//					methodAccess.invoke(object, "set" + methodName.substring(3), new Object[]{ null });
-//				}
-//			}
-//		}
-		
 	}
 	
 	protected static void convertStringToNull(Class<?> clazz, Object obj)

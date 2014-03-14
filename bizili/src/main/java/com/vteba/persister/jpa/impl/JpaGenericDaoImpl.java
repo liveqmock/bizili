@@ -23,10 +23,9 @@ public abstract class JpaGenericDaoImpl<T, ID extends Serializable> implements I
 		return entityManager;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public JpaGenericDaoImpl(){
 		super();
-		this.entityClass = (Class<T>)ReflectUtils.getSuperClassGenericType(getClass());
+		this.entityClass = ReflectUtils.getClassGenericType(getClass());
 	}
 	
 	public abstract void setEntityManager(EntityManager entityManager);
