@@ -80,7 +80,7 @@
   <div id="header">
 			<div class="up">
 				<p class="welcome">
-					您好，欢迎来到淘钢网！
+					您好，欢迎来到网！
 					<a href="<c:url value="/j_spring_security_logout"/>" target="_blank">退出</a>
 					<a href="<c:url value="/user/userLogin.htm"/>" target="_blank">登录</a>
 				</p>
