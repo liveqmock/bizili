@@ -84,13 +84,13 @@ public class AuthResourcesAction extends BaseAction<AuthResource> {
 	 * date 2012-6-24 下午11:33:30
 	 */
 	@RequestMapping("resources-list")
-	public String list(AuthResource model, Map<String, Object> maps) throws Exception {
-		Page<AuthResource> pages = new Page<AuthResource>();
+	public String list(AuthResource model, PageBean<AuthResource> pageBean, Map<String, Object> maps) throws Exception {
+		page = pageBean.getPage();
 		page.setPageSize(20);
-		pages = authResourceServiceImpl.queryForPageByModel(page, model);
-		listResult = pages.getResult();
+		authResourceServiceImpl.queryForPageByModel(page, model);
+		listResult = page.getResult();
 		maps.put("listResult", listResult);
-		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
+		setAttributeToRequest(CommonConst.PAGE_NAME, page);
 		return "user/resources/resource-list";
 	}
 	

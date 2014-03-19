@@ -65,7 +65,7 @@
 	<div class="epMcCtContent">
 	<h3 class="bordFont bigFont">资源查询</h3>
 	<div class="tab">
-		<form action="resource-list.htm" id="queryForm" name="queryForm" method="post">
+		<form action="resources-list.htm" id="queryForm" name="queryForm" method="post">
 		<table class="bugSteel first" style="border-top: 0;">
 							<tr>
 								<td style="width:50px;">&nbsp;资源名</td>

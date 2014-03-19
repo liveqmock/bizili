@@ -54,7 +54,7 @@ img {border-width: 0px 0px 0px 0px}
 					<li class="first"><a href="<c:url value="/table/dailyaccount-initial.htm?types=cash"/>" <c:if test="${(types eq null) or (types eq 'cash')}">class="current"</c:if> >现金日记账</a></li>
 					<li><a href="<c:url value="/table/dailyaccount-initial.htm?types=bank"/>" <c:if test="${types eq 'bank'}">class="current"</c:if>>银行存款日记账</a></li>
 				</ul>
-		<form action="detailaccount-initial.htm" id="queryForm" name="queryForm" method="post">
+		<form action="dailyaccount-initial.htm" id="queryForm" name="queryForm" method="post">
 		<table class="bugSteel first" style="border-top: 0;">
 							<tr><td class="twof">日期</td>
 								<td class="twef"><input type="text" style="width:90px;" onclick="WdatePicker()" class="Wdate" id="startDate" name="startDate"/>-<input type="text" onclick="WdatePicker()" class="Wdate" style="width:90px;" id="endDate" name="endDate"/></td>

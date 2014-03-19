@@ -60,7 +60,7 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 			String hql = "select a from ModuleMenu a where a.enable = true";
 			List<ModuleMenu> list = moduleMenuServiceImpl.getEntityListByHql(hql);
 			maps.put("list", list);
-			return "user/authorities/authorities-input";
+			return "user/authorities/auth-input-success";
 		}
 		authoritiesServiceImpl.save(model);
 		return "user/authorities/auth-input-success";
