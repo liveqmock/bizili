@@ -324,6 +324,7 @@ img {border-width: 0px 0px 0px 0px}
 								<td class="tenf">
 								<input type="button" value="添加" class="determination" id="addNewCert" style="margin-right:20px;" />
 								</td>
+								<td class="tenf"></td>
 							</tr>
 						</table>
 		<table class="tableSteel noBorder" style="margin-top:0px;">
