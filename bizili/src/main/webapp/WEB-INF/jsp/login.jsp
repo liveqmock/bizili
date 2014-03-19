@@ -80,7 +80,7 @@
   <div id="header">
 			<div class="up">
 				<p class="welcome">
-					您好，欢迎来到网！
+					您好，欢迎您的到来！
 					<a href="<c:url value="/j_spring_security_logout"/>" target="_blank">退出</a>
 					<a href="<c:url value="/user/userLogin.htm"/>" target="_blank">登录</a>
 				</p>
@@ -114,8 +114,8 @@
 			<h1 class="epMcCenterTitle"><span>企业会员中心</span></h1>
 		</div>  
 	<div id="content">
-        <div id="right" style="float:right;">   
-        <h2 style="text-align:center;">平台登录</h2>   
+        <div id="right" style="float:right;">
+        <h2 style="float:left;margin-left:150px;margin-bottom:10px;">平台登录</h2>   
         <form id="login_form" name="login_form" action="${SERVLET_PATH}/j_spring_security_check" method="post">
         
         <input type="hidden" id="msg" value="<c:if test="${sessionScope.SPRING_SECURITY_LAST_EXCEPTION ne null}">您输入的用户名或密码错误。</c:if>">
@@ -125,7 +125,9 @@
                     <td><input id="username" maxlength="64" style="width:170px;" name="j_username" type="text" value="yinlei_nb" />
 					</td>
                 </tr>
-                
+                <tr style="height:20px;">
+                    <td colspan="2"></td>
+                </tr>
                 <tr>
                     <th>用户密码</th>
                     <td><input id="password" maxlength="64" value="123456" style="width:170px" name="j_password" type="password" />&nbsp;&nbsp;</td>
@@ -141,12 +143,12 @@
                     <td><a class="icon arrow" href="${SERVLET_PATH}/jsp/forgotpassword.jsp">忘记密码？</a>&nbsp;<input id="remember" name="_spring_security_remember_me" value="true" type="checkbox" class="field" />两周之内记住我！</td>
                 </tr>
                  -->
-                 <tr></tr>
-                 <tr></tr>
+                <tr style="height:20px;">
+                    <td colspan="2"></td>
+                </tr>
                 <tr style="margin-top:20px;">
                 	<td></td>
                     <td><input name="login" class="pageCutSmallButton" value="登 录" id="login" onclick="javascript:userLogin();" type="button"/>&nbsp;&nbsp;<input name="reset" class="cancellation" value="重置" id="reset" type="reset"/></td>
-                	<input name="login" class="pageCutSmallButton" value="登 录" id="loginTest" type="button"/>
                 </tr>
             </table>
             <div>
@@ -154,14 +156,14 @@
         	</div>         
    		</form>
    		
-   		<form id="uploadForm" method="post" enctype="multipart/form-data" action="subject-importExcel2.htm">
-	<div id="tabcontent">
-		<h3>提示：</h3>
-		<p>导入科目前，请下载我们提供的Excel模板，并按照规范填写。<a href="#">下载Excel表格模板</a></p>
-		<p> <input type="file" name="uploadFile"/>
-		<input type="button" id="sureImport" class="imSure" value="确认导入" /></p>
-	</div>
-	</form>
+<!--    		<form id="uploadForm" method="post" enctype="multipart/form-data" action="subject-importExcel2.htm"> -->
+<!-- 	<div id="tabcontent"> -->
+<!-- 		<h3>提示：</h3> -->
+<!-- 		<p>导入科目前，请下载我们提供的Excel模板，并按照规范填写。<a href="#">下载Excel表格模板</a></p> -->
+<!-- 		<p> <input type="file" name="uploadFile"/> -->
+<!-- 		<input type="button" id="sureImport" class="imSure" value="确认导入" /></p> -->
+<!-- 	</div> -->
+<!-- 	</form> -->
     </div>        
 </div>
   </div>
