@@ -25,6 +25,7 @@ img {border-width: 0px 0px 0px 0px}
 <%@ include file="/WEB-INF/inc/script.inc" %>
 <%@ include file="/WEB-INF/inc/style.inc" %>
 <script type="text/javascript" src="<c:url value='/dwr/interface/EmpUserBean.js'></c:url>"></script>
+<script type="text/javascript" src="<c:url value='/js/lhgdialog/lhgdialog.min.js'></c:url>"></script>
 <script type="text/javascript">
     $(document).ready(function(){
     	$('#allCheckSelected').click(function(){
@@ -124,6 +125,10 @@ img {border-width: 0px 0px 0px 0px}
 		 }
 	 });
  }
+ 
+ function queryRoles(userId) {
+	 
+ }
 </script>
 </head>
 <body>
@@ -217,7 +222,7 @@ img {border-width: 0px 0px 0px 0px}
                 <td class="fouf">${empUser.userAccount}</td>
                 <td class="fivf">${empUser.enable}</td>
                 <td class="fouf"><fmt:formatDate value="${empUser.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                <td class="fivf"><img src="../images/juese3.png" title="角色" style="margin-left:4px;margin-top:4px;cursor:pointer;height:22px;width:22px;" onclick="javascript:queryAuth('${role.roleId}');"></img> <img src="../images/btn_edit.gif" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:editUser('${empUser.userId}')" title="修改"/>&nbsp;<img src="../images/tu12.gif" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:deleteUser('${empUser.userId}')" title="删除"/></td>
+                <td class="fivf"><img src="../images/juese3.png" title="角色" style="margin-left:4px;margin-top:4px;cursor:pointer;height:22px;width:22px;" onclick="javascript:queryRoles('${empUser.userId}');"></img> <img src="../images/btn_edit.gif" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:editUser('${empUser.userId}')" title="修改"/>&nbsp;<img src="../images/tu12.gif" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:deleteUser('${empUser.userId}')" title="删除"/></td>
               </tr>
               </c:forEach>
             </table>
