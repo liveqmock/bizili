@@ -71,10 +71,10 @@
 	
 <!-- 	<mvc:resources location="/favicon.ico" mapping="/favicon.ico" /> -->
 	
-    <!-- bean name view resolver-->
-    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
-    	<property name="order" value="0"/>
-    </bean>  
+    <!-- bean name view resolver，根据action的name进行映射，现在使用不到-->
+<!--     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"> -->
+<!--     	<property name="order" value="0"/> -->
+<!--     </bean>   -->
     
     <!-- 根据客户端的不同的请求决定不同的 view进行响应, 如 /blog/1.json /blog/1.xml -->  
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">

@@ -1,6 +1,5 @@
 package com.vteba.user.web;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -12,12 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.common.constant.CommonConst;
-import com.vteba.persister.generic.Page;
+import com.vteba.user.form.RolesForm;
 import com.vteba.user.model.RoleAuth;
 import com.vteba.user.model.Roles;
 import com.vteba.user.service.IRoleAuthService;
 import com.vteba.user.service.IRolesService;
 import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.PageBean;
 
 /**
  * 角色管理action
@@ -28,7 +28,6 @@ import com.vteba.web.action.BaseAction;
 @RequestMapping("/users")
 public class RolesAction extends BaseAction<Roles> {
 
-	private List<Roles> roleList = new ArrayList<Roles>();
 	private IRolesService rolesServiceImpl;
 	private IRoleAuthService roleAuthServiceImpl;
 	
@@ -43,14 +42,14 @@ public class RolesAction extends BaseAction<Roles> {
 	}
 
 	@RequestMapping("/roles-initial")
-	public String initial(Page<Roles> page, Map<String, Object> maps) throws Exception {
-		Page<Roles> pages = new Page<Roles>();
+	public String initial(PageBean<Roles> pageBean, Map<String, Object> maps) throws Exception {
 		Roles entity = new Roles();
 		entity.setPriority(1);
-		pages = rolesServiceImpl.queryForPageByModel(page, entity);
-		listResult = pages.getResult();
+		page = pageBean.getPage();
+		rolesServiceImpl.queryForPageByModel(page, entity);
+		listResult = page.getResult();
 		maps.put("listResult", listResult);
-		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
+		setAttributeToRequest(CommonConst.PAGE_NAME, page);
 		return "user/roles/roles-initial-success";
 	}
 	
@@ -60,11 +59,11 @@ public class RolesAction extends BaseAction<Roles> {
 	 * date 2012-6-24 下午11:22:12
 	 */
 	@RequestMapping("/roles-input")
-	public String input() throws Exception {
+	public String input(RolesForm rolesForm) throws Exception {
 		if (isInit()) {
 			return "user/roles/roles-input-success";
 		}
-		for (Roles entity : roleList) {
+		for (Roles entity : rolesForm.getRoleList()) {
 			if (StringUtils.isNotEmpty(entity.getRoleName())) {
 				entity.setCreateTime(new Date());
 				rolesServiceImpl.save(entity);
@@ -98,14 +97,6 @@ public class RolesAction extends BaseAction<Roles> {
 		listResult = rolesServiceImpl.getListByPropertyLike(Roles.class, entity);
 		maps.put("listResult", listResult);
 		return "user/roles/roles-list";
-	}
-
-	public List<Roles> getRoleList() {
-		return roleList;
-	}
-
-	public void setRoleList(List<Roles> roleList) {
-		this.roleList = roleList;
 	}
 	
 }
