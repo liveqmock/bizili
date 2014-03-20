@@ -190,16 +190,23 @@ input.iptBuySteelAdd{
 		<td class="twoFont">部门ID</td><td class="widt"><input class="widt" name="deptId" value="${entity.deptId}" type="text" /><span class="star">*</span></td><td class="star"></td>
 		</tr>
 		<tr>
-		<td class="twoFont">密码</td><td class="widt"><input class="widt" name="pass" id="currentPass" type="text"/><span class="star">*</span></td><td class="star"></td>
-		<td class="twoFont">可用</td><td class="widt"><input class="widt" name="enable" value="${entity.enable}" type="text" /><span class="star">*</span></td><td class="star"></td>
+		<td class="twoFont">密码</td><td class="widt"><input class="widt" name="pass" id="currentPass" type="password"/><span class="star">*</span></td><td class="star"></td>
+		<td class="twoFont">可用</td><td class="widt">
+		<select name="enable">
+			<option value="1" <c:if test="${entity.enable == 1}">selected="selected"</c:if>>是</option>
+			<option value="0" <c:if test="${entity.enable == 0}">selected="selected"</c:if>>否</option>
+		</select>
+		<span class="star">*</span></td><td class="star"></td>
 		</tr>
 		<tr>
-		<td class="twoFont">权限</td><td class="widt" colspan="5"><input type="text" name="authName" value="${entity.roleNames}" id="authName" readOnly="false" class="note" /><input type="buttom" class="iptBuySteelAdd" id="addAuth"/></td>
+		<td class="twoFont">权限</td><td class="widt" colspan="5"><input type="text" name="authName" value="${entity.roleNames}" id="authName" readOnly="false" class="note" /><img id="addAuth" src="../images/tb2.gif" style="margin-left:6px;cursor:pointer;"></img></td>
 		<input type="hidden" name="username" value="${entity.username}" id="authId"/>
 		</tr>
 		<tr>
 		<td class="twoFont">部门名称</td><td class="widt" ><input type="text" name="deptName" value="${entity.deptName}" class="widt" /><span class="star">*</span></td><td class="star"></td>
-		<td class="twoFont">租户ID</td><td class="widt"><input type="text" name="tenantIdentifier" value="${entity.tenantIdentifier}" class="widt" /><span class="star">*</span></td><td class="star"></td>
+		<td class="twoFont"></td><td class="widt">
+<%-- 		<input type="text" name="tenantIdentifier" value="${entity.tenantIdentifier}" class="widt" /><span class="star">*</span> --%>
+		</td><td class="star"></td>
 		</tr>
 	</tbody>
 	

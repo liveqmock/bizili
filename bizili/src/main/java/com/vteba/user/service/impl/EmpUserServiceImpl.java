@@ -107,7 +107,6 @@ public class EmpUserServiceImpl extends GenericServiceImpl<EmpUser, Long> implem
 	}
 	
 	public int saveUserAndRole(EmpUser model){
-		empUserDaoImpl.saveOrUpdate(model);
 		if (model.getUsername() != null) {//如果关联了角色
 			String[] roleIds = StringUtils.split(model.getUsername(), ",");
 			for (String roleId : roleIds) {
@@ -120,12 +119,12 @@ public class EmpUserServiceImpl extends GenericServiceImpl<EmpUser, Long> implem
 				model.getRoleSet().add(role);//对多对关联操作，脚手架代码
 			}
 		}
+		empUserDaoImpl.saveOrUpdate(model);
 		return 1;
 	}
 	
 	public EmpUser loadEmpUser(Long userId) {
-		EmpUser user = new EmpUser();
-		user = empUserDaoImpl.get(userId);
+		EmpUser user = empUserDaoImpl.get(userId);
 		
 		String roleNames = "";//角色中文名
 		String roleIds = "";//角色id

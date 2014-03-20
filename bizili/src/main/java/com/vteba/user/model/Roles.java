@@ -1,7 +1,6 @@
 package com.vteba.user.model;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -13,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.vteba.common.model.AstModel;
 
@@ -29,8 +29,9 @@ public class Roles implements AstModel {
 	private String roleDesc;
 	private Integer enabled;
 	private Integer priority;
-	private Set<Authorities> authsSet = new HashSet<Authorities>();
+	private Set<Authorities> authSets;
 	private Date createTime;
+	private String authIds;
 	//private Set<EmpUser> userSet;
 	
 	public Roles() {
@@ -107,12 +108,21 @@ public class Roles implements AstModel {
 	@JoinTable(name = "role_auth",//连接表的名字 
 	joinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "role_id") }, //name指的是连接表中的栏位名
 	inverseJoinColumns = { @JoinColumn(name = "auth_id", referencedColumnName = "auth_id") })//referencedColumnName指的是原来表中的名字
-	public Set<Authorities> getAuthsSet() {
-		return authsSet;
+	public Set<Authorities> getAuthSets() {
+		return authSets;
 	}
 
-	public void setAuthsSet(Set<Authorities> authsSet) {
-		this.authsSet = authsSet;
+	public void setAuthSets(Set<Authorities> authSets) {
+		this.authSets = authSets;
+	}
+
+	@Transient
+	public String getAuthIds() {
+		return authIds;
+	}
+
+	public void setAuthIds(String authIds) {
+		this.authIds = authIds;
 	}
 	
 	//去掉注释就是'用户-角色'双向多对多

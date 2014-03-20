@@ -30,7 +30,25 @@ img {border-width: 0px 0px 0px 0px}
     		$("#queryForm").submit();
     	});
     });
-    </script>
+    function deleteRes(id) {
+		var del = confirm('你确定要删除该资源？');
+		if (del) {
+			$.ajax({
+	            type:"post",
+	            dataType:"text",
+	            url: '${ctx}/users/resources-delete.htm?resourceId=' + id,
+	            success: function(msg){
+	                //alert(msg);
+	                //window.location.reload();
+	            	$('#tr'+id).remove();
+	            },
+	            error: function (msg) {
+	                alert(msg.responseText);
+	            }
+	        });
+		}
+	}
+</script>
 </head>
 <body>
 <div id="container">
@@ -74,7 +92,7 @@ img {border-width: 0px 0px 0px 0px}
 							<tr>
 								<td class="twof">使用中</td>
 								<td class="twef">
-								<select id="enable" name="enable" style="width:120px;">
+								<select id="enabled" name="enabled" style="width:120px;">
 										<option value="">--请选择--</option>
 										<option value="true">是</option>
 										<option value="false">否</option>
@@ -100,34 +118,29 @@ img {border-width: 0px 0px 0px 0px}
 					<table class="tableSteel">
               <tr class="title" style="border-right:1px #bfd2ed solid;">
                 <td class="twof"></td>
-                <td class="fouf">序号</td>
-                <td class="fivf">权限ID</td>
-                <td class="fivf">资源名</td>
-                <td class="fouf">资源类型</td>
+                <td class="fouf">资源名</td>
+                <td class="fivf">资源类型</td>
                 <td class="fivf">资源URL</td>
-                <td class="fivf">使用中</td>
-                <td class="sixf">默认URL</td>
+                <td class="fouf">资源描述</td>
+                <td class="fivf">是否可用</td>
+                <td class="fivf">默认URL</td>
+                <td class="sixf">菜单中显示</td>
                 <td class="fivf" style="border-right:1px #09f solid">操作</td>
               </tr>
-              <c:forEach items="${listResult}" var="authResource" varStatus="st">
-              <tr style="${st.count%2==0?'background:#f3f3f3':''}">
-                <td class="twof"><input type="checkbox" /></td>
-                <td class="fouf">${authResource.id }</td>
-                <td class="sixf">${authResource.authId }</td>
-                <td class="fivf">${authResource.resourceName }</td>
-                <td class="fouf">${authResource.resourceType }</td>
-                <td class="fivf">${authResource.resourceUrl }</td>
-                <td class="sixf">${authResource.enable }</td>
-                <td class="fouf"><c:if test="${authResource.defaults eq 1}">是</c:if><c:if test="${authResource.defaults eq 0}">否</c:if></td>
-                <td class="fivf"><input type="button" class="pageCutSmallBtnDel" id="input4" value="删除" /></td>
+              <c:forEach items="${listResult}" var="resource" varStatus="st">
+              <tr id="tr${resource.resourceId}" style="${st.count%2==0?'background:#f3f3f3':''}">
+                <td class="twof"></td>
+                <td class="fouf">${resource.resourceName}</td>
+                <td class="sixf">${resource.resourceType }</td>
+                <td class="fivf">${resource.resourceUrl }</td>
+                <td class="fouf">${resource.resourceDesc }</td>
+                <td class="fivf"><c:if test="${resource.enabled eq 1}">是</c:if><c:if test="${resource.enabled eq 0}">否</c:if></td>
+                <td class="sixf"><c:if test="${resource.defaults == true}">是</c:if><c:if test="${resource.defaults == false}">否</c:if></td>
+                <td class="fouf"><c:if test="${resource.showInMenu == true}">是</c:if><c:if test="${resource.showInMenu == false}">否</c:if></td>
+                <td class="fivf">&nbsp;<input type="button" onclick="javascript:deleteRes('${resource.resourceId}')" title="删除" class="tableSteelBtnDel" /></td>
               </tr>
               </c:forEach>
             </table>
-					<div>
-						<input type="checkbox" class="pageCutSmallCheckbox" />
-							<label for="#"> 全选 </label> <input type="button"
-							class="pageCutSmallButton" id="" value="发布到店铺" />
-					</div>
 					<div id="page">
 						<p>
 						<vte:pages hasForm="true" beanName="page" formName="queryForm"/>

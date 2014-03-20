@@ -1,7 +1,5 @@
 package com.vteba.user.web;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -9,11 +7,12 @@ import javax.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vteba.common.constant.CommonConst;
-import com.vteba.persister.generic.Page;
-import com.vteba.user.model.AuthResource;
-import com.vteba.user.service.IAuthResourceService;
+import com.vteba.user.form.ResourcesForm;
+import com.vteba.user.model.Resources;
+import com.vteba.user.service.IResourcesService;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
@@ -25,27 +24,21 @@ import com.vteba.web.action.PageBean;
  */
 @Controller
 @RequestMapping("/users")
-public class AuthResourcesAction extends BaseAction<AuthResource> {
+public class AuthResourcesAction extends BaseAction<Resources> {
 
-	private IAuthResourceService authResourceServiceImpl;
-	private List<AuthResource> authList = new ArrayList<AuthResource>();
-	
 	@Inject
-	public void setAuthResourceServiceImpl(IAuthResourceService authResourceServiceImpl) {
-		this.authResourceServiceImpl = authResourceServiceImpl;
-	}
-
+	private IResourcesService resourcesServiceImpl;
+	
 	@RequestMapping("/resources-initial")
-	public String initial(AuthResource model, PageBean<AuthResource> pageBean, Map<String, Object> maps) throws Exception {
-		Page<AuthResource> pages = new Page<AuthResource>();
-		if (!(model.getEnable() == null && model.getResourceName() == null
-				&& model.getResourceType() == null && model.getResourceUrl() == null)) {
-			ReflectUtils.emptyToNull(model);
+	public String initial(Resources model, PageBean<Resources> pageBean, Map<String, Object> maps) throws Exception {
+		if (!(model.getResourceName() == null && model.getResourceType() == null && model.getResourceUrl() == null)) {
+			ReflectUtils.emptyToNulls(model);
 		}
-		pages = authResourceServiceImpl.queryForPageByModel(pageBean.getPage(), model);
-		listResult = pages.getResult();
+		page = pageBean.getPage();
+		resourcesServiceImpl.queryForPageByModel(page, model);
+		listResult = page.getResult();
 		maps.put("listResult", listResult);
-		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
+		setAttributeToRequest(CommonConst.PAGE_NAME, page);
 		return "user/resources/resource-initial-success";
 	}
 	
@@ -55,13 +48,13 @@ public class AuthResourcesAction extends BaseAction<AuthResource> {
 	 * date 2012-6-24 下午11:34:05
 	 */
 	@RequestMapping("/resources-input")
-	public String input() throws Exception {
+	public String input(ResourcesForm resourcesForm) throws Exception {
 		if (isInit()) {
 			return "user/resources/resource-input-success";
 		}
-		for (AuthResource model : authList) {
-			if (StringUtils.isNotEmpty(model.getResourceUrl()) && StringUtils.isNotEmpty(model.getResourceType())) {
-				authResourceServiceImpl.save(model);
+		for (Resources model : resourcesForm.getResourcesList()) {
+			if (StringUtils.isNotEmpty(model.getResourceName()) && StringUtils.isNotEmpty(model.getResourceUrl()) && StringUtils.isNotEmpty(model.getResourceDesc())) {
+				resourcesServiceImpl.save(model);
 			}
 		}
 		setAttributeToRequest("msg", "新增资源成功。");
@@ -70,12 +63,14 @@ public class AuthResourcesAction extends BaseAction<AuthResource> {
 	
 	public String edit() throws Exception {
 		
-		return "";
+		return "edit";
 	}
 	
-	public String update() throws Exception {
-		
-		return DETAIL;
+	@RequestMapping("/resources-delete")
+	@ResponseBody
+	public void delete(Long resourceId) throws Exception {
+		resourcesServiceImpl.delete(resourceId);
+		renderText(SUCCESS);
 	}
 	
 	/**
@@ -84,24 +79,14 @@ public class AuthResourcesAction extends BaseAction<AuthResource> {
 	 * date 2012-6-24 下午11:33:30
 	 */
 	@RequestMapping("resources-list")
-	public String list(AuthResource model, PageBean<AuthResource> pageBean, Map<String, Object> maps) throws Exception {
+	public String list(Resources model, PageBean<Resources> pageBean, Map<String, Object> maps) throws Exception {
 		page = pageBean.getPage();
 		page.setPageSize(20);
-		authResourceServiceImpl.queryForPageByModel(page, model);
+		resourcesServiceImpl.queryForPageByModel(page, model);
 		listResult = page.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, page);
 		return "user/resources/resource-list";
-	}
-	
-	/**********setter and getter********/
-	
-	public List<AuthResource> getAuthList() {
-		return authList;
-	}
-
-	public void setAuthList(List<AuthResource> authList) {
-		this.authList = authList;
 	}
 
 }

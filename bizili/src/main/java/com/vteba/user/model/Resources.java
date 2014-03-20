@@ -27,16 +27,20 @@ public class Resources implements AstModel {
 	private String resourceDesc;
 	private Integer enabled;
 	private Integer orders;
-	private boolean defaults;
-	private boolean showInMenu;
+	private Boolean defaults;
+	private Boolean showInMenu;
 
 	public Resources() {
 	}
 
+	public Resources(Long resourceId) {
+		this.resourceId = resourceId;
+	}
+	
 	public Resources(Long resourceId, String resourceName,
 			String resourceType, String resourceUrl, String resourceDesc,
 			Integer enabled, Integer orders,
-			boolean defaults, boolean showInMenu) {
+			Boolean defaults, Boolean showInMenu) {
 		super();
 		this.resourceId = resourceId;
 		this.resourceName = resourceName;
@@ -115,20 +119,20 @@ public class Resources implements AstModel {
 	}
 	
 	@Column(name = "defaults")
-	public boolean isDefaults() {
+	public Boolean getDefaults() {
 		return defaults;
 	}
 
-	public void setDefaults(boolean defaults) {
+	public void setDefaults(Boolean defaults) {
 		this.defaults = defaults;
 	}
 
 	@Column(name = "show_in_menu")
-	public boolean isShowInMenu() {
+	public Boolean getShowInMenu() {
 		return showInMenu;
 	}
 
-	public void setShowInMenu(boolean showInMenu) {
+	public void setShowInMenu(Boolean showInMenu) {
 		this.showInMenu = showInMenu;
 	}
 

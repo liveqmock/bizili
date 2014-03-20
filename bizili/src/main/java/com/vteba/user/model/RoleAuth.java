@@ -74,7 +74,7 @@ public class RoleAuth implements AstModel {
 		this.authId = authId;
 	}
 
-	@Column(name = "auth_name", nullable = false, length = 100)
+	@Column(name = "auth_name", length = 100)
 	public String getAuthName() {
 		return this.authName;
 	}
@@ -83,7 +83,7 @@ public class RoleAuth implements AstModel {
 		this.authName = authName;
 	}
 
-	@Column(name = "auth_desc", nullable = false, length = 150)
+	@Column(name = "auth_desc", length = 150)
 	public String getAuthDesc() {
 		return this.authDesc;
 	}

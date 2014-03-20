@@ -58,10 +58,28 @@ select#operatorNum{
 	width:150px;
 	font-size:12px;
 }
+span.star{
+	padding-left:10px;
+	color:red;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
-	$('saveRole').click(function(){
+	$('#addAuth').click(function(){
+		var returnValue = window.showModalDialog('<c:url value="/users/auth-list.htm"/>','', "dialogWidth=810px;dialogHeight=600px;status=no;help=no;scrollbars=no;dialogLeft:360px;dialogTop:140px");
+		var ids = "";
+		var names = "";
+		var rets = returnValue.split(';');
+		for(var i =0; i<rets.length-1; i++){
+			var temp = rets[i].split('#');
+			ids += temp[0]+",";
+			names += temp[1]+",";
+		}
+		$('#authNames').val(names);
+		$('#authNames').attr('readOnly',true);
+		$('#authIds').val(ids);
+	});
+	$('#saveRole').click(function(){
 		var queryForm = $('#queryForm');
 		queryForm.submit();
 	});
@@ -89,60 +107,64 @@ $(document).ready(function(){
 		</ul>
 	<div id="tabContent1">
 	<form action="roles-input.htm" method="post" name="queryForm" id="queryForm">
-		<table class="bugSteel first" >
-		<tr>
-			<td class="fivf floCenter">仓库：</td><td class="eigf"><input type="text" class="ef" /></td><td class="fivf floCenter">产地：</td><td class="eigf"><input type="text" class="ef"/></td><td class="fivf floCenter">排序：</td><td class="fotf"><select style="width:90px;" ><option>请选择</option></select>-<select style="width:64px;" ><option>升序</option></select></td>
-			<td class="sixf"><input type="button" class="determination" value="查询" /></td>
-			<td class="sixf"><input type="reset" class="cancellation" value="重置" /></td>
-		</tr>
-		</table>
 		<table class="tableSteel">
-			<tr class="title">
-			<td class="twof">序号</td>
-			<td class="fouf">角色名<span class="red">*</span></td>
-			<td class="sixf">角色描述<span class="red">*</span></td>
-			<td class="fouf">可用<span class="red">*</span></td>
-			<td class="fouf">优先级<span class="red">*</span></td>
-			<td class="eigf" style="border-right:1px #09f solid;">操作</td>
+<!-- 			<tr class="title"> -->
+<!-- 			<td class="twof"></td> -->
+<!-- 			<td class="fouf">角色名<span class="red">*</span></td> -->
+<!-- 			<td class="sixf">角色描述<span class="red">*</span></td> -->
+<!-- 			<td class="fouf">可用<span class="red">*</span></td> -->
+<!-- 			<td class="fouf">优先级<span class="red">*</span></td> -->
+<!-- 			<td class="eigf" style="border-right:1px #09f solid;">操作</td> -->
+<!-- 			</tr> -->
+			<tr>
+			<td class="twof"></td>
+			<td class="fivf">角色名</td>
+			<td><input type="text" name="roleName" class="twf190" /><span class="star">*</span></td>
+			
+			<td class="fivf">角色描述</td>
+			<td><input type="text" name="roleDesc" class="twf190" /><span class="star">*</span></td>
+			<td class="twof"></td>
 			</tr>
 			<tr>
-			<td class="twof"><input type="checkbox" value="#" /></td>
-				<td><input type="text" name="roleList[0].roleName" class="twf190" /></td><td><input type="text" name="roleList[0].roleDesc" class="twf190" /></td><td><input type="text" name="roleList[0].enabled" class="tf" /></td><td><input type="text" name="roleList[0].priority" class="twf" /></td><td class="tenf"><input type="button" class="tableSteelBtnDel" /><input type="button" value="复制" class="tableSteelBtnCopy" /></td>
+			<td class="twof"></td>
+			<td class="fivf">是否启用</td>
+			<td>
+					<select name="enabled">
+						<option value="1">是</option>
+						<option value="0">否</option>
+					</select>
+					<span class="star">*</span>
+			</td>
+			
+			<td class="fivf">优先级</td>
+			<td>
+					<select name="priority">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+					</select><span class="star">*</span></td>
+			<td class="twof"></td>
 			</tr>
 			<tr>
-			<td class="twof"><input type="checkbox" value="#" /></td>
-				<td><input type="text" name="roleList[1].roleName" class="twf190" /></td><td><input type="text" name="roleList[1].roleDesc" class="twf190" /></td><td><input type="text" name="roleList[1].enabled" class="tf" /></td><td><input type="text" name="roleList[1].priority" class="twf" /></td><td class="tenf"><input type="button" class="tableSteelBtnDel" /><input type="button" value="复制" class="tableSteelBtnCopy" /></td>
+			<td class="twof"></td>
+			<td class="fivf">拥有权限</td>
+			<td class="tenf" colspan="3"><input type="hidden" id="authIds" name="authIds"/><input type="text" id="authNames" class="twf190" /><span class="star">*</span><img id="addAuth" src="../images/tb2.gif" style="margin-left:6px;cursor:pointer;"></img> </td>
+			<td class="twof"></td>
 			</tr>
-			<tr>
-			<td class="twof"><input type="checkbox" value="#" /></td>
-				<td><input type="text" name="roleList[2].roleName" class="twf190" /></td><td><input type="text" name="roleList[2].roleDesc" class="twf190" /></td><td><input type="text" name="roleList[2].enabled" class="tf" /></td><td><input type="text" name="roleList[2].priority" class="twf" /></td><td class="tenf"><input type="button" class="tableSteelBtnDel" /><input type="button" value="复制" class="tableSteelBtnCopy" /></td>
-			</tr>
-			<tr>
-			<td class="twof"><input type="checkbox" value="#" /></td>
-				<td><input type="text" name="roleList[3].roleName" class="twf190" /></td><td><input type="text" name="roleList[3].roleDesc" class="twf190" /></td><td><input type="text" name="roleList[3].enabled" class="tf" /></td><td><input type="text" name="roleList[3].priority" class="twf" /></td><td class="tenf"><input type="button" class="tableSteelBtnDel" /><input type="button" value="复制" class="tableSteelBtnCopy" /></td>
-			</tr>
-			<tr>
-			<td class="twof"><input type="checkbox" value="#" /></td>
-				<td><input type="text" name="roleList[4].roleName" class="twf190" /></td><td><input type="text" name="roleList[4].roleDesc" class="twf190" /></td><td><input type="text" name="roleList[4].enabled" class="tf" /></td><td><input type="text" name="roleList[4].priority" class="twf" /></td><td class="tenf"><input type="button" class="tableSteelBtnDel" /><input type="button" value="复制" class="tableSteelBtnCopy" /></td>
-			</tr>
-			<tr>
-			<td class="twof"><input type="checkbox" value="#" /></td>
-				<td><input type="text" name="roleList[5].roleName" class="twf190" /></td><td><input type="text" name="roleList[5].roleDesc" class="twf190" /></td><td><input type="text" name="roleList[5].enabled" class="tf" /></td><td><input type="text" name="roleList[5].priority" class="twf" /></td><td class="tenf"><input type="button" class="tableSteelBtnDel" /><input type="button" value="复制" class="tableSteelBtnCopy" /></td>
-			</tr>
-			<tr>
-			<td class="twof"><input type="checkbox" value="#" /></td>
-				<td><input type="text" name="roleList[6].roleName" class="twf190" /></td><td><input type="text" name="roleList[6].roleDesc" class="twf190" /></td><td><input type="text" name="roleList[6].enabled" class="tf" /></td><td><input type="text" name="roleList[6].priority" class="twf" /></td><td class="tenf"><input type="button" class="tableSteelBtnDel" /><input type="button" value="复制" class="tableSteelBtnCopy" /></td>
-			</tr>
-			<tr>
-			<td class="twof"><input type="checkbox" value="#" /></td>
-				<td><input type="text" name="roleList[7].roleName" class="twf190" /></td><td><input type="text" name="roleList[7].roleDesc" class="twf190" /></td><td><input type="text" name="roleList[7].enabled" class="tf" /></td><td><input type="text" name="roleList[7].priority" class="twf" /></td><td class="tenf"><input type="button" class="tableSteelBtnDel" /><input type="button" value="复制" class="tableSteelBtnCopy" /></td>
-			</tr>
-			<tr>
-				<td colspan="8" class="floRight"><input type="button" class="newLine bordFont" value="新增一行" /></td>
-			</tr> 
+<!-- 			<tr> -->
+<!-- 			<td class="twof"><input type="checkbox" value="#" /></td> -->
+<!-- 				<td><input type="text" name="roleList[1].roleName" class="twf190" /></td><td><input type="text" name="roleList[1].roleDesc" class="twf190" /></td><td><input type="text" name="roleList[1].enabled" class="tf" /></td><td><input type="text" name="roleList[1].priority" class="twf" /></td><td class="tenf"><input type="hidden" id="authIds2" name="roleList[1].authIds"/><input type="text" id="authNames2" class="twf230" /></td> -->
+<!-- 			</tr> -->
+			
+<!-- 			<tr> -->
+<!-- 				<td colspan="6" class="floRight"><input type="button" class="newLine bordFont" title="暂不可用" value="新增一行" /></td> -->
+<!-- 			</tr>  -->
 		  </table>
 			<div>
-				<input type="checkbox" class="pageCutSmallCheckbox" /><label for="#">全选</label><input type="submit" class="pageCutSmallBtnSub" id="saveRole" value="保存" /><input type="button" class="pageCutSmallBtnDel" id="" value="删除" />
+				<input type="button" class="pageCutSmallBtnSub" id="saveRole" value="保存" />
 			</div>
 			</form>
 		</div>

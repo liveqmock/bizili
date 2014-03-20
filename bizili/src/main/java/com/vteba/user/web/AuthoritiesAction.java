@@ -7,14 +7,15 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vteba.common.constant.CommonConst;
 import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
-import com.vteba.persister.generic.Page;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.service.IAuthoritiesService;
 import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.PageBean;
 
 /**
  * 权限action
@@ -39,13 +40,13 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 	}
 
 	@RequestMapping("/authorities-initial")
-	public String initial(Authorities model, Map<String, Object> maps) throws Exception {
-		Page<Authorities> pages = new Page<Authorities>();
+	public String initial(Authorities model, PageBean<Authorities> pageBean, Map<String, Object> maps) throws Exception {
+		page = pageBean.getPage();
 		Authorities entity = new Authorities();
-		pages = authoritiesServiceImpl.queryForPageByModel(page, entity);
-		listResult = pages.getResult();
+		authoritiesServiceImpl.queryForPageByModel(page, entity);
+		listResult = page.getResult();
 		maps.put("listResult", listResult);
-		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
+		setAttributeToRequest(CommonConst.PAGE_NAME, page);
 		return "user/authorities/auth-initial-success";
 	}
 	
@@ -62,8 +63,34 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 			maps.put("list", list);
 			return "user/authorities/auth-input-success";
 		}
-		authoritiesServiceImpl.save(model);
+		authoritiesServiceImpl.saveAuthRes(model);
 		return "user/authorities/auth-input-success";
 	}
 
+	/**
+	 * 删除权限
+	 * @param authId 权限id
+	 */
+	@ResponseBody
+	@RequestMapping("/auth-delete")
+	public void delete(Long authId) {
+		authoritiesServiceImpl.delete(authId);
+		renderText(SUCCESS);
+	}
+	
+	@RequestMapping("/auth-list")
+	public String list(Authorities authorities, PageBean<Authorities> pageBean, Map<String, Object> maps) {
+		page = pageBean.getPage();
+		page.setPageSize(20);
+		authoritiesServiceImpl.queryForPageByModel(page, authorities);
+		listResult = page.getResult();
+		maps.put("listResult", listResult);
+		
+		String hql = "select a from ModuleMenu a where a.enable = true";
+		List<ModuleMenu> list = moduleMenuServiceImpl.getEntityListByHql(hql);
+		maps.put("list", list);
+		
+		setAttributeToRequest(CommonConst.PAGE_NAME, page);
+		return "user/authorities/auth-list";
+	}
 }

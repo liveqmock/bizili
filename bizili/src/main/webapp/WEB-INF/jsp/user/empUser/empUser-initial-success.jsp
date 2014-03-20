@@ -120,7 +120,7 @@ img {border-width: 0px 0px 0px 0px}
 	 EmpUserBean.deleteUser(userId,function(data){
 		 if (data == 'success') {
 			 $('#tr'+userId).remove();//在页面上删除那一行
-			 aAlert('删除成功。');
+			 //aAlert('删除成功。');
 		 }
 	 });
  }
@@ -217,7 +217,7 @@ img {border-width: 0px 0px 0px 0px}
                 <td class="fouf">${empUser.userAccount}</td>
                 <td class="fivf">${empUser.enable}</td>
                 <td class="fouf"><fmt:formatDate value="${empUser.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                <td class="fivf"><input type="button" onclick="javascript:editUser('${empUser.userId}')" title="修改" class="tableSteelBtnEdit" />&nbsp;<input type="button" onclick="javascript:deleteUser('${empUser.userId}')" title="删除" class="tableSteelBtnDel" /></td>
+                <td class="fivf"><img src="../images/juese3.png" title="角色" style="margin-left:4px;margin-top:4px;cursor:pointer;height:22px;width:22px;" onclick="javascript:queryAuth('${role.roleId}');"></img> <img src="../images/btn_edit.gif" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:editUser('${empUser.userId}')" title="修改"/>&nbsp;<img src="../images/tu12.gif" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:deleteUser('${empUser.userId}')" title="删除"/></td>
               </tr>
               </c:forEach>
             </table>

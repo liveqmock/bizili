@@ -77,7 +77,7 @@ img {border-width: 0px 0px 0px 0px}
         			aAlert('角色使用中，无法删除！');
         		} else if(data == 'success') {
         			$('#tr'+ roleId).remove();
-        			aAlert('角色删除成功！');
+        			//aAlert('角色删除成功！');
         		}
         	});
     	}
@@ -155,7 +155,7 @@ img {border-width: 0px 0px 0px 0px}
                 
                 <td class="sixf">${role.enabled }</td>
                 <td class="fouf">${role.priority }</td>
-                <td class="fivf"><input type="button" class="pageCutSmallBtnDel" title="权限" style="font-weight:100;margin-left:0px;width:27px;" onclick="javascript:queryAuth('${role.roleId}');" value="权限" />&nbsp;<input type="button" onclick="javascript:editUser('${role.roleId}')" title="修改" class="tableSteelBtnEdit" />&nbsp;<input type="button" onclick="javascript:deleteRole('${role.roleId}')" title="删除" class="tableSteelBtnDel" /></td>
+                <td class="fivf"><img src="../images/quanxian3.png" title="权限" style="margin-left:4px;margin-top:4px;cursor:pointer;height:22px;width:22px;" onclick="javascript:queryAuth('${role.roleId}');"></img>&nbsp;<input type="button" onclick="javascript:editUser('${role.roleId}')" title="修改" class="tableSteelBtnEdit" />&nbsp;<input type="button" onclick="javascript:deleteRole('${role.roleId}')" title="删除" class="tableSteelBtnDel" /></td>
               </tr>
               </c:forEach>
             </table>

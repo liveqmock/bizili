@@ -131,7 +131,7 @@ input.iptBuySteelAdd{
 			}
 			$('#urls').val(names);
 			$('#urls').attr('readOnly',true);
-			//$('#urls').val(ids);//使用username属性封装的auth ids
+			$('#resIds').val(ids);
 		});
 		
 	});
@@ -170,7 +170,8 @@ input.iptBuySteelAdd{
 			<option value="0">否</option>
 		</select>
 		<span class="star">*</span></td><td class="star"></td>
-		<td class="twoFont">归属</td><td class="widt"><input class="widt" name="userId" type="text" /><span class="star">*</span></td><td class="star"></td>
+		<td class="twoFont">归属</td><td class="widt"><input class="widt" name="userId" type="text" />（属于哪个用户）</td><td class="star"></td>
+		
 		</tr>
 		<tr>
 		<td class="twoFont">模组</td><td class="widt">
@@ -180,15 +181,15 @@ input.iptBuySteelAdd{
 			<option value="${module.moduleId}">${module.moduleName}</option>
 			</c:forEach>
 		</select>
-		<span class="star">*</span></td><td class="star"></td>
-		<td class="twoFont">动作</td><td class="widt"><input class="widt" name="action" type="text" /><span class="star">*</span></td><td class="star"></td>
+		<span class="star">*</span>（属于哪个菜单）</td><td class="star"></td>
+		<td class="twoFont">动作</td><td class="widt"><input class="widt" name="action" type="text" />（该权限的默认URL）</td><td class="star"></td>
 		</tr>
 		<tr>
-		<td class="twoFont">资源</td><td class="widt" colspan="5"><input type="text" name="urls" id="urls" value="" class="note" /><input type="buttom" class="iptBuySteelAdd" id="addResource"/>(新增请输入，已有的请点击+选择。)</td>
+		<td class="twoFont">资源</td><td class="widt" colspan="5"><input type="hidden" name="resIds" id="resIds" value=""/><input type="text" name="urls" id="urls" value="" class="note" /><img id="addResource" src="../images/tb2.gif" style="margin-left:6px;cursor:pointer;"></img>（新增请输入，已有的请点击+选择）</td>
 		</tr>
-		<tr>
-		<td class="twoFont">备注</td><td class="widt" colspan="5"><input type="text" name="description" class="widt" /></td>
-		</tr>
+<!-- 		<tr> -->
+<!-- 		<td class="twoFont">备注</td><td class="widt" colspan="5"><input type="text" name="description" class="widt" /></td> -->
+<!-- 		</tr> -->
 	</tbody>
 	
 	</table>

@@ -32,6 +32,12 @@ import com.vteba.web.editer.LongEditor;
  * date 2012-5-5 下午9:37:30
  */
 public abstract class  BaseAction<T> {
+	public static final String SUCCESS = "success";
+	public static final String ERROR = "error";
+	
+	public static final String DETAIL = "detail";
+	public static final String LIST = "list";
+	
 	private static final Random RANDOM = new Random();
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 //	protected T entity;
@@ -79,9 +85,6 @@ public abstract class  BaseAction<T> {
 //	 * 防止表单重复提交，不使用struts2自带的
 //	 */
 //	protected String tokenName;
-	
-	public static final String DETAIL = "detail";
-	public static final String LIST = "list";
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
@@ -283,20 +286,20 @@ public abstract class  BaseAction<T> {
 	 * 直接输出json。
 	 */
 	public void renderJson(String json) {
-		response(RequestContextHolder.getResponse(), json, "application/json;charset=UTF-8");
+		response(getHttpServletResponse(), json, "application/json;charset=UTF-8");
 	}
 
 	/**
 	 * 直接输出纯HTML。
 	 */
 	public void renderHtml(String text) {
-		response(RequestContextHolder.getResponse(), text, "text/html;charset=UTF-8");
+		response(getHttpServletResponse(), text, "text/html;charset=UTF-8");
 	}
 
 	/**
 	 * 直接输出纯字符串。
 	 */
 	public void renderText(String text) {
-		response(RequestContextHolder.getResponse(), text, "text/plain;charset=UTF-8");
+		response(getHttpServletResponse(), text, "text/plain;charset=UTF-8");
 	}
 }

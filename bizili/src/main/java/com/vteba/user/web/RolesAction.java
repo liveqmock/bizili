@@ -1,17 +1,14 @@
 package com.vteba.user.web;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.common.constant.CommonConst;
-import com.vteba.user.form.RolesForm;
 import com.vteba.user.model.RoleAuth;
 import com.vteba.user.model.Roles;
 import com.vteba.user.service.IRoleAuthService;
@@ -59,16 +56,17 @@ public class RolesAction extends BaseAction<Roles> {
 	 * date 2012-6-24 下午11:22:12
 	 */
 	@RequestMapping("/roles-input")
-	public String input(RolesForm rolesForm) throws Exception {
+	public String input(Roles model) throws Exception {
 		if (isInit()) {
 			return "user/roles/roles-input-success";
 		}
-		for (Roles entity : rolesForm.getRoleList()) {
-			if (StringUtils.isNotEmpty(entity.getRoleName())) {
-				entity.setCreateTime(new Date());
-				rolesServiceImpl.save(entity);
-			}
-		}
+//		for (Roles entity : rolesForm.getRoleList()) {
+//			if (StringUtils.isNotEmpty(entity.getRoleName())) {
+//				entity.setCreateTime(new Date());
+//				rolesServiceImpl.save(entity);
+//			}
+//		}
+		rolesServiceImpl.saveRoleAuths(model);
 		return "user/roles/roles-input-success";
 	}
 	

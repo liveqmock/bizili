@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -15,25 +18,30 @@ import javax.persistence.Transient;
 public class Authorities implements java.io.Serializable {
 
 	private static final long serialVersionUID = -7617690178463797548L;
-	
+
 	private Long authId;
 	private String authName;
 	private String authDesc;
 	private Integer enabled;
 	private Long userId;
 	private String moduleId;
-	private String action;//该权限默认的url
-	private String urls;//该权限下所有的url
-	private Integer orders;//显示顺序
-	private Set<String> resUrls;//该权限下的资源url
-	//private Set<Resources> resourceSet = new HashSet<Resources>();
-	
+	private String action;// 该权限默认的url
+	private String urls;// 该权限下所有的url
+	private String resIds;// 该权限所有的资源id，瞬态的@Transient
+	private Integer orders;// 显示顺序
+	private Set<String> resUrls;// 该权限下的资源url
+	private Set<Resources> resourceSets;
+
 	public Authorities() {
 	}
 
+	public Authorities(Long authId) {
+		this.authId = authId;
+	}
+	
 	public Authorities(Long authId, String authName, String authDesc,
 			Integer enabled, Long userId, String moduleId, String action,
-			String urls, Integer orders, Set<String> resUrls) {
+			String urls, Integer orders, Set<String> resUrls, Set<Resources> resourceSets) {
 		super();
 		this.authId = authId;
 		this.authName = authName;
@@ -45,7 +53,7 @@ public class Authorities implements java.io.Serializable {
 		this.urls = urls;
 		this.orders = orders;
 		this.resUrls = resUrls;
-		//this.resourceSet = resourceSet;
+		this.resourceSets = resourceSets;
 	}
 
 	@Id
@@ -94,7 +102,7 @@ public class Authorities implements java.io.Serializable {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	
+
 	@Column(name = "module_id")
 	public String getModuleId() {
 		return moduleId;
@@ -103,7 +111,7 @@ public class Authorities implements java.io.Serializable {
 	public void setModuleId(String moduleId) {
 		this.moduleId = moduleId;
 	}
-	
+
 	@Column(name = "action")
 	public String getAction() {
 		return action;
@@ -112,7 +120,7 @@ public class Authorities implements java.io.Serializable {
 	public void setAction(String action) {
 		this.action = action;
 	}
-	
+
 	@Column
 	public String getUrls() {
 		return urls;
@@ -121,7 +129,7 @@ public class Authorities implements java.io.Serializable {
 	public void setUrls(String urls) {
 		this.urls = urls;
 	}
-	
+
 	@Column
 	public Integer getOrders() {
 		return orders;
@@ -129,6 +137,15 @@ public class Authorities implements java.io.Serializable {
 
 	public void setOrders(Integer orders) {
 		this.orders = orders;
+	}
+
+	@Transient
+	public String getResIds() {
+		return resIds;
+	}
+
+	public void setResIds(String resIds) {
+		this.resIds = resIds;
 	}
 
 	@Transient
@@ -140,15 +157,14 @@ public class Authorities implements java.io.Serializable {
 		this.resUrls = resUrls;
 	}
 
-//	@ManyToMany
-//	@JoinTable(name="auth_resource",
-//	joinColumns = {@JoinColumn(name="",referencedColumnName="")})
-//	public Set<Resources> getResourceSet() {
-//		return resourceSet;
-//	}
-//
-//	public void setResourceSet(Set<Resources> resourceSet) {
-//		this.resourceSet = resourceSet;
-//	}
-	
+	@ManyToMany
+	@JoinTable(name = "auth_resource", joinColumns = { @JoinColumn(name = "auth_id", referencedColumnName = "auth_id") }, inverseJoinColumns = { @JoinColumn(name = "resource_id", referencedColumnName = "resource_id") })
+	public Set<Resources> getResourceSets() {
+		return resourceSets;
+	}
+
+	public void setResourceSets(Set<Resources> resourceSets) {
+		this.resourceSets = resourceSets;
+	}
+
 }
