@@ -78,6 +78,13 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 		renderText(SUCCESS);
 	}
 	
+	/**
+	 * 查询角色权限列表
+	 * @param authorities 参数
+	 * @param pageBean 分页信息
+	 * @param maps 返回值
+	 * @return 角色权限列表页逻辑视图
+	 */
 	@RequestMapping("/auth-list")
 	public String list(Authorities authorities, PageBean<Authorities> pageBean, Map<String, Object> maps) {
 		page = pageBean.getPage();

@@ -56,4 +56,13 @@ public interface IEmpUserService extends IGenericService<EmpUser, Long>{
 	 * date 2012-9-7 下午4:07:37
 	 */
 	public EmpUser loadEmpUser(Long userId);
+	
+	/**
+	 * 根据用户ID加载用户，含有用户的角色信息
+	 * @param userId 用户ID
+	 * @return 用户实体EmpUser
+	 * @author yinlei
+	 * date 2014-2-7 下午4:07:37
+	 */
+	public EmpUser loadEmpUserEager(Long userId);
 }

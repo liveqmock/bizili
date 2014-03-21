@@ -10,7 +10,11 @@ import com.vteba.persister.hibernate.impl.HibernateGenericDaoImpl;
 import com.vteba.user.dao.IResourcesDao;
 import com.vteba.user.model.Resources;
 
-@Deprecated
+/**
+ * 资源dao实现。
+ * @author yinlei
+ * 2012-3-21 下午12:34:15
+ */
 @Named
 public class ResourcesDaoImpl extends HibernateGenericDaoImpl<Resources, Long> implements
 		IResourcesDao {

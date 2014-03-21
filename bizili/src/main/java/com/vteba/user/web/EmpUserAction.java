@@ -19,7 +19,6 @@ import com.vteba.user.model.EmpUser;
 import com.vteba.user.model.Roles;
 import com.vteba.user.service.IAuthoritiesService;
 import com.vteba.user.service.IEmpUserService;
-import com.vteba.user.service.IRolesService;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
@@ -34,7 +33,6 @@ import com.vteba.web.action.PageBean;
 public class EmpUserAction extends BaseAction<EmpUser> {
 
 	private IEmpUserService empUserServiceImpl;
-	private IRolesService rolesServiceImpl;
 	private IAuthoritiesService authoritiesServiceImpl;
 	private ShaPasswordEncoder shaPasswordEncoder;
 	private List<Long> ids;//封装页面的选择的id
@@ -42,11 +40,6 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 	@Inject
 	public void setEmpUserServiceImpl(IEmpUserService empUserServiceImpl) {
 		this.empUserServiceImpl = empUserServiceImpl;
-	}
-	
-	@Inject
-	public void setRolesServiceImpl(IRolesService rolesServiceImpl) {
-		this.rolesServiceImpl = rolesServiceImpl;
 	}
 	
 	@Inject
@@ -153,6 +146,18 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 		maps.put("list", list);
 		setAttributeToRequest(CommonConst.PAGE_NAME, rolesPage);
 		return "user/empUser/empUser-roles-success";
+	}
+	
+	/**
+	 * 查看某一用户的所有角色。
+	 * @param user 用户
+	 * @param maps 返回值Map
+	 */
+	@RequestMapping("/user-roles-list")
+	public String userRolesList(EmpUser user, Map<String, Object> maps) {
+		EmpUser empUser = empUserServiceImpl.loadEmpUserEager(user.getUserId());
+		maps.put("list", empUser.getRoleSet());
+		return "user/empUser/user-roles-list";
 	}
 	
 	public String authority() throws Exception {

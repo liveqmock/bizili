@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -135,6 +136,12 @@ public class EmpUserServiceImpl extends GenericServiceImpl<EmpUser, Long> implem
 		}
 		user.setUsername(roleIds);
 		user.setRoleNames(roleNames);
+		return user;
+	}
+	
+	public EmpUser loadEmpUserEager(Long userId) {
+		EmpUser user = empUserDaoImpl.get(userId);
+		Hibernate.initialize(user.getRoleSet());
 		return user;
 	}
 }

@@ -25,7 +25,7 @@ img {border-width: 0px 0px 0px 0px}
 <%@ include file="/WEB-INF/inc/script.inc" %>
 <%@ include file="/WEB-INF/inc/style.inc" %>
 <script type="text/javascript" src="<c:url value='/dwr/interface/EmpUserBean.js'></c:url>"></script>
-<script type="text/javascript" src="<c:url value='/js/lhgdialog/lhgdialog.min.js'></c:url>"></script>
+<%-- <script type="text/javascript" src="<c:url value='/js/jquery-1.8.3.min.js'></c:url>"></script> --%>
 <script type="text/javascript">
     $(document).ready(function(){
     	$('#allCheckSelected').click(function(){
@@ -127,7 +127,16 @@ img {border-width: 0px 0px 0px 0px}
  }
  
  function queryRoles(userId) {
-	 
+	 $.dialog({
+			title:'用户角色明细',
+			content:'url:<c:url value="/users/user-roles-list.htm?userId=' + userId + '"/>',
+			width:804,
+			height:600,
+			min:true,
+			max:true,
+			esc:true,
+			lock:true
+			});
  }
 </script>
 </head>

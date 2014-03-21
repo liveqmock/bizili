@@ -24,7 +24,7 @@ import com.vteba.web.action.PageBean;
  */
 @Controller
 @RequestMapping("/users")
-public class AuthResourcesAction extends BaseAction<Resources> {
+public class ResourcesAction extends BaseAction<Resources> {
 
 	@Inject
 	private IResourcesService resourcesServiceImpl;

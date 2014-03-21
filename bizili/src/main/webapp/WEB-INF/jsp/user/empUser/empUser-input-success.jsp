@@ -139,18 +139,16 @@ input.iptBuySteelAdd{
 	}
 	$(document).ready(function(){
 		$('#addAuth').click(function(){
-			var returnValue = window.showModalDialog('<c:url value="/users/roles-list.htm"/>','', "dialogWidth=810px;dialogHeight=600px;status=no;help=no;scrollbars=no;dialogLeft:360px;dialogTop:140px");
-			var ids = "";
-			var names = "";
-			var rets = returnValue.split(';');
-			for(var i =0; i<rets.length-1; i++){
-				var temp = rets[i].split('#');
-				ids += temp[0]+",";
-				names += temp[1]+",";
-			}
-			$('#authName').val(names);
-			$('#authName').attr('readOnly',true);
-			$('#authId').val(ids);//使用username属性封装的auth ids
+			$.dialog({
+				title:'用户角色查询',
+				content:'url:<c:url value="/users/roles-list.htm"/>',
+				width:804,
+				height:620,
+				min:true,
+				max:true,
+				esc:true,
+				lock:true
+			});
 		});
 		
 	});

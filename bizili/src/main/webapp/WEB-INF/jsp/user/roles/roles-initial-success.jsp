@@ -65,7 +65,17 @@ img {border-width: 0px 0px 0px 0px}
     
     //查询角色的权限
     function queryAuth(roleId){
-    	window.showModalDialog('<c:url value="/users/roles-roleAuthList.htm?roleId='+roleId+'"/>','', "dialogWidth=810px;dialogHeight=600px;status=no;help=no;scrollbars=no;dialogLeft:360px;dialogTop:140px");
+    	//window.showModalDialog('<c:url value="/users/roles-roleAuthList.htm?roleId='+roleId+'"/>','', "dialogWidth=810px;dialogHeight=600px;status=no;help=no;scrollbars=no;dialogLeft:360px;dialogTop:140px");
+    	$.dialog({
+			title:'角色权限明细',
+			content:'url:<c:url value="/users/roles-roleAuthList.htm?roleId='+roleId+'"/>',
+			width:804,
+			height:600,
+			min:true,
+			max:true,
+			esc:true,
+			lock:true
+			});
 	}
     
     //删除单笔数据
@@ -110,7 +120,7 @@ img {border-width: 0px 0px 0px 0px}
 					<input type="hidden" id="deletedIds" value="">
 						<table class="bugSteel first" style="border-top: 0;">
 							<tr>
-								<td class="twof">&nbsp;&nbsp;角色名</td>
+								<td class="twof">&nbsp;角色名</td>
 								<td class="twef">
 								<input type="text" name="roleName" class="tf" />
 								</td>
@@ -155,7 +165,7 @@ img {border-width: 0px 0px 0px 0px}
                 
                 <td class="sixf">${role.enabled }</td>
                 <td class="fouf">${role.priority }</td>
-                <td class="fivf"><img src="../images/quanxian3.png" title="权限" style="margin-left:4px;margin-top:4px;cursor:pointer;height:22px;width:22px;" onclick="javascript:queryAuth('${role.roleId}');"></img>&nbsp;<input type="button" onclick="javascript:editUser('${role.roleId}')" title="修改" class="tableSteelBtnEdit" />&nbsp;<input type="button" onclick="javascript:deleteRole('${role.roleId}')" title="删除" class="tableSteelBtnDel" /></td>
+                <td class="fivf"><img src="../images/quanxian3.png" title="角色权限" style="margin-left:4px;margin-top:4px;cursor:pointer;height:22px;width:22px;" onclick="javascript:queryAuth('${role.roleId}');"></img>&nbsp;<input type="button" onclick="javascript:editUser('${role.roleId}')" title="修改" class="tableSteelBtnEdit" />&nbsp;<input type="button" onclick="javascript:deleteRole('${role.roleId}')" title="删除" class="tableSteelBtnDel" /></td>
               </tr>
               </c:forEach>
             </table>

@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ include file="../../../inc/taglib.inc"%>
-<%@ include file="../../../inc/constants.inc" %>
-<%@ include file="../../../inc/script.inc" %>
-<%@ include file="../../../inc/style.inc" %>
+<%@ include file="/WEB-INF/inc/taglib.inc"%>
+<%@ include file="/WEB-INF/inc/constants.inc" %>
+<%@ include file="/WEB-INF/inc/script.inc" %>
+<%@ include file="/WEB-INF/inc/style.inc" %>
 <%@ taglib prefix="vte" uri="/WEB-INF/tld/" %>
 
 <html>
@@ -44,14 +44,19 @@
     	});
     	$('#btnReturn').click(function(){
     		var listSize = parseInt($('#listSize').val());
-    		var ret = "";
+    		var ids = "";
+    		var names = "";
     		for (var i=1; i<=listSize; i++) {
     			if ($('#check'+i).attr('checked')=='checked'){
-    				ret += $('#check'+i).val()+";";
+    				var temp = $('#check'+i).val().split('#');
+    				ids += temp[0]+",";
+        			names += temp[1]+",";
     			}
     		}
-    		window.returnValue = ret;
-    		window.close();
+    		W.$('#authName').val(names);
+    		W.$('#authName').attr('readOnly',true);
+    		W.$('#authId').val(ids);
+    		api.close();
     	});
     	$('#queryButton').click(function(){
     		var queryForm = $('#queryForm');

@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ include file="../../../inc/taglib.inc"%>
-<%@ include file="../../../inc/constants.inc" %>
-<%@ include file="../../../inc/script.inc" %>
-<%@ include file="../../../inc/style.inc" %>
+<%@ include file="/WEB-INF/inc/taglib.inc"%>
+<%@ include file="/WEB-INF/inc/constants.inc" %>
+<%@ include file="/WEB-INF/inc/script.inc" %>
+<%@ include file="/WEB-INF/inc/style.inc" %>
 <%@ taglib prefix="vte" uri="/WEB-INF/tld/" %>
 <html>
 	<head>      
@@ -49,8 +49,22 @@
     				ret += $('#check'+i).val()+";";
     			}
     		}
-    		window.returnValue = ret;
-    		window.close();
+    		var ids = "";
+			var names = "";
+			var rets = ret.split(';');
+			for(var i =0; i<rets.length-1; i++){
+				var temp = rets[i].split('#');
+				ids += temp[0]+",";
+				names += temp[1]+",";
+			}
+			//W.$.dialog.data('urls',names);
+			//W.$.dialog.data('resIds',ids);
+			W.$('#urls').val(names);
+			W.$('#urls').attr('readOnly',true);
+			W.$('#resIds').val(ids);
+    		//window.returnValue = ret;
+    		//window.close();
+    		api.close();
     	});
     	$('#queryButton').click(function(){
     		var queryForm = $('#queryForm');

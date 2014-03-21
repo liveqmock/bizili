@@ -31,22 +31,21 @@ img {border-width: 0px 0px 0px 0px}
     	});
     });
     function deleteRes(id) {
-		var del = confirm('你确定要删除该资源？');
-		if (del) {
+    	$.dialog.confirm('你确定要删除这条资源吗？', function(){
 			$.ajax({
 	            type:"post",
 	            dataType:"text",
 	            url: '${ctx}/users/resources-delete.htm?resourceId=' + id,
 	            success: function(msg){
-	                //alert(msg);
-	                //window.location.reload();
 	            	$('#tr'+id).remove();
 	            },
 	            error: function (msg) {
 	                alert(msg.responseText);
 	            }
 	        });
-		}
+    	}, function(){
+    	    $.dialog.tips('不删除');
+    	});
 	}
 </script>
 </head>

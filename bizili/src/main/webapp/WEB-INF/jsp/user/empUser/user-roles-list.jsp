@@ -53,23 +53,23 @@
   <div id="container">
 <div id="epMcContent" style="margin-bottom:100px;">
 	<div class="epMcCtContent">
-	<h3 class="bordFont bigFont">角色权限明细</h3>
+	<h3 class="bordFont bigFont">用户角色明细</h3>
 	<div class="tab">
 		<form action="roles-list.htm" id="queryForm" name="queryForm" method="post">
 			<table class="tableSteel">
               <tr class="title" style="border-right:1px #bfd2ed solid;">
-                <td class="twof">序号</td>
-                <td class="fouf">权限名</td>
-                <td class="fivf">描述</td>
-                <td class="fivf">可用</td>
+                <td class="twof" ></td>
+                <td class="fouf" >角色名</td>
+                <td class="sixf" style="width:300px;">角色描述</td>
+                <td class="twof" style="width:100px;">是否可用</td>
               </tr>
               
-              <c:forEach items="${list}" var="roleAuth" varStatus="st">
+              <c:forEach items="${list}" var="role" varStatus="st">
               <tr style="${st.count%2==0?'background:#f3f3f3':''}">
-                <td class="twof"><input type="checkbox" id="check${st.count}" /></td>
-                <td class="fouf">${roleAuth.authName}</td>
-                <td class="sixf">${roleAuth.authDesc}</td>
-                <td class="fivf">${roleAuth.flag}</td>
+                <td class="twof"></td>
+                <td class="fouf">${role.roleName}</td>
+                <td class="sixf" style="width:300px;">${role.roleDesc}</td>
+                <td class="twof" style="width:100px;"><c:if test="${role.enabled == 1}">是</c:if><c:if test="${role.enabled != 1}">否</c:if> </td>
               </tr>
               </c:forEach>
             </table>

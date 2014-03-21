@@ -9,7 +9,11 @@ import com.vteba.user.dao.IResourcesDao;
 import com.vteba.user.model.Resources;
 import com.vteba.user.service.IResourcesService;
 
-@Deprecated
+/**
+ * 资源service实现。
+ * @author yinlei
+ * 2012-3-21 下午12:33:14
+ */
 @Named
 public class ResourcesServiceImpl extends GenericServiceImpl<Resources, Long> implements IResourcesService {
 

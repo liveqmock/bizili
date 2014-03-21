@@ -120,18 +120,28 @@ input.iptBuySteelAdd{
 	}
 	$(document).ready(function(){
 		$('#addResource').click(function(){
-			var returnValue = window.showModalDialog('<c:url value="/users/resources-list.htm"/>','', "dialogWidth=820px;dialogHeight=600px;status=no;help=no;scrollbars=no;dialogLeft:360px;dialogTop:140px");
-			var ids = "";
-			var names = "";
-			var rets = returnValue.split(';');
-			for(var i =0; i<rets.length-1; i++){
-				var temp = rets[i].split('#');
-				ids += temp[0]+",";
-				names += temp[1]+",";
-			}
-			$('#urls').val(names);
-			$('#urls').attr('readOnly',true);
-			$('#resIds').val(ids);
+			$.dialog({
+				title:'角色权限明细',
+				content:'url:<c:url value="/users/resources-list.htm"/>',
+				width:820,
+				height:620,
+				min:true,
+				max:true,
+				esc:true,
+				lock:true
+			});
+			//var returnValue = window.showModalDialog('<c:url value="/users/resources-list.htm"/>','', "dialogWidth=820px;dialogHeight=600px;status=no;help=no;scrollbars=no;dialogLeft:360px;dialogTop:140px");
+// 			var ids = "";
+// 			var names = "";
+// 			var rets = returnValue.split(';');
+// 			for(var i =0; i<rets.length-1; i++){
+// 				var temp = rets[i].split('#');
+// 				ids += temp[0]+",";
+// 				names += temp[1]+",";
+// 			}
+// 			$('#urls').val(names);
+// 			$('#urls').attr('readOnly',true);
+// 			$('#resIds').val(ids);
 		});
 		
 	});

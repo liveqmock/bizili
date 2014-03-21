@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ include file="../../../inc/taglib.inc"%>
-<%@ include file="../../../inc/constants.inc" %>
-<%@ include file="../../../inc/script.inc" %>
-<%@ include file="../../../inc/style.inc" %>
+<%@ include file="/WEB-INF/inc/taglib.inc"%>
+<%@ include file="/WEB-INF/inc/constants.inc" %>
+<%@ include file="/WEB-INF/inc/script.inc" %>
+<%@ include file="/WEB-INF/inc/style.inc" %>
 <%@ taglib prefix="vte" uri="/WEB-INF/tld/" %>
 <html>
 	<head>      
@@ -43,14 +43,19 @@
     	});
     	$('#btnReturn').click(function(){
     		var listSize = parseInt($('#listSize').val());
-    		var ret = "";
+    		var ids = "";
+    		var names = "";
     		for (var i=1; i<=listSize; i++) {
     			if ($('#check'+i).attr('checked')=='checked'){
-    				ret += $('#check'+i).val()+";";
+    				var temp = $('#check'+i).val().split('#');
+    				ids += temp[0]+",";
+        			names += temp[1]+",";
     			}
     		}
-    		window.returnValue = ret;
-    		window.close();
+    		W.$('#authNames').val(names);
+    		W.$('#authNames').attr('readOnly',true);
+    		W.$('#authIds').val(ids);
+    		api.close();
     	});
     	$('#queryButton').click(function(){
     		var queryForm = $('#queryForm');
@@ -63,7 +68,7 @@
   <div id="container">
 <div id="epMcContent" style="margin-bottom:100px;">
 	<div class="epMcCtContent">
-	<h3 class="bordFont bigFont">资源查询</h3>
+	<h3 class="bordFont bigFont">角色权限查询</h3>
 	<div class="tab">
 		<form action="auth-list.htm" id="queryForm" name="queryForm" method="post">
 		<table class="bugSteel first" style="border-top: 0;">
@@ -72,11 +77,11 @@
 								<td class="twef">
 								<input type="text" name="authName" />
 								</td>
-								<td class="twof">权限描述</td>
+								<td class="fouf">权限描述</td>
 								<td class="twef">
 								<input type="text" name="authDesc" />
 								</td>
-								<td class="twof">所属模块</td>
+								<td class="fouf">所属模块</td>
 								<td class="twef">
 								<select name="moduleId" id="moduleId">
 									<option value="">--请选择--</option>
@@ -94,7 +99,7 @@
 			<table class="tableSteel">
               <tr class="title" style="border-right:1px #bfd2ed solid;">
                 <td class="twof"></td>
-                <td class="fivf">权限名</td>
+                <td class="fouf">权限名</td>
                 <td class="fivf">权限描述</td>
                 <td class="fivf">是否启用</td>
                 <td class="fivf">所属模块</td>
@@ -103,7 +108,7 @@
               <c:forEach items="${listResult}" var="auth" varStatus="st">
               <tr style="${st.count%2==0?'background:#f3f3f3':''}">
                 <td class="twof"><input type="checkbox" id="check${st.count}" value="${auth.authId}#${auth.authName}"/></td>
-                <td class="fivf">${auth.authName}</td>
+                <td class="fouf">${auth.authName}</td>
                 <td class="fivf">${auth.authDesc}</td>
                 <td class="fivf">${auth.enabled}</td>
                 <td class="fivf">${auth.moduleId}</td>

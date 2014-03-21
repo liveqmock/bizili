@@ -66,18 +66,16 @@ span.star{
 <script type="text/javascript">
 $(document).ready(function(){
 	$('#addAuth').click(function(){
-		var returnValue = window.showModalDialog('<c:url value="/users/auth-list.htm"/>','', "dialogWidth=810px;dialogHeight=600px;status=no;help=no;scrollbars=no;dialogLeft:360px;dialogTop:140px");
-		var ids = "";
-		var names = "";
-		var rets = returnValue.split(';');
-		for(var i =0; i<rets.length-1; i++){
-			var temp = rets[i].split('#');
-			ids += temp[0]+",";
-			names += temp[1]+",";
-		}
-		$('#authNames').val(names);
-		$('#authNames').attr('readOnly',true);
-		$('#authIds').val(ids);
+		$.dialog({
+			title:'角色权限查询',
+			content:'url:<c:url value="/users/auth-list.htm"/>',
+			width:820,
+			height:620,
+			min:true,
+			max:true,
+			esc:true,
+			lock:true
+		});
 	});
 	$('#saveRole').click(function(){
 		var queryForm = $('#queryForm');

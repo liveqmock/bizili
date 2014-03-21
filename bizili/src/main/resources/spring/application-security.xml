@@ -72,7 +72,7 @@
 	
 	<!--加密使用的盐值-->
 	<bean id="reflectionSaltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
-		<property name="userPropertyToUse" value="username" />
+		<property name="userPropertyToUse" value="name" />
 	</bean>
 	
 	<!--Dao认证提供者
