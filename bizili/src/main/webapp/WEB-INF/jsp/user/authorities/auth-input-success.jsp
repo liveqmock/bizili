@@ -123,7 +123,7 @@ input.iptBuySteelAdd{
 			$.dialog({
 				title:'权限资源查询',
 				content:'url:<c:url value="/users/resources-list.htm"/>',
-				width:820,
+				width:804,
 				height:620,
 				min:true,
 				max:true,
