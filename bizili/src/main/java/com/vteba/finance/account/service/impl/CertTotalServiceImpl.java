@@ -15,7 +15,7 @@ import com.vteba.finance.account.model.Certificate;
 import com.vteba.finance.account.service.ICertTotalService;
 import com.vteba.finance.account.service.ICertificateService;
 import com.vteba.finance.currency.model.Currency;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 import com.vteba.security.spring.SecurityContextHolderUtils;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.user.model.EmpUser;

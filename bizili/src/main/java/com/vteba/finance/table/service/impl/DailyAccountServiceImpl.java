@@ -13,7 +13,7 @@ import com.vteba.finance.table.model.AccountBalance;
 import com.vteba.finance.table.model.DailyAccount;
 import com.vteba.finance.table.service.IAccountBalanceService;
 import com.vteba.finance.table.service.IDailyAccountService;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.util.common.BigDecimalUtils;
 import com.vteba.util.common.ObjectUtils;
@@ -52,7 +52,7 @@ public class DailyAccountServiceImpl extends GenericServiceImpl<DailyAccount, St
 		codeList.add("100202");
 		//删除原有的数据
 		String delHql = " delete from DailyAccount d where d.accountPeriod = ?1 ";
-		dailyAccountDaoImpl.executeUpdateByHql(delHql, false, period);
+		dailyAccountDaoImpl.executeHqlUpdate(delHql, false, period);
 		
 		for (String code : codeList) {
 			//--------------上日余额--------------//

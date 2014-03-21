@@ -48,7 +48,7 @@ public class AccountBalanceAction extends BaseAction<AccountBalance> {
 		ReflectUtils.emptyToNull(model);
 		Map<String, String> param = new LinkedHashMap<String, String>();
 		param.put("subjectCode", "asc");
-		listResult = accountBalanceServiceImpl.getListByPropertyEqual(AccountBalance.class, model, param);
+		listResult = accountBalanceServiceImpl.getListByCriteria(AccountBalance.class, model, param);
 		
 		//String hql = "select sum(ab.startBalanceDebit),sum(ab.startBalanceCredit) from AccountBalance ab";
 		//可以使用hql汇总来做，但是where条件

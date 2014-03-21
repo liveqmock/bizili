@@ -43,7 +43,7 @@ public class RolesAction extends BaseAction<Roles> {
 		Roles entity = new Roles();
 		entity.setPriority(1);
 		page = pageBean.getPage();
-		rolesServiceImpl.queryForPageByModel(page, entity);
+		rolesServiceImpl.queryForPageByCriteria(page, entity);
 		listResult = page.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, page);
@@ -92,7 +92,7 @@ public class RolesAction extends BaseAction<Roles> {
 		entity.setRoleName(model.getRoleName());
 		entity.setRoleDesc(model.getRoleDesc());
 		entity.setPriority(1);
-		listResult = rolesServiceImpl.getListByPropertyLike(Roles.class, entity);
+		listResult = rolesServiceImpl.getListByCriteriaLike(entity);
 		maps.put("listResult", listResult);
 		return "user/roles/roles-list";
 	}

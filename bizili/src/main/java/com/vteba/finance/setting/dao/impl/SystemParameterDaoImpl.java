@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.setting.dao.ISystemParameterDao;
 import com.vteba.finance.setting.model.SystemParameter;
-import com.vteba.persister.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tm.hibernate.impl.HibernateGenericDaoImpl;
 
 /**
  * 系统参数设定Dao实现

@@ -16,7 +16,7 @@ import com.vteba.finance.table.model.DetailAccount;
 import com.vteba.finance.table.service.IAccountBalanceService;
 import com.vteba.finance.table.service.IAccountSummaryService;
 import com.vteba.finance.table.service.IDetailAccountService;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.util.common.BigDecimalUtils;
 import com.vteba.util.common.ObjectUtils;
@@ -51,7 +51,7 @@ public class DetailAccountServiceImpl extends GenericServiceImpl<DetailAccount, 
 		
 		//删除原有数据
 		String delHql = " delete from DetailAccount d where d.accountPeriod = ?1 ";
-		detailAccountDaoImpl.executeUpdateByHql(delHql, false, period);
+		detailAccountDaoImpl.executeHqlUpdate(delHql, false, period);
 		
 		//本期发生的一级会计科目，需要处理，期初，本期，期末，本年累计
 		String oneHql = " select distinct c.oneLevel from Certificate c where c.accountPeriod = ?1 ";
@@ -67,7 +67,7 @@ public class DetailAccountServiceImpl extends GenericServiceImpl<DetailAccount, 
 	public void createDetailAccount(List<String> subjectList, String period, Integer level) {
 		if (subjectList != null && subjectList.size() > 0) {
 			for (String code : subjectList) {
-				Subject sub = subjectServiceImpl.getUniqueResultByProperty(Subject.class, "subjectCode", code);
+				Subject sub = subjectServiceImpl.uniqueResultByCriteria(Subject.class, "subjectCode", code);
 				//查询该科目及子科目的凭证
 				StringBuilder hql = new StringBuilder(" select new DetailAccount(t.accountPeriod,c.subjectId,c.subjectName,c.currency,t.createDate,t.codeNo,c.summary,c.debitAmount,c.creditAmount) ");
 				hql.append(" from CertTotal t join t.childCerts c ");

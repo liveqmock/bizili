@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.common.constant.CommonConst;
-import com.vteba.persister.generic.Page;
+import com.vteba.tm.generic.Page;
 import com.vteba.security.spring.SecurityContextHolderUtils;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.model.EmpUser;
@@ -56,7 +56,7 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 	public String initial(EmpUser model, PageBean<EmpUser> pageBean, Map<String, Object> maps) throws Exception {
 		Page<EmpUser> pages = new Page<EmpUser>();
 		ReflectUtils.emptyToNulls(model);
-		pages = empUserServiceImpl.queryForPageByModel(pageBean.getPage(), model);
+		pages = empUserServiceImpl.queryForPageByCriteria(pageBean.getPage(), model);
 		listResult = pages.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);

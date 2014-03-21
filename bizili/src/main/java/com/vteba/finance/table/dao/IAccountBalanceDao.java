@@ -1,7 +1,7 @@
 package com.vteba.finance.table.dao;
 
 import com.vteba.finance.table.model.AccountBalance;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 
 /**
  * 科目余额表DAO接口

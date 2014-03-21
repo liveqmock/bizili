@@ -6,7 +6,7 @@ import javax.inject.Named;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import com.vteba.persister.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tm.hibernate.impl.HibernateGenericDaoImpl;
 import com.vteba.user.dao.IRoleAuthDao;
 import com.vteba.user.model.RoleAuth;
 

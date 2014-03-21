@@ -1,7 +1,7 @@
 package com.vteba.finance.assets.dao;
 
 import com.vteba.finance.assets.model.DepreDetails;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 
 /**
  * 折旧明细表DAO

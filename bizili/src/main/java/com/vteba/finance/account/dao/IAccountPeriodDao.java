@@ -1,7 +1,7 @@
 package com.vteba.finance.account.dao;
 
 import com.vteba.finance.account.model.AccountPeriod;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 
 /**
  * 会计期间DAO

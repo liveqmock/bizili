@@ -14,7 +14,7 @@ import static org.objectweb.asm.Opcodes.*;
 
 public abstract class FieldAccess {
 	private String[] fieldNames;
-	private List<Class<?>> fieldTypes;
+	private Class<?>[] fieldTypes;
 	
 	public int getIndex (String fieldName) {
 		for (int i = 0, n = fieldNames.length; i < n; i++)
@@ -34,7 +34,7 @@ public abstract class FieldAccess {
 		return fieldNames;
 	}
 	
-	public List<Class<?>> getFieldTypes() {
+	public Class<?>[] getFieldTypes() {
 		return fieldTypes;
 	}
 	
@@ -86,7 +86,7 @@ public abstract class FieldAccess {
 				Field field = declaredFields[i];
 				int modifiers = field.getModifiers();
 				if (Modifier.isStatic(modifiers)) continue;
-				//if (Modifier.isPrivate(modifiers)) continue;
+				if (Modifier.isPrivate(modifiers)) continue;
 				fields.add(field);
 				fieldTypes.add(field.getType());
 			}
@@ -140,7 +140,9 @@ public abstract class FieldAccess {
 		try {
 			FieldAccess access = (FieldAccess)accessClass.newInstance();
 			access.fieldNames = fieldNames;
-			access.fieldTypes = fieldTypes;
+			Class<?>[] fieldType = new Class<?>[fieldTypes.size()];
+			fieldTypes.toArray(fieldType);
+			access.fieldTypes = fieldType;
 			return access;
 		} catch (Exception ex) {
 			throw new RuntimeException("Error constructing field access class: " + accessClassName, ex);

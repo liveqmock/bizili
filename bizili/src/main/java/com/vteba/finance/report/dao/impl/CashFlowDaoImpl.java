@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.report.dao.ICashFlowDao;
 import com.vteba.finance.report.model.CashFlow;
-import com.vteba.persister.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tm.hibernate.impl.HibernateGenericDaoImpl;
 
 /**
  * 现金流量表DAO实现

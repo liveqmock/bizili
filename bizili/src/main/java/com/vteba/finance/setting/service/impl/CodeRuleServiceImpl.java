@@ -6,7 +6,7 @@ import javax.inject.Named;
 import com.vteba.finance.setting.dao.ICodeRuleDao;
 import com.vteba.finance.setting.model.CodeRule;
 import com.vteba.finance.setting.service.ICodeRuleService;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 
 /**

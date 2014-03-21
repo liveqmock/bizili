@@ -6,7 +6,7 @@ import javax.inject.Named;
 import com.vteba.finance.table.dao.IQuantityAmountLedgerDao;
 import com.vteba.finance.table.model.QuantityAmountLedger;
 import com.vteba.finance.table.service.IQuantityAccountLedgerService;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 
 /**

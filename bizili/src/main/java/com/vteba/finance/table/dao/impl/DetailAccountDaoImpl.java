@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.table.dao.IDetailAccountDao;
 import com.vteba.finance.table.model.DetailAccount;
-import com.vteba.persister.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tm.hibernate.impl.HibernateGenericDaoImpl;
 
 /**
  * 明细账DAO实现

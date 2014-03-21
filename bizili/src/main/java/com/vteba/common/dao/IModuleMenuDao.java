@@ -1,7 +1,7 @@
 package com.vteba.common.dao;
 
 import com.vteba.common.model.ModuleMenu;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 
 /**
  * 菜单模组DAO

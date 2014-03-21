@@ -17,10 +17,10 @@ import com.vteba.finance.account.dao.SubjectDao;
 import com.vteba.finance.account.model.Subject;
 import com.vteba.finance.account.service.ISubjectService;
 import com.vteba.finance.cache.FinanceCacheName;
-import com.vteba.persister.generic.Page;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
-import com.vteba.persister.hibernate.QueryStatement;
-import com.vteba.persister.jdbc.spring.SpringJdbcTemplate;
+import com.vteba.tm.generic.Page;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.QueryStatement;
+import com.vteba.tm.jdbc.spring.SpringJdbcTemplate;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.user.dao.UserDao;
 import com.vteba.user.model.EmpUser;
@@ -140,7 +140,7 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
     		String hql = "update Subject s set s.childNumber = (s.childNumber + 1) where s.id =:id ";
     		Map<String, Object> param = new HashMap<String, Object>();
     		param.put("id", parent.getId());
-    		subjectDaoImpl.executeUpdateByHql(hql, false, param);
+    		subjectDaoImpl.executeHqlUpdate(hql, false, param);
     	} else {//新增的是一级科目
     		model.setId(null);
     		model.setParentName(null);

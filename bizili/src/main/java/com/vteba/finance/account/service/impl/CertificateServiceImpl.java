@@ -8,7 +8,7 @@ import javax.inject.Named;
 import com.vteba.finance.account.dao.ICertificateDao;
 import com.vteba.finance.account.model.Certificate;
 import com.vteba.finance.account.service.ICertificateService;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 
 @Named

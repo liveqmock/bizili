@@ -32,14 +32,14 @@ public class AssetsLiabilitiesAction extends BaseAction<AssetsLiabilities> {
 	
 	@RequestMapping("/assetsliabilities-initial")
 	public String initial(AssetsLiabilities model, Map<String, Object> maps) throws Exception {
-		ReflectUtils.emptyToNull(model);
+		ReflectUtils.emptyToNulls(model);
 		if (model.getAccountPeriod() == null) {//默认查询当前会计期间
 			String accountPeriod = accountPeriodServiceImpl.getCurrentPeriod();
 			model.setAccountPeriod(accountPeriod);
 		}
-		Map<String, Object> param = new LinkedHashMap<String, Object>();
+		Map<String, String> param = new LinkedHashMap<String, String>();
 		param.put("orders", "asc");
-		listResult = assetsLiabilitiesServiceImpl.getListByPropertyEqual(AssetsLiabilities.class, model, param);
+		listResult = assetsLiabilitiesServiceImpl.getListByCriteria(AssetsLiabilities.class, model, param);
 		maps.put("listResult", listResult);
 		return "report/assetsliabilities/assetsliabilities-initial-success";
 	}

@@ -1,7 +1,7 @@
 package com.vteba.finance.account.dao;
 
 import com.vteba.finance.account.model.Subject;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 
 /**
  * 科目代码DAO

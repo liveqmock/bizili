@@ -43,7 +43,7 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 	public String initial(Authorities model, PageBean<Authorities> pageBean, Map<String, Object> maps) throws Exception {
 		page = pageBean.getPage();
 		Authorities entity = new Authorities();
-		authoritiesServiceImpl.queryForPageByModel(page, entity);
+		authoritiesServiceImpl.queryForPageByCriteria(page, entity);
 		listResult = page.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, page);
@@ -89,7 +89,7 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 	public String list(Authorities authorities, PageBean<Authorities> pageBean, Map<String, Object> maps) {
 		page = pageBean.getPage();
 		page.setPageSize(20);
-		authoritiesServiceImpl.queryForPageByModel(page, authorities);
+		authoritiesServiceImpl.queryForPageByCriteria(page, authorities);
 		listResult = page.getResult();
 		maps.put("listResult", listResult);
 		

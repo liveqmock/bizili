@@ -31,7 +31,7 @@ public class SystemParamAction extends BaseAction<SystemParameter> {
 	@RequestMapping("/systemparam-initial")
 	public String initial(SystemParameter model, Map<String, Object> maps) throws Exception {
 		ReflectUtils.emptyToNull(model);
-		listResult = systemParameterServiceImpl.getListByPropertyEqual(SystemParameter.class, model);
+		listResult = systemParameterServiceImpl.getListByCriteria(model);
 		maps.put("listResult", listResult);
 		return "setting/systemparam/systemparam-initial-success";
 	}

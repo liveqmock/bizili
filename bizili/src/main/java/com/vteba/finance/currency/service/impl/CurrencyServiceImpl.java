@@ -6,7 +6,7 @@ import javax.inject.Named;
 import com.vteba.finance.currency.dao.ICurrencyDao;
 import com.vteba.finance.currency.model.Currency;
 import com.vteba.finance.currency.service.ICurrencyService;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 
 /**

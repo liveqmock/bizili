@@ -17,7 +17,7 @@ import com.vteba.common.constant.CommonConst;
 import com.vteba.common.constant.FileConst;
 import com.vteba.finance.account.model.Subject;
 import com.vteba.finance.account.service.ISubjectService;
-import com.vteba.persister.generic.Page;
+import com.vteba.tm.generic.Page;
 import com.vteba.service.context.RequestContextHolder;
 import com.vteba.util.common.ExcelExportUtils;
 import com.vteba.util.common.ExcelImportUtils;
@@ -62,7 +62,7 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 			page.setOrderBy("subjectCode");
 		}
 		//subjectServiceImpl.test();
-		pages = subjectServiceImpl.queryForPageByModel(page, model);
+		pages = subjectServiceImpl.queryForPageByCriteria(page, model);
 		listResult = pages.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);

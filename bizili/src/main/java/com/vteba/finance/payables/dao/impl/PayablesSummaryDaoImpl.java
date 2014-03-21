@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.payables.dao.IPayablesSummaryDao;
 import com.vteba.finance.payables.model.PayablesSummary;
-import com.vteba.persister.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tm.hibernate.impl.HibernateGenericDaoImpl;
 
 /**
  * 应付汇总表DAO实现

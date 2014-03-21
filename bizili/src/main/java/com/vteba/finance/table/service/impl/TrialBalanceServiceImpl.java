@@ -8,7 +8,7 @@ import javax.inject.Named;
 import com.vteba.finance.table.dao.ITrialBalanceDao;
 import com.vteba.finance.table.model.TrialBalance;
 import com.vteba.finance.table.service.ITrialBalanceService;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.util.common.ObjectUtils;
 
@@ -58,7 +58,7 @@ public class TrialBalanceServiceImpl extends GenericServiceImpl<TrialBalance, St
 		
 		//删除原有的数据
 		String delHql = " delete from TrialBalance where accountPeriod = ?1 ";
-		trialBalanceDaoImpl.executeUpdateByHql(delHql, false, period);
+		trialBalanceDaoImpl.executeHqlUpdate(delHql, false, period);
 		
 		for (TrialBalance entity : trialList) {
 			trialBalanceDaoImpl.persist(entity);

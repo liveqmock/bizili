@@ -1,7 +1,7 @@
 package com.vteba.finance.receivables.dao;
 
 import com.vteba.finance.receivables.model.ReceivablesDetail;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 
 /**
  * 应收明细表DAO

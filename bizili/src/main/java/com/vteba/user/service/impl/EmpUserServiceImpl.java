@@ -9,12 +9,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import com.vteba.persister.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 import com.vteba.user.dao.IEmpUserDao;
 import com.vteba.user.model.EmpUser;
 import com.vteba.user.model.Roles;
@@ -85,7 +84,7 @@ public class EmpUserServiceImpl extends GenericServiceImpl<EmpUser, Long> implem
 	}
 	public EmpUser queryEmpUserByUserAccount(String userAccount){
 		EmpUser empUser = new EmpUser();
-		empUser = empUserDaoImpl.getUniqueResultByProperty(EmpUser.class , "userAccount", userAccount);
+		empUser = empUserDaoImpl.uniqueResultByCriteria(EmpUser.class , "userAccount", userAccount);
 		return empUser;
 	}
 	
@@ -141,7 +140,7 @@ public class EmpUserServiceImpl extends GenericServiceImpl<EmpUser, Long> implem
 	
 	public EmpUser loadEmpUserEager(Long userId) {
 		EmpUser user = empUserDaoImpl.get(userId);
-		Hibernate.initialize(user.getRoleSet());
+		empUserDaoImpl.initProxyObject(user.getRoleSet());
 		return user;
 	}
 }

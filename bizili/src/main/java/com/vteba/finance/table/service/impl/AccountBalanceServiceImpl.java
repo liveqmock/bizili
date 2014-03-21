@@ -18,7 +18,7 @@ import com.vteba.finance.account.service.ISubjectService;
 import com.vteba.finance.table.dao.IAccountBalanceDao;
 import com.vteba.finance.table.model.AccountBalance;
 import com.vteba.finance.table.service.IAccountBalanceService;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.util.common.BigDecimalUtils;
 
@@ -116,7 +116,7 @@ public class AccountBalanceServiceImpl extends GenericServiceImpl<AccountBalance
 				balance.setYearSumBalanceDebit(yearDebit.doubleValue());
 				
 				//会计科目相关
-				Subject sub = subjectServiceImpl.getUniqueResultByProperty(Subject.class, "subjectCode", subjectCode);//这里有缓存，无影响
+				Subject sub = subjectServiceImpl.uniqueResultByCriteria(Subject.class, "subjectCode", subjectCode);//这里有缓存，无影响
 				balance.setAccountPeriod(period);
 				balance.setSubjectCode(subjectCode);
 				balance.setSubjectName(sub.getSubjectName());

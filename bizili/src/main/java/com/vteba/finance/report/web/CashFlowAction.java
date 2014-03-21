@@ -26,10 +26,10 @@ public class CashFlowAction extends BaseAction<CashFlow> {
 	
 	@RequestMapping("/cashflow-initial")
 	public String initial(CashFlow model, Map<String, Object> maps) throws Exception {
-		ReflectUtils.emptyToNull(model);
-		Map<String, Object> param = new LinkedHashMap<String, Object>();
+		ReflectUtils.emptyToNulls(model);
+		Map<String, String> param = new LinkedHashMap<String, String>();
 		param.put("orders", "asc");
-		listResult = cashFlowServiceImpl.getListByPropertyEqual(CashFlow.class, model, param);
+		listResult = cashFlowServiceImpl.getListByCriteria(CashFlow.class, model, param);
 		maps.put("listResult", listResult);
 		return "report/cashflow/cashflow-initial-success";
 	}

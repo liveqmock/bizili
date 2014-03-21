@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.common.dao.IModuleMenuDao;
 import com.vteba.common.model.ModuleMenu;
-import com.vteba.persister.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tm.hibernate.impl.HibernateGenericDaoImpl;
 
 /**
  * 菜单模组DAO实现

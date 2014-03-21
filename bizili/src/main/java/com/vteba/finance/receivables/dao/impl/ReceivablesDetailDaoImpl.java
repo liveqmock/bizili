@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.receivables.dao.IReceivablesDetailDao;
 import com.vteba.finance.receivables.model.ReceivablesDetail;
-import com.vteba.persister.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tm.hibernate.impl.HibernateGenericDaoImpl;
 
 /**
  * 应收明细表DAO实现

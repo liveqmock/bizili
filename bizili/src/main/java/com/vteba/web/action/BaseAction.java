@@ -19,7 +19,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
 import com.vteba.common.constant.CommonConst;
-import com.vteba.persister.generic.Page;
+import com.vteba.tm.generic.Page;
 import com.vteba.service.context.RequestContextHolder;
 import com.vteba.web.editer.DoubleEditor;
 import com.vteba.web.editer.FloatEditor;

@@ -16,7 +16,7 @@ import com.vteba.common.constant.CommonConst;
 import com.vteba.finance.account.form.CertTotalForm;
 import com.vteba.finance.account.model.CertTotal;
 import com.vteba.finance.account.service.ICertTotalService;
-import com.vteba.persister.generic.Page;
+import com.vteba.tm.generic.Page;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
@@ -48,7 +48,7 @@ public class AccountCertAction extends BaseAction<CertTotal> {
 		Page<CertTotal> pages = new Page<CertTotal>();
 		ReflectUtils.emptyToNull(model);
 		page = pageBean.getPage();
-		pages = certTotalServiceImpl.queryForPageByModel(page, model);
+		pages = certTotalServiceImpl.queryForPageByCriteria(page, model);
 		listResult = pages.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);

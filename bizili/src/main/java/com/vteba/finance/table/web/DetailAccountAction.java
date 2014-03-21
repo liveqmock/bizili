@@ -38,7 +38,7 @@ public class DetailAccountAction extends BaseAction<DetailAccount> {
 		param.put("codeNo", "asc");
 		param.put("subjectCode", "asc");
 		param.put("summary", "desc");
-		listResult = detailAccountServiceImpl.getListByPropertyEqual(DetailAccount.class, model, param);
+		listResult = detailAccountServiceImpl.getListByCriteria(DetailAccount.class, model, param);
 		maps.put("listResult", listResult);
 		return "table/detailaccount/detailaccount-initial-success";
 	}

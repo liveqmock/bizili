@@ -72,65 +72,9 @@ public class InfinispanXAResourceProducer implements XAResourceProducer {
         			return new InfinispanXAResourceHolder((TransactionXaAdapter)xaResource, bean);
         		}
 			} catch (XAException e) {
-				logger.info("判断InfinispanXaResource和当前xaResource是否相同异常，" + e.getMessage());
+				logger.info("判断InfinispanXaResource和当前xaResource是否相同异常，" + e.getMessage(), e);
 			}
-    		
-    		//XaTransactionTable txTable = (XaTransactionTable)cacheManager.getCache(cacheName).getAdvancedCache().getComponentRegistry().getComponent(TransactionTable.class);
-    		
-//    		TransactionTable txTable = cacheManager.getCache(cacheName).getAdvancedCache().getComponentRegistry().getComponent(TransactionTable.class);
-//    		Collection<LocalTransaction> localTransactions = txTable.getLocalTransactions();
-//    		
-//    		for (Object localTransaction : localTransactions) {
-//    			TransactionXaAdapter xaAdapter = (TransactionXaAdapter) localTransaction;
-//    			if (xaResource == xaAdapter) {
-//        			return new InfinispanXAResourceHolder(xaAdapter, bean);
-//        		}
-//    		}
-    		
-//    		TransactionXaAdapter xaAdapter = (TransactionXaAdapter)cacheManager.getCache(cacheName).getAdvancedCache().getXAResource();
-//    		if (xaResource == xaAdapter) {
-//    			return new InfinispanXAResourceHolder(xaAdapter, bean);
-//    		}
-    		
     	}
-    	
-//    	for (String cacheName : cacheNames) {
-//    		Cache<?, ?> cache = cacheManager.getCache(cacheName);
-//    		TransactionTable transactionTable = (TransactionTable) FieldExtractionHelper.extractComponent(cache, TransactionTable.class);
-//    		ConcurrentMap<Transaction, LocalTransaction> localTxs = (ConcurrentMap<Transaction, LocalTransaction>) FieldExtractionHelper.extractField(TransactionTable.class, transactionTable, "localTransactions");
-//            
-//            for (Entry<Transaction, LocalTransaction> txEntry : localTxs.entrySet()) {
-//                
-//                LocalTransaction adapter = txEntry.getValue();
-//
-//                if (adapter == xaResource) {
-//                    InfinispanXAResourceHolder holder = new InfinispanXAResourceHolder(adapter, bean);
-//                    return holder;
-//                }
-//            }
-//    	}
-//        Map cachesMap = (Map) FieldExtractionHelper.extractField(manager.getClass(), manager, "caches");
-//
-//        Iterator cachesIt = cachesMap.entrySet().iterator();
-//        while (cachesIt.hasNext()) {
-//            Map.Entry cacheEntry = (Map.Entry) cachesIt.next();
-//            Cache cache = (Cache) cacheEntry.getValue();//获得缓存
-//
-//            TransactionTable transactionTable = (TransactionTable) FieldExtractionHelper.extractComponent(cache, TransactionTable.class);
-//            Map localTxs = (Map) FieldExtractionHelper.extractField(TransactionTable.class, transactionTable, "localTransactions");
-//            Iterator txs = localTxs.entrySet().iterator();
-//            while (txs.hasNext()) {
-//                Map.Entry txEntry = (Map.Entry) txs.next();
-//                TransactionXaAdapter adapter = (TransactionXaAdapter) txEntry.getValue();
-//
-//                if (adapter == xaResource) {
-//                    InfinispanXAResourceHolder holder = new InfinispanXAResourceHolder(adapter, bean);
-//                    
-//                    //holder.setXAResourceHolderState(new XAResourceHolderState(holder, bean));
-//                    return holder;
-//                }
-//            }
-//        }
         return null;
     }
 

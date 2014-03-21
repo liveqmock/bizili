@@ -38,7 +38,7 @@ public class LedgerAction extends BaseAction<Ledger> {
 		order.put("subjectCode", "asc");
 		order.put("createDate", "asc");
 		order.put("summary", "desc");
-		listResult = ledgerServiceImpl.getListByPropertyEqual(Ledger.class, model, order);
+		listResult = ledgerServiceImpl.getListByCriteria(Ledger.class, model, order);
 		maps.put("listResult", listResult);
 		return "/table/ledger/ledger-initial-success";
 	}

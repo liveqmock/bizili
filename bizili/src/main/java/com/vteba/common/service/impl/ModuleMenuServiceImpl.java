@@ -15,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.vteba.common.dao.IModuleMenuDao;
 import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.model.EmpUser;

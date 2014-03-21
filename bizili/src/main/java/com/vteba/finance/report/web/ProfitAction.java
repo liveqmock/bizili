@@ -27,14 +27,14 @@ public class ProfitAction extends BaseAction<Profit> {
 
 	@RequestMapping("/profit-initial")
 	public String initial(Profit model, Map<String, Object> maps) throws Exception {
-		ReflectUtils.emptyToNull(model);
+		ReflectUtils.emptyToNulls(model);
 		if (model.getAccountPeriod() == null) {//默认查当前会计期间
 			String accountPeriod = accountPeriodServiceImpl.getCurrentPeriod();
 			model.setAccountPeriod(accountPeriod);
 		}
-		Map<String, Object> param = new LinkedHashMap<String, Object>();
+		Map<String, String> param = new LinkedHashMap<String, String>();
 		param.put("rowNumber", "asc");
-		listResult = profitServiceImpl.getListByPropertyEqual(Profit.class, model, param);
+		listResult = profitServiceImpl.getListByCriteria(Profit.class, model, param);
 		maps.put("listResult", listResult);
 		return "report/profit/profit-initial-success";
 	}

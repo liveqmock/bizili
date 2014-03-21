@@ -1,6 +1,6 @@
 package com.vteba.web.action;
 
-import com.vteba.persister.generic.Page;
+import com.vteba.tm.generic.Page;
 
 /**
  * 对分页数据的封装。

@@ -56,7 +56,7 @@
     	<level value="DEBUF"/>
     	<appender-ref ref="console"/>
     </logger> -->
-    <logger name="com.vteba.persister.jdbc" additivity="true">
+    <logger name="com.vteba.tm.jdbc" additivity="true">
     	<level value="ERROR"/>
 <!--     	<appender-ref ref="console"/> -->
     </logger>

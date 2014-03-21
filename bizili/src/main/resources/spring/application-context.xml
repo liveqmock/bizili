@@ -194,13 +194,13 @@
 	</bean>
 	
 	<!-- SpringJdbcTemplate -->
-	<bean id="biziliJdbcTemplate" class="com.vteba.persister.jdbc.spring.SpringJdbcTemplate">
+	<bean id="biziliJdbcTemplate" class="com.vteba.tm.jdbc.spring.SpringJdbcTemplate">
 		<property name="dataSource" ref="biziliDataSource"/>
 	</bean>
-	<bean id="skmbwJdbcTemplate" class="com.vteba.persister.jdbc.spring.SpringJdbcTemplate">
+	<bean id="skmbwJdbcTemplate" class="com.vteba.tm.jdbc.spring.SpringJdbcTemplate">
 		<property name="dataSource" ref="skmbwDataSource"/>
 	</bean>
-	<bean id="supplychainJdbcTemplate" class="com.vteba.persister.jdbc.spring.SpringJdbcTemplate">
+	<bean id="supplychainJdbcTemplate" class="com.vteba.tm.jdbc.spring.SpringJdbcTemplate">
 		<property name="dataSource" ref="supplychainDataSource"/>
 	</bean>
 	

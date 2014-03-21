@@ -29,7 +29,7 @@ public class TrialBalanceAction extends BaseAction<TrialBalance> {
 		Map<String, String> param = new LinkedHashMap<String, String>();
 		param.put("subjectCode", "asc");
 		
-		listResult = trialBalanceServiceImpl.getListByPropertyEqual(TrialBalance.class, model, param);
+		listResult = trialBalanceServiceImpl.getListByCriteria(TrialBalance.class, model, param);
 		maps.put("listResult", listResult);
 		return "table/trialbalance/trialbalance-initial-success";
 	}

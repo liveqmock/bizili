@@ -35,7 +35,7 @@ public class ResourcesAction extends BaseAction<Resources> {
 			ReflectUtils.emptyToNulls(model);
 		}
 		page = pageBean.getPage();
-		resourcesServiceImpl.queryForPageByModel(page, model);
+		resourcesServiceImpl.queryForPageByCriteria(page, model);
 		listResult = page.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, page);
@@ -82,7 +82,7 @@ public class ResourcesAction extends BaseAction<Resources> {
 	public String list(Resources model, PageBean<Resources> pageBean, Map<String, Object> maps) throws Exception {
 		page = pageBean.getPage();
 		//page.setPageSize(20);
-		resourcesServiceImpl.queryForPageByModel(page, model);
+		resourcesServiceImpl.queryForPageByCriteria(page, model);
 		listResult = page.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, page);

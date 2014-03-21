@@ -16,7 +16,7 @@ import com.vteba.finance.table.model.Ledger;
 import com.vteba.finance.table.service.IAccountBalanceService;
 import com.vteba.finance.table.service.IAccountSummaryService;
 import com.vteba.finance.table.service.ILedgerService;
-import com.vteba.persister.hibernate.IHibernateGenericDao;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.util.common.BigDecimalUtils;
 import com.vteba.util.common.ObjectUtils;
@@ -60,12 +60,12 @@ public class LedgerServiceImpl extends GenericServiceImpl<Ledger, String> implem
 	
 	public void createLedger(List<Ledger> ledgerList, String period, int level) {
 		String delHql = "delete from Ledger l where l.accountPeriod = ?1 and l.level = ?2 ";
-		ledgerDaoImpl.executeUpdateByHql(delHql, false, period, level);
+		ledgerDaoImpl.executeHqlUpdate(delHql, false, period, level);
 		
 		if (ledgerList != null && ledgerList.size() > 0) {
 			for (Ledger bean : ledgerList) {
 				//科目
-				Subject sub = subjectServiceImpl.getUniqueResultByProperty(Subject.class, "subjectCode", bean.getSubjectCode());
+				Subject sub = subjectServiceImpl.uniqueResultByCriteria(Subject.class, "subjectCode", bean.getSubjectCode());
 				
 				double startBalance = 0D;//期初余额
 				String startAccBalHql = " select b from AccountBalance b where b.subjectCode =?1 and b.accountPeriod = ?2 ";

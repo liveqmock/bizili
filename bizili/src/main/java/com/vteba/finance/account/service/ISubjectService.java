@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.vteba.finance.account.model.Subject;
-import com.vteba.persister.generic.Page;
+import com.vteba.tm.generic.Page;
 import com.vteba.service.generic.IGenericService;
 
 /**
