@@ -31,23 +31,34 @@ img {border-width: 0px 0px 0px 0px}
     	});
     });
     function deleteAuth(id) {
-		var del = confirm('你确定要删除该权限？');
-		if (del) {
-			$.ajax({
+    	$.dialog.confirm('你确定要删除该权限吗？', function(){
+    		$.ajax({
 	            type:"post",
 	            dataType:"text",
 	            url: '${ctx}/users/auth-delete.htm?authId=' + id,
 	            success: function(msg){
-	                //alert(msg);
-	                //window.location.reload();
 	            	$('#tr'+id).remove();
 	            },
 	            error: function (msg) {
 	                alert(msg.responseText);
 	            }
 	        });
-		}
+    	}, function(){
+    	    //$.dialog.tips('不删除');
+    	});
 	}
+    function queryRes(authId) {
+    	$.dialog({
+			title:'权限资源明细',
+			content:'url:<c:url value="/users/auth-resource.htm?authId=' + authId + '"/>',
+			width:804,
+			height:600,
+			min:true,
+			max:false,
+			esc:true,
+			lock:true
+		});
+    }
 </script>
 </head>
 <body>
@@ -81,14 +92,6 @@ img {border-width: 0px 0px 0px 0px}
 								<td class="twef">
 								<input type="text" name="authDesc" class="tf" />
 								</td>
-<!-- 								<td class="twof">使用中</td> -->
-<!-- 								<td class="twef"> -->
-<!-- 								<select id="enabled" name="enabled" style="width:120px;"> -->
-<!-- 										<option value="">--请选择--</option> -->
-<!-- 										<option value="1">是</option> -->
-<!-- 										<option value="0">否</option> -->
-<!-- 								</select> -->
-<!-- 								</td> -->
 								<td class="twof">排序</td><td class="fotf"><select style="width:90px;" name="page.orderBy"><option value="authName">权限名</option><option value="authDesc">描述</option><option value="moduleId">模组</option></select>-<select style="width:70px;" name="page.ascDesc"><option value="asc">升序</option><option value="desc">降序</option></select></td>
 								<td class="twof"></td>
 								<td class="twef">
@@ -101,31 +104,26 @@ img {border-width: 0px 0px 0px 0px}
 					<table class="tableSteel">
               <tr class="title" style="border-right:1px #bfd2ed solid;">
                 <td class="twof"></td>
-<!--                 <td class="fouf">序号</td> -->
                 <td class="fivf">权限名</td>
                 <td class="fivf">描述</td>
-                
                 <td class="fivf">默认URL</td>
-<!--                 <td class="sixf">归属</td> -->
-                
                 <td class="fivf">模组</td>
                 <td class="sixf">动作</td>
-<!--                 <td class="fivf">拥有资源</td> -->
                 <td class="fivf" style="border-right:1px #09f solid">操作</td>
               </tr>
               <c:forEach items="${listResult}" var="auth" varStatus="st">
               <tr id="tr${auth.authId}" style="${st.count%2==0?'background:#f3f3f3':''}">
                 <td class="twof"><input type="checkbox" /></td>
-<%--                 <td class="fouf">${auth.authId }</td> --%>
                 <td class="sixf">${auth.authName }</td>
                 <td class="fivf">${auth.authDesc }</td>
                 
                 <td class="sixf">${auth.enabled }</td>
-<%--                 <td class="fouf"><c:if test="${auth.userId eq null}">系统</c:if><c:if test="${auth.userId ne null}">${auth.userId}</c:if></td> --%>
                 <td class="sixf">${auth.moduleId}</td>
                 <td class="sixf">${auth.action}</td>
-<%--                 <td class="sixf">${auth.urls}</td> --%>
-                <td class="fivf">&nbsp;<input type="button" onclick="javascript:deleteAuth('${auth.authId}')" title="删除" class="tableSteelBtnDel" /></td>
+                <td class="fivf">
+                 <img src="../images/res3.png" title="资源" style="margin-left:4px;margin-top:4px;cursor:pointer;height:22px;width:22px;" onclick="javascript:queryRes('${auth.authId}');"></img>
+                 <img src="../images/btn_edit.gif" title="修改" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:editRes('${auth.authId}')"/>
+                 <img src="../images/tu12.gif" title="删除" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:deleteAuth('${auth.authId}')"/></td>
               </tr>
               </c:forEach>
             </table>

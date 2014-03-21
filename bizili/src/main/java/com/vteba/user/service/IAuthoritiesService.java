@@ -9,4 +9,11 @@ public interface IAuthoritiesService extends IGenericService<Authorities, Long> 
 	 * @param authorities 权限
 	 */
 	public void saveAuthRes(Authorities authorities);
+	
+	/**
+	 * 即时加载权限，以及其所包含的资源。
+	 * @param authId 权限ID
+	 * @return 权限，含资源
+	 */
+	public Authorities loadAuthoritiesEager(Long authId);
 }

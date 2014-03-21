@@ -118,12 +118,16 @@ img {border-width: 0px 0px 0px 0px}
  
  //单条删除实体
  function deleteUser(userId) {
-	 EmpUserBean.deleteUser(userId,function(data){
-		 if (data == 'success') {
-			 $('#tr'+userId).remove();//在页面上删除那一行
-			 //aAlert('删除成功。');
-		 }
-	 });
+	 $.dialog.confirm('你确定要删除该用户吗？', function(){
+		 EmpUserBean.deleteUser(userId,function(data){
+			 if (data == 'success') {
+				 $('#tr'+userId).remove();//在页面上删除那一行
+				 //aAlert('删除成功。');
+			 }
+		 });
+ 	}, function(){
+ 	    //$.dialog.tips('不删除');
+ 	});
  }
  
  function queryRoles(userId) {

@@ -57,6 +57,13 @@ public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long
 		}
 		authoritiesDaoImpl.saveOrUpdate(authorities);
 	}
+
+	@Override
+	public Authorities loadAuthoritiesEager(Long authId) {
+		Authorities authorities = authoritiesDaoImpl.get(authId);
+		authoritiesDaoImpl.initProxyObject(authorities.getResourceSets());
+		return authorities;
+	}
 	
 
 }

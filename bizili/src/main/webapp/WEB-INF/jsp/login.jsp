@@ -45,7 +45,18 @@
 	$(document).ready(function(){
 		var msg = $('#msg').val();
 		if ($.trim(msg) != '') {
-			aAlert(msg);
+			$.dialog.alert(msg,function(){});
+// 			$.dialog({
+// 				title:'温馨提示您',
+// 				content:msg,
+// 				width:300,
+// 				height:150,
+// 				max:false,
+// 				min:false,
+// 				esc:true,
+// 				lock:true
+// 			});
+			//aAlert(msg);
 		}
 		
 		$('#sureImport').click(function(){

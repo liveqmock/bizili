@@ -121,7 +121,7 @@ input.iptBuySteelAdd{
 	$(document).ready(function(){
 		$('#addResource').click(function(){
 			$.dialog({
-				title:'角色权限明细',
+				title:'权限资源查询',
 				content:'url:<c:url value="/users/resources-list.htm"/>',
 				width:820,
 				height:620,

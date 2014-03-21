@@ -80,17 +80,19 @@ img {border-width: 0px 0px 0px 0px}
     
     //删除单笔数据
     function deleteRole(roleId){
-    	var result = confirm('您确定要删除角色？');
-    	if (result) {
+    	$.dialog.confirm('你确定要删除该角色吗？', function(){
     		RolesBean.deleteRole(roleId,function(data){
         		if (data == 'inused') {
-        			aAlert('角色使用中，无法删除！');
+        			//aAlert('角色使用中，无法删除！');
+        			$.dialog.alert('角色使用中，无法删除！',function(){});
         		} else if(data == 'success') {
         			$('#tr'+ roleId).remove();
         			//aAlert('角色删除成功！');
         		}
         	});
-    	}
+    	}, function(){
+    	    $.dialog.tips('您选择不删除。');
+    	});
     }
     </script>
 </head>

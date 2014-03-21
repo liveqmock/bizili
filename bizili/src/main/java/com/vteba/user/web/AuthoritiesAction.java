@@ -100,4 +100,11 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 		setAttributeToRequest(CommonConst.PAGE_NAME, page);
 		return "user/authorities/auth-list";
 	}
+	
+	@RequestMapping("/auth-resource")
+	public String authResource(Authorities model, Map<String, Object> maps) {
+		model = authoritiesServiceImpl.loadAuthoritiesEager(model.getAuthId());
+		maps.put("list", model.getResourceSets());
+		return "user/authorities/auth-resource";
+	}
 }
