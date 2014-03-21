@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vteba.common.constant.CommonConst;
 import com.vteba.tm.generic.Page;
@@ -85,14 +86,15 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 		return "user/empUser/empUser-input-success";
 	}
 	
-	@RequestMapping("/delete")
-	public void delete() throws Exception {
+	@ResponseBody
+	@RequestMapping("/empUser-delete")
+	public String delete() throws Exception {
 		try {
 			empUserServiceImpl.deleteEntityBatch(ids);
-			renderText("1");
+			return "1";
 		} catch (Exception e) {
 			logger.info("delete user " + e.getMessage());
-			renderText(e.getMessage());
+			return e.getMessage();
 		}
 		
 	}

@@ -32,6 +32,7 @@ public class Roles implements AstModel {
 	private Set<Authorities> authSets;
 	private Date createTime;
 	private String authIds;
+	private String authNames;
 	//private Set<EmpUser> userSet;
 	
 	public Roles() {
@@ -123,6 +124,15 @@ public class Roles implements AstModel {
 
 	public void setAuthIds(String authIds) {
 		this.authIds = authIds;
+	}
+
+	@Transient
+	public String getAuthNames() {
+		return authNames;
+	}
+
+	public void setAuthNames(String authNames) {
+		this.authNames = authNames;
 	}
 	
 	//去掉注释就是'用户-角色'双向多对多

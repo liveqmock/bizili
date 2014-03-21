@@ -78,6 +78,10 @@ img {border-width: 0px 0px 0px 0px}
 			});
 	}
     
+    function editRole(roleId) {
+    	window.location.href = 'roles-input.htm?init=true&roleId='+roleId;
+    }
+    
     //删除单笔数据
     function deleteRole(roleId){
     	$.dialog.confirm('你确定要删除该角色吗？', function(){
@@ -167,7 +171,10 @@ img {border-width: 0px 0px 0px 0px}
                 
                 <td class="sixf">${role.enabled }</td>
                 <td class="fouf">${role.priority }</td>
-                <td class="fivf"><img src="../images/quanxian3.png" title="角色权限" style="margin-left:4px;margin-top:4px;cursor:pointer;height:22px;width:22px;" onclick="javascript:queryAuth('${role.roleId}');"></img>&nbsp;<input type="button" onclick="javascript:editUser('${role.roleId}')" title="修改" class="tableSteelBtnEdit" />&nbsp;<input type="button" onclick="javascript:deleteRole('${role.roleId}')" title="删除" class="tableSteelBtnDel" /></td>
+                <td class="fivf"><img src="../images/quanxian3.png" title="角色权限" style="margin-left:4px;margin-top:4px;cursor:pointer;height:22px;width:22px;" onclick="javascript:queryAuth('${role.roleId}');"></img>
+                <img src="../images/btn_edit.gif" title="修改" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:editRole('${role.roleId}');"/>
+                <img src="../images/tu12.gif" title="删除" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:deleteRole('${role.roleId}');"/>
+                </td>
               </tr>
               </c:forEach>
             </table>

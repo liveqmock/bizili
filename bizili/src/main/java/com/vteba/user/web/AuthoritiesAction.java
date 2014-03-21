@@ -73,9 +73,9 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 	 */
 	@ResponseBody
 	@RequestMapping("/auth-delete")
-	public void delete(Long authId) {
+	public String delete(Long authId) {
 		authoritiesServiceImpl.delete(authId);
-		renderText(SUCCESS);
+		return SUCCESS;
 	}
 	
 	/**

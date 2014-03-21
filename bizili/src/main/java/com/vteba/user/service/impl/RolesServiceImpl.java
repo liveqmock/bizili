@@ -46,6 +46,20 @@ public class RolesServiceImpl extends GenericServiceImpl<Roles, Long> implements
 			roles.setAuthSets(authSets);
 		}
 		rolesDaoImpl.saveOrUpdate(roles);
+	}
+
+	@Override
+	public Roles loadRoles(Long roleId) {
+		Roles roles = rolesDaoImpl.get(roleId);
+		String authIds = "";
+		String authNames = "";
+		for (Authorities auth : roles.getAuthSets()) {
+			authIds += auth.getAuthId() + ",";
+			authNames += auth.getAuthName() + ",";
+		}
+		roles.setAuthIds(authIds);
+		roles.setAuthNames(authNames);
+		return roles;
 	}	
 
 }

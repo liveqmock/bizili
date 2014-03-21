@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vteba.common.constant.CommonConst;
-import com.vteba.user.form.ResourcesForm;
 import com.vteba.user.model.Resources;
 import com.vteba.user.service.IResourcesService;
 import com.vteba.util.reflection.ReflectUtils;
@@ -48,16 +47,14 @@ public class ResourcesAction extends BaseAction<Resources> {
 	 * date 2012-6-24 下午11:34:05
 	 */
 	@RequestMapping("/resources-input")
-	public String input(ResourcesForm resourcesForm) throws Exception {
+	public String input(Resources model) throws Exception {
 		if (isInit()) {
 			return "user/resources/resource-input-success";
 		}
-		for (Resources model : resourcesForm.getResourcesList()) {
-			if (StringUtils.isNotEmpty(model.getResourceName()) && StringUtils.isNotEmpty(model.getResourceUrl()) && StringUtils.isNotEmpty(model.getResourceDesc())) {
-				resourcesServiceImpl.save(model);
-			}
+		if (StringUtils.isNotEmpty(model.getResourceName()) && StringUtils.isNotEmpty(model.getResourceUrl()) && StringUtils.isNotEmpty(model.getResourceDesc())) {
+			resourcesServiceImpl.save(model);
+			setAttributeToRequest("msg", "新增资源成功。");
 		}
-		setAttributeToRequest("msg", "新增资源成功。");
 		return "user/resources/resource-input-success";
 	}
 	
@@ -68,9 +65,9 @@ public class ResourcesAction extends BaseAction<Resources> {
 	
 	@RequestMapping("/resources-delete")
 	@ResponseBody
-	public void delete(Long resourceId) throws Exception {
+	public String delete(Long resourceId) throws Exception {
 		resourcesServiceImpl.delete(resourceId);
-		renderText(SUCCESS);
+		return SUCCESS;
 	}
 	
 	/**

@@ -109,10 +109,10 @@ $(document).ready(function(){
 			<tr>
 			<td class="twof"></td>
 			<td class="fivf">角色名</td>
-			<td><input type="text" name="roleName" value="${roles.roleName}" class="twf190" /><span class="star">*</span></td>
+			<td><input type="text" name="roleName" value="${roleName}" class="twf190" /><span class="star">*</span></td>
 			
 			<td class="fivf">角色描述</td>
-			<td><input type="text" name="roleDesc" value="${roles.roleDesc}" class="twf190" /><span class="star">*</span></td>
+			<td><input type="text" name="roleDesc" value="${roleDesc}" class="twf190" /><span class="star">*</span></td>
 			<td class="twof"></td>
 			</tr>
 			<tr>
@@ -120,8 +120,8 @@ $(document).ready(function(){
 			<td class="fivf">是否启用</td>
 			<td>
 					<select name="enabled">
-						<option value="1" <c:if test="${roles.enabled == 1}">selected="selected"</c:if>>是</option>
-						<option value="0" <c:if test="${roles.enabled != 1}">selected="selected"</c:if>>否</option>
+						<option value="1">是</option>
+						<option value="0">否</option>
 					</select>
 					<span class="star">*</span>
 			</td>
@@ -129,18 +129,19 @@ $(document).ready(function(){
 			<td class="fivf">优先级</td>
 			<td>
 					<select name="priority">
-						<option value="1" <c:if test="${roles.priority == 1}">selected="selected"</c:if>>1</option>
-						<option value="2" <c:if test="${roles.priority == 2}">selected="selected"</c:if>>2</option>
-						<option value="3" <c:if test="${roles.priority == 3}">selected="selected"</c:if>>3</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
 					</select><span class="star">*</span></td>
 			<td class="twof"></td>
 			</tr>
 			<tr>
 			<td class="twof"></td>
 			<td class="fivf">拥有权限</td>
-			<td class="tenf" colspan="3">
-			<input type="hidden" id="authIds" value="${roles.authIds}" name="authIds"/>
-			<input type="text" id="authNames" value="${roles.authNames}" class="twf250" style="width:600px;"/><span class="star">*</span><img id="addAuth" src="../images/tb2.gif" style="margin-left:6px;cursor:pointer;"></img> </td>
+			<td class="tenf" colspan="3"><input type="hidden" id="authIds" name="authIds"/><input type="text" id="authNames" class="twf190" /><span class="star">*</span><img id="addAuth" src="../images/tb2.gif" style="margin-left:6px;cursor:pointer;"></img> </td>
 			<td class="twof"></td>
 			</tr>
 		  </table>

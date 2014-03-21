@@ -154,8 +154,7 @@ input.iptBuySteelAdd{
 					<li><a href="<c:url value="/users/authorities-input.htm?init=true"/>" class="current">新增权限</a></li>
 				</ul>
 			</div>
-			<table class="singleIncreasesResources">
-	<tbody>
+	<table class="tableSteel">
 		<tr>
 		<td class="twoFont">权限名 </td><td class="widt"><input class="widt" name="authName" type="text"/><span class="star">*</span></td><td class="star"></td>
 		<td class="twoFont">权限描述</td><td class="widt"><input class="widt" name="authDesc" type="text" /><span class="star">*</span></td><td class="star"></td>
@@ -185,11 +184,6 @@ input.iptBuySteelAdd{
 		<tr>
 		<td class="twoFont">资源</td><td class="widt" colspan="5"><input type="hidden" name="resIds" id="resIds" value=""/><input type="text" name="urls" id="urls" value="" class="note" /><img id="addResource" src="../images/tb2.gif" style="margin-left:6px;cursor:pointer;"></img>（新增请输入，已有的请点击+选择）</td>
 		</tr>
-<!-- 		<tr> -->
-<!-- 		<td class="twoFont">备注</td><td class="widt" colspan="5"><input type="text" name="description" class="widt" /></td> -->
-<!-- 		</tr> -->
-	</tbody>
-	
 	</table>
 	<input type="button" class="determination" value="保存" onclick="saveAuth();"/>
 	<input type="reset" class="cancellation" id="" value="取消" />

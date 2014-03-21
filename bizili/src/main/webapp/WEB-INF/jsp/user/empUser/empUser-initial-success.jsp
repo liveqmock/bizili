@@ -137,10 +137,10 @@ img {border-width: 0px 0px 0px 0px}
 			width:804,
 			height:600,
 			min:true,
-			max:true,
+			max:false,
 			esc:true,
 			lock:true
-			});
+	});
  }
 </script>
 </head>
@@ -243,7 +243,6 @@ img {border-width: 0px 0px 0px 0px}
 	        <p style="padding-left:16px;line-height:30px; height:30px;">
           <input type="checkbox" id="allCheckSelected" />
           <label for="allCheckSelected" style="position:relative ;bottom:5px;">全选</label>
-          <!-- <input type="button" class="pageCutSmallBtnCheckout" id="input2" value="确定导入" /> -->
           <input type="button" class="pageCutSmallBtnDel" id="deleteAll" value="删除" />
 		  </p>
 		  <div id="page">

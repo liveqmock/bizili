@@ -216,7 +216,7 @@ public class EmpUser implements IUserDetails, CredentialsContainer, AstModel {
 		this.userAccount = userAccount;
 	}
 	
-	@Column(name = "tenant_identifier", length = 50, nullable = false)
+	@Column(name = "tenant_identifier", length = 50)
 	public String getTenantIdentifier() {
 		return tenantIdentifier;
 	}

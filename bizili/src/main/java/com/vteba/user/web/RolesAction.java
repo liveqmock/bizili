@@ -56,16 +56,15 @@ public class RolesAction extends BaseAction<Roles> {
 	 * date 2012-6-24 下午11:22:12
 	 */
 	@RequestMapping("/roles-input")
-	public String input(Roles model) throws Exception {
+	public String input(Roles model, Map<String, Object> maps) throws Exception {
 		if (isInit()) {
+			if (model.getRoleId() != null) {
+				model = rolesServiceImpl.loadRoles(model.getRoleId());
+				maps.put("roles", model);
+			}
 			return "user/roles/roles-input-success";
 		}
-//		for (Roles entity : rolesForm.getRoleList()) {
-//			if (StringUtils.isNotEmpty(entity.getRoleName())) {
-//				entity.setCreateTime(new Date());
-//				rolesServiceImpl.save(entity);
-//			}
-//		}
+
 		rolesServiceImpl.saveRoleAuths(model);
 		return "user/roles/roles-input-success";
 	}

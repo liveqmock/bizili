@@ -177,8 +177,7 @@ input.iptBuySteelAdd{
 					<li><a href="<c:url value="/users/empUser-input.htm?init=true"/>" class="current">新增用户</a></li>
 				</ul>
 			</div>
-			<table class="singleIncreasesResources">
-	<tbody>
+	<table class="tableSteel">
 		<tr>
 		<td class="twoFont">账号 </td><td class="widt"><input class="widt" name="userAccount" id="userAccount" value="${entity.userAccount}" type="text"/><span class="star">*</span></td><td class="star"></td>
 		<td class="twoFont">姓名</td><td class="widt"><input class="widt" name="name" id="name" value="${entity.name}" type="text" /><span class="star">*</span></td><td class="star"></td>
@@ -203,11 +202,8 @@ input.iptBuySteelAdd{
 		<tr>
 		<td class="twoFont">部门名称</td><td class="widt" ><input type="text" name="deptName" value="${entity.deptName}" class="widt" /><span class="star">*</span></td><td class="star"></td>
 		<td class="twoFont"></td><td class="widt">
-<%-- 		<input type="text" name="tenantIdentifier" value="${entity.tenantIdentifier}" class="widt" /><span class="star">*</span> --%>
 		</td><td class="star"></td>
 		</tr>
-	</tbody>
-	
 	</table>
 	<input type="button" class="determination" value="保存" onclick="saveUser();"/>
 	<input type="reset" class="cancellation" id="" value="取消" />
