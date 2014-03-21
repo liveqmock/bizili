@@ -130,18 +130,6 @@ input.iptBuySteelAdd{
 				esc:true,
 				lock:true
 			});
-			//var returnValue = window.showModalDialog('<c:url value="/users/resources-list.htm"/>','', "dialogWidth=820px;dialogHeight=600px;status=no;help=no;scrollbars=no;dialogLeft:360px;dialogTop:140px");
-// 			var ids = "";
-// 			var names = "";
-// 			var rets = returnValue.split(';');
-// 			for(var i =0; i<rets.length-1; i++){
-// 				var temp = rets[i].split('#');
-// 				ids += temp[0]+",";
-// 				names += temp[1]+",";
-// 			}
-// 			$('#urls').val(names);
-// 			$('#urls').attr('readOnly',true);
-// 			$('#resIds').val(ids);
 		});
 		
 	});
