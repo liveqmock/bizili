@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 import bitronix.tm.recovery.RecoveryException;
 import bitronix.tm.resource.ResourceRegistrar;
 
-import com.vteba.common.exception.BaseException;
+import com.vteba.common.exception.BasicException;
 import com.vteba.tm.bitronix.infinispan.InfinispanXAResourceProducer;
 
 /**
@@ -360,7 +360,7 @@ public class InfinispanCacheManagerImpl implements InfinispanCacheManager {
 			ResourceRegistrar.register(xaResourceProducer);
 		} catch (RecoveryException e) {
 			logger.error("将Infinispan注册为XAResource失败。" + e.getMessage());
-			throw new BaseException("将Infinispan注册为XAResource失败。");
+			throw new BasicException("将Infinispan注册为XAResource失败。");
 		}
 	}
 

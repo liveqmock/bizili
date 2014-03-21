@@ -58,7 +58,7 @@ import com.vteba.cache.memcached.transaction.local.LocalTransactionStoreDelegete
 import com.vteba.cache.memcached.transaction.manager.DefaultTransactionManagerLookup;
 import com.vteba.cache.memcached.transaction.manager.TransactionManagerLookup;
 import com.vteba.cache.memcached.transaction.xa.XATransactionStore;
-import com.vteba.common.exception.BaseException;
+import com.vteba.common.exception.BasicException;
 
 /**
  * xmemcached client manager
@@ -303,7 +303,7 @@ public class XMemcachedManager{
 		
 		//将缓存放入Map
 		if (cacheMap.get(cacheName) != null) {
-			throw new BaseException("存在同名的缓存，cacheName=[" + cacheName + "]");
+			throw new BasicException("存在同名的缓存，cacheName=[" + cacheName + "]");
 		} else {
 			cacheMap.put(cacheName, memcache);
 		}

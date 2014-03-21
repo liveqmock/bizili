@@ -6,7 +6,7 @@ import org.springframework.beans.factory.InitializingBean;
 
 import com.vteba.cache.infinispan.InfinispanCacheManager;
 import com.vteba.cache.infinispan.InfinispanCacheManagerImpl;
-import com.vteba.common.exception.BaseException;
+import com.vteba.common.exception.BasicException;
 
 /**
  * InfinispanCacheManager FactoryBean，产生InfinispanCacheManager实例。
@@ -39,7 +39,7 @@ public class InfinispanCacheManagerFactoryBean implements InitializingBean, Fact
 			infinispanCacheManager = new InfinispanCacheManagerImpl(embeddedCacheManager);
 		} else {
 			if (configFileLocation == null) {
-				throw new BaseException("配置文件configFileLocation属性没有指定。");
+				throw new BasicException("配置文件configFileLocation属性没有指定。");
 			}
 			infinispanCacheManager = new InfinispanCacheManagerImpl(configFileLocation);
 		}
