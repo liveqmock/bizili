@@ -69,22 +69,5 @@
 		<property name="sqlSessionFactoryBeanName" value="biziliSqlSessionFactory"/>
 	</bean>
 	
-	<bean id="supplychainSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="biziliDataSource" />
-		<!--指定MyBatis的基本配置文件路径-->
-		<property name="configLocation" value="classpath:/mybatis/mybatis-config-supplychain.xml"/>
-		<!--指定Mapper映射文件的位置 -->
-		<property name="mapperLocations">
-			<list>
-				<value>classpath:/mybatis/supplychain/*Mapper.xml</value>
-			</list>
-		</property>
-	</bean>
 	
-	<bean id="supplychainMapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.vteba.supplychain" /><!-- 如果只指定了basePackage属性，扫描全部借口 -->
-		<property name="markerInterface" value="com.vteba.tm.jdbc.mybatis.mapper.BaseMapper"/><!-- 扫描该接口的子接口 -->
-		<property name="annotationClass" value="com.vteba.tm.jdbc.mybatis.annotation.DaoMapper"/><!-- 扫描被该注解标注的接口 -->
-		<property name="sqlSessionFactoryBeanName" value="supplychainSqlSessionFactory"/>
-	</bean>
 </beans>
