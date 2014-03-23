@@ -25,7 +25,7 @@ public class JMemcachedFactoryBean implements InitializingBean, DisposableBean {
 	private MemCacheDaemon<LocalCacheElement> cacheDaemon;
 
 	private String serverAddress = "localhost";
-	private int port = 11211;
+	private int port = 11210;
 	private int maxItems = 1024 * 1024 * 100;
 	private long maxBytes = 1024 * 1024 * 200;
 
