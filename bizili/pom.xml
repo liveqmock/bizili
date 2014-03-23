@@ -130,7 +130,7 @@
 				<artifactId>reflectasm</artifactId>
 			</exclusion>
 		</exclusions>
-	</dependency>
+	</dependency> 
     <dependency>
 		<groupId>com.esotericsoftware.reflectasm</groupId>
 		<artifactId>reflectasm</artifactId>
@@ -794,7 +794,7 @@
 	  <artifactId>quartz-jboss</artifactId>
 	  <version>2.1.6</version>
 	</dependency> -->
-	<dependency>
+	<dependency> 
 	  	<groupId>org.quartz-scheduler</groupId>
 	  	<artifactId>quartz</artifactId>
 	  	<version>2.1.7</version>
@@ -888,27 +888,27 @@
 	  <artifactId>mybatis-spring</artifactId>
 	  <version>1.2.0</version>
 	</dependency>
-	<dependency>
-	  <groupId>org.mybatis.caches</groupId>
-	  <artifactId>mybatis-oscache</artifactId>
-	  <version>1.0.1</version>
-	</dependency>
+<!-- 	<dependency> -->
+<!-- 	  <groupId>org.mybatis.caches</groupId> -->
+<!-- 	  <artifactId>mybatis-oscache</artifactId> -->
+<!-- 	  <version>1.0.1</version> -->
+<!-- 	</dependency> -->
 	
-	<dependency>
-		<groupId>opensymphony</groupId>
-		<artifactId>oscache</artifactId>
-		<version>2.4.1</version>
-		<exclusions>
-			<exclusion>
-				<groupId>javax.servlet</groupId>
-	  			<artifactId>servlet-api</artifactId>
-			</exclusion>
-			<exclusion>
-				<groupId>javax.jms</groupId>
-				<artifactId>jms</artifactId>
-			</exclusion>
-		</exclusions>
-	</dependency>
+<!-- 	<dependency> -->
+<!-- 		<groupId>opensymphony</groupId> -->
+<!-- 		<artifactId>oscache</artifactId> -->
+<!-- 		<version>2.4.1</version> -->
+<!-- 		<exclusions> -->
+<!-- 			<exclusion> -->
+<!-- 				<groupId>javax.servlet</groupId> -->
+<!-- 	  			<artifactId>servlet-api</artifactId> -->
+<!-- 			</exclusion> -->
+<!-- 			<exclusion> -->
+<!-- 				<groupId>javax.jms</groupId> -->
+<!-- 				<artifactId>jms</artifactId> -->
+<!-- 			</exclusion> -->
+<!-- 		</exclusions> -->
+<!-- 	</dependency> -->
 	
 	<dependency>
 	  <groupId>org.mybatis.caches</groupId>
@@ -938,11 +938,11 @@
 	  </exclusions>
 	</dependency>
 	
-	<dependency>
-		<groupId>com.alibaba</groupId>
-		<artifactId>druid</artifactId>
-		<version>1.0.3</version>
-	</dependency>
+<!-- 	<dependency> -->
+<!-- 		<groupId>com.alibaba</groupId> -->
+<!-- 		<artifactId>druid</artifactId> -->
+<!-- 		<version>1.0.3</version> -->
+<!-- 	</dependency> -->
 	
 	<!-- json parse -->
 	<dependency>
@@ -1153,11 +1153,11 @@
 	  <version>1.4.2</version>
 	</dependency>
 	
-	<dependency>
-	  <groupId>net.spy</groupId>
-	  <artifactId>spymemcached</artifactId>
-	  <version>2.9.0</version>
-	</dependency>
+<!-- 	<dependency> -->
+<!-- 	  <groupId>net.spy</groupId> -->
+<!-- 	  <artifactId>spymemcached</artifactId> -->
+<!-- 	  <version>2.9.0</version> -->
+<!-- 	</dependency> -->
 	<!-- 
 	<dependency>
 	  <groupId>com.skmbw</groupId>
@@ -1274,11 +1274,11 @@
 	  <artifactId>infinispan-core</artifactId>
 	  <version>${infinispan-version}</version>
 	</dependency>
-	<dependency>
-		<groupId>org.infinispan</groupId>
-		<artifactId>infinispan-spring</artifactId>
-		<version>${infinispan-version}</version>
-	</dependency>
+<!-- 	<dependency> -->
+<!-- 		<groupId>org.infinispan</groupId> -->
+<!-- 		<artifactId>infinispan-spring</artifactId> -->
+<!-- 		<version>${infinispan-version}</version> -->
+<!-- 	</dependency> -->
 <!-- 	<dependency> -->
 <!-- 		<groupId>org.infinispan</groupId> -->
 <!-- 		<artifactId>infinispan-cdi</artifactId> -->
@@ -1330,11 +1330,11 @@
 <!-- 	  <scope>provided</scope> -->
 	</dependency>
 	
-	<dependency>
-	  <groupId>org.infinispan</groupId>
-	  <artifactId>infinispan-jcache</artifactId>
-	  <version>5.3.0.Final</version>
-	</dependency>
+<!-- 	<dependency> -->
+<!-- 	  <groupId>org.infinispan</groupId> -->
+<!-- 	  <artifactId>infinispan-jcache</artifactId> -->
+<!-- 	  <version>5.3.0.Final</version> -->
+<!-- 	</dependency> -->
 	<dependency>
 	  <groupId>org.jboss.spec.javax.interceptor</groupId>
       <artifactId>jboss-interceptors-api_1.1_spec</artifactId>
