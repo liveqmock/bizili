@@ -15,43 +15,6 @@
 	<import resource="application-security.xml"/>
 <!-- 	<import resource="classpath:cxf/application-soap-server.xml"/> -->
 	
-	<!-- BoneCP configuration -->
-<!-- 	<bean id="mainDataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close"> -->
-<!-- 		<property name="driverClass" value="com.mysql.jdbc.Driver" /> -->
-<!-- 		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1/yourdb" /> -->
-<!-- 		<property name="username" value="root" /> -->
-<!-- 		<property name="password" value="abcdefgh" /> -->
-<!-- 		<property name="idleConnectionTestPeriod" value="60" /> -->
-<!-- 		<property name="idleMaxAge" value="240" /> -->
-<!-- 		<property name="maxConnectionsPerPartition" value="30" /> -->
-<!-- 		<property name="minConnectionsPerPartition" value="10" /> -->
-<!-- 		<property name="partitionCount" value="3" /> -->
-<!-- 		<property name="acquireIncrement" value="5" /> -->
-<!-- 		<property name="statementsCacheSize" value="100" /> -->
-<!-- 		<property name="releaseHelperThreads" value="3" /> -->
-<!-- 	</bean> -->
-	
-	<!-- ssm start 
-	<import resource="classpath:simplesm-context.xml"/>
-	<bean id="ssmSettings" class="com.google.code.ssm.Settings" />
-	<bean name="defaultMemcachedClient" class="com.google.code.ssm.CacheFactory">
-		<property name="cacheClientFactory">
-			<bean class="com.google.code.ssm.providers.xmemcached.MemcacheClientFactoryImpl" />
-		</property>
-		<property name="addressProvider">
-			<bean class="com.google.code.ssm.config.DefaultAddressProvider">
-				<property name="address" value="localhost:11211" />
-			</bean>
-		</property>
-		<property name="configuration">
-			<bean class="com.google.code.ssm.providers.CacheConfiguration">
-				<property name="consistentHashing" value="true" />
-			</bean>
-		</property>
-	</bean>
-	<aop:aspectj-autoproxy />-->
-	<!-- ssm end -->	
-	
 	<!-- auto wire bean -->
 	<context:annotation-config/>
 	<!-- spring cache -->

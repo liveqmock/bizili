@@ -39,10 +39,6 @@
 		<property name="jndiName" value="${jdbc.biziliDataSource}" />
 	</bean>
 	
-	<bean id="supplychainDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<property name="jndiName" value="${jdbc.supplychainDataSource}" />
-	</bean>
-	
 	<!--基于annotation配置Hibernate sessionFactory-->
 	<bean id="biziliSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="biziliDataSource" />
@@ -150,58 +146,12 @@
 		</property>
 	</bean>
 	
-	<!--based annotation config Hibernate sessionFactory-->
-	<bean id="supplychainSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="dataSource" ref="supplychainDataSource" />
-		<property name="packagesToScan">
-    		<list>
-     			<value>com.vteba.supplychain.inventory.model</value>
-     			<value>com.vteba.supplychain.purchase.model</value>
-     			<value>com.vteba.supplychain.sell.model</value>
-     			<value>com.vteba.supplychain.accounting.model</value>
-    		</list>
-   		</property>
-		<property name="namingStrategy">
-			<bean class="org.hibernate.cfg.ImprovedNamingStrategy" />
-		</property>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
-				<prop key="hibernate.jdbc.batch_size">50</prop>
-				<prop key="hibernate.jdbc.fetch_size">50</prop>
-				<prop key="hibernate.default_batch_fetch_size">50</prop>
-				<prop key="hibernate.jdbc.use_reflection_optimizer">true</prop>
-				<prop key="hibernate.jdbc.use_scrollable_resultset">false</prop>
-				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
-				<prop key="hibernate.use_sql_comments">true</prop>
-				<!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
-				<prop key="hibernate.max_fetch_depth">3</prop>
-				<prop key="javax.persistence.validation.mode">none</prop>
-				
-				<!-- the below three configration is the XaTransaction configration -->
-				<prop key="hibernate.current_session_context_class">jta</prop>
-				<prop key="hibernate.transaction.factory_class">org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory</prop>
-				<prop key="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform</prop>
-				
-				<prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
-                <prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
-                <prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
-                <prop key="net.sf.ehcache.configurationResourceName">${ehcache.configFileName.supplychain}</prop>
-                <prop key="hibernate.cache.use_structured_entries">${hibernate.cache.use_structured_entries}</prop>
-			</props>
-		</property>
-	</bean>
-	
 	<!-- SpringJdbcTemplate -->
 	<bean id="biziliJdbcTemplate" class="com.vteba.tm.jdbc.spring.SpringJdbcTemplate">
 		<property name="dataSource" ref="biziliDataSource"/>
 	</bean>
 	<bean id="skmbwJdbcTemplate" class="com.vteba.tm.jdbc.spring.SpringJdbcTemplate">
 		<property name="dataSource" ref="skmbwDataSource"/>
-	</bean>
-	<bean id="supplychainJdbcTemplate" class="com.vteba.tm.jdbc.spring.SpringJdbcTemplate">
-		<property name="dataSource" ref="supplychainDataSource"/>
 	</bean>
 	
 	<!--单个Hibernate SessionFactory的Transaction manager
