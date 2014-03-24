@@ -28,9 +28,10 @@ public class Authorities implements java.io.Serializable {
 	private String action;// 该权限默认的url
 	private String urls;// 该权限下所有的url
 	private String resIds;// 该权限所有的资源id，瞬态的@Transient
+	private String resNames;// 该权限所有的资源name，瞬态的@Transient
 	private Integer orders;// 显示顺序
-	private Set<String> resUrls;// 该权限下的资源url
-	private Set<Resources> resourceSets;
+	private Set<String> resUrls;// 该权限下的资源url，用于菜单显示
+	private Set<Resources> resourceSets;//和资源的多对多关联
 
 	public Authorities() {
 	}
@@ -139,6 +140,16 @@ public class Authorities implements java.io.Serializable {
 		this.orders = orders;
 	}
 
+	@ManyToMany
+	@JoinTable(name = "auth_resource", joinColumns = { @JoinColumn(name = "auth_id", referencedColumnName = "auth_id") }, inverseJoinColumns = { @JoinColumn(name = "resource_id", referencedColumnName = "resource_id") })
+	public Set<Resources> getResourceSets() {
+		return resourceSets;
+	}
+
+	public void setResourceSets(Set<Resources> resourceSets) {
+		this.resourceSets = resourceSets;
+	}
+
 	@Transient
 	public String getResIds() {
 		return resIds;
@@ -157,14 +168,13 @@ public class Authorities implements java.io.Serializable {
 		this.resUrls = resUrls;
 	}
 
-	@ManyToMany
-	@JoinTable(name = "auth_resource", joinColumns = { @JoinColumn(name = "auth_id", referencedColumnName = "auth_id") }, inverseJoinColumns = { @JoinColumn(name = "resource_id", referencedColumnName = "resource_id") })
-	public Set<Resources> getResourceSets() {
-		return resourceSets;
+	@Transient
+	public String getResNames() {
+		return resNames;
 	}
 
-	public void setResourceSets(Set<Resources> resourceSets) {
-		this.resourceSets = resourceSets;
+	public void setResNames(String resNames) {
+		this.resNames = resNames;
 	}
-
+	
 }

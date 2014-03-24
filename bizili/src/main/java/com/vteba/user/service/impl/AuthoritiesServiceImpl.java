@@ -64,6 +64,20 @@ public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long
 		authoritiesDaoImpl.initProxyObject(authorities.getResourceSets());
 		return authorities;
 	}
+
+	@Override
+	public Authorities loadAuthorities(Long authId) {
+		Authorities authorities = authoritiesDaoImpl.get(authId);
+		StringBuilder resIds = new StringBuilder("");
+		StringBuilder resNames = new StringBuilder("");
+		for (Resources res : authorities.getResourceSets()) {
+			resIds.append(res.getResourceId()).append(",");
+			resNames.append(res.getResourceUrl()).append(",");
+		}
+		authorities.setResIds(resIds.toString());
+		authorities.setResNames(resNames.toString());
+		return authorities;
+	}
 	
 
 }

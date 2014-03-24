@@ -59,6 +59,10 @@ img {border-width: 0px 0px 0px 0px}
 			lock:true
 		});
     }
+  	//修改实体
+    function editAuth(id) {
+   	 window.location.href = 'authorities-input.htm?init=true&authId='+id;
+    }
 </script>
 </head>
 <body>
@@ -122,7 +126,7 @@ img {border-width: 0px 0px 0px 0px}
                 <td class="sixf">${auth.action}</td>
                 <td class="fivf">
                  <img src="../images/res3.png" title="资源" style="margin-left:4px;margin-top:4px;cursor:pointer;height:22px;width:22px;" onclick="javascript:queryRes('${auth.authId}');"></img>
-                 <img src="../images/btn_edit.gif" title="修改" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:editRes('${auth.authId}')"/>
+                 <img src="../images/btn_edit.gif" title="修改" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:editAuth('${auth.authId}')"/>
                  <img src="../images/tu12.gif" title="删除" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:deleteAuth('${auth.authId}')"/></td>
               </tr>
               </c:forEach>

@@ -58,12 +58,19 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 	@RequestMapping("/authorities-input")
 	public String input(Authorities model, Map<String, Object> maps) throws Exception {
 		if (isInit()) {
+			setTokenValue();
 			String hql = "select a from ModuleMenu a where a.enable = true";
 			List<ModuleMenu> list = moduleMenuServiceImpl.getEntityListByHql(hql);
 			maps.put("list", list);
+			if (model.getAuthId() != null) {
+				model = authoritiesServiceImpl.loadAuthorities(model.getAuthId());
+				maps.put("auth", model);
+			}
 			return "user/authorities/auth-input-success";
 		}
-		authoritiesServiceImpl.saveAuthRes(model);
+		if (isTokenValueOK()) {
+			authoritiesServiceImpl.saveAuthRes(model);
+		}
 		return "user/authorities/auth-input-success";
 	}
 

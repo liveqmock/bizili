@@ -148,6 +148,8 @@ input.iptBuySteelAdd{
 			<div id="epMcContent" class="epMcCtContent" style="margin-top:10px;margin-bottom:10px;">
 	<h3 class="bordFont bigFont">权限管理</h3>
 	<form name="frm" id="frm" action="authorities-input.htm" method="post">
+	<input type="hidden" name="tokenName" value="${token_name}">
+	<input type="hidden" name="authId" value="${auth.authId}"/>
 			<div class="tab">
 				<ul class="tabMenu none bordFont floatUl normalFont">
 					<li class="first"><a href="<c:url value="/users/authorities-initial.htm"/>">权限列表</a></li>
@@ -156,18 +158,18 @@ input.iptBuySteelAdd{
 			</div>
 	<table class="tableSteel">
 		<tr>
-		<td class="twoFont">权限名 </td><td class="widt"><input class="widt" name="authName" type="text"/><span class="star">*</span></td><td class="star"></td>
-		<td class="twoFont">权限描述</td><td class="widt"><input class="widt" name="authDesc" type="text" /><span class="star">*</span></td><td class="star"></td>
+		<td class="twoFont">权限名 </td><td class="widt"><input class="widt" name="authName" value="${auth.authName}" type="text"/><span class="star">*</span></td><td class="star"></td>
+		<td class="twoFont">权限描述</td><td class="widt"><input class="widt" name="authDesc" value="${auth.authDesc}" type="text" /><span class="star">*</span></td><td class="star"></td>
 		</tr>
 		<tr>
 		<td class="twoFont">默认URL</td><td class="widt">
 		<select id="enabled" name="enabled" style="width:120px;">
 			<option value="">--请选择--</option>
-			<option value="1">是</option>
-			<option value="0">否</option>
+			<option value="1" <c:if test="${auth.enabled == 1}">selected="selected"</c:if>>是</option>
+			<option value="0" <c:if test="${auth.enabled == 0}">selected="selected"</c:if>>否</option>
 		</select>
 		<span class="star">*</span></td><td class="star"></td>
-		<td class="twoFont">归属</td><td class="widt"><input class="widt" name="userId" type="text" />（属于哪个用户）</td><td class="star"></td>
+		<td class="twoFont">归属</td><td class="widt"><input class="widt" value="${auth.userId}" name="userId" type="text" />（属于哪个用户）</td><td class="star"></td>
 		
 		</tr>
 		<tr>
@@ -175,14 +177,14 @@ input.iptBuySteelAdd{
 		<select id="moduleId" name="moduleId" style="width:120px;">
 			<option value="">--请选择--</option>
 			<c:forEach items="${list}" var="module">
-			<option value="${module.moduleId}">${module.moduleName}</option>
+			<option value="${module.moduleId}" <c:if test="${module.moduleId == auth.moduleId}">selected="selected"</c:if> >${module.moduleName}</option>
 			</c:forEach>
 		</select>
 		<span class="star">*</span>（属于哪个菜单）</td><td class="star"></td>
-		<td class="twoFont">动作</td><td class="widt"><input class="widt" name="action" type="text" />（该权限的默认URL）</td><td class="star"></td>
+		<td class="twoFont">动作</td><td class="widt"><input class="widt" name="action" value="${auth.action}" type="text" />（该权限的默认URL）</td><td class="star"></td>
 		</tr>
 		<tr>
-		<td class="twoFont">资源</td><td class="widt" colspan="5"><input type="hidden" name="resIds" id="resIds" value=""/><input type="text" name="urls" id="urls" value="" class="note" /><img id="addResource" src="../images/tb2.gif" style="margin-left:6px;cursor:pointer;"></img>（新增请输入，已有的请点击+选择）</td>
+		<td class="twoFont">资源</td><td class="widt" colspan="5"><input type="hidden" value="${auth.resIds}" name="resIds" id="resIds" value=""/><input type="text" name="urls" id="urls" value="${auth.resNames}" class="note" /><img id="addResource" src="../images/tb2.gif" style="margin-left:6px;cursor:pointer;"></img>（新增请输入，已有的请点击+选择）</td>
 		</tr>
 	</table>
 	<input type="button" class="determination" value="保存" onclick="saveAuth();"/>
