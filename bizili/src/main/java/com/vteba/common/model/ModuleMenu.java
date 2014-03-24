@@ -1,5 +1,6 @@
 package com.vteba.common.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class ModuleMenu implements AstModel{
 	private Date createTime;
 	private boolean enable;//是否可用
 	private Integer orders;//显示顺序
-	private List<Authorities> authorities;//用户权限
+	private List<Authorities> authorities = new ArrayList<Authorities>();//用户权限
 	
 	public ModuleMenu() {
 	}

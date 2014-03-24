@@ -1,8 +1,8 @@
-<link rel="stylesheet" href="${CSS_PATH}/global.css">
-<link rel="stylesheet" href="${CSS_PATH}/reset.css">
-<link rel="stylesheet" href="${CSS_PATH}/epMCLayout.css">
-<link rel="stylesheet" href="${CSS_PATH}/font.css">
-<link rel="stylesheet" href="${JS_PATH}/jquery.alerts.css">
+<link rel="stylesheet" href="<c:url value='/css/global.css'/>">
+<link rel="stylesheet" href="<c:url value='/css/reset.css'/>">
+<link rel="stylesheet" href="<c:url value='/css/epMCLayout.css'/>">
+<link rel="stylesheet" href="<c:url value='/css/font.css'/>">
+<link rel="stylesheet" href="<c:url value='/js/jquery.alerts.css'/>">
 
 
 

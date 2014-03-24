@@ -88,7 +88,7 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 	@RequestMapping("/auth-list")
 	public String list(Authorities authorities, PageBean<Authorities> pageBean, Map<String, Object> maps) {
 		page = pageBean.getPage();
-		page.setPageSize(20);
+		page.setPageSize(30);
 		authoritiesServiceImpl.queryForPageByCriteria(page, authorities);
 		listResult = page.getResult();
 		maps.put("listResult", listResult);

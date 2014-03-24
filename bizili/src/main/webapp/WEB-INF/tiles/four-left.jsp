@@ -34,8 +34,8 @@
 		}
 	}
 %>
-<link href="../js/SpryAssets/SpryAccordion.css" rel="stylesheet" type="text/css"/>
-<script src="../js/SpryAssets/SpryAccordion.js" type="text/javascript"></script>
+<link href="<c:url value='/js/SpryAssets/SpryAccordion.css'/>" rel="stylesheet" type="text/css"/>
+<script src="<c:url value='/js/SpryAssets/SpryAccordion.js'/>" type="text/javascript"></script>
 <style type="text/css">
 .epMcNav{
 	width:148px;
@@ -127,7 +127,7 @@
 </c:if>
 <!-- 
   <h3 class="epMcNavMcMessageInweb"><a href="#" style="font-size:14px;text-align:left;"><span>站内短信</span></a></h3> -->	
-  <div style="width:127px; margin:2px auto;"><a href="<c:url value="/j_spring_security_logout"/>" ><img src="../images/exit.gif" alt="" /></a></div>
+  <div style="width:127px; margin:2px auto;"><a href="<c:url value="/j_spring_security_logout"/>" ><img src="<c:url value='/images/exit.gif'/>" alt="" /></a></div>
 </div>
 <script type="text/javascript">
 var Accordion1 = new Spry.Widget.Accordion("Accordion1",{defaultPanel:<%=panel%>});

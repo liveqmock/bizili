@@ -58,14 +58,16 @@ public class RolesAction extends BaseAction<Roles> {
 	@RequestMapping("/roles-input")
 	public String input(Roles model, Map<String, Object> maps) throws Exception {
 		if (isInit()) {
+			setTokenValue();
 			if (model.getRoleId() != null) {
 				model = rolesServiceImpl.loadRoles(model.getRoleId());
-				maps.put("roles", model);
+				maps.put("role", model);
 			}
 			return "user/roles/roles-input-success";
 		}
-
-		rolesServiceImpl.saveRoleAuths(model);
+		if (isTokenValueOK()) {
+			rolesServiceImpl.saveRoleAuths(model);
+		}
 		return "user/roles/roles-input-success";
 	}
 	

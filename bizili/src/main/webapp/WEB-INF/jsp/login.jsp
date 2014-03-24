@@ -127,7 +127,7 @@
 	<div id="content">
         <div id="right" style="float:right;">
         <h2 style="float:center;margin-left:50px;margin-bottom:10px;">平台登录</h2>   
-        <form id="login_form" name="login_form" action="${SERVLET_PATH}/j_spring_security_check" method="post">
+        <form id="login_form" name="login_form" action="${ctx}/j_spring_security_check" method="post">
         
         <input type="hidden" id="msg" value="<c:if test="${sessionScope.SPRING_SECURITY_LAST_EXCEPTION ne null}">您输入的用户名或密码错误。</c:if>">
             <table width="500" border="0" cellspacing="0" cellpadding="0">

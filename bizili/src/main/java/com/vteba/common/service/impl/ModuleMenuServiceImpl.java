@@ -1,10 +1,8 @@
 package com.vteba.common.service.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -15,11 +13,13 @@ import org.apache.commons.lang3.StringUtils;
 import com.vteba.common.dao.IModuleMenuDao;
 import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
-import com.vteba.tm.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.tm.hibernate.IHibernateGenericDao;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.model.EmpUser;
-import com.vteba.user.service.IAuthoritiesService;
+import com.vteba.user.model.Resources;
+import com.vteba.user.model.Roles;
+import com.vteba.user.service.IEmpUserService;
 
 /**
  * 菜单service实现
@@ -31,16 +31,18 @@ public class ModuleMenuServiceImpl extends GenericServiceImpl<ModuleMenu, String
 		IModuleMenuService {
 
 	private IModuleMenuDao moduleMenuDaoImpl;
-	private IAuthoritiesService authoritiesServiceImpl;
+	//private IAuthoritiesService authoritiesServiceImpl;
+	@Inject
+	private IEmpUserService empUserServiceImpl;
 	
 	public ModuleMenuServiceImpl() {
 		super();
 	}
 	
-	@Inject
-	public void setAuthoritiesServiceImpl(IAuthoritiesService authoritiesServiceImpl) {
-		this.authoritiesServiceImpl = authoritiesServiceImpl;
-	}
+//	@Inject
+//	public void setAuthoritiesServiceImpl(IAuthoritiesService authoritiesServiceImpl) {
+//		this.authoritiesServiceImpl = authoritiesServiceImpl;
+//	}
 
 	@Inject
 	public void setHibernateGenericDaoImpl(
@@ -50,39 +52,72 @@ public class ModuleMenuServiceImpl extends GenericServiceImpl<ModuleMenu, String
 	}
 	
 	public List<ModuleMenu> getModuleMenuList(EmpUser user){
-		String hql = "from ModuleMenu mm where mm.enable = true order by orders asc";
+		user = empUserServiceImpl.get(user.getUserId());
+		//获得所有的菜单
+		String hql = "select mm from ModuleMenu mm where mm.enable = true order by orders asc";
 		List<ModuleMenu> menuList = moduleMenuDaoImpl.getEntityListByHql(hql);
+		List<Authorities> authorities = new ArrayList<Authorities>();
+		for (Roles role : user.getRoleSet()) {
+			Set<Authorities> authSets = role.getAuthSets();
+			authorities.addAll(authSets);
+		}
 
-		if (menuList != null && menuList.size() > 0) {
-			String mhql = "from Authorities aa where aa.moduleId = :moduleId and aa.userId = :userId and aa.enabled = 1 order by :orders asc";
-			for (ModuleMenu menu : menuList) {//获得各模组下的菜单(权限)
-				List<Authorities> authorities = new ArrayList<Authorities>();
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("moduleId", menu.getModuleId());
-				map.put("userId", user.getUserId());
-				map.put("orders", "orders");
-				authorities = authoritiesServiceImpl.getEntityListByHql(mhql, map);
-				
-				List<Authorities> sets = new ArrayList<Authorities>();
-				for (Authorities auth : authorities) {
-					Set<String> urls = new HashSet<String>();
-					urls = splitUrls(auth.getUrls());
-					if (urls != null) {//该权限下所有的动作(URL)
-						auth.setResUrls(urls);
+		//匹配权限和菜单
+		for (Authorities auth : authorities) {
+			for (ModuleMenu menu : menuList) {
+				if (auth.getModuleId().equals(menu.getModuleId())) {
+					if (auth.getEnabled() == 1) {
+						//取得菜单下所有的资源，控制菜单显示
+						Set<String> resUrls = new HashSet<String>();
+						for (Resources res : auth.getResourceSets()) {
+							resUrls.add(res.getResourceUrl());
+						}
+						if (resUrls.size() > 0) {
+							auth.setResUrls(resUrls);
+						}
+						menu.getAuthorities().add(auth);
 					}
-					sets.add(auth);
 				}
-				menu.setAuthorities(sets);
 			}
 		}
-		List<ModuleMenu> finalMenus = new ArrayList<ModuleMenu>();
-		for (ModuleMenu menu : menuList) {
-			//有权限，才显示相应的菜单
-			if (menu.getAuthorities() != null && menu.getAuthorities().size() > 0) {
-				finalMenus.add(menu);
-			}
-		}
-		return finalMenus;
+		
+		
+		return menuList;
+		
+//		//获得所有的菜单
+//		String hql = "from ModuleMenu mm where mm.enable = true order by orders asc";
+//		List<ModuleMenu> menuList = moduleMenuDaoImpl.getEntityListByHql(hql);
+//		if (menuList != null && menuList.size() > 0) {
+//			//获得权限
+//			String mhql = "from Authorities aa where aa.moduleId = :moduleId and aa.userId = :userId and aa.enabled = 1 order by :orders asc";
+//			for (ModuleMenu menu : menuList) {//获得各模组下的菜单(权限)
+//				List<Authorities> authorities = new ArrayList<Authorities>();
+//				Map<String, Object> map = new HashMap<String, Object>();
+//				map.put("moduleId", menu.getModuleId());
+//				map.put("userId", user.getUserId());
+//				map.put("orders", "orders");
+//				authorities = authoritiesServiceImpl.getEntityListByHql(mhql, map);
+//				
+//				List<Authorities> sets = new ArrayList<Authorities>();
+//				for (Authorities auth : authorities) {
+//					Set<String> urls = new HashSet<String>();
+//					urls = splitUrls(auth.getUrls());
+//					if (urls != null) {//该权限下所有的动作(URL)
+//						auth.setResUrls(urls);
+//					}
+//					sets.add(auth);
+//				}
+//				menu.setAuthorities(sets);
+//			}
+//		}
+//		List<ModuleMenu> finalMenus = new ArrayList<ModuleMenu>();
+//		for (ModuleMenu menu : menuList) {
+//			//有权限，才显示相应的菜单
+//			if (menu.getAuthorities() != null && menu.getAuthorities().size() > 0) {
+//				finalMenus.add(menu);
+//			}
+//		}
+//		return finalMenus;
 	}
 	
 	/**
