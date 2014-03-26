@@ -62,4 +62,10 @@ public class RolesServiceImpl extends GenericServiceImpl<Roles, Long> implements
 		return roles;
 	}	
 
+	@Override
+	public Roles loadRolesEager(Long roleId) {
+		Roles roles = rolesDaoImpl.get(roleId);
+		rolesDaoImpl.initProxyObject(roles.getAuthSets());
+		return roles;
+	}
 }

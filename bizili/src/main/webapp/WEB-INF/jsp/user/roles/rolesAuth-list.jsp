@@ -69,7 +69,7 @@
                 <td class="twof"><input type="checkbox" id="check${st.count}" /></td>
                 <td class="fouf">${roleAuth.authName}</td>
                 <td class="sixf">${roleAuth.authDesc}</td>
-                <td class="fivf">${roleAuth.flag}</td>
+                <td class="fivf">${roleAuth.enabled}</td>
               </tr>
               </c:forEach>
             </table>

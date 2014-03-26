@@ -1,6 +1,5 @@
 package com.vteba.user.web;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -9,9 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.common.constant.CommonConst;
-import com.vteba.user.model.RoleAuth;
 import com.vteba.user.model.Roles;
-import com.vteba.user.service.IRoleAuthService;
 import com.vteba.user.service.IRolesService;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
@@ -26,18 +23,12 @@ import com.vteba.web.action.PageBean;
 public class RolesAction extends BaseAction<Roles> {
 
 	private IRolesService rolesServiceImpl;
-	private IRoleAuthService roleAuthServiceImpl;
 	
 	@Inject
 	public void setRolesServiceImpl(IRolesService rolesServiceImpl) {
 		this.rolesServiceImpl = rolesServiceImpl;
 	}
 	
-	@Inject
-	public void setRoleAuthServiceImpl(IRoleAuthService roleAuthServiceImpl) {
-		this.roleAuthServiceImpl = roleAuthServiceImpl;
-	}
-
 	@RequestMapping("/roles-initial")
 	public String initial(PageBean<Roles> pageBean, Map<String, Object> maps) throws Exception {
 		Roles entity = new Roles();
@@ -78,9 +69,10 @@ public class RolesAction extends BaseAction<Roles> {
 	 */
 	@RequestMapping("/roles-roleAuthList")
 	public String roleAuthList(Roles model, Map<String, Object> maps) throws Exception {
-		String hql = "select a from RoleAuth a where a.roleId = ?1 ";
-		List<RoleAuth> list = roleAuthServiceImpl.getEntityListByHql(hql, model.getRoleId());
-		maps.put("list", list);
+		//String hql = "select a from RoleAuth a where a.roleId = ?1 ";
+		model = rolesServiceImpl.loadRolesEager(model.getRoleId());
+		//List<RoleAuth> list = roleAuthServiceImpl.getEntityListByHql(hql, model.getRoleId());
+		maps.put("list", model.getAuthSets());
 		return "user/roles/rolesAuth-list";
 	}
 	

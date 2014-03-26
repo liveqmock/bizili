@@ -11,9 +11,16 @@ public interface IRolesService extends IGenericService<Roles, Long> {
 	public void saveRoleAuths(Roles roles);
 	
 	/**
-	 * 即时加载角色，包含该角色下的资源。
+	 * 即时加载角色，包含该角色下的权限，以及authIds，authNames字符串（以，分割）。
 	 * @param roleId 角色Id
 	 * @return 角色
 	 */
 	public Roles loadRoles(Long roleId);
+	
+	/**
+	 * 即时加载角色，包含该角色下的权限。
+	 * @param roleId 角色Id
+	 * @return 角色
+	 */
+	public Roles loadRolesEager(Long roleId);
 }
