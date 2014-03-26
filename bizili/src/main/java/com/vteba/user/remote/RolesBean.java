@@ -30,7 +30,7 @@ public class RolesBean {
 	@RemoteMethod
 	public String deleteRole(Long roleId) {
 		String hql = "select count(*) from user_role ur where ur.role_id = ?";
-		Integer count = rolesServiceImpl.hqlQueryForObject(hql, Integer.class, roleId);
+		Integer count = rolesServiceImpl.sqlQueryForObject(hql, Integer.class, roleId);
 		if (count > 0) {
 			return "inused";
 		}
