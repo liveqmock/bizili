@@ -36,7 +36,7 @@ public class ModuleMenu implements AstModel{
 	private String moduleId;
 	private String moduleName;
 	private Date createTime;
-	private boolean enable;//是否可用
+	private Boolean enable;//是否可用
 	private Integer orders;//显示顺序
 	private List<Authorities> authorities = new ArrayList<Authorities>();//用户权限
 	
@@ -86,11 +86,11 @@ public class ModuleMenu implements AstModel{
 	}
 
 	@Column(name = "enable")
-	public boolean isEnable() {
+	public Boolean getEnable() {
 		return enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(Boolean enable) {
 		this.enable = enable;
 	}
 	

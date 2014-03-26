@@ -51,6 +51,8 @@ span.star{
 	<div class="epMcCtContent">
 	<h3 class="titleBig bigFont bordFont">资源管理</h3>
 	<form id="tabContent" action="resources-input.htm" method="post">
+	<input type="hidden" name="tokenName" value="${token_name}">
+	<input type="hidden" name="resourceId" value="${res.resourceId}"/>
 				<div class="tab">
 					<ul class="tabMenu none bordFont floatUl normalFont">
 						<li class="first"><a href="<c:url value="/users/resources-initial.htm"/>">资源列表</a>
@@ -59,106 +61,27 @@ span.star{
 					</ul>
 				</div>
 				<div id="tabContent1">
-		
-<!-- 		<table class="tableSteel"> -->
-<!-- 			<tr class="title"> -->
-<!-- 			<td class="twof">序号</td> -->
-<!-- 			<td class="fouf">资源名<span class="red">*</span></td> -->
-<!-- 			<td class="sixf">资源类型<span class="red">*</span></td> -->
-<!-- 			<td class="fouf">资源URL<span class="red">*</span></td> -->
-<!-- 			<td class="eigf">资源描述<span class="red">*</span></td> -->
-<!-- 			<td class="fouf">是否可用<span class="red">*</span></td> -->
-<!-- 			<td class="fouf">默认URL<span class="red">*</span></td> -->
-<!-- 			<td class="eigf" style="border-right:1px #09f solid;">菜单中显示<span class="red">*</span></td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 			<td class="twof"></td> -->
-<!-- 			<td><input type="text" name="resourcesList[0].resourceName" class="twf" /></td> -->
-<!-- 			<td> -->
-<!-- 				<select name="resourcesList[0].resourceType"> -->
-<!-- 					<option value="action">Action</option> -->
-<!-- 					<option value="url">URL</option> -->
-<!-- 					<option value="method">Method</option> -->
-<!-- 				</select> -->
-<!-- 			</td> -->
-<!-- 			<td><input type="text" name="resourcesList[0].resourceUrl" class="twf230" /></td> -->
-<!-- 			<td><input type="text" name="resourcesList[0].resourceDesc" class="twf230" /></td> -->
-<!-- 			<td> -->
-<!-- 				<select name="resourcesList[0].enabled"> -->
-<!-- 					<option value="1">是</option> -->
-<!-- 					<option value="0">否</option> -->
-<!-- 				</select> -->
-<!-- 			</td> -->
-<!-- 			<td> -->
-<!-- 				<select name="resourcesList[0].defaults"> -->
-<!-- 					<option value="0">否</option> -->
-<!-- 					<option value="1">是</option> -->
-<!-- 				</select> -->
-<!-- 			</td> -->
-<!-- 			<td > -->
-<!-- 				<select name="resourcesList[0].showInMenu"> -->
-<!-- 					<option value="0">否</option> -->
-<!-- 					<option value="1">是</option> -->
-<!-- 				</select> -->
-<!-- 			</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 			<td class="twof"></td> -->
-<!-- 			<td><input type="text" name="resourcesList[1].resourceName" class="twf" /></td> -->
-<!-- 			<td> -->
-<!-- 				<select name="resourcesList[1].resourceType"> -->
-<!-- 					<option value="action">Action</option> -->
-<!-- 					<option value="url">URL</option> -->
-<!-- 					<option value="method">Method</option> -->
-<!-- 				</select> -->
-<!-- 			</td> -->
-<!-- 			<td><input type="text" name="resourcesList[1].resourceUrl" class="twf230" /></td> -->
-<!-- 			<td><input type="text" name="resourcesList[1].resourceDesc" class="twf230" /></td> -->
-<!-- 			<td> -->
-<!-- 				<select name="resourcesList[1].enabled"> -->
-<!-- 					<option value="1">是</option> -->
-<!-- 					<option value="0">否</option> -->
-<!-- 				</select> -->
-<!-- 			</td> -->
-<!-- 			<td> -->
-<!-- 				<select name="resourcesList[1].defaults"> -->
-<!-- 					<option value="0">否</option> -->
-<!-- 					<option value="1">是</option> -->
-<!-- 				</select> -->
-<!-- 			</td> -->
-<!-- 			<td > -->
-<!-- 				<select name="resourcesList[1].showInMenu"> -->
-<!-- 					<option value="0">否</option> -->
-<!-- 					<option value="1">是</option> -->
-<!-- 				</select> -->
-<!-- 			</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td colspan="8" class="floRight"><input type="button" class="newLine bordFont" title="暂不可用" value="新增一行" /></td> -->
-<!-- 			</tr>  -->
-<!-- 		  </table> -->
-		  
 		  
 		  <table class="tableSteel">
 			<tr>
 			<td class="twof"></td>
 			<td class="fivf">资源名</td>
-			<td><input type="text" name="resourceName" class="twf190" /><span class="star">*</span></td>
+			<td><input type="text" name="resourceName" value="${res.resourceName}" class="twf190" /><span class="star">*</span></td>
 			
 			<td class="fivf">资源描述</td>
-			<td><input type="text" name="resourceDesc" class="twf190" /><span class="star">*</span></td>
+			<td><input type="text" name="resourceDesc" value="${res.resourceDesc}" class="twf190" /><span class="star">*</span></td>
 			<td class="twof"></td>
 			</tr>
 			<tr>
 			<td class="twof"></td>
 			<td class="fivf">资源URL</td>
-			<td><input type="text" name="resourceUrl" class="twf190" /><span class="star">*</span></td>
+			<td><input type="text" name="resourceUrl" value="${res.resourceUrl}" class="twf190" /><span class="star">*</span></td>
 			
 			<td class="fivf">默认URL</td>
 			<td>
 				<select name="defaults">
-					<option value="0">否</option>
-					<option value="1">是</option>
+					<option value="0" <c:if test="${res.defaults == false}">selected="selected"</c:if>>否</option>
+					<option value="1" <c:if test="${res.defaults == true}">selected="selected"</c:if>>是</option>
 				</select>
 			<span class="star">*</span></td>
 			<td class="twof"></td>
@@ -168,8 +91,8 @@ span.star{
 			<td class="fivf">是否启用</td>
 			<td>
 					<select name="enabled">
-						<option value="1">是</option>
-						<option value="0">否</option>
+						<option value="1" <c:if test="${res.enabled ==1}">selected="selected"</c:if>>是</option>
+						<option value="0" <c:if test="${res.enabled ==0}">selected="selected"</c:if>>否</option>
 					</select>
 					<span class="star">*</span>
 			</td>
@@ -177,8 +100,8 @@ span.star{
 			<td class="fivf">菜单中显示</td>
 			<td>
 					<select name="showInMenu">
-						<option value="0">否</option>
-						<option value="1">是</option>
+						<option value="0" <c:if test="${res.showInMenu == false}">selected="selected"</c:if>>否</option>
+						<option value="1" <c:if test="${res.showInMenu == true}">selected="selected"</c:if>>是</option>
 					</select><span class="star">*</span></td>
 			<td class="twof"></td>
 			</tr>
@@ -187,9 +110,9 @@ span.star{
 			<td class="fivf">资源类型</td>
 			<td class="tenf" colspan="3">
 				<select name="resourceType">
-					<option value="action">Action</option>
-					<option value="url">URL</option>
-					<option value="method">Method</option>
+					<option value="action" <c:if test="${res.resourceType eq 'action'}">selected="selected"</c:if>>Action</option>
+					<option value="url" <c:if test="${res.resourceType eq 'url'}">selected="selected"</c:if>>URL</option>
+					<option value="method" <c:if test="${res.resourceType eq 'method'}">selected="selected"</c:if>>Method</option>
 				</select>
 			<span class="star">*</span></td>
 			<td class="twof"></td>

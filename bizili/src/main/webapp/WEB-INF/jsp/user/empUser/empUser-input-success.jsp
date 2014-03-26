@@ -173,7 +173,7 @@ input.iptBuySteelAdd{
 			<div class="tab">
 				<ul class="tabMenu none bordFont floatUl normalFont">
 					<li class="first"><a href="<c:url value="/users/empUser-initial.htm"/>">用户列表</a></li>
-					<li><a href="<c:url value="/users/empUser-roles.htm"/>">我的角色</a></li>
+					<li><a href="<c:url value="/users/empUser-roles.htm?init=true"/>">我的角色</a></li>
 					<li><a href="<c:url value="/users/empUser-input.htm?init=true"/>" class="current">新增用户</a></li>
 				</ul>
 			</div>

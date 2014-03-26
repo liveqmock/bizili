@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Language" content="zh-cn" />
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
-<head><title>权限管理</title>
+<head><title>菜单管理</title>
 <style type="text/css">
 img {border-width: 0px 0px 0px 0px}
 #middel{
@@ -31,12 +31,18 @@ img {border-width: 0px 0px 0px 0px}
     		$("#queryForm").submit();
     	});
     });
-    function deleteAuth(id) {
-    	$.dialog.confirm('你确定要删除该权限吗？', function(){
+    
+  	//修改实体
+    function editMenu(id) {
+   	 window.location.href = 'add.htm?init=true&moduleId='+id;
+    }
+  	
+    function deleteMenu(id) {
+    	$.dialog.confirm('你确定要删除该菜单吗？', function(){
     		$.ajax({
 	            type:"post",
 	            dataType:"text",
-	            url: '${ctx}/users/auth-delete.htm?authId=' + id,
+	            url: '${ctx}/menu/delete.htm?moduleId=' + id,
 	            success: function(msg){
 	            	$('#tr'+id).remove();
 	            },
@@ -60,10 +66,6 @@ img {border-width: 0px 0px 0px 0px}
 			lock:true
 		});
     }
-  	//修改实体
-    function editAuth(id) {
-   	 window.location.href = 'authorities-input.htm?init=true&authId='+id;
-    }
 </script>
 </head>
 <body>
@@ -78,35 +80,33 @@ img {border-width: 0px 0px 0px 0px}
 		<div id="content">
 			<div id="epMcContent">
 		<div class="epMcCtContent">
-			<h3 class="bordFont bigFont">权限管理</h3>
+			<h3 class="bordFont bigFont">菜单管理</h3>
 			<div class="tab">
 				<ul class="tabMenu none bordFont floatUl normalFont">
-					<li class="first"><a href="<c:url value="/users/authorities-initial.htm"/>" class="current">权限列表</a>
+					<li class="first"><a href="<c:url value="/menu/list.htm"/>" class="current">菜单列表</a>
 					</li>
-					<li><a href="<c:url value="/users/authorities-input.htm?init=true"/>">新增权限</a></li>
+					<li><a href="<c:url value="/menu/add.htm?init=true"/>">新增菜单</a></li>
 				</ul>
 				<div class="">
-					<form action="authorities-initial.htm" id="queryForm" name="queryForm" method="post">
+					<form action="list.htm" id="queryForm" name="queryForm" method="post">
 					<input type="hidden" name="query" id="query" value="false"/>
 						<table class="bugSteel first" style="border-top: 0;">
 							<tr>
-								<td class="twof"> 权限名</td>
+								<td class="twof"> 模块名</td>
 								<td class="twef">
-								<input type="text" name="authName" value="${authorities.authName}" class="tf" />
+								<input type="text" name="moduleName" value="${moduleMenu.moduleName}" class="tf" />
 								</td>
-								<td class="twof">描述</td>
+								<td class="twof">是否可用</td>
 								<td class="twef">
-								<input type="text" name="authDesc" value="${authorities.authDesc}" class="tf" />
-								</td>
-								<td class="twof">动作</td>
-								<td class="twef">
-								<input type="text" name="action" value="${authorities.action}" class="tf" />
+								<select style="width:70px;" name="enable">
+									<option value="true" <c:if test="${moduleMenu.enable == true}">selected="selected"</c:if>>是</option>
+									<option value="false" <c:if test="${moduleMenu.enable == false}">selected="selected"</c:if>>否</option>
+								</select>
 								</td>
 								<td class="twof">排序</td><td class="fotf">
 								<select style="width:90px;" name="page.orderBy">
-									<option value="authName" <c:if test="${page.orderBy eq 'authName'}">selected="selected"</c:if>>权限名</option>
-									<option value="authDesc" <c:if test="${page.orderBy eq 'authDesc'}">selected="selected"</c:if>>描述</option>
-									<option value="moduleId" <c:if test="${page.orderBy eq 'moduleId'}">selected="selected"</c:if>>模组</option>
+								<option value="moduleName" <c:if test="${page.orderBy eq 'moduleName'}">selected="selected"</c:if>>权限名</option>
+								<option value="enable" <c:if test="${page.orderBy eq 'enable'}">selected="selected"</c:if>>是否可用</option>
 								</select>-
 								<select style="width:70px;" name="page.ascDesc">
 									<option value="asc" <c:if test="${page.ascDesc eq 'asc'}">selected="selected"</c:if>>升序</option>
@@ -124,26 +124,25 @@ img {border-width: 0px 0px 0px 0px}
 					<table class="tableSteel">
               <tr class="title" style="border-right:1px #bfd2ed solid;">
                 <td class="twof"></td>
-                <td class="fivf">权限名</td>
-                <td class="fivf">描述</td>
-                <td class="fivf">默认URL</td>
-                <td class="fivf">模组</td>
-                <td class="sixf">动作</td>
+                <td class="fivf">ID</td>
+                <td class="fivf">模块名</td>
+                <td class="fivf">创建时间</td>
+                <td class="fivf">是否可用</td>
+                <td class="sixf">显示顺序</td>
                 <td class="fivf" style="border-right:1px #09f solid">操作</td>
               </tr>
-              <c:forEach items="${listResult}" var="auth" varStatus="st">
-              <tr id="tr${auth.authId}" style="${st.count%2==0?'background:#f3f3f3':''}">
+              <c:forEach items="${listResult}" var="entity" varStatus="st">
+              <tr id="tr${entity.moduleId}" style="${st.count%2==0?'background:#f3f3f3':''}">
                 <td class="twof"><input type="checkbox" /></td>
-                <td class="sixf">${auth.authName }</td>
-                <td class="fivf">${auth.authDesc }</td>
-                
-                <td class="sixf"><c:if test="${auth.enabled == 1}">是</c:if><c:if test="${auth.enabled == 0}">否</c:if></td>
-                <td class="sixf">${auth.moduleId}</td>
-                <td class="sixf">${auth.action}</td>
+                <td class="sixf">${entity.moduleId}</td>
+                <td class="fivf">${entity.moduleName}</td>
+                <td class="sixf"><fmt:formatDate value="${entity.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                <td class="sixf"><c:if test="${enable == true}">是</c:if><c:if test="${enable == false}">否</c:if></td>
+                <td class="sixf">${entity.orders}</td>
                 <td class="fivf">
-                 <img src="../images/res3.png" title="资源" style="margin-left:4px;margin-top:4px;cursor:pointer;height:22px;width:22px;" onclick="javascript:queryRes('${auth.authId}');"></img>
-                 <img src="../images/btn_edit.gif" title="修改" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:editAuth('${auth.authId}')"/>
-                 <img src="../images/tu12.gif" title="删除" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:deleteAuth('${auth.authId}')"/></td>
+                 <img src="../images/res3.png" title="资源" style="margin-left:4px;margin-top:4px;cursor:pointer;height:22px;width:22px;" onclick="javascript:queryMenu('${entity.moduleId}');"></img>
+                 <img src="../images/btn_edit.gif" title="修改" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:editMenu('${entity.moduleId}')"/>
+                 <img src="../images/tu12.gif" title="删除" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:deleteMenu('${entity.moduleId}')"/></td>
               </tr>
               </c:forEach>
             </table>

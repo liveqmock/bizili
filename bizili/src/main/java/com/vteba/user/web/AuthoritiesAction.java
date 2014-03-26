@@ -14,6 +14,7 @@ import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.service.IAuthoritiesService;
+import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
 
@@ -42,8 +43,10 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 	@RequestMapping("/authorities-initial")
 	public String initial(Authorities model, PageBean<Authorities> pageBean, Map<String, Object> maps) throws Exception {
 		page = pageBean.getPage();
-		Authorities entity = new Authorities();
-		authoritiesServiceImpl.queryForPageByCriteria(page, entity);
+		if (isQuery()) {
+			ReflectUtils.emptyToNulls(model);
+		}
+		authoritiesServiceImpl.queryForPageByCriteria(page, model);
 		listResult = page.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, page);

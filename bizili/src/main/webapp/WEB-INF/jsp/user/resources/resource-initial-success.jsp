@@ -27,6 +27,7 @@ img {border-width: 0px 0px 0px 0px}
 <script type="text/javascript">
     $(document).ready(function(){
     	$('#queryButton').click(function(){
+    		$('#query').val('true');
     		$("#queryForm").submit();
     	});
     });
@@ -47,6 +48,11 @@ img {border-width: 0px 0px 0px 0px}
     	    $.dialog.tips('不删除');
     	});
 	}
+    
+  	//修改实体
+    function editRes(id) {
+   	 window.location.href = 'resources-input.htm?init=true&resourceId='+id;
+    }
 </script>
 </head>
 <body>
@@ -70,6 +76,7 @@ img {border-width: 0px 0px 0px 0px}
 				</ul>
 				<div class="">
 					<form action="resources-initial.htm" id="queryForm" name="queryForm" method="post">
+					<input type="hidden" name="query" id="query" value="false"/>
 						<table class="bugSteel first" style="border-top: 0;">
 							<tr>
 								<td class="twof">资源名</td>
@@ -136,7 +143,8 @@ img {border-width: 0px 0px 0px 0px}
                 <td class="fivf"><c:if test="${resource.enabled eq 1}">是</c:if><c:if test="${resource.enabled eq 0}">否</c:if></td>
                 <td class="sixf"><c:if test="${resource.defaults == true}">是</c:if><c:if test="${resource.defaults == false}">否</c:if></td>
                 <td class="fouf"><c:if test="${resource.showInMenu == true}">是</c:if><c:if test="${resource.showInMenu == false}">否</c:if></td>
-                <td class="fivf">&nbsp;<input type="button" onclick="javascript:deleteRes('${resource.resourceId}')" title="删除" class="tableSteelBtnDel" /></td>
+                <td class="fivf"><img src="../images/btn_edit.gif" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:editRes('${resource.resourceId}')" title="修改"/>
+                <img src="../images/tu12.gif" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:deleteRes('${resource.resourceId}')" title="删除"/></td>
               </tr>
               </c:forEach>
             </table>

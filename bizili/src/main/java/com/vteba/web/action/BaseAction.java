@@ -173,6 +173,18 @@ public abstract class  BaseAction<T> {
 		}
 		return false;
 	}
+	
+	/**
+	 * 是否是表单查询，如果是，需要排除空字符串。
+	 * @return true是，false否
+	 */
+	public boolean isQuery() {
+		String init = getHttpServletRequest().getParameter("query");
+		if (init != null && init.equals("true")) {
+			return true;
+		}
+		return false;
+	}
 //
 //	public void setInit(boolean init) {
 //		this.init = init;

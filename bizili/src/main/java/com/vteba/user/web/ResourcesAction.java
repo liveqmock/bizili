@@ -30,7 +30,7 @@ public class ResourcesAction extends BaseAction<Resources> {
 	
 	@RequestMapping("/resources-initial")
 	public String initial(Resources model, PageBean<Resources> pageBean, Map<String, Object> maps) throws Exception {
-		if (!(model.getResourceName() == null && model.getResourceType() == null && model.getResourceUrl() == null)) {
+		if (isQuery()) {
 			ReflectUtils.emptyToNulls(model);
 		}
 		page = pageBean.getPage();
@@ -47,13 +47,20 @@ public class ResourcesAction extends BaseAction<Resources> {
 	 * date 2012-6-24 下午11:34:05
 	 */
 	@RequestMapping("/resources-input")
-	public String input(Resources model) throws Exception {
+	public String input(Resources model, Map<String, Object> maps) throws Exception {
 		if (isInit()) {
+			setTokenValue();
+			if (model.getResourceId() != null) {
+				model = resourcesServiceImpl.get(model.getResourceId());
+				maps.put("res", model);
+			}
 			return "user/resources/resource-input-success";
 		}
-		if (StringUtils.isNotEmpty(model.getResourceName()) && StringUtils.isNotEmpty(model.getResourceUrl()) && StringUtils.isNotEmpty(model.getResourceDesc())) {
-			resourcesServiceImpl.save(model);
-			setAttributeToRequest("msg", "新增资源成功。");
+		if (isTokenValueOK()) {
+			if (StringUtils.isNotEmpty(model.getResourceName()) && StringUtils.isNotEmpty(model.getResourceUrl()) && StringUtils.isNotEmpty(model.getResourceDesc())) {
+				resourcesServiceImpl.saveOrUpdate(model);
+				setAttributeToRequest("msg", "新增资源成功。");
+			}
 		}
 		return "user/resources/resource-input-success";
 	}
