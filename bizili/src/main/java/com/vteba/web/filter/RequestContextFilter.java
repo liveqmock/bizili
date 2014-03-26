@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -46,7 +47,10 @@ public class RequestContextFilter extends OncePerRequestFilter {
 		ServletWebRequest servletWebRequest = new ServletWebRequest(request, response);
 		initContextHolders(request, servletWebRequest);
 		
-		String path = RequestContextHolder.getRequest().getServletPath();
+		String path = request.getServletPath();
+		if (StringUtils.isNotBlank(request.getParameter("init"))) {
+			path += "?init=true";
+		}
 		request.setAttribute("currentActionPath", path);
 		
 		try {
