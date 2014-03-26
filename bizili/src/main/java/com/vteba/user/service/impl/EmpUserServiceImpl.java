@@ -84,7 +84,7 @@ public class EmpUserServiceImpl extends GenericServiceImpl<EmpUser, Long> implem
 	}
 	public EmpUser queryEmpUserByUserAccount(String userAccount){
 		EmpUser empUser = new EmpUser();
-		empUser = empUserDaoImpl.uniqueResultByCriteria(EmpUser.class , "userAccount", userAccount);
+		empUser = empUserDaoImpl.uniqueResultByCriteria("userAccount", userAccount);
 		return empUser;
 	}
 	
@@ -96,15 +96,15 @@ public class EmpUserServiceImpl extends GenericServiceImpl<EmpUser, Long> implem
 		return authList;
 	}
 	
-	public List<String> getResourceUrlByAuthName(String authName){
-		List<String> authList = new ArrayList<String>();
-		StringBuilder sb = new StringBuilder();
-		sb = sb.append(" select a.resource_url from auth_resource a, authorities c ");
-		sb = sb.append(" where a.id = c.auth_id and ");
-		sb = sb.append(" c.auth_name = ? ");
-		authList = empUserDaoImpl.sqlQueryForList(sb.toString(), String.class, authName);
-		return authList;
-	}
+//	public List<String> getResourceUrlByAuthName(String authName){
+//		List<String> authList = new ArrayList<String>();
+//		StringBuilder sb = new StringBuilder();
+//		sb = sb.append(" select a.resource_url from auth_resource a, authorities c ");
+//		sb = sb.append(" where a.id = c.auth_id and ");
+//		sb = sb.append(" c.auth_name = ? ");
+//		authList = empUserDaoImpl.sqlQueryForList(sb.toString(), String.class, authName);
+//		return authList;
+//	}
 	
 	public int saveUserAndRole(EmpUser model){
 		if (model.getUsername() != null) {//如果关联了角色

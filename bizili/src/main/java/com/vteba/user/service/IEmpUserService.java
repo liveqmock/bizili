@@ -28,17 +28,17 @@ public interface IEmpUserService extends IGenericService<EmpUser, Long>{
 	 * @return 用户EmpUser
 	 */
 	public EmpUser queryEmpUserByUserAccount(String userAccount);
-	/**
-	 * 获得系统所有的权限名 spring security use
-	 * @return List<String> 系统所有的权限名
-	 */
-	public List<String> getAllAuthorities();
-	/**
-	 * 根据权限名，获得该权限下的资源 spring security use
-	 * @param authName 权限名
-	 * @return 资源URL list
-	 */
-	public List<String> getResourceUrlByAuthName(String authName);
+//	/**
+//	 * 获得系统所有的权限名 spring security use
+//	 * @return List<String> 系统所有的权限名
+//	 */
+//	public List<String> getAllAuthorities();
+//	/**
+//	 * 根据权限名，获得该权限下的资源 spring security use
+//	 * @param authName 权限名
+//	 * @return 资源URL list
+//	 */
+//	public List<String> getResourceUrlByAuthName(String authName);
 	
 	/**
 	 * 保存或更新用户，同时保存角色关系，成功返回1

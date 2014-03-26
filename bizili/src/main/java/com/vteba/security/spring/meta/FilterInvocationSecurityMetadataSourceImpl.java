@@ -1,4 +1,4 @@
-package com.vteba.security.spring;
+package com.vteba.security.spring.meta;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -17,7 +17,8 @@ import org.springframework.security.web.util.AntPathRequestMatcher;
 //import org.springframework.security.web.util.UrlMatcher;
 
 
-import com.vteba.user.service.IEmpUserService;
+import com.vteba.user.service.IAuthoritiesService;
+//import com.vteba.user.service.IEmpUserService;
 
 /**
  * 实现FilterInvocationSecurityMetadataSource接口，进行url级别的拦截，使用servlet filter
@@ -25,30 +26,31 @@ import com.vteba.user.service.IEmpUserService;
  * 
  * @author yinlei
  */
-public class FilterInvocationSecurityMetadataSourceImpl implements
-		FilterInvocationSecurityMetadataSource {
-	private IEmpUserService empUserServiceImpl;
+public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocationSecurityMetadataSource {
+	//private IEmpUserService empUserServiceImpl;
+	private IAuthoritiesService authoritiesServiceImpl;
+	
 	//private UrlMatcher urlMatcher = new AntUrlPathMatcher();
 	private Map<String, Collection<ConfigAttribute>> resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
 
-	public FilterInvocationSecurityMetadataSourceImpl(
-			IEmpUserService empUserServiceImpl) {
+	public FilterInvocationSecurityMetadataSourceImpl(IAuthoritiesService authoritiesServiceImpl) {
 		super();
-		this.empUserServiceImpl = empUserServiceImpl;// 只能使用构造函数注入
+		//this.empUserServiceImpl = empUserServiceImpl;// 只能使用构造函数注入
+		this.authoritiesServiceImpl = authoritiesServiceImpl;
 		//加载资源和权限
-		this.getResourceAuthConfig();
+		this.loadResourceAuthConfig();
 	}
 	
 	/**
 	 * 从数据库加载资源和权限的对应关系
 	 */
-	private void getResourceAuthConfig() {
-		List<String> authNameList = empUserServiceImpl.getAllAuthorities();
+	private void loadResourceAuthConfig() {
+		List<String> authNameList = authoritiesServiceImpl.getAllAuthorities();
 		Collection<ConfigAttribute> atts = new HashSet<ConfigAttribute>();
 		for (String authName : authNameList) {
 			ConfigAttribute ca = new SecurityConfig(authName);// eg:ROLE_ADMIN
 			atts.add(ca);// 如果atts使用ArrayList实现，则在此处将ca添加到atts，如果atts的实现是Set，则可随便
-			List<String> resourceList = empUserServiceImpl.getResourceUrlByAuthName(authName);
+			List<String> resourceList = authoritiesServiceImpl.getResourceUrlByAuthName(authName);
 			for (String url : resourceList) {
 				// 该资源和权限是否有对应关系，如果已经存在，则将新权限添加到对应的资源上
 				if (resourceMap.containsKey(url)) {

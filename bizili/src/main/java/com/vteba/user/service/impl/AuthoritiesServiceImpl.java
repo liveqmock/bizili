@@ -1,6 +1,8 @@
 package com.vteba.user.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -79,5 +81,31 @@ public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long
 		return authorities;
 	}
 	
+	public List<String> getResourceUrlByAuthName(String authName) {
+		String hql = "select a from Authorities a where a.authName = ?1";
+		Authorities auth = authoritiesDaoImpl.uniqueResultByHql(hql, authName);
+		List<String> resList = new ArrayList<String>();
+		if (auth != null) {
+			for (Resources res : auth.getResourceSets()) {
+				resList.add(res.getResourceUrl());
+			}
+		}
+		return resList;
+		
+//		StringBuilder sb = new StringBuilder();
+//		sb = sb.append(" select a.resource_url from auth_resource a, authorities c ");
+//		sb = sb.append(" where a.id = c.auth_id and ");
+//		sb = sb.append(" c.auth_name = ? ");
+//		authList = authoritiesDaoImpl.sqlQueryForList(sb.toString(), String.class, authName);
+//		return authList;
+	}
 
+	//@Cacheable(value="getAllAuthorities", key="'getAllAuthorities'")
+	@Override
+	public List<String> getAllAuthorities() {
+		List<String> authList = new ArrayList<String>();
+		String hql = "select a.authName from Authorities a where a.enabled = 1";
+		authList = authoritiesDaoImpl.hqlQueryForList(hql, String.class);
+		return authList;
+	}
 }

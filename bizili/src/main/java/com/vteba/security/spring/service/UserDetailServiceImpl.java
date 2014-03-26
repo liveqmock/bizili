@@ -1,4 +1,4 @@
-package com.vteba.security.spring;
+package com.vteba.security.spring.service;
 
 import java.util.HashSet;
 import java.util.List;

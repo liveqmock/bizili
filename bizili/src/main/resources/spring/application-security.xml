@@ -55,15 +55,16 @@
 	</security:http>
 	
 	<!--访问决策管理器-->
-	<bean id="accessDecisionManagerImpl" class="com.vteba.security.spring.AccessDecisionManagerImpl"></bean>
+	<bean id="accessDecisionManagerImpl" class="com.vteba.security.spring.manager.AccessDecisionManagerImpl"></bean>
 	
 	<!--安全资源源数据，将所有的资源和权限对应起来，即某一资源可以被哪些角色去访问,在这里自动注入会失败，所以使用构造函数注入-->
-	<bean id="securityMetadataSourceImpl" class="com.vteba.security.spring.FilterInvocationSecurityMetadataSourceImpl">
-		<constructor-arg ref="empUserServiceImpl" />
+	<bean id="securityMetadataSourceImpl" class="com.vteba.security.spring.meta.FilterInvocationSecurityMetadataSourceImpl">
+<!-- 		<constructor-arg index="0" ref="empUserServiceImpl" /> -->
+		<constructor-arg ref="authoritiesServiceImpl" />
 	</bean>
 	
 	<!--验证主体实现-->
-	<bean id="userDetailServiceImpl" class="com.vteba.security.spring.UserDetailServiceImpl"/>
+	<bean id="userDetailServiceImpl" class="com.vteba.security.spring.service.UserDetailServiceImpl"/>
 	
 	<!--security hash algorithm-->
 	<bean id="shaPasswordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">

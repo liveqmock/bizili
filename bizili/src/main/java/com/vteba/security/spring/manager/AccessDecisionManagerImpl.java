@@ -1,4 +1,4 @@
-package com.vteba.security.spring;
+package com.vteba.security.spring.manager;
 
 import java.util.Collection;
 import java.util.Iterator;
