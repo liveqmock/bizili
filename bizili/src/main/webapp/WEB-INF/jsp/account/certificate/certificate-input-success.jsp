@@ -24,8 +24,10 @@ img {border-width: 0px 0px 0px 0px}
 <%@ include file="/WEB-INF/inc/constants.inc" %>
 <%@ include file="/WEB-INF/inc/script.inc" %>
 <%@ include file="/WEB-INF/inc/style.inc" %>
-<script type="text/javascript" src="<c:url value='/dwr/interface/AccountBalanceBean.js'></c:url>"></script>
-    <script type="text/javascript" src="<c:url value='/dwr/interface/SubjectBean.js'></c:url>"></script>
+<link rel="stylesheet" href="<c:url value='/css/zTreeStyle/zTreeStyle.css'/>" type="text/css">
+<script type="text/javascript" src="<c:url value='/js/jquery.ztree.all-3.5.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/dwr/interface/AccountBalanceBean.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/dwr/interface/SubjectBean.js'/>"></script>
     <script type="text/javascript">
     //var $j = jQuery.noConflict();
     $(document).ready(function(){
@@ -253,7 +255,55 @@ img {border-width: 0px 0px 0px 0px}
 		
 		$('#editSubject').val(indexs);//标记要修改的分录
     }
+    
+    var setting = {
+		view: {
+			dblClickExpand: dblClickExpand
+		},
+		data: {
+			simpleData: {
+				enable: true
+			}
+		},
+		check: {
+			enable: true
+		}
+	};
+
+    function dblClickExpand(treeId, treeNode) {
+		return treeNode.level > 0;
+	}
+	var zNodes =[
+			{ id:1, pId:0, name:"根 Root", open:true},
+			{ id:11, pId:1, name:"父节点 1-1", open:true},
+			{ id:111, pId:11, name:"叶子节点 1-1-1"},
+			{ id:112, pId:11, name:"叶子节点 1-1-2"},
+			{ id:113, pId:11, name:"叶子节点 1-1-3"},
+			{ id:114, pId:11, name:"叶子节点 1-1-4"},
+			{ id:12, pId:1, name:"父节点 1-2", open:true},
+			{ id:121, pId:12, name:"叶子节点 1-2-1"},
+			{ id:122, pId:12, name:"叶子节点 1-2-2"},
+			{ id:123, pId:12, name:"叶子节点 1-2-3"},
+			{ id:124, pId:12, name:"叶子节点 1-2-4"},
+			{ id:13, pId:1, name:"父节点 1-3", open:true},
+			{ id:131, pId:13, name:"叶子节点 1-3-1"},
+			{ id:132, pId:13, name:"叶子节点 1-3-2"},
+			{ id:133, pId:13, name:"叶子节点 1-3-3"},
+			{ id:134, pId:13, name:"叶子节点 1-3-4"}
+	];
+
+	function dblClickExpand(treeId, treeNode) {
+		return treeNode.level > 0;
+	}
+    
+    $(document).ready(function(){
+		$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+	});
     </script>
+    <style type="text/css">
+.ztree li span.button.switch.level0 {visibility:hidden; width:1px;}
+.ztree li ul.level0 {padding:0; background:none;}
+	</style>
     <script language="javascript" type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
     <style type="text/css">
     .jiacu td{
@@ -274,6 +324,9 @@ img {border-width: 0px 0px 0px 0px}
 <div id="container">
 	<div id="header">
 		<jsp:include page="/WEB-INF/tiles/four-header.jsp" />
+	</div>
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
 	</div>
 	<div id="middel">
 		<div id="left">
