@@ -278,7 +278,7 @@ input.iptBuySteelAdd{
 	<table class="singleIncreasesResources">
 	<tbody>
 		<tr>
-		<td class="twoFont">父级科目</td><td class="widt"><input type="text" style="width:100px;" name="parentCode" id="parentCode" readonly="readonly" value="" class="widt" /> <img id="selectParentSub" style="cursor:pointer;" title="点击选择科目" src="${IMG_PATH}/btn_add.gif"/></td><td></td>
+		<td class="twoFont">父级科目</td><td class="widt"><input type="text" style="width:100px;" name="parentCode" id="parentCode" readonly="readonly" value="" class="widt" /> <img id="selectParentSub" style="cursor:pointer;" title="点击选择科目" src="<c:url value='/images/btn_add.gif'/>"/></td><td></td>
 		<input type="hidden" name="parentName" id="parentName" value=""/>
 		<td class="twoFont">科目代码 </td><td class="widt"><input style="width:100px;" name="subjectCode" id="subjectCode" type="text"/><span class="star">*</span><span class="star" id="formatMsg">(格式：1001)</span></td>
 		</tr>
