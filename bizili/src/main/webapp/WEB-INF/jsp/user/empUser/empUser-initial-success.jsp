@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="Content-Language" content="zh-cn" />
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head><title>用户管理</title>
@@ -25,7 +24,6 @@ img {border-width: 0px 0px 0px 0px}
 <%@ include file="/WEB-INF/inc/script.inc" %>
 <%@ include file="/WEB-INF/inc/style.inc" %>
 <script type="text/javascript" src="<c:url value='/dwr/interface/EmpUserBean.js'></c:url>"></script>
-<%-- <script type="text/javascript" src="<c:url value='/js/jquery-1.8.3.min.js'></c:url>"></script> --%>
 <script type="text/javascript">
     $(document).ready(function(){
     	$('#allCheckSelected').click(function(){
@@ -46,7 +44,8 @@ img {border-width: 0px 0px 0px 0px}
     	//查询
     	$('#queryButton').click(function(){
     		var queryForm = $('#queryForm');
-    		queryForm.attr('action','empUser-initial.htm');
+    		$('#query').val('true');
+    		//queryForm.attr('action','empUser-initial.htm');
     		$('#ajaxForm').val('2');//设为2，普通查询
     		queryForm.submit();
     	});
@@ -168,10 +167,11 @@ img {border-width: 0px 0px 0px 0px}
 				<input type="hidden" id="listSize" value="${listResult.size()}">
 				<input type="hidden" id="deletedIds" value=""><!-- 要被批量删除的实体id -->
 				<input type="hidden" id="ajaxForm" value="">
+				<input type="hidden" name="query" id="query" value="false"/>
 		<table class="bugSteel first" style="border-top: 0;">
 							<tr>
 								<td class="twof">用户名</td>
-								<td class="eigf"><input type="text" name="name" class="tf" /></td>
+								<td class="eigf"><input type="text" name="name" value="${empUser.name}" class="tf" /></td>
 								<td class="twof">资源类型</td>
 								<td class="twef">
 								<select id="resourceType" name="resourceType" style="width:140px;">
@@ -182,9 +182,9 @@ img {border-width: 0px 0px 0px 0px}
 								</select>
 								</td>
 								<td class="twof">账号</td>
-								<td class="twef"><input type="text" name="userAccount" style="width:160px;"/></td>
+								<td class="twef"><input type="text" name="userAccount" value="${empUser.userAccount}" style="width:160px;"/></td>
 								<td class="twof">Email</td>
-								<td class="twef"><input type="text" name="email"/></td>
+								<td class="twef"><input type="text" name="email" value="${empUser.email}"/></td>
 							</tr>
 							<tr>
 								<td class="twof">使用中</td>
@@ -225,17 +225,21 @@ img {border-width: 0px 0px 0px 0px}
                 <td class="fivf" style="border-right:1px #09f solid">操作</td>
               </tr>
               
-              <c:forEach items="${listResult}" var="empUser" varStatus="st">
-              <tr style="${st.count%2==0?'background:#f3f3f3':''}" id="tr${empUser.userId}">
-                <td class="twof"><input type="checkbox" name="ids" value="${empUser.userId}" id="check${st.count}"/></td>
-                <td class="fouf">${empUser.name}</td>
-                <td class="sixf">${empUser.email}</td>
-                <td class="fivf">${empUser.deptId}</td>
-                <td class="sixf">${empUser.deptName}</td>
-                <td class="fouf">${empUser.userAccount}</td>
-                <td class="fivf">${empUser.enable}</td>
-                <td class="fouf"><fmt:formatDate value="${empUser.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                <td class="fivf"><img src="../images/juese3.png" title="角色" style="margin-left:4px;margin-top:4px;cursor:pointer;height:22px;width:22px;" onclick="javascript:queryRoles('${empUser.userId}');"></img> <img src="../images/btn_edit.gif" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:editUser('${empUser.userId}')" title="修改"/>&nbsp;<img src="../images/tu12.gif" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:deleteUser('${empUser.userId}')" title="删除"/></td>
+              <c:forEach items="${listResult}" var="user" varStatus="st">
+              <tr style="${st.count%2==0?'background:#f3f3f3':''}" id="tr${user.userId}">
+                <td class="twof"><input type="checkbox" name="ids" value="${user.userId}" id="check${st.count}"/></td>
+                <td class="fouf">${user.name}</td>
+                <td class="sixf">${user.email}</td>
+                <td class="fivf">${user.deptId}</td>
+                <td class="sixf">${user.deptName}</td>
+                <td class="fouf">${user.userAccount}</td>
+                <td class="fivf">${user.enable}</td>
+                <td class="fouf"><fmt:formatDate value="${user.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                <td class="fivf">
+                <img src="../images/juese3.png" title="角色" style="margin-left:4px;margin-top:4px;cursor:pointer;height:22px;width:22px;" onclick="javascript:queryRoles('${user.userId}');"/>
+                <img src="../images/btn_edit.gif" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:editUser('${user.userId}')" title="修改"/>
+                <img src="../images/tu12.gif" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:deleteUser('${user.userId}')" title="删除"/>
+                </td>
               </tr>
               </c:forEach>
             </table>

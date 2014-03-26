@@ -55,12 +55,14 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 	
 	@RequestMapping("/empUser-initial")
 	public String initial(EmpUser model, PageBean<EmpUser> pageBean, Map<String, Object> maps) throws Exception {
-		Page<EmpUser> pages = new Page<EmpUser>();
-		ReflectUtils.emptyToNulls(model);
-		pages = empUserServiceImpl.queryForPageByCriteria(pageBean.getPage(), model);
-		listResult = pages.getResult();
+		page = pageBean.getPage();
+		if (isQuery()) {
+			ReflectUtils.emptyToNulls(model);
+		}
+		empUserServiceImpl.queryForPageByCriteria(page, model);
+		listResult = page.getResult();
 		maps.put("listResult", listResult);
-		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
+		setAttributeToRequest(CommonConst.PAGE_NAME, page);
 		return "user/empUser/empUser-initial-success";
 	}
 	

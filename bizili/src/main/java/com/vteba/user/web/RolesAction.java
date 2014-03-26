@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.vteba.common.constant.CommonConst;
 import com.vteba.user.model.Roles;
 import com.vteba.user.service.IRolesService;
+import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
 
@@ -30,11 +31,11 @@ public class RolesAction extends BaseAction<Roles> {
 	}
 	
 	@RequestMapping("/roles-initial")
-	public String initial(PageBean<Roles> pageBean, Map<String, Object> maps) throws Exception {
-		Roles entity = new Roles();
-		entity.setPriority(1);
+	public String initial(Roles model, PageBean<Roles> pageBean, Map<String, Object> maps) throws Exception {
+		ReflectUtils.emptyToNulls(model);
+		model.setPriority(1);
 		page = pageBean.getPage();
-		rolesServiceImpl.queryForPageByCriteria(page, entity);
+		rolesServiceImpl.queryForPageByCriteria(page, model);
 		listResult = page.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, page);
