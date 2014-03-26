@@ -5,8 +5,8 @@
 <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="../js/jquery.alerts.js"></script>
 <script type="text/javascript" src="../js/lhgdialog/lhgdialog.min.js"></script>
-<script type="text/javascript" src="../js/commonUtils.js"></script>
-<script type="text/javascript" src="../js/numberFormat.js"></script>
+<script type="text/javascript" src="../js/common-utils.js"></script>
+<script type="text/javascript" src="../js/number-format.js"></script>
 
 <link rel="stylesheet" type="text/css" href="../css/reset.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="../css/global.css" media="screen" />
