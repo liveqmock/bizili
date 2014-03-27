@@ -93,7 +93,7 @@
 	</bean>
 	
 	<!--验证管理器,Spring传统Bean配置的方式,亦可使用名空间的方式
-	这个Bean的名字被写死了,ProviderManager extends AbstractAuthenticationManager,后者实现AuthenticationManager-->
+	这个Bean的名字被写死了(BeanIds),ProviderManager extends AbstractAuthenticationManager,后者实现AuthenticationManager-->
 	<bean id="org.springframework.security.authenticationManager" class="org.springframework.security.authentication.ProviderManager">
 		<property name="providers">
 			<list>
