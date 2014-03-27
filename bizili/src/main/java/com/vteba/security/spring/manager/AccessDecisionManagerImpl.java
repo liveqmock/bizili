@@ -1,7 +1,6 @@
 package com.vteba.security.spring.manager;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
@@ -25,9 +24,7 @@ public class AccessDecisionManagerImpl implements AccessDecisionManager {
 		if (configAttributes == null) {
 			return;
 		}
-		Iterator<ConfigAttribute> ite = configAttributes.iterator();
-		while (ite.hasNext()) {
-			ConfigAttribute ca = ite.next();
+		for (ConfigAttribute ca : configAttributes) {
 			String needRole = ((SecurityConfig) ca).getAttribute();
 			for (GrantedAuthority ga : authentication.getAuthorities()) {
 				if (needRole.equals(ga.getAuthority())) { // ga is user's role
