@@ -17,11 +17,11 @@
 <!-- 		<property name="autodetectAnnotations" value="true"/> -->
 	</bean>
 	
-	<bean id="jibxMarshallerFactory" class="com.vteba.service.xml.JibxMarshallerFactory">
-		<property name="targetClassList">
-			<list>
-				<value>com.vteba.test.Customer</value>
-			</list>
-		</property>
+	<bean id="jibxMarshallerFactory" class="com.vteba.service.xml.jibx.JibxMarshallerFactory">
+<!-- 		<property name="targetClassList"> -->
+<!-- 			<list> -->
+<!-- 				<value>com.vteba.test.Customer</value> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
 	</bean>
 </beans>

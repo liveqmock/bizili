@@ -12,15 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vteba.common.constant.CommonConst;
 import com.vteba.common.constant.FileConst;
 import com.vteba.finance.account.model.Subject;
 import com.vteba.finance.account.service.ISubjectService;
-import com.vteba.tm.generic.Page;
 import com.vteba.service.context.RequestContextHolder;
+import com.vteba.tm.generic.Page;
 import com.vteba.util.common.ExcelExportUtils;
 import com.vteba.util.common.ExcelImportUtils;
+import com.vteba.util.json.Node;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.util.web.struts.StrutsUtils;
 import com.vteba.web.action.BaseAction;
@@ -99,6 +101,18 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 		mapResult = subjectServiceImpl.getSubjectTreeList();
 		maps.put("mapResult", mapResult);
 		return "account/subject/subject-list";
+	}
+	
+	/**
+	 * 新增科目时，选择科目的父科目
+	 * @author yinlei
+	 * date 2012-6-26 下午3:09:17
+	 */
+	@RequestMapping("/subject-tree")
+	@ResponseBody
+	public List<Node> treeList() throws Exception {
+		List<Node> nodeList = subjectServiceImpl.loadSubjectTree();
+		return nodeList;
 	}
 	
 	/**

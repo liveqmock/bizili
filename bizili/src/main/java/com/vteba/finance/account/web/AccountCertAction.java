@@ -2,6 +2,7 @@ package com.vteba.finance.account.web;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -16,7 +17,10 @@ import com.vteba.common.constant.CommonConst;
 import com.vteba.finance.account.form.CertTotalForm;
 import com.vteba.finance.account.model.CertTotal;
 import com.vteba.finance.account.service.ICertTotalService;
+import com.vteba.finance.account.service.ISubjectService;
 import com.vteba.tm.generic.Page;
+import com.vteba.util.json.FastJsonUtils;
+import com.vteba.util.json.Node;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
@@ -31,6 +35,8 @@ import com.vteba.web.action.PageBean;
 public class AccountCertAction extends BaseAction<CertTotal> {
 	
 	private ICertTotalService certTotalServiceImpl;
+	@Inject
+	private ISubjectService subjectServiceImpl;
 	
 	@Inject
 	public void setCertTotalServiceImpl(ICertTotalService certTotalServiceImpl) {
@@ -51,6 +57,7 @@ public class AccountCertAction extends BaseAction<CertTotal> {
 		pages = certTotalServiceImpl.queryForPageByCriteria(page, model);
 		listResult = pages.getResult();
 		maps.put("listResult", listResult);
+		
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);
 		return "/account/certificate/certificate-initial-success";
 	}
@@ -62,9 +69,11 @@ public class AccountCertAction extends BaseAction<CertTotal> {
 	 * date 2012-7-5 下午9:07:05
 	 */
 	@RequestMapping("/certificate-input")
-	public String input(CertTotal model, CertTotalForm certTotalForm) throws Exception {
+	public String input(CertTotal model, CertTotalForm certTotalForm, Map<String, Object> maps) throws Exception {
 		if (isInit()) {
 			setTokenValue();
+			List<Node> nodes = subjectServiceImpl.loadSubjectTree();
+			maps.put("subjectTree", FastJsonUtils.toJson(nodes));
 			return "account/certificate/certificate-input-success";
 		}
 		if (isTokenValueOK()) {

@@ -1,4 +1,4 @@
-package com.vteba.service.xml;
+package com.vteba.service.xml.jibx;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,19 +15,21 @@ import org.springframework.oxm.jibx.JibxMarshaller;
  * date 2013-8-1 下午8:10:45
  */
 public class JibxMarshallerFactory implements InitializingBean {
-	private static Logger logger = LoggerFactory.getLogger(JibxMarshallerFactory.class);
+	private static final Logger logger = LoggerFactory.getLogger(JibxMarshallerFactory.class);
 	private static final String BINDING_NAME = "Binding";
-
+	
+	private String encoding;
 	private List<Class<?>> targetClassList;
 	private Map<Class<?>, JibxMarshaller> jibxCache = new HashMap<Class<?>, JibxMarshaller>();
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		if (targetClassList != null) {
-			for (Class<?> clazz : targetClassList) {
+		if (this.targetClassList != null) {
+			for (Class<?> clazz : this.targetClassList) {
 				JibxMarshaller jibxMarshaller = new JibxMarshaller();
 				jibxMarshaller.setTargetClass(clazz);
 				jibxMarshaller.setBindingName(BINDING_NAME);
+				jibxMarshaller.setEncoding(this.encoding);
 				jibxMarshaller.afterPropertiesSet();
 				jibxCache.put(clazz, jibxMarshaller);
 			}
@@ -48,5 +50,17 @@ public class JibxMarshallerFactory implements InitializingBean {
 
 	public JibxMarshaller getJibxMarshaller(Class<?> targetClass) {
 		return jibxCache.get(targetClass);
+	}
+
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
+
+	public String getEncoding() {
+		return encoding;
+	}
+	
+	public boolean support(Class<?> clazz) {
+		return jibxCache.containsKey(clazz);
 	}
 }

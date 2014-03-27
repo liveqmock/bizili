@@ -5,6 +5,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 
+import javax.inject.Inject;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamResult;
@@ -16,6 +17,8 @@ import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.oxm.xstream.XStreamMarshaller;
 
+import com.vteba.service.xml.jibx.JibxMarshallerFactory;
+
 /**
  * XML和对象序列化和反序列化服务。
  * @author yinlei
@@ -25,10 +28,12 @@ import org.springframework.oxm.xstream.XStreamMarshaller;
 public class XmlServiceImpl {
 	private static Logger logger = LoggerFactory.getLogger(XmlServiceImpl.class);
 	
-//	@Inject
+	private boolean useXStream;
+	
+	@Inject
 	private JibxMarshallerFactory jibxMarshallerFactory;
 	
-//	@Inject
+	@Inject
 	private XStreamMarshaller xstreamMarshaller;
 	
 	/**
@@ -39,7 +44,6 @@ public class XmlServiceImpl {
 	 * @author yinlei
 	 * date 2013-7-28 下午8:17:05
 	 */
-	@Deprecated
 	public Object fromXml(String xml) {
 		StringReader reader = new StringReader(xml);
 		return xstreamMarshaller.getXStream().fromXML(reader);
@@ -52,7 +56,6 @@ public class XmlServiceImpl {
 	 * @author yinlei
 	 * date 2013-7-28 下午8:18:05
 	 */
-	@Deprecated
 	public String toXml(Object object) {
 		return xstreamMarshaller.getXStream().toXML(object);
 	}
@@ -70,8 +73,8 @@ public class XmlServiceImpl {
 		Source source = new StreamSource(reader);
 		Unmarshaller unmarshaller = jibxMarshallerFactory.getJibxMarshaller(targetClass);
 		if (unmarshaller == null) {
-			if (logger.isInfoEnabled()) {
-				logger.info("从JibxMarshallerFactory类没有获取类[" + targetClass.getName() + "]的Marshaller，将使用XStreamMarshaller。");
+			if (logger.isWarnEnabled()) {
+				logger.warn("从JibxMarshallerFactory类没有获取类[" + targetClass.getName() + "]的JibxMarshaller，将使用XStreamMarshaller。");
 			}
 			unmarshaller = xstreamMarshaller;
 		}
@@ -96,6 +99,9 @@ public class XmlServiceImpl {
 	public <T> T xmlToObject(Source source, Class<T> targetClass) {
 		Unmarshaller unmarshaller = jibxMarshallerFactory.getJibxMarshaller(targetClass);
 		if (unmarshaller == null) {
+			if (logger.isWarnEnabled()) {
+				logger.warn("从JibxMarshallerFactory类没有获取类[" + targetClass.getName() + "]的JibxMarshaller，将使用XStreamMarshaller。");
+			}
 			unmarshaller = xstreamMarshaller;
 		}
 		try {
@@ -118,6 +124,9 @@ public class XmlServiceImpl {
 	public void objectToXml(Object object, Result result) {
 		Marshaller marshaller = jibxMarshallerFactory.getJibxMarshaller(object.getClass());
 		if (marshaller == null) {
+			if (logger.isWarnEnabled()) {
+				logger.warn("从JibxMarshallerFactory类没有获取类[" + object.getClass().getName() + "]的JibxMarshaller，将使用XStreamMarshaller。");
+			}
 			marshaller = xstreamMarshaller;
 		}
 		try {
@@ -140,6 +149,9 @@ public class XmlServiceImpl {
 		
 		Marshaller marshaller = jibxMarshallerFactory.getJibxMarshaller(object.getClass());
 		if (marshaller == null) {
+			if (logger.isWarnEnabled()) {
+				logger.warn("从JibxMarshallerFactory类没有获取类[" + object.getClass().getName() + "]的JibxMarshaller，将使用XStreamMarshaller。");
+			}
 			marshaller = xstreamMarshaller;
 		}
 		
@@ -152,4 +164,49 @@ public class XmlServiceImpl {
 		return writer.toString();
 	}
 
+	/**
+	 * 将对象序列化成XML字符串。
+	 * @param object 要被序列化的对象
+	 * @return 序列化后的XML字符串
+	 * @author yinlei
+	 * date 2013-7-28 下午8:20:44
+	 */
+	public String objectToXml(Object object, Class<?> serializerType) {
+		StringWriter writer = new StringWriter();
+		Result result = new StreamResult(writer);
+		
+		Marshaller marshaller = jibxMarshallerFactory.getJibxMarshaller(serializerType);
+		if (marshaller == null) {
+			if (logger.isWarnEnabled()) {
+				logger.warn("从JibxMarshallerFactory类没有获取类[" + serializerType.getName() + "]的JibxMarshaller，将使用XStreamMarshaller。");
+			}
+			marshaller = xstreamMarshaller;
+		}
+		
+		try {
+			marshaller.marshal(object, result);
+		} catch (IOException e) {
+			logger.error("XML to Object IO错误。", e);
+		}
+		writer.flush();
+		return writer.toString();
+	}
+	
+	/**
+	 * @return 当JibxMarshaller没有配置时，是否使用XStream
+	 */
+	public boolean isUseXStream() {
+		return useXStream;
+	}
+
+	/**
+	 * @param useXStream 设置是否使用XStream
+	 */
+	public void setUseXStream(boolean useXStream) {
+		this.useXStream = useXStream;
+	}
+	
+	public boolean canSerialize(Class<?> clazz) {
+		return jibxMarshallerFactory.support(clazz);
+	}
 }

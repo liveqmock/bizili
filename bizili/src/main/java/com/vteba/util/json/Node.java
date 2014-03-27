@@ -9,9 +9,12 @@ import java.util.List;
  * @date 2014-03-26 21:30
  */
 public class Node {
-	private String id;
-	private String name;
-	private List<Node> children;
+	private String id;//节点id
+	private String name;//显示的名字
+	private Boolean open;//是否打开
+	private Boolean checked;//是否选中
+	private Boolean nocheck;//不显示checked
+	private List<Node> children;//子节点
 
 	public Node(Long id, String name) {
 		super();
@@ -53,6 +56,30 @@ public class Node {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Boolean getOpen() {
+		return open;
+	}
+
+	public void setOpen(Boolean open) {
+		this.open = open;
+	}
+
+	public Boolean getChecked() {
+		return checked;
+	}
+
+	public void setChecked(Boolean checked) {
+		this.checked = checked;
+	}
+
+	public Boolean getNocheck() {
+		return nocheck;
+	}
+
+	public void setNocheck(Boolean nocheck) {
+		this.nocheck = nocheck;
 	}
 
 	public List<Node> getChildren() {

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.vteba.finance.account.model.Subject;
 import com.vteba.tm.generic.Page;
+import com.vteba.util.json.Node;
 import com.vteba.service.generic.IGenericService;
 
 /**
@@ -45,5 +46,11 @@ public interface ISubjectService extends IGenericService<Subject, String> {
      * 测试的方法，勿用。
      */
     public void test();
+    
+    /**
+     * 获取会计科目，树形结构，树形结构可转为Json格式。
+     * @return List&lt;Node&gt; 
+     */
+    public List<Node> loadSubjectTree();
     
 }

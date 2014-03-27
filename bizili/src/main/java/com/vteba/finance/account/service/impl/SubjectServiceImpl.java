@@ -25,6 +25,7 @@ import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.user.dao.UserDao;
 import com.vteba.user.model.EmpUser;
 import com.vteba.user.service.IEmpUserService;
+import com.vteba.util.json.Node;
 
 /**
  * 会计科目service实现
@@ -255,5 +256,91 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
     public static void main(String[] a) {
     	System.out.println(int.class.isPrimitive());
     }
+
+	@Override
+	public List<Node> loadSubjectTree() {
+		List<Node> nodeList = new ArrayList<Node>();
+		Node root = new Node("0", "会计科目");
+		root.setOpen(true);
+		root.setNocheck(true);
+		nodeList.add(root);
+		
+		List<Node> children = new ArrayList<Node>();
+		root.setChildren(children);
+		
+		Node assets = new Node("1", "资产类");
+		children.add(assets);
+		Node liability = new Node("2", "负债类");
+		children.add(liability);
+		Node common = new Node("3", "共同类");
+		children.add(common);
+		Node rights = new Node("4", "权益类");
+		children.add(rights);
+		Node cost = new Node("5", "成本类");
+		children.add(cost);
+		Node loss = new Node("6", "损益类");
+		children.add(loss);
+		
+		StringBuilder hql = new StringBuilder();
+		hql.append(" select distinct p from Subject p ");
+    	hql.append(" left join fetch p.childSubjects order by p.subjectCode desc ");
+    	
+    	List<Subject> subjectList = subjectDaoImpl.getEntityListByHql(hql.toString());
+    	
+    	//只取一级科目，因为二级和三级会包含在一级的树形list中
+    	for (Subject subject : subjectList) {
+			if (subject == null || subject.getLevel() != 1) {
+				continue;
+			}
+    		if (subject.getMajorCate().equals(Subject.TYPE_ZC)) {
+    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectName());
+    			initChildren(assets, parent);
+    			explorer(subject, parent);
+    		} else if (subject.getMajorCate().equals(Subject.TYPE_FZ)) {
+    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectName());
+    			initChildren(liability, parent);
+    			explorer(subject, parent);
+    		} else if (subject.getMajorCate().equals(Subject.TYPE_GT)) {
+    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectName());
+    			initChildren(common, parent);
+    			explorer(subject, parent);
+    		} else if (subject.getMajorCate().equals(Subject.TYPE_QY)) {
+    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectName());
+    			initChildren(rights, parent);
+    			explorer(subject, parent);
+    		} else if (subject.getMajorCate().equals(Subject.TYPE_CB)) {
+    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectName());
+    			initChildren(cost, parent);
+    			explorer(subject, parent);
+    		} else if (subject.getMajorCate().equals(Subject.TYPE_SY)) {
+    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectName());
+    			initChildren(loss, parent);
+    			explorer(subject, parent);
+    		}
+		}
+		
+		return nodeList;
+	}
     
+	/**
+	 * 递归构造会计科目节点。
+	 * @param subject 会计科目
+	 * @param parent 父节点
+	 */
+	public void explorer(Subject subject, Node parent) {
+		if (subject.getChildSubjects() != null) {
+			for (Subject sub : subject.getChildSubjects()) {
+				Node node = new Node(sub.getSubjectCode(), sub.getSubjectName());
+				initChildren(parent, node);
+				explorer(sub, node);
+			}
+		}
+	}
+	
+	public void initChildren(Node parent, Node child) {
+		if (parent.getChildren() == null) {
+			parent.setChildren(new ArrayList<Node>());
+		}
+		parent.getChildren().add(child);
+	}
 }

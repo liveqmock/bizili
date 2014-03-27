@@ -69,7 +69,7 @@
 <!--     	<appender-ref ref="R"/> -->
     </logger>
     <logger name="org.springframework.web" additivity="true">
-    	<level value="INFO"/>
+    	<level value="DEBUG"/>
     </logger>
     <logger name="com.google.code.yanf4j" additivity="true">
     	<level value="ERROR"/>

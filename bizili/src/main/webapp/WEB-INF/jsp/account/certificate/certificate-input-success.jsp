@@ -25,6 +25,7 @@ img {border-width: 0px 0px 0px 0px}
 <%@ include file="/WEB-INF/inc/script.inc" %>
 <%@ include file="/WEB-INF/inc/style.inc" %>
 <link rel="stylesheet" href="<c:url value='/css/zTreeStyle/zTreeStyle.css'/>" type="text/css">
+<link rel="stylesheet" href="<c:url value='/css/zTreeStyle/ztree.demo.css'/>" type="text/css">
 <script type="text/javascript" src="<c:url value='/js/jquery.ztree.all-3.5.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/dwr/interface/AccountBalanceBean.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/dwr/interface/SubjectBean.js'/>"></script>
@@ -256,54 +257,99 @@ img {border-width: 0px 0px 0px 0px}
 		$('#editSubject').val(indexs);//标记要修改的分录
     }
     
-    var setting = {
-		view: {
-			dblClickExpand: dblClickExpand
-		},
-		data: {
-			simpleData: {
-				enable: true
-			}
-		},
-		check: {
-			enable: true
-		}
-	};
-
-    function dblClickExpand(treeId, treeNode) {
-		return treeNode.level > 0;
-	}
-	var zNodes =[
-			{ id:1, pId:0, name:"根 Root", open:true},
-			{ id:11, pId:1, name:"父节点 1-1", open:true},
-			{ id:111, pId:11, name:"叶子节点 1-1-1"},
-			{ id:112, pId:11, name:"叶子节点 1-1-2"},
-			{ id:113, pId:11, name:"叶子节点 1-1-3"},
-			{ id:114, pId:11, name:"叶子节点 1-1-4"},
-			{ id:12, pId:1, name:"父节点 1-2", open:true},
-			{ id:121, pId:12, name:"叶子节点 1-2-1"},
-			{ id:122, pId:12, name:"叶子节点 1-2-2"},
-			{ id:123, pId:12, name:"叶子节点 1-2-3"},
-			{ id:124, pId:12, name:"叶子节点 1-2-4"},
-			{ id:13, pId:1, name:"父节点 1-3", open:true},
-			{ id:131, pId:13, name:"叶子节点 1-3-1"},
-			{ id:132, pId:13, name:"叶子节点 1-3-2"},
-			{ id:133, pId:13, name:"叶子节点 1-3-3"},
-			{ id:134, pId:13, name:"叶子节点 1-3-4"}
-	];
-
-	function dblClickExpand(treeId, treeNode) {
-		return treeNode.level > 0;
-	}
-    
-    $(document).ready(function(){
-		$.fn.zTree.init($("#treeDemo"), setting, zNodes);
-	});
     </script>
-    <style type="text/css">
-.ztree li span.button.switch.level0 {visibility:hidden; width:1px;}
-.ztree li ul.level0 {padding:0; background:none;}
-	</style>
+    <SCRIPT type="text/javascript">
+    	var setting = {
+			check: {
+				enable: true,
+				chkboxType: {"Y":"", "N":""}
+			},
+			view: {
+				dblClickExpand: false
+			},
+// 			data: {
+// 				simpleData: {
+// 					enable: true
+// 				}
+// 			},
+			callback: {
+				beforeClick: beforeClick,
+				beforeCheck: beforeCheck,
+				onCheck: onCheck
+			}
+		};
+
+		function beforeClick(treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			var nodes = zTree.getCheckedNodes(true);
+			for (var i=0, l=nodes.length; i<l; i++) {
+				zTree.checkNode(nodes[i], false, null, true);
+			}
+			zTree.checkNode(treeNode, !treeNode.checked, null, true);
+			return false;
+		}
+		
+		function beforeCheck(treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			var nodes = zTree.getCheckedNodes(true);
+			for (var i=0, l=nodes.length; i<l; i++) {
+				if (treeNode.id == nodes[i].id) {
+					zTree.checkNode(treeNode, true, null, true);
+				} else {
+					zTree.checkNode(nodes[i], false, null, true);
+				}
+			}
+			return treeNode;
+		}
+		
+		function onCheck(e, treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+			nodes = zTree.getCheckedNodes(true),
+			v = "";
+			for (var i=0, l=nodes.length; i<l; i++) {
+				if (treeNode.id == nodes[i].id) {
+					v = nodes[i].name;
+				}
+			}
+			var cityObj = $("#subjectIdTemp");
+			cityObj.attr("value", v);
+		}
+		
+		function showMenu() {
+			var cityObj = $("#subjectIdTemp");
+			var cityOffset = $("#subjectIdTemp").offset();
+			$("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+
+			$("body").bind("mousedown", onBodyDown);
+		}
+		function hideMenu() {
+			$("#menuContent").fadeOut("fast");
+			$("body").unbind("mousedown", onBodyDown);
+		}
+		function onBodyDown(event) {
+			if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+				hideMenu();
+			}
+		}
+
+		function loadJson() {
+			$.ajax({
+	            type:"get",
+	            dataType:"text",
+	            url: '${ctx}/account/subject-tree',
+//	             contentType: 'text/json;charset=UTF-8',
+	            success: function(json){
+	            	zNodes = json;
+	            }
+	        });
+			return zNodes;
+		}
+		
+		var zNodes = ${subjectTree};
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+		});
+	</SCRIPT>
     <script language="javascript" type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
     <style type="text/css">
     .jiacu td{
@@ -325,8 +371,8 @@ img {border-width: 0px 0px 0px 0px}
 	<div id="header">
 		<jsp:include page="/WEB-INF/tiles/four-header.jsp" />
 	</div>
-	<div class="zTreeDemoBackground left">
-		<ul id="treeDemo" class="ztree"></ul>
+	<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+		<ul id="treeDemo" class="ztree" style="margin-top:0; width:260px;"></ul>
 	</div>
 	<div id="middel">
 		<div id="left">
@@ -366,7 +412,8 @@ img {border-width: 0px 0px 0px 0px}
 								<td class="fivf" colspan="3"><input type="text" value="" id="summaryTemp" class="twf270" />[<a>常用摘要</a>]</td>
 								<td class="twof">会计科目</td>
 								<td class="twef" colspan="3"><input type="text" class="twf190" value="" id="subjectIdTemp"/>
-								<input type="buttom" class="tableSteelBtnAdd" id="selectSub"/><!-- &nbsp;<input type="text" style="border:0px;" id="subjectNameTemp" value="" readonly> --></td>
+								&nbsp;<a id="menuBtn" href="#" onclick="showMenu();">选择</a>
+								<input type="buttom" class="tableSteelBtnAdd" id="selectSub"/></td>
 								<td class="twof">[<a href="javascript:queryAccountBalance();">查询余额</a>]</td><td class="tenf"><span id="subjectBalance" style="font-weight:600;"></span></td>
 							</tr>
 							<tr style="border-bottom:0px;">
