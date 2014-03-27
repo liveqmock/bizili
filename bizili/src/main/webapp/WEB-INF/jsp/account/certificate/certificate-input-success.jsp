@@ -280,7 +280,7 @@ img {border-width: 0px 0px 0px 0px}
 		};
 
 		function beforeClick(treeId, treeNode) {
-			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			var zTree = $.fn.zTree.getZTreeObj("subjectTree");
 			var nodes = zTree.getCheckedNodes(true);
 			for (var i=0, l=nodes.length; i<l; i++) {
 				zTree.checkNode(nodes[i], false, null, true);
@@ -290,7 +290,7 @@ img {border-width: 0px 0px 0px 0px}
 		}
 		
 		function beforeCheck(treeId, treeNode) {
-			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			var zTree = $.fn.zTree.getZTreeObj("subjectTree");
 			var nodes = zTree.getCheckedNodes(true);
 			for (var i=0, l=nodes.length; i<l; i++) {
 				if (treeNode.id == nodes[i].id) {
@@ -303,7 +303,7 @@ img {border-width: 0px 0px 0px 0px}
 		}
 		
 		function onCheck(e, treeId, treeNode) {
-			var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+			var zTree = $.fn.zTree.getZTreeObj("subjectTree"),
 			nodes = zTree.getCheckedNodes(true),
 			v = "";
 			for (var i=0, l=nodes.length; i<l; i++) {
@@ -331,23 +331,10 @@ img {border-width: 0px 0px 0px 0px}
 				hideMenu();
 			}
 		}
-
-		function loadJson() {
-			$.ajax({
-	            type:"get",
-	            dataType:"text",
-	            url: '${ctx}/account/subject-tree',
-//	             contentType: 'text/json;charset=UTF-8',
-	            success: function(json){
-	            	zNodes = json;
-	            }
-	        });
-			return zNodes;
-		}
 		
 		var zNodes = ${subjectTree};
 		$(document).ready(function(){
-			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			$.fn.zTree.init($("#subjectTree"), setting, zNodes);
 		});
 	</SCRIPT>
     <script language="javascript" type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
@@ -372,7 +359,7 @@ img {border-width: 0px 0px 0px 0px}
 		<jsp:include page="/WEB-INF/tiles/four-header.jsp" />
 	</div>
 	<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
-		<ul id="treeDemo" class="ztree" style="margin-top:0; width:260px;"></ul>
+		<ul id="subjectTree" class="ztree" style="margin-top:0; width:280px;"></ul>
 	</div>
 	<div id="middel">
 		<div id="left">

@@ -293,27 +293,27 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
 				continue;
 			}
     		if (subject.getMajorCate().equals(Subject.TYPE_ZC)) {
-    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectName());
+    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectCode() + "_" + subject.getSubjectName());
     			initChildren(assets, parent);
     			explorer(subject, parent);
     		} else if (subject.getMajorCate().equals(Subject.TYPE_FZ)) {
-    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectName());
+    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectCode() + "_" + subject.getSubjectName());
     			initChildren(liability, parent);
     			explorer(subject, parent);
     		} else if (subject.getMajorCate().equals(Subject.TYPE_GT)) {
-    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectName());
+    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectCode() + "_" + subject.getSubjectName());
     			initChildren(common, parent);
     			explorer(subject, parent);
     		} else if (subject.getMajorCate().equals(Subject.TYPE_QY)) {
-    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectName());
+    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectCode() + "_" + subject.getSubjectName());
     			initChildren(rights, parent);
     			explorer(subject, parent);
     		} else if (subject.getMajorCate().equals(Subject.TYPE_CB)) {
-    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectName());
+    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectCode() + "_" + subject.getSubjectName());
     			initChildren(cost, parent);
     			explorer(subject, parent);
     		} else if (subject.getMajorCate().equals(Subject.TYPE_SY)) {
-    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectName());
+    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectCode() + "_" + subject.getSubjectName());
     			initChildren(loss, parent);
     			explorer(subject, parent);
     		}
@@ -330,13 +330,18 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
 	public void explorer(Subject subject, Node parent) {
 		if (subject.getChildSubjects() != null) {
 			for (Subject sub : subject.getChildSubjects()) {
-				Node node = new Node(sub.getSubjectCode(), sub.getSubjectName());
+				Node node = new Node(sub.getSubjectCode(), sub.getSubjectCode() + "_" + sub.getSubjectName());
 				initChildren(parent, node);
 				explorer(sub, node);
 			}
 		}
 	}
 	
+	/**
+	 * 将孩子节点添加到父节点的集合中。
+	 * @param parent 父节点
+	 * @param child 孩子节点
+	 */
 	public void initChildren(Node parent, Node child) {
 		if (parent.getChildren() == null) {
 			parent.setChildren(new ArrayList<Node>());
