@@ -24,6 +24,9 @@ img {border-width: 0px 0px 0px 0px}
 <%@ include file="/WEB-INF/inc/constants.inc" %>
 <%@ include file="/WEB-INF/inc/script.inc" %>
 <%@ include file="/WEB-INF/inc/style.inc" %>
+<link rel="stylesheet" href="<c:url value='/css/zTreeStyle/zTreeStyle.css'/>" type="text/css">
+<link rel="stylesheet" href="<c:url value='/css/zTreeStyle/ztree.demo.css'/>" type="text/css">
+<script type="text/javascript" src="<c:url value='/js/jquery.ztree.all-3.5.min.js'/>"></script>
 <style type="text/css">
 table.singleIncreasesResources{
 	width:1235px;
@@ -109,50 +112,9 @@ input.iptBuySteelAdd{
     <script type="text/javascript">
 	
 	$(document).ready(function(){
-		$('#selectParentSub').click(function(){
-			var returnValue = window.showModalDialog('<c:url value="/account/subject-list.htm"/>','', "dialogWidth=610px;dialogHeight=600px;status=no;help=no;scrollbars=no;dialogLeft:450px;dialogTop:140px");
-			var ids = "";
-			var names = "";
-			var size = 0;
-			var parentId = "";
-			var level = "";
-			var dir = "";//余额方向
-			if (returnValue == null) {
-				return false;
-			}
-			var rets = returnValue.split(';');
-			for(var i =0; i<rets.length-1; i++){
-				var temp = rets[i].split('#');
-				ids = temp[0];
-				names = temp[1];
-				size = temp[2];//该分类下子类的数量
-				parentId = temp[3];
-				level = temp[4];
-				dir = temp[5];
-			}
-			//自动生成新增科目的代码
-			if (parseInt(size) < 10) {
-				$('#subjectCode').val(ids + "0" + (parseInt(size)+1));
-			} else {
-				$('#subjectCode').val(ids + "" + (parseInt(size)+1));
-			}
-			$('#parentName').val(names);
-			$('#parentCode').val(ids);
-			$('#id').val(parentId);
-			$('#level').val((parseInt(level)+1));
-			$('#formatMsg').text('(科目代码自动生成，请勿修改。)');
-			if (dir =='借') {
-				$('#jief').attr("selected","selected");
-				$('#balanceDirection').html('<option id="jief" value="借">借方</option>');
-			} else if (dir == "贷") {
-				$('#daif').attr("selected","selected");
-				$('#balanceDirection').html('<option id="daif" value="贷">贷方</option>');
-			}
-		});
-		
 		var msg = $.trim($('#message').val());
     	if (msg != '' && msg != null) {
-    		aAlert(msg);
+    		$.dialog.alert(msg);
     	}
     	
     	$('#foreignCurrencyAccount').change(function(){
@@ -191,69 +153,163 @@ input.iptBuySteelAdd{
     		}
     		
     	});
-    	$('#subjectCode').change(function(){
-    		$('#parentCode').val('');
-    		$('#balanceDirection').html('<option id="jief" value="借">借方</option><option id="daif" value="贷">贷方</option>');
-    	});
+//     	$('#subjectCode').change(function(){
+//     		$('#parentCode').val('');
+//     		$('#balanceDirection').html('<option id="jief" value="借">借方</option><option id="daif" value="贷">贷方</option>');
+//     	});
     	$('#saveSubject').click(function(){
     		var subjectCode = $('#subjectCode').val();
     		if ($.trim(subjectCode) == '') {
-				aAlert('科目代码不能为空。');
+    			$.dialog.alert('科目代码不能为空。');
 				return false;
 			}
 			if (!isInteger(subjectCode)){
-				aAlert('科目代码填写错误。科目代码必须为整数。');
+				$.dialog.alert('科目代码填写错误。科目代码必须为整数。');
 				return false;
 			}
 			var parentCode = $('#parentCode').val();
     		if ($.trim(parentCode) == '') {//新增的是一级科目
     			if (subjectCode.length > 4 ) {
-    				aAlert('科目代码填写错误。您填写的一级科目代码不正确。');
+    				$.dialog.alert('科目代码填写错误。您填写的一级科目代码不正确。');
     				return false;
     			}
-    			
     			$('#level').val('1');//一级科目
     		} else {
     			if (subjectCode.length < 6 ) {
-    				aAlert('科目代码填写规则错误。');
+    				$.dialog.alert('科目代码填写规则错误。');
     				return false;
     			}
     		}
     		var majorCate = $('#majorCate').val();
     		if ($.trim(majorCate) == '') {
-    			aAlert('请选择科目大类。');
+    			$.dialog.alert('请选择科目大类。');
     			return false;
     		}
     		var subjectType = $('#subjectType').val();
     		if ($.trim(subjectType) == '') {
-    			aAlert('请选择科目分类。');
+    			$.dialog.alert('请选择科目分类。');
     			return false;
     		}
     		var subjectName = $('#subjectName').val();
     		if ($.trim(subjectName) == '') {
-    			aAlert('科目名称不能为空。');
+    			$.dialog.alert('科目名称不能为空。');
     			return false;
     		}
     		if (subjectName.length > 10) {
-    			aAlert('科目名称长度不能超过10个字符。');
+    			$.dialog.alert('科目名称长度不能超过10个字符。');
     			return false;
     		}
     		if ($.trim(parentCode) == '') {
-    			var sure = confirm('您新增的科目是一级科目，请确保您填写的科目代码是正确的。您确定新增？');
-        		if (!sure) {
-        			return false;
-        		}
+    			$.dialog.confirm('您新增的科目是一级科目，请确保您填写的科目代码是正确的。您确定新增？', function(){
+    				var forms = $('#saveSubForm');
+    	    		forms.submit();
+    	    	}, function(){
+    	    	    $.dialog.tips('放弃新增会计科目。');
+    	    	});
+//     			var sure = confirm();
+//         		if (!sure) {
+//         			return false;
+//         		}
+    		} else {
+    			var forms = $('#saveSubForm');
+    			forms.submit();
     		}
-    		var forms = $('#saveSubForm');
-    		forms.submit();
     	});
 	});
 	</script>
+	<SCRIPT type="text/javascript">
+    	var setting = {
+			check: {
+				enable: true,
+				chkboxType: {"Y":"", "N":""}
+			},
+			view: {
+				dblClickExpand: false
+			},
+			callback: {
+				beforeClick: beforeClick,
+				beforeCheck: beforeCheck,
+				onCheck: onCheck
+			}
+		};
+
+		function beforeClick(treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("subjectTree");
+			var nodes = zTree.getCheckedNodes(true);
+			for (var i=0, l=nodes.length; i<l; i++) {
+				zTree.checkNode(nodes[i], false, null, true);
+			}
+			zTree.checkNode(treeNode, !treeNode.checked, null, true);
+			return false;
+		}
+		
+		function beforeCheck(treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("subjectTree");
+			var nodes = zTree.getCheckedNodes(true);
+			for (var i=0, l=nodes.length; i<l; i++) {
+				if (treeNode.id == nodes[i].id) {
+					zTree.checkNode(treeNode, true, null, true);
+				} else {
+					zTree.checkNode(nodes[i], false, null, true);
+				}
+			}
+			return treeNode;
+		}
+		
+		function onCheck(e, treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("subjectTree"),
+			nodes = zTree.getCheckedNodes(true),
+			v = "";
+			for (var i=0, l=nodes.length; i<l; i++) {
+				if (treeNode.id == nodes[i].id) {
+					v = nodes[i].name;
+				}
+			}
+			var arr = v.split('_');
+			$('#parentName').val(arr[1]);
+			$('#parentCode').val(treeNode.id);
+			$('#formatMsg').text('(科目代码自动生成，请勿修改。)');
+// 			if (dir =='借') {
+// 				$('#jief').attr("selected","selected");
+// 				$('#balanceDirection').html('<option id="jief" value="借">借方</option>');
+// 			} else if (dir == "贷") {
+// 				$('#daif').attr("selected","selected");
+// 				$('#balanceDirection').html('<option id="daif" value="贷">贷方</option>');
+// 			}
+			$('#level').val(treeNode.level);
+			$("#parentCode").val(arr[0]);
+		}
+		
+		function showMenu() {
+			var cityObj = $("#parentCode");
+			var cityOffset = $("#parentCode").offset();
+			$("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+
+			$("body").bind("mousedown", onBodyDown);
+		}
+		function hideMenu() {
+			$("#menuContent").fadeOut("fast");
+			$("body").unbind("mousedown", onBodyDown);
+		}
+		function onBodyDown(event) {
+			if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+				hideMenu();
+			}
+		}
+		
+		var zNodes = ${subjectTree};
+		$(document).ready(function(){
+			$.fn.zTree.init($("#subjectTree"), setting, zNodes);
+		});
+	</SCRIPT>
 </head>
 <body>
 <div id="container">
 	<div id="header">
 		<jsp:include page="/WEB-INF/tiles/four-header.jsp" />
+	</div>
+	<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+		<ul id="subjectTree" class="ztree" style="margin-top:0; width:280px;"></ul>
 	</div>
 	<div id="middel">
 		<div id="left">
@@ -264,7 +320,7 @@ input.iptBuySteelAdd{
 	<h3 class="bordFont bigFont">会计科目</h3>
 	<form name="saveSubForm" id="saveSubForm" action="subject-input.htm" method="post">
 	<input type="hidden" id="message" value="${msg}">
-	<input type="hidden" name="id" id="id" value=""/>
+<!-- 	<input type="hidden" name="id" id="id" value=""/> -->
 	<input type="hidden" name="level" id="level" value=""/>
 	<input type="hidden" name="childNumber" id="childNumber" value="0"/>
 	<input type="hidden" name="tokenName" value="${token_name}">
@@ -278,7 +334,11 @@ input.iptBuySteelAdd{
 	<table class="singleIncreasesResources">
 	<tbody>
 		<tr>
-		<td class="twoFont">父级科目</td><td class="widt"><input type="text" style="width:100px;" name="parentCode" id="parentCode" readonly="readonly" value="" class="widt" /> <img id="selectParentSub" style="cursor:pointer;" title="点击选择科目" src="<c:url value='/images/btn_add.gif'/>"/></td><td></td>
+		<td class="twoFont">父级科目</td><td class="widt">
+		<input type="text" name="parentSubject.subjectCode" id="parentCode" readonly="readonly" value="" class="widt" />
+		<img src="<c:url value='/images/btn_add.gif'/>" id="menuBtn" style="cursor:pointer;" alt="选择科目" title="选择科目" onclick="showMenu();"/>
+<%-- 		<img id="selectParentSub" style="cursor:pointer;" title="点击选择科目" src="<c:url value='/images/btn_add.gif'/>"/> --%>
+		</td><td></td>
 		<input type="hidden" name="parentName" id="parentName" value=""/>
 		<td class="twoFont">科目代码 </td><td class="widt"><input style="width:100px;" name="subjectCode" id="subjectCode" type="text"/><span class="star">*</span><span class="star" id="formatMsg">(格式：1001)</span></td>
 		</tr>

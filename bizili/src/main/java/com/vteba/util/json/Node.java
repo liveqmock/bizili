@@ -1,5 +1,6 @@
 package com.vteba.util.json;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,12 +9,15 @@ import java.util.List;
  * @author yinlei
  * @date 2014-03-26 21:30
  */
-public class Node {
+public class Node implements Serializable {
+	private static final long serialVersionUID = -10392254772186054L;
+	
 	private String id;//节点id
 	private String name;//显示的名字
 	private Boolean open;//是否打开
 	private Boolean checked;//是否选中
 	private Boolean nocheck;//不显示checked
+	private Integer level;// 层级
 	private List<Node> children;//子节点
 
 	public Node(Long id, String name) {
@@ -26,6 +30,13 @@ public class Node {
 		super();
 		this.id = id;
 		this.name = name;
+	}
+	
+	public Node(String id, String name, Integer level) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.level = level;
 	}
 	
 	public Node(String id, String name, List<Node> children) {
@@ -80,6 +91,14 @@ public class Node {
 
 	public void setNocheck(Boolean nocheck) {
 		this.nocheck = nocheck;
+	}
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
 	}
 
 	public List<Node> getChildren() {

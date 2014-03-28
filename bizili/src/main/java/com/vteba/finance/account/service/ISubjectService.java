@@ -53,4 +53,11 @@ public interface ISubjectService extends IGenericService<Subject, String> {
      */
     public List<Node> loadSubjectTree();
     
+    /**
+     * 删除会计科目，使用中的无法删除。
+     * @param subjectCode 科目代码
+     * @return 1：使用中，0：会计科目不存在，2：删除成功
+     */
+    public int deleteSubject(String subjectCode);
+    
 }

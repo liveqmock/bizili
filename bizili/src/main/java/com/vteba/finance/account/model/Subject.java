@@ -7,7 +7,6 @@ import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,7 +24,6 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.LazyToOne;
@@ -51,7 +49,7 @@ public class Subject implements AstModel {
 
 	private static final long serialVersionUID = -2180300954170909046L;
 	
-	private String id;
+	//private String id;
 	private String subjectCode;//科目代码
 	private String subjectName;//科目名字
 	private String subjectType;//科目分类
@@ -99,14 +97,14 @@ public class Subject implements AstModel {
 	public Subject() {
 	}
 
-	public Subject(String id, String subjectCode, String subjectName,
+	public Subject(String subjectCode, String subjectName,
 			String subjectType, String balanceDirection,
 			String foreignCurrencyAccount, String aidAccount, String state,
 			String majorCate, String parentName, Boolean adjustExrate,
 			Integer level, Integer childNumber, Integer ledgerFormat,
 			List<Subject> childSubjects, Subject parentSubject) {
 		super();
-		this.id = id;
+//		this.id = id;
 		this.subjectCode = subjectCode;
 		this.subjectName = subjectName;
 		this.subjectType = subjectType;
@@ -124,19 +122,20 @@ public class Subject implements AstModel {
 		this.parentSubject = parentSubject;
 	}
 
+//	@Id
+//	@GeneratedValue(generator="uuid")
+//	@GenericGenerator(name="uuid", strategy = "org.hibernate.id.UUIDGenerator")
+//	@Column(name = "id", unique = true, nullable = false, length = 45)
+//	public String getId() {
+//		return this.id;
+//	}
+//
+//	public void setId(String id) {
+//		this.id = id;
+//	}
+
 	@Id
-	@GeneratedValue(generator="uuid")
-	@GenericGenerator(name="uuid", strategy = "org.hibernate.id.UUIDGenerator")
-	@Column(name = "id", unique = true, nullable = false, length = 45)
-	public String getId() {
-		return this.id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	@Column(name = "subject_code", nullable = false, length = 45)
+	@Column(name = "subject_code", unique = true, nullable = false, length = 45)
 	public String getSubjectCode() {
 		return this.subjectCode;
 	}

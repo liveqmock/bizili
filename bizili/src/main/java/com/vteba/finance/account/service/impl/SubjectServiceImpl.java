@@ -16,12 +16,13 @@ import com.vteba.finance.account.dao.ISubjectDao;
 import com.vteba.finance.account.dao.SubjectDao;
 import com.vteba.finance.account.model.Subject;
 import com.vteba.finance.account.service.ISubjectService;
+import com.vteba.finance.cache.C;
 import com.vteba.finance.cache.FinanceCacheName;
+import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.tm.generic.Page;
 import com.vteba.tm.hibernate.IHibernateGenericDao;
 import com.vteba.tm.hibernate.QueryStatement;
 import com.vteba.tm.jdbc.spring.SpringJdbcTemplate;
-import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.user.dao.UserDao;
 import com.vteba.user.model.EmpUser;
 import com.vteba.user.service.IEmpUserService;
@@ -130,24 +131,41 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
     }
     
     public boolean saveSubject(Subject model){
-    	if (StringUtils.isNotBlank(model.getId())) {//新增的是子科目
+    	if (StringUtils.isNotBlank(model.getParentSubject().getSubjectCode())) {//新增的是子科目
     		// 自关联，一对多级联保存
-    		Subject parent = new Subject();
-    		parent.setId(model.getId());
+    		Subject parent = subjectDaoImpl.get(model.getParentSubject().getSubjectCode());
+    		parent.setChildNumber(parent.getChildNumber() + 1);
     		parent.getChildSubjects().add(model);
     		model.setParentSubject(parent);
-    		subjectDaoImpl.save(model);
-    		//更改分类的子类数目+1
-    		String hql = "update Subject s set s.childNumber = (s.childNumber + 1) where s.id =:id ";
-    		Map<String, Object> param = new HashMap<String, Object>();
-    		param.put("id", parent.getId());
-    		subjectDaoImpl.executeHqlUpdate(hql, false, param);
+    		subjectDaoImpl.save(parent);
     	} else {//新增的是一级科目
-    		model.setId(null);
     		model.setParentName(null);
+    		model.setParentSubject(null);
     		subjectDaoImpl.save(model);
     	}
 		return true;
+    }
+    
+    public int deleteSubject(String subjectCode) {
+    	if (StringUtils.isBlank(subjectCode)) {
+    		throw new NullPointerException("科目代码为空。"); 
+    	}
+    	String hql = "select count(*) from Certificate where subject_id = ?1";
+    	Integer count = subjectDaoImpl.hqlQueryForObject(hql, Integer.class, subjectCode);
+    	if (count > 0) {// 使用中
+    		return 1;
+    	}
+    	Subject subject = subjectDaoImpl.get(subjectCode);
+    	if (subject == null) {
+    		return 0;
+    	}
+    	Subject parent = subject.getParentSubject();
+    	if (parent != null) {
+    		parent.setChildNumber(parent.getChildNumber() - 1);
+    		subjectDaoImpl.saveOrUpdate(parent);
+    	}
+    	subjectDaoImpl.delete(subject);
+		return 2;
     }
     
     @SuppressWarnings("unused")
@@ -259,6 +277,16 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
 
 	@Override
 	public List<Node> loadSubjectTree() {
+		InfinispanCache<String, List<Node>> subjectTreeCache = infinispanCacheManager.getCache(C.Subject.class.getName());
+		List<Node> nodeList = subjectTreeCache.get(C.Subject.TREE);
+		if (nodeList != null && nodeList.size() > 0) {
+			return nodeList;
+		}
+		nodeList = loadSubjectNodeCache();
+		return nodeList;
+	}
+    
+	public List<Node> loadSubjectNodeCache() {
 		List<Node> nodeList = new ArrayList<Node>();
 		Node root = new Node("0", "会计科目");
 		root.setOpen(true);
@@ -284,7 +312,6 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
 		StringBuilder hql = new StringBuilder();
 		hql.append(" select distinct p from Subject p ");
     	hql.append(" left join fetch p.childSubjects order by p.subjectCode desc ");
-    	
     	List<Subject> subjectList = subjectDaoImpl.getEntityListByHql(hql.toString());
     	
     	//只取一级科目，因为二级和三级会包含在一级的树形list中
@@ -292,36 +319,32 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
 			if (subject == null || subject.getLevel() != 1) {
 				continue;
 			}
+			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectCode() + "_" + subject.getSubjectName());
     		if (subject.getMajorCate().equals(Subject.TYPE_ZC)) {
-    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectCode() + "_" + subject.getSubjectName());
     			initChildren(assets, parent);
     			explorer(subject, parent);
     		} else if (subject.getMajorCate().equals(Subject.TYPE_FZ)) {
-    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectCode() + "_" + subject.getSubjectName());
     			initChildren(liability, parent);
     			explorer(subject, parent);
     		} else if (subject.getMajorCate().equals(Subject.TYPE_GT)) {
-    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectCode() + "_" + subject.getSubjectName());
     			initChildren(common, parent);
     			explorer(subject, parent);
     		} else if (subject.getMajorCate().equals(Subject.TYPE_QY)) {
-    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectCode() + "_" + subject.getSubjectName());
     			initChildren(rights, parent);
     			explorer(subject, parent);
     		} else if (subject.getMajorCate().equals(Subject.TYPE_CB)) {
-    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectCode() + "_" + subject.getSubjectName());
     			initChildren(cost, parent);
     			explorer(subject, parent);
     		} else if (subject.getMajorCate().equals(Subject.TYPE_SY)) {
-    			Node parent = new Node(subject.getSubjectCode(), subject.getSubjectCode() + "_" + subject.getSubjectName());
     			initChildren(loss, parent);
     			explorer(subject, parent);
     		}
 		}
-		
+    	InfinispanCache<String, List<Node>> subjectTreeCache = infinispanCacheManager.getCache(C.Subject.class.getName());
+    	subjectTreeCache.putAsync(C.Subject.TREE, nodeList);
 		return nodeList;
 	}
-    
+	
 	/**
 	 * 递归构造会计科目节点。
 	 * @param subject 会计科目

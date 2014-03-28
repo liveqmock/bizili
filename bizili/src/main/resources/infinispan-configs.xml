@@ -179,4 +179,21 @@
 	  <transaction 
       		transactionMode="TRANSACTIONAL" autoCommit="false" lockingMode="OPTIMISTIC"/>
    </namedCache>
+   
+   <namedCache name="com.vteba.finance.cache.C$Subject">
+      <clustering mode="invalidation">
+         <stateTransfer fetchInMemoryState="false" timeout="20000"/>
+         <sync replTimeout="20000"/>
+      </clustering>
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <!-- Eviction configuration.  WakeupInterval defines how often the eviction thread runs, in milliseconds.  
+           0 means the eviction thread will never run.  A separate executor is used for eviction in each cache. -->
+      <eviction maxEntries="10000" strategy="LRU"/>
+      <expiration maxIdle="100000" wakeUpInterval="5000"/>
+      <lazyDeserialization enabled="true"/>
+<!--       <transaction transactionManagerLookupClass="com.vteba.tm.bitronix.infinispan.BitronixTransactionManagerLookup" useSynchronization="false" -->
+	  <transaction 
+      		transactionMode="NON_TRANSACTIONAL" autoCommit="false" lockingMode="OPTIMISTIC"/>
+   </namedCache>
 </infinispan>

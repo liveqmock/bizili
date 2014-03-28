@@ -35,67 +35,50 @@ img {border-width: 0px 0px 0px 0px}
     	//显示提示信息
     	var msg = $.trim($('#message').val());
     	if (msg != '' && msg != null) {
-    		aAlert(msg);
+    		$.dialog.alert(msg);
     	}
     	//保存凭证
     	$('#saveCert').click(function(){
     		var debitSum = $('#debitSum').val();
     		var creditSum = $('#creditSum').val();
     		if(parseFloat(debitSum) != parseFloat(creditSum)){
-    			aAlert('借方金额合计不等于贷方金额合计，无法保存。请调整。');
+    			$.dialog.alert('借方金额合计不等于贷方金额合计，无法保存。请调整。');
     			return false;
     		}
     		var createDate = $('#createDate').val();
     		if ($.trim(createDate) == '') {
-    			aAlert('请您选择日期。');
+    			$.dialog.alert('请您选择日期。');
     			return false;
     		}
     		var forms = $('#saveCertForm');
     		forms.submit();
     	});
     	
-    	//选择科目
-    	$('#selectSub').click(function(){
-			var returnValue = window.showModalDialog('<c:url value="/account/subject-list.htm"/>','selectChild', "dialogWidth=610px;dialogHeight=600px;status=no;help=no;scrollbars=no;dialogLeft:450px;dialogTop:140px");
-			var ids = "";
-			var names = "";
-			if (returnValue == null) {
-				return false;
-			}
-			var rets = returnValue.split(';');
-			for(var i =0; i<rets.length-1; i++){
-				var temp = rets[i].split('#');
-				ids = temp[0];
-				names = temp[1];
-			}
-			//$('#subjectNameTemp').val(names);
-			$('#subjectIdTemp').val(ids+'_'+names);
-		});
     	//添加凭证分录
     	$('#addNewCert').click(function(){
     		var summaryTemp = $('#summaryTemp').val();
     		if ($.trim(summaryTemp) == ''){
-    			aAlert('摘要不能为空。');
+    			$.dialog.alert('摘要不能为空。');
     			return false;
     		}
     		if (isValidChar(summaryTemp)) {
-    			aAlert('摘要含有非法字符。');
+    			$.dialog.alert('摘要含有非法字符。');
     			return false;
     		}
     		if ($.trim(summaryTemp).length > 25){
-    			aAlert('摘要最多输入25位。');
+    			$.dialog.alert('摘要最多输入25位。');
     			return false;
     		}
     		var temp = $('#subjectIdTemp').val();
     		if($.trim(temp) == ''){
-    			aAlert('会计科目不能为空。');
+    			$.dialog.alert('会计科目不能为空。');
     			return false;
     		}
     		var arr = temp.split('_');
     		var subjectIdTemp = arr[0];
     		var subjectNameTemp = '';
     		if(subjectIdTemp == undefined || !isInteger(subjectIdTemp)){
-    			aAlert('您填写的会计科目不合法。');
+    			$.dialog.alert('您填写的会计科目不合法。');
     			return false;
     		}
     		dwr.engine.setAsync(false);//设为同步
@@ -103,26 +86,26 @@ img {border-width: 0px 0px 0px 0px}
     			subjectNameTemp = data;//将返回值，赋给外层变量
     		});
     		if($.trim(subjectNameTemp) == 'error'){//在dwr回调函数中赋值，决定是否中断后面的操作
-    			aAlert('您填写的会计科目不合法。');
+    			$.dialog.alert('您填写的会计科目不合法。');
     			return false;
     		}
     		var debitAmountTemp = $('#debitAmountTemp').val();
     		var creditAmountTemp = $('#creditAmountTemp').val();
     		
     		if($.trim(debitAmountTemp)=='' && $.trim(creditAmountTemp)==''){
-    			aAlert('借方金额和贷方金额不能同时为空。');
+    			$.dialog.alert('借方金额和贷方金额不能同时为空。');
     			return false;
     		}
     		if($.trim(debitAmountTemp) !='' && $.trim(creditAmountTemp) !=''){
-    			aAlert('借方金额和贷方金额不能同时填写。');
+    			$.dialog.alert('借方金额和贷方金额不能同时填写。');
     			return false;
     		}    		
     		if($.trim(debitAmountTemp) !='' && !isDoubleFormat(debitAmountTemp, 2)){
-    			aAlert('借方金额输入格式错误。');
+    			$.dialog.alert('借方金额输入格式错误。');
     			return false;
     		}
     		if($.trim(creditAmountTemp) !='' && !isDoubleFormat(creditAmountTemp, 2)){
-    			aAlert('贷方金额输入格式错误。');
+    			$.dialog.alert('贷方金额输入格式错误。');
     			return false;
     		}
     		var indexs = $('#indexs').val();
@@ -215,7 +198,7 @@ img {border-width: 0px 0px 0px 0px}
         		}
         	});
     	} else {
-    		aAlert('请您选择会计科目。');
+    		$.dialog.alert('请您选择会计科目。');
     	}
     	
     }
@@ -226,14 +209,15 @@ img {border-width: 0px 0px 0px 0px}
     	var certListSummary = $('#certListSummary'+tr).val();
     	var certListSubjectId = $('#certListSubjectId'+tr).val();
     	if ($.trim(certListSubjectId) == '' || $.trim(certListSummary) == ''){
-    		aAlert('该凭证分录为空。');
+    		$.dialog.alert('该凭证分录为空。');
     		return false;
     	}
-    	var sure = confirm('您确定要删除该凭证分录？');
-    	if(sure){
+    	$.dialog.confirm('您确定要删除该凭证分录？', function(){
     		$('#tr'+tr).remove();
         	sumDebitCreditBig();
-    	}
+    	}, function(){
+    	    $.dialog.tips('放弃删除。');
+    	});
     }
     /**
      * 编辑修改某一个凭证分录，即一个tr
@@ -246,7 +230,7 @@ img {border-width: 0px 0px 0px 0px}
 		var certListDebitAmount = $('#certListDebitAmount'+indexs).val();
 		var certListCreditAmount = $('#certListCreditAmount'+indexs).val();
 		if ($.trim(certListSubjectId) == '' || $.trim(certListSummary) == ''){
-    		aAlert('该凭证分录为空。');
+			$.dialog.alert('该凭证分录为空。');
     		return false;
     	}
 		$('#summaryTemp').val(certListSummary);
@@ -267,11 +251,6 @@ img {border-width: 0px 0px 0px 0px}
 			view: {
 				dblClickExpand: false
 			},
-// 			data: {
-// 				simpleData: {
-// 					enable: true
-// 				}
-// 			},
 			callback: {
 				beforeClick: beforeClick,
 				beforeCheck: beforeCheck,
@@ -399,8 +378,8 @@ img {border-width: 0px 0px 0px 0px}
 								<td class="fivf" colspan="3"><input type="text" value="" id="summaryTemp" class="twf270" />[<a>常用摘要</a>]</td>
 								<td class="twof">会计科目</td>
 								<td class="twef" colspan="3"><input type="text" class="twf190" value="" id="subjectIdTemp"/>
-								&nbsp;<a id="menuBtn" href="#" onclick="showMenu();">选择</a>
-								<input type="buttom" class="tableSteelBtnAdd" id="selectSub"/></td>
+								<img src="<c:url value='/images/btn_add.gif'/>" id="menuBtn" style="cursor:pointer;" alt="选择科目" title="选择科目" onclick="showMenu();"/>
+								</td>
 								<td class="twof">[<a href="javascript:queryAccountBalance();">查询余额</a>]</td><td class="tenf"><span id="subjectBalance" style="font-weight:600;"></span></td>
 							</tr>
 							<tr style="border-bottom:0px;">

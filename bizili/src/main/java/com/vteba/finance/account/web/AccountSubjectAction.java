@@ -22,6 +22,7 @@ import com.vteba.service.context.RequestContextHolder;
 import com.vteba.tm.generic.Page;
 import com.vteba.util.common.ExcelExportUtils;
 import com.vteba.util.common.ExcelImportUtils;
+import com.vteba.util.json.FastJsonUtils;
 import com.vteba.util.json.Node;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.util.web.struts.StrutsUtils;
@@ -77,9 +78,11 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 	 * date 2012-6-25 下午2:42:39
 	 */
 	@RequestMapping("/subject-input")
-	public String input(Subject model) throws Exception {
+	public String input(Subject model, Map<String, Object> maps) throws Exception {
 		if (isInit()) {
 			setTokenValue();
+			List<Node> nodes = subjectServiceImpl.loadSubjectTree();
+			maps.put("subjectTree", FastJsonUtils.toJson(nodes));
 			return "account/subject/subject-input-success";
 		}
 		if (isTokenValueOK()) {
@@ -167,6 +170,13 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 		return null;
 	}
 
+	@RequestMapping("/subject-delete")
+	@ResponseBody
+	public String delete(String id) {
+		subjectServiceImpl.delete(id);
+		return SUCCESS;
+	}
+	
 	/*********seter and getter**********/
 	public List<Subject> getSubjectList() {
 		return subjectList;

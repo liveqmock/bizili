@@ -1,8 +1,5 @@
 package com.vteba.finance.account.remote;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import org.directwebremoting.annotations.RemoteMethod;
@@ -35,11 +32,9 @@ public class SubjectBean {
 	 */
 	@RemoteMethod
 	public String checkSubjectExist(String subjectId){
+		String hql = " select s from Subject s where s.subjectCode = ?1 ";
+		Subject bean = subjectServiceImpl.uniqueResultByHql(hql, subjectId);
 		String result = "error";
-		String hql = " select s from Subject s where subjectCode = :subjectCode ";
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("subjectCode", subjectId);
-		Subject bean = subjectServiceImpl.uniqueResultByHql(hql, false, param);
 		if (bean != null) {
 			result = bean.getSubjectName();
 		}

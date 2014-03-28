@@ -66,6 +66,23 @@ img {border-width: 0px 0px 0px 0px}
     	$('#orderBy').val('subjectCode');
     	$('#ascDesc').val('asc');
     }
+    function deletes(id) {
+    	$.dialog.confirm('你确定要删除该会计科目吗？子科目也会一起被删除。可能对账务产生影响。', function(){
+    		$.ajax({
+	            type:"post",
+	            dataType:"text",
+	            url: '${ctx}/account/subject-delete.htm?id=' + id,
+	            success: function(msg){
+	            	$('#tr'+id).remove();
+	            },
+	            error: function (msg) {
+	                $.dialog.alert(msg.responseText);
+	            }
+	        });
+    	}, function(){
+    	    $.dialog.tips('放弃删除。');
+    	});
+	}
     </script>
 </head>
 <body>
@@ -168,8 +185,8 @@ img {border-width: 0px 0px 0px 0px}
               </tr>
               
               <c:forEach items="${listResult}" var="subject" varStatus="st">
-              <tr style="${st.count%2==0?'background:#f3f3f3':''}">
-                <td class="twof"><input type="checkbox" id="check${st.count}" value="${subject.id}"/></td>
+              <tr id="tr${subject.subjectCode}" style="${st.count%2==0?'background:#f3f3f3':''}">
+                <td class="twof"><input type="checkbox" id="check${st.count}" value="${subject.subjectCode}"/></td>
                 <td class="fouf">${subject.subjectCode}</td>
                 <td class="sixf">${subject.subjectName}</td>
                 <td class="fivf">${subject.subjectType}</td>
@@ -181,17 +198,15 @@ img {border-width: 0px 0px 0px 0px}
                 <td class="fouf">${subject.majorCate}</td>
                 <td class="fouf">${subject.level}</td>
                 <td class="fouf"><c:if test="${subject.ledgerFormat == 1}">金额式</c:if><c:if test="${subject.ledgerFormat == 2}">数量金额式</c:if></td>
-                <td class="fivf"><input type="button" class="pageCutSmallBtnDel" id="input4" value="删除" /></td>
+                <td class="fivf">
+                <img src="../images/res3.png" title="资源" style="margin-left:4px;margin-top:4px;cursor:pointer;height:22px;width:22px;" onclick="javascript:queryRes('${subject.subjectCode}');"></img>
+                <img src="../images/btn_edit.gif" title="修改" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:editAuth('${subject.subjectCode}')"/>
+                <img src="../images/tu12.gif" title="删除" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:deletes('${subject.subjectCode}')"/>
+                </td>
               </tr>
               </c:forEach>
             </table>
         
-	        <p style="padding-left:16px;line-height:30px; height:30px;">
-          <input type="checkbox" id="allCheckSelected" />
-          <label for="pageCutSmallCheckbox1" style="position:relative ;bottom:5px;">全选</label>
-          <input type="button" class="pageCutSmallBtnCheckout" id="input2" value="确定导入" />
-          <input type="button" class="pageCutSmallBtnDel" id="input23" value="删除" />
-		  </p>
 		  <div id="page">
 			<p>
 				<vte:pages hasForm="true" beanName="page" formName="queryForm"/>

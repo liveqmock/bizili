@@ -16,6 +16,6 @@ public class InfinispanCacheRegionFactory extends InfinispanRegionFactory {
 	private static final long serialVersionUID = 812967435530068562L;
 	
 	protected EmbeddedCacheManager createCacheManager(Properties properties) {
-		return ApplicationContextHolder.getApplicationContext().getBean("nativeEmbeddedCacheManager", EmbeddedCacheManager.class);
+		return ApplicationContextHolder.getBean("nativeEmbeddedCacheManager", EmbeddedCacheManager.class);
 	}
 }
