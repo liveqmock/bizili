@@ -93,8 +93,8 @@
 								<td class="twof">类型</td>
 								<td class="fotf">
 									<select name="resourceType">
-										<option value="action">Action</option>
 										<option value="url">URL</option>
+										<option value="action">Action</option>
 										<option value="method">Method</option>
 									</select>
 								</td>

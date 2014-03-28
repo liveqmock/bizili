@@ -108,12 +108,21 @@ span.star{
 			<tr>
 			<td class="twof"></td>
 			<td class="fivf">资源类型</td>
-			<td class="tenf" colspan="3">
+			<td>
 				<select name="resourceType">
-					<option value="action" <c:if test="${res.resourceType eq 'action'}">selected="selected"</c:if>>Action</option>
 					<option value="url" <c:if test="${res.resourceType eq 'url'}">selected="selected"</c:if>>URL</option>
+					<option value="action" <c:if test="${res.resourceType eq 'action'}">selected="selected"</c:if>>Action</option>
 					<option value="method" <c:if test="${res.resourceType eq 'method'}">selected="selected"</c:if>>Method</option>
 				</select>
+			<span class="star">*</span></td>
+			<td class="fivf">菜单模块</td>
+			<td>
+			<select id="moduleId" name="moduleId" style="width:120px;">
+				<option value="">--请选择--</option>
+				<c:forEach items="${list}" var="module">
+					<option value="${module.moduleId}" <c:if test="${module.moduleId == res.moduleId}">selected="selected"</c:if> >${module.moduleName}</option>
+				</c:forEach>
+			</select>
 			<span class="star">*</span></td>
 			<td class="twof"></td>
 			</tr>

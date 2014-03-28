@@ -139,4 +139,9 @@ public class ModuleMenuServiceImpl extends GenericServiceImpl<ModuleMenu, String
 		return null;
 	}
 
+	public List<ModuleMenu> loadModuleMenus() {
+		String hql = "select a from ModuleMenu a where a.enable = true";
+		List<ModuleMenu> list = moduleMenuDaoImpl.getEntityListByHql(hql);
+		return list;
+	}
 }

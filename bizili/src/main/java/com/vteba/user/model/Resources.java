@@ -29,6 +29,7 @@ public class Resources implements AstModel {
 	private Integer orders;
 	private Boolean defaults;
 	private Boolean showInMenu;
+	private String moduleId;
 
 	public Resources() {
 	}
@@ -134,6 +135,15 @@ public class Resources implements AstModel {
 
 	public void setShowInMenu(Boolean showInMenu) {
 		this.showInMenu = showInMenu;
+	}
+
+	@Column(name = "module_id", length = 45)
+	public String getModuleId() {
+		return moduleId;
+	}
+
+	public void setModuleId(String moduleId) {
+		this.moduleId = moduleId;
 	}
 
 }

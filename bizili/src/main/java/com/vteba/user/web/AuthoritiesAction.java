@@ -14,6 +14,7 @@ import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.service.IAuthoritiesService;
+import com.vteba.user.service.IResourcesService;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
@@ -29,6 +30,8 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 
 	private IAuthoritiesService authoritiesServiceImpl;
 	private IModuleMenuService moduleMenuServiceImpl;
+	@Inject
+	private IResourcesService resourcesServiceImpl;
 	
 	@Inject
 	public void setAuthoritiesServiceImpl(IAuthoritiesService authoritiesServiceImpl) {
@@ -62,13 +65,15 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 	public String input(Authorities model, Map<String, Object> maps) throws Exception {
 		if (isInit()) {
 			setTokenValue();
-			String hql = "select a from ModuleMenu a where a.enable = true";
-			List<ModuleMenu> list = moduleMenuServiceImpl.getEntityListByHql(hql);
+			List<ModuleMenu> list = moduleMenuServiceImpl.loadModuleMenus();
 			maps.put("list", list);
 			if (model.getAuthId() != null) {
 				model = authoritiesServiceImpl.loadAuthorities(model.getAuthId());
 				maps.put("auth", model);
 			}
+			
+			String json = resourcesServiceImpl.getResNode();
+			maps.put("json", json);
 			return "user/authorities/auth-input-success";
 		}
 		if (isTokenValueOK()) {
@@ -103,8 +108,7 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 		listResult = page.getResult();
 		maps.put("listResult", listResult);
 		
-		String hql = "select a from ModuleMenu a where a.enable = true";
-		List<ModuleMenu> list = moduleMenuServiceImpl.getEntityListByHql(hql);
+		List<ModuleMenu> list = moduleMenuServiceImpl.loadModuleMenus();
 		maps.put("list", list);
 		
 		setAttributeToRequest(CommonConst.PAGE_NAME, page);

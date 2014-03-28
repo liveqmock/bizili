@@ -20,4 +20,10 @@ public interface IModuleMenuService extends IGenericService<ModuleMenu, String> 
 	 * @date 2012-6-6 下午9:58:02
 	 */
 	public List<ModuleMenu> getModuleMenuList(EmpUser user);
+	
+	/**
+	 * 加载正在使用的菜单。
+	 * @return 菜单list
+	 */
+	public List<ModuleMenu> loadModuleMenus();
 }

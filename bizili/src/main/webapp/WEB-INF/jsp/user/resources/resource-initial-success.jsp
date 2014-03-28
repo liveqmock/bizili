@@ -45,7 +45,7 @@ img {border-width: 0px 0px 0px 0px}
 	            }
 	        });
     	}, function(){
-    	    $.dialog.tips('不删除');
+    	    $.dialog.tips('您放弃删除。');
     	});
 	}
     
@@ -85,31 +85,38 @@ img {border-width: 0px 0px 0px 0px}
 								<td class="twef">
 								<select id="resourceType" name="resourceType" style="width:140px;">
 										<option value="">--请选择--</option>
-										<option value="action">Action</option>
 										<option value="url">URL</option>
+										<option value="action">Action</option>
 										<option value="method">Method</option>
 								</select>
 								</td>
 								<td class="twof">资源URL</td>
 								<td class="twef"><input type="text" name="resourceUrl" style="width:160px;"/></td>
-								<td class="twof">权限ID</td>
-								<td class="twef"><input type="text" name="authId"/></td>
+								<td class="twof">菜单模块</td>
+								<td class="twef">
+								<select id="moduleId" name="moduleId" style="width:120px;">
+									<option value="">--请选择--</option>
+									<c:forEach items="${list}" var="module">
+										<option value="${module.moduleId}" <c:if test="${module.moduleId == resources.moduleId}">selected="selected"</c:if> >${module.moduleName}</option>
+									</c:forEach>
+								</select>
+								</td>
 							</tr>
 							<tr>
-								<td class="twof">使用中</td>
+								<td class="twof">是否启用</td>
 								<td class="twef">
 								<select id="enabled" name="enabled" style="width:120px;">
 										<option value="">--请选择--</option>
-										<option value="true">是</option>
-										<option value="false">否</option>
+										<option value="1">是</option>
+										<option value="0">否</option>
 								</select>
 								</td>
 								<td class="twof">默认URL</td>
 								<td class="twef">
 								<select id="defaults" name="defaults" style="width:120px;">
 										<option value="">--请选择--</option>
-										<option value="1">是</option>
-										<option value="0">否</option>
+										<option value="true">是</option>
+										<option value="false">否</option>
 								</select>
 								</td>
 								<td class="twof">排序</td><td class="fotf"><select style="width:90px;" name="page.orderBy"><option value="resourceUrl">资源URL</option><option value="resourceType">资源类型</option></select>-<select style="width:70px;" name="page.ascDesc"><option value="asc">升序</option><option value="desc">降序</option></select></td>
@@ -130,6 +137,7 @@ img {border-width: 0px 0px 0px 0px}
                 <td class="fouf">资源描述</td>
                 <td class="fivf">是否可用</td>
                 <td class="fivf">默认URL</td>
+                <td class="fivf">菜单模块</td>
                 <td class="sixf">菜单中显示</td>
                 <td class="fivf" style="border-right:1px #09f solid">操作</td>
               </tr>
@@ -142,6 +150,11 @@ img {border-width: 0px 0px 0px 0px}
                 <td class="fouf">${resource.resourceDesc }</td>
                 <td class="fivf"><c:if test="${resource.enabled eq 1}">是</c:if><c:if test="${resource.enabled eq 0}">否</c:if></td>
                 <td class="sixf"><c:if test="${resource.defaults == true}">是</c:if><c:if test="${resource.defaults == false}">否</c:if></td>
+                <td class="sixf">
+                <c:forEach items="${list}" var="module">
+					<c:if test="${resource.moduleId eq module.moduleId}">${module.moduleName}</c:if>
+				</c:forEach>
+                </td>
                 <td class="fouf"><c:if test="${resource.showInMenu == true}">是</c:if><c:if test="${resource.showInMenu == false}">否</c:if></td>
                 <td class="fivf"><img src="../images/btn_edit.gif" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:editRes('${resource.resourceId}')" title="修改"/>
                 <img src="../images/tu12.gif" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:deleteRes('${resource.resourceId}')" title="删除"/></td>

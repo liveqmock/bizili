@@ -12,11 +12,11 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.vteba.cache.infinispan.InfinispanCache;
 import com.vteba.cache.infinispan.InfinispanCacheManager;
+import com.vteba.common.constant.C;
 import com.vteba.finance.account.dao.ISubjectDao;
 import com.vteba.finance.account.dao.SubjectDao;
 import com.vteba.finance.account.model.Subject;
 import com.vteba.finance.account.service.ISubjectService;
-import com.vteba.finance.cache.C;
 import com.vteba.finance.cache.FinanceCacheName;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.tm.generic.Page;
@@ -26,6 +26,7 @@ import com.vteba.tm.jdbc.spring.SpringJdbcTemplate;
 import com.vteba.user.dao.UserDao;
 import com.vteba.user.model.EmpUser;
 import com.vteba.user.service.IEmpUserService;
+import com.vteba.util.json.FastJsonUtils;
 import com.vteba.util.json.Node;
 
 /**
@@ -276,17 +277,17 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
     }
 
 	@Override
-	public List<Node> loadSubjectTree() {
-		InfinispanCache<String, List<Node>> subjectTreeCache = infinispanCacheManager.getCache(C.Subject.class.getName());
-		List<Node> nodeList = subjectTreeCache.get(C.Subject.TREE);
-		if (nodeList != null && nodeList.size() > 0) {
+	public String getSubjectJson() {
+		InfinispanCache<String, String> subjectTreeCache = infinispanCacheManager.getCache(C.Subject.class.getName());
+		String nodeList = subjectTreeCache.get(C.Subject.TREE);
+		if (nodeList != null) {
 			return nodeList;
 		}
-		nodeList = loadSubjectNodeCache();
+		nodeList = loadSubjectJsonCache();
 		return nodeList;
 	}
     
-	public List<Node> loadSubjectNodeCache() {
+	public String loadSubjectJsonCache() {
 		List<Node> nodeList = new ArrayList<Node>();
 		Node root = new Node("0", "会计科目");
 		root.setOpen(true);
@@ -340,9 +341,10 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
     			explorer(subject, parent);
     		}
 		}
-    	InfinispanCache<String, List<Node>> subjectTreeCache = infinispanCacheManager.getCache(C.Subject.class.getName());
-    	subjectTreeCache.putAsync(C.Subject.TREE, nodeList);
-		return nodeList;
+    	InfinispanCache<String, String> subjectTreeCache = infinispanCacheManager.getCache(C.Subject.class.getName());
+    	String json = FastJsonUtils.toJson(nodeList);
+    	subjectTreeCache.putAsync(C.Subject.TREE, json);
+		return json;
 	}
 	
 	/**

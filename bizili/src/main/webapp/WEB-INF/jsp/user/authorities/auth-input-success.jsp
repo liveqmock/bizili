@@ -24,6 +24,9 @@ img {border-width: 0px 0px 0px 0px}
 <%@ include file="/WEB-INF/inc/constants.inc" %>
 <%@ include file="/WEB-INF/inc/script.inc" %>
 <%@ include file="/WEB-INF/inc/style.inc" %>
+<link rel="stylesheet" href="<c:url value='/css/zTreeStyle/zTreeStyle.css'/>" type="text/css">
+<link rel="stylesheet" href="<c:url value='/css/zTreeStyle/ztree.demo.css'/>" type="text/css">
+<script type="text/javascript" src="<c:url value='/js/jquery.ztree.all-3.5.min.js'/>"></script>
 <style type="text/css">
 table.singleIncreasesResources{
 	width:1235px;
@@ -134,11 +137,83 @@ input.iptBuySteelAdd{
 		
 	});
 	</script>
+	<SCRIPT type="text/javascript">
+    	var setting = {
+			check: {
+				enable: true,
+				chkboxType: {"Y":"", "N":""}
+			},
+			view: {
+				dblClickExpand: false
+			},
+			callback: {
+				beforeClick: beforeClick,
+				beforeCheck: beforeCheck,
+				onCheck: onCheck
+			}
+		};
+
+    	function beforeClick(treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("subjectTree");
+			zTree.checkNode(treeNode, !treeNode.checked, null, true);
+			return false;
+		}
+		
+		function beforeCheck(treeId, treeNode) {
+// 			var zTree = $.fn.zTree.getZTreeObj("subjectTree");
+// 			var nodes = zTree.getCheckedNodes(true);
+// 			for (var i=0, l=nodes.length; i<l; i++) {
+// 				if (treeNode.id == nodes[i].id) {
+// 					zTree.checkNode(treeNode, true, null, true);
+// 				} else {
+// 					zTree.checkNode(nodes[i], false, null, true);
+// 				}
+// 			}
+// 			return treeNode;
+		}
+		
+		function onCheck(e, treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("subjectTree"),
+			nodes = zTree.getCheckedNodes(true);
+			var urls = "", resIds = "";
+			for (var i=0, l=nodes.length; i<l; i++) {
+				urls += nodes[i].name + ",";
+				resIds += nodes[i].id + ",";
+			}
+			$('#urls').val(urls);
+			$('#resIds').val(resIds);
+		}
+		
+		function showMenu() {
+			var cityObj = $("#urls");
+			var cityOffset = $("#urls").offset();
+			$("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+
+			$("body").bind("mousedown", onBodyDown);
+		}
+		function hideMenu() {
+			$("#menuContent").fadeOut("fast");
+			$("body").unbind("mousedown", onBodyDown);
+		}
+		function onBodyDown(event) {
+			if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+				hideMenu();
+			}
+		}
+		
+		var zNodes = ${json};
+		$(document).ready(function(){
+			$.fn.zTree.init($("#subjectTree"), setting, zNodes);
+		});
+	</SCRIPT>
 </head>
 <body>
 <div id="container">
 	<div id="header">
 		<jsp:include page="/WEB-INF/tiles/four-header.jsp" />
+	</div>
+	<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+		<ul id="subjectTree" class="ztree" style="margin-top:0; width:220px;"></ul>
 	</div>
 	<div id="middel">
 		<div id="left">
@@ -173,7 +248,7 @@ input.iptBuySteelAdd{
 		
 		</tr>
 		<tr>
-		<td class="twoFont">模组</td><td class="widt">
+		<td class="twoFont">菜单模块</td><td class="widt">
 		<select id="moduleId" name="moduleId" style="width:120px;">
 			<option value="">--请选择--</option>
 			<c:forEach items="${list}" var="module">
@@ -184,7 +259,11 @@ input.iptBuySteelAdd{
 		<td class="twoFont">动作</td><td class="widt"><input class="widt" name="action" value="${auth.action}" type="text" />（该权限的默认URL）</td><td class="star"></td>
 		</tr>
 		<tr>
-		<td class="twoFont">资源</td><td class="widt" colspan="5"><input type="hidden" value="${auth.resIds}" name="resIds" id="resIds" value=""/><input type="text" name="urls" id="urls" value="${auth.resNames}" class="note" /><img id="addResource" src="../images/tb2.gif" style="margin-left:6px;cursor:pointer;"></img>（新增请输入，已有的请点击+选择）</td>
+		<td class="twoFont">资源</td><td class="widt" colspan="5">
+		<input type="hidden" value="${auth.resIds}" name="resIds" id="resIds" value=""/>
+		<input type="text" name="urls" id="urls" value="${auth.resNames}" class="note" />
+		<img src="<c:url value='/images/btn_add.gif'/>" id="menuBtn" style="cursor:pointer;" alt="选择资源" title="选择资源" onclick="javascript:showMenu();"/>
+		<img id="addResource" src="../images/tb2.gif" style="margin-left:6px;cursor:pointer;"></img>（新增请输入，已有的请点击+选择）</td>
 		</tr>
 	</table>
 	<input type="button" class="determination" value="保存" onclick="saveAuth();"/>

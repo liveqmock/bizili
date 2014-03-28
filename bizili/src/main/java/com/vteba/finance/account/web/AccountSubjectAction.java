@@ -22,8 +22,6 @@ import com.vteba.service.context.RequestContextHolder;
 import com.vteba.tm.generic.Page;
 import com.vteba.util.common.ExcelExportUtils;
 import com.vteba.util.common.ExcelImportUtils;
-import com.vteba.util.json.FastJsonUtils;
-import com.vteba.util.json.Node;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.util.web.struts.StrutsUtils;
 import com.vteba.web.action.BaseAction;
@@ -81,8 +79,8 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 	public String input(Subject model, Map<String, Object> maps) throws Exception {
 		if (isInit()) {
 			setTokenValue();
-			List<Node> nodes = subjectServiceImpl.loadSubjectTree();
-			maps.put("subjectTree", FastJsonUtils.toJson(nodes));
+			String nodes = subjectServiceImpl.getSubjectJson();
+			maps.put("subjectTree", nodes);
 			return "account/subject/subject-input-success";
 		}
 		if (isTokenValueOK()) {
@@ -113,9 +111,8 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 	 */
 	@RequestMapping("/subject-tree")
 	@ResponseBody
-	public List<Node> treeList() throws Exception {
-		List<Node> nodeList = subjectServiceImpl.loadSubjectTree();
-		return nodeList;
+	public String treeList() throws Exception {
+		return subjectServiceImpl.getSubjectJson();
 	}
 	
 	/**
@@ -173,7 +170,7 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 	@RequestMapping("/subject-delete")
 	@ResponseBody
 	public String delete(String id) {
-		subjectServiceImpl.delete(id);
+		subjectServiceImpl.deleteSubject(id);
 		return SUCCESS;
 	}
 	

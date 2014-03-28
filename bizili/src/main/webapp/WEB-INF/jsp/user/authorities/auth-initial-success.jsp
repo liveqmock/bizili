@@ -45,7 +45,7 @@ img {border-width: 0px 0px 0px 0px}
 	            }
 	        });
     	}, function(){
-    	    //$.dialog.tips('不删除');
+    	    $.dialog.tips('您放弃删除操作。');
     	});
 	}
     function queryRes(authId) {

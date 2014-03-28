@@ -2,7 +2,6 @@ package com.vteba.finance.account.web;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -19,8 +18,6 @@ import com.vteba.finance.account.model.CertTotal;
 import com.vteba.finance.account.service.ICertTotalService;
 import com.vteba.finance.account.service.ISubjectService;
 import com.vteba.tm.generic.Page;
-import com.vteba.util.json.FastJsonUtils;
-import com.vteba.util.json.Node;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
@@ -72,8 +69,8 @@ public class AccountCertAction extends BaseAction<CertTotal> {
 	public String input(CertTotal model, CertTotalForm certTotalForm, Map<String, Object> maps) throws Exception {
 		if (isInit()) {
 			setTokenValue();
-			List<Node> nodes = subjectServiceImpl.loadSubjectTree();
-			maps.put("subjectTree", FastJsonUtils.toJson(nodes));
+			String nodes = subjectServiceImpl.getSubjectJson();
+			maps.put("subjectTree", nodes);
 			return "account/certificate/certificate-input-success";
 		}
 		if (isTokenValueOK()) {

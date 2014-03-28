@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.vteba.finance.account.model.Subject;
-import com.vteba.tm.generic.Page;
-import com.vteba.util.json.Node;
 import com.vteba.service.generic.IGenericService;
+import com.vteba.tm.generic.Page;
 
 /**
  * 会计科目Service接口。
@@ -51,7 +50,7 @@ public interface ISubjectService extends IGenericService<Subject, String> {
      * 获取会计科目，树形结构，树形结构可转为Json格式。
      * @return List&lt;Node&gt; 
      */
-    public List<Node> loadSubjectTree();
+    public String getSubjectJson();
     
     /**
      * 删除会计科目，使用中的无法删除。

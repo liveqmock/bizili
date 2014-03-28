@@ -1,5 +1,6 @@
 package com.vteba.user.web;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vteba.common.constant.CommonConst;
+import com.vteba.common.model.ModuleMenu;
+import com.vteba.common.service.IModuleMenuService;
 import com.vteba.user.model.Resources;
 import com.vteba.user.service.IResourcesService;
 import com.vteba.util.reflection.ReflectUtils;
@@ -27,6 +30,8 @@ public class ResourcesAction extends BaseAction<Resources> {
 
 	@Inject
 	private IResourcesService resourcesServiceImpl;
+	@Inject
+	private IModuleMenuService moduleMenuServiceImpl;
 	
 	@RequestMapping("/resources-initial")
 	public String initial(Resources model, PageBean<Resources> pageBean, Map<String, Object> maps) throws Exception {
@@ -38,6 +43,10 @@ public class ResourcesAction extends BaseAction<Resources> {
 		listResult = page.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, page);
+		
+		List<ModuleMenu> list = moduleMenuServiceImpl.loadModuleMenus();
+		maps.put("list", list);
+		
 		return "user/resources/resource-initial-success";
 	}
 	
@@ -54,10 +63,12 @@ public class ResourcesAction extends BaseAction<Resources> {
 				model = resourcesServiceImpl.get(model.getResourceId());
 				maps.put("res", model);
 			}
+			List<ModuleMenu> list = moduleMenuServiceImpl.loadModuleMenus();
+			maps.put("list", list);
 			return "user/resources/resource-input-success";
 		}
 		if (isTokenValueOK()) {
-			if (StringUtils.isNotEmpty(model.getResourceName()) && StringUtils.isNotEmpty(model.getResourceUrl()) && StringUtils.isNotEmpty(model.getResourceDesc())) {
+			if (StringUtils.isNotEmpty(model.getResourceName()) && StringUtils.isNotEmpty(model.getResourceUrl())) {
 				resourcesServiceImpl.saveOrUpdate(model);
 				setAttributeToRequest("msg", "新增资源成功。");
 			}
