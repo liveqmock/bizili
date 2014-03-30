@@ -9,6 +9,10 @@ public final class C {
 		public static final String JSON = "c_resources_json";
 	}
 	
+	public static final class Auth {
+		public static final String JSON = "c_auth_json";
+	}
+	
 	public static void main(String[] aa) {
 		System.err.println(C.Subject.class.getName());
 	}

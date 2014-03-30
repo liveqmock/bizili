@@ -17,6 +17,7 @@ public class Node implements Serializable {
 	private Boolean open;//是否打开
 	private Boolean checked;//是否选中
 	private Boolean nocheck;//不显示checked
+	private Boolean chkDisabled;//禁用checked
 	private Integer level;// 层级
 	private List<Node> children;//子节点
 
@@ -91,6 +92,14 @@ public class Node implements Serializable {
 
 	public void setNocheck(Boolean nocheck) {
 		this.nocheck = nocheck;
+	}
+
+	public Boolean getChkDisabled() {
+		return chkDisabled;
+	}
+
+	public void setChkDisabled(Boolean chkDisabled) {
+		this.chkDisabled = chkDisabled;
 	}
 
 	public Integer getLevel() {

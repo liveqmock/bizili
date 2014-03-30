@@ -11,11 +11,18 @@ import javax.inject.Named;
 import org.apache.commons.lang3.StringUtils;
 
 import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.cache.infinispan.InfinispanCache;
+import com.vteba.cache.infinispan.InfinispanCacheManager;
+import com.vteba.common.constant.C;
+import com.vteba.common.model.ModuleMenu;
+import com.vteba.common.service.IModuleMenuService;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.user.dao.IAuthoritiesDao;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.model.Resources;
 import com.vteba.user.service.IAuthoritiesService;
+import com.vteba.util.json.FastJsonUtils;
+import com.vteba.util.json.Node;
 
 /**
  * 权限service实现。
@@ -30,7 +37,12 @@ public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long
 	}
 	
 	private IAuthoritiesDao authoritiesDaoImpl;
-		
+	
+	@Inject
+	private InfinispanCacheManager infinispanCacheManager;
+	@Inject
+	private IModuleMenuService moduleMenuServiceImpl;
+	
 	@Inject
 	@Override
 	public void setHibernateGenericDaoImpl(
@@ -38,10 +50,6 @@ public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long
 		this.hibernateGenericDaoImpl = authoritiesDaoImpl;
 		this.authoritiesDaoImpl = (IAuthoritiesDao) authoritiesDaoImpl;
 		
-	}
-
-	public IAuthoritiesDao getAuthoritiesDaoImpl() {
-		return authoritiesDaoImpl;
 	}
 
 	@Override
@@ -91,13 +99,6 @@ public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long
 			}
 		}
 		return resList;
-		
-//		StringBuilder sb = new StringBuilder();
-//		sb = sb.append(" select a.resource_url from auth_resource a, authorities c ");
-//		sb = sb.append(" where a.id = c.auth_id and ");
-//		sb = sb.append(" c.auth_name = ? ");
-//		authList = authoritiesDaoImpl.sqlQueryForList(sb.toString(), String.class, authName);
-//		return authList;
 	}
 
 	//@Cacheable(value="getAllAuthorities", key="'getAllAuthorities'")
@@ -107,5 +108,40 @@ public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long
 		String hql = "select a.authName from Authorities a where a.enabled = 1";
 		authList = authoritiesDaoImpl.hqlQueryForList(hql, String.class);
 		return authList;
+	}
+	
+	public String loadAuthJson() {
+		InfinispanCache<String, String> authCache = infinispanCacheManager.getCache(C.Auth.class.getName());
+		String nodeList = authCache.get(C.Auth.JSON);
+		if (nodeList != null) {
+			return nodeList;
+		}
+		nodeList = loadAuthJsonCache();
+		return nodeList;
+	}
+	
+	public String loadAuthJsonCache() {
+		List<Node> nodeList = new ArrayList<Node>();
+		Node root = new Node("0", "权限列表");
+		root.setOpen(true);
+		root.setNocheck(true);
+		nodeList.add(root);
+		
+		List<Node> children = new ArrayList<Node>();
+		root.setChildren(children);
+		
+		List<ModuleMenu> moduleMenus = moduleMenuServiceImpl.loadModuleMenus();
+		for (ModuleMenu menu : moduleMenus) {
+			Node node = new Node(menu.getModuleId(), menu.getModuleName());
+			children.add(node);
+			String hql = "select new com.vteba.util.json.Node(r.authId, r.authName) from Authorities r where r.moduleId = ?1";
+			List<Node> nodeChildList = authoritiesDaoImpl.getListByHql(hql, Node.class, menu.getModuleId());
+			node.setChildren(nodeChildList);
+		}
+		
+		InfinispanCache<String, String> authJsonCache = infinispanCacheManager.getCache(C.Auth.class.getName());
+    	String json = FastJsonUtils.toJson(nodeList);
+    	authJsonCache.put(C.Auth.JSON, json);
+		return json;
 	}
 }

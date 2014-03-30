@@ -141,14 +141,13 @@ input.iptBuySteelAdd{
     	var setting = {
 			check: {
 				enable: true,
-				chkboxType: {"Y":"", "N":""}
+				chkboxType: {"Y":"ps", "N":"ps"}
 			},
 			view: {
 				dblClickExpand: false
 			},
 			callback: {
 				beforeClick: beforeClick,
-				beforeCheck: beforeCheck,
 				onCheck: onCheck
 			}
 		};
@@ -157,19 +156,6 @@ input.iptBuySteelAdd{
 			var zTree = $.fn.zTree.getZTreeObj("subjectTree");
 			zTree.checkNode(treeNode, !treeNode.checked, null, true);
 			return false;
-		}
-		
-		function beforeCheck(treeId, treeNode) {
-// 			var zTree = $.fn.zTree.getZTreeObj("subjectTree");
-// 			var nodes = zTree.getCheckedNodes(true);
-// 			for (var i=0, l=nodes.length; i<l; i++) {
-// 				if (treeNode.id == nodes[i].id) {
-// 					zTree.checkNode(treeNode, true, null, true);
-// 				} else {
-// 					zTree.checkNode(nodes[i], false, null, true);
-// 				}
-// 			}
-// 			return treeNode;
 		}
 		
 		function onCheck(e, treeId, treeNode) {

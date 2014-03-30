@@ -41,7 +41,7 @@ public class Resources implements AstModel {
 	public Resources(Long resourceId, String resourceName,
 			String resourceType, String resourceUrl, String resourceDesc,
 			Integer enabled, Integer orders,
-			Boolean defaults, Boolean showInMenu) {
+			Boolean defaults, Boolean showInMenu, String moduleId) {
 		super();
 		this.resourceId = resourceId;
 		this.resourceName = resourceName;
@@ -52,6 +52,7 @@ public class Resources implements AstModel {
 		this.orders = orders;
 		this.defaults = defaults;
 		this.showInMenu = showInMenu;
+		this.moduleId = moduleId;
 	}
 
 	@Id
