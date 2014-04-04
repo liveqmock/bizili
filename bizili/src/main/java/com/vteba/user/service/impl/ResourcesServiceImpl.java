@@ -9,7 +9,7 @@ import javax.inject.Named;
 import com.vteba.tm.hibernate.IHibernateGenericDao;
 import com.vteba.cache.infinispan.InfinispanCache;
 import com.vteba.cache.infinispan.InfinispanCacheManager;
-import com.vteba.common.constant.C;
+import com.vteba.common.constant.Cc;
 import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
 import com.vteba.service.generic.impl.GenericServiceImpl;
@@ -46,8 +46,8 @@ public class ResourcesServiceImpl extends GenericServiceImpl<Resources, Long> im
 	}
 
 	public String getResNode() {
-		InfinispanCache<String, String> cache = infinispanCacheManager.getCache(C.Resources.class.getName());
-		String json = cache.get(C.Resources.JSON);
+		InfinispanCache<String, String> cache = infinispanCacheManager.getCache(Cc.Resources.class.getName());
+		String json = cache.get(Cc.Resources.JSON);
 		if (json == null) {
 			json = loadResNodeCache();
 		}
@@ -73,8 +73,8 @@ public class ResourcesServiceImpl extends GenericServiceImpl<Resources, Long> im
 			node.setChildren(nodeChildList);
 		}
 		String json = FastJsonUtils.toJson(resNodes);
-		InfinispanCache<String, String> cache = infinispanCacheManager.getCache(C.Resources.class.getName());
-		cache.putAsync(C.Resources.JSON, json);
+		InfinispanCache<String, String> cache = infinispanCacheManager.getCache(Cc.Resources.class.getName());
+		cache.putAsync(Cc.Resources.JSON, json);
 		return json;
 	}
 }

@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.vteba.tm.hibernate.IHibernateGenericDao;
 import com.vteba.cache.infinispan.InfinispanCache;
 import com.vteba.cache.infinispan.InfinispanCacheManager;
-import com.vteba.common.constant.C;
+import com.vteba.common.constant.Cc;
 import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
 import com.vteba.service.generic.impl.GenericServiceImpl;
@@ -111,8 +111,8 @@ public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long
 	}
 	
 	public String loadAuthJson() {
-		InfinispanCache<String, String> authCache = infinispanCacheManager.getCache(C.Auth.class.getName());
-		String nodeList = authCache.get(C.Auth.JSON);
+		InfinispanCache<String, String> authCache = infinispanCacheManager.getCache(Cc.Auth.class.getName());
+		String nodeList = authCache.get(Cc.Auth.JSON);
 		if (nodeList != null) {
 			return nodeList;
 		}
@@ -139,9 +139,9 @@ public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long
 			node.setChildren(nodeChildList);
 		}
 		
-		InfinispanCache<String, String> authJsonCache = infinispanCacheManager.getCache(C.Auth.class.getName());
+		InfinispanCache<String, String> authJsonCache = infinispanCacheManager.getCache(Cc.Auth.class.getName());
     	String json = FastJsonUtils.toJson(nodeList);
-    	authJsonCache.put(C.Auth.JSON, json);
+    	authJsonCache.put(Cc.Auth.JSON, json);
 		return json;
 	}
 }

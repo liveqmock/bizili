@@ -3,7 +3,7 @@ package com.vteba.cache.memcached;
 import java.io.Serializable;
 
 /**
- * A pre JDK1.5 compatible enum class to indicate the status of a {@link CacheManager} or {@link C}.
+ * A pre JDK1.5 compatible enum class to indicate the status of a {@link CacheManager} or {@link Cc}.
  * <p/>
  * ehcache historically used int values for status. This is unsuitable for third party use thus this class.
  * Methods are provided to convert from the int status values to enum values and vice versa.

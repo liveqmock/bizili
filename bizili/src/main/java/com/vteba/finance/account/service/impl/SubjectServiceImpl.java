@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.vteba.cache.infinispan.InfinispanCache;
 import com.vteba.cache.infinispan.InfinispanCacheManager;
-import com.vteba.common.constant.C;
+import com.vteba.common.constant.Cc;
 import com.vteba.finance.account.dao.ISubjectDao;
 import com.vteba.finance.account.dao.SubjectDao;
 import com.vteba.finance.account.model.Subject;
@@ -278,8 +278,8 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
 
 	@Override
 	public String getSubjectJson() {
-		InfinispanCache<String, String> subjectTreeCache = infinispanCacheManager.getCache(C.Subject.class.getName());
-		String nodeList = subjectTreeCache.get(C.Subject.TREE);
+		InfinispanCache<String, String> subjectTreeCache = infinispanCacheManager.getCache(Cc.Subject.class.getName());
+		String nodeList = subjectTreeCache.get(Cc.Subject.TREE);
 		if (nodeList != null) {
 			return nodeList;
 		}
@@ -341,9 +341,9 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
     			explorer(subject, parent);
     		}
 		}
-    	InfinispanCache<String, String> subjectTreeCache = infinispanCacheManager.getCache(C.Subject.class.getName());
+    	InfinispanCache<String, String> subjectTreeCache = infinispanCacheManager.getCache(Cc.Subject.class.getName());
     	String json = FastJsonUtils.toJson(nodeList);
-    	subjectTreeCache.putAsync(C.Subject.TREE, json);
+    	subjectTreeCache.putAsync(Cc.Subject.TREE, json);
 		return json;
 	}
 	

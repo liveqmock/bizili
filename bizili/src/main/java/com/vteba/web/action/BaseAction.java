@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -17,10 +18,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.vteba.common.constant.CommonConst;
-import com.vteba.tm.generic.Page;
 import com.vteba.service.context.RequestContextHolder;
+import com.vteba.tm.generic.Page;
+import com.vteba.util.json.FastJsonUtils;
 import com.vteba.web.editer.DoubleEditor;
 import com.vteba.web.editer.FloatEditor;
 import com.vteba.web.editer.IntegerEditor;
@@ -37,6 +40,8 @@ public abstract class  BaseAction<T> {
 	
 	public static final String DETAIL = "detail";
 	public static final String LIST = "list";
+	
+	public final static String MSG = "msg";
 	
 	private static final Random RANDOM = new Random();
 	protected Logger logger = LoggerFactory.getLogger(getClass());
@@ -190,6 +195,66 @@ public abstract class  BaseAction<T> {
 //		this.init = init;
 //	}
 
+	/**
+	 * 获取IP地址
+	 * @param request HttpServletRequest
+	 * @return IP地址
+	 */
+	public String getIpAddress(HttpServletRequest request) {
+		String ip = request.getHeader("x-forwarded-for");
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr();
+		}
+		return ip;
+	}
+
+	/**
+	 * 所有ActionMap 统一从这里获取
+	 * @return
+	 */
+	public Map<String, Object> getRootMap() {
+		Map<String, Object> rootMap = new HashMap<String, Object>();
+		// 添加url到 Map中
+		//rootMap.putAll(URLUtils.getUrlMap());
+		return rootMap;
+	}
+
+	public ModelAndView forword(String viewName, Map<String, ?> context) {
+		return new ModelAndView(viewName, context);
+	}
+	
+	public ModelAndView error(String errMsg) {
+		return new ModelAndView("error_all");
+	}
+
+	/**
+	 * 提示成功信息
+	 * @param message
+	 */
+	public void sendSuccessMessage(String message) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put(SUCCESS, true);
+		result.put(MSG, message);
+		renderJson(FastJsonUtils.toJson(result));
+	}
+
+	/**
+	 * 提示失败信息
+	 * @param message
+	 */
+	public void sendFailureMessage(String message) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put(SUCCESS, false);
+		result.put(MSG, message);
+		renderJson(FastJsonUtils.toJson(result));
+	}
+	
 	/**
 	 * 将value保存到request。
 	 * @param name
