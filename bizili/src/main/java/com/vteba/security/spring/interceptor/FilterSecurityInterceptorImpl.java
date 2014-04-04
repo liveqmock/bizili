@@ -20,14 +20,9 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
  * @author yinlei
  * date 2012-4-6 下午6:16:28
  */
-public class FilterSecurityInterceptorImpl extends AbstractSecurityInterceptor
-		implements Filter {
+public class FilterSecurityInterceptorImpl extends AbstractSecurityInterceptor implements Filter {
 	
 	private FilterInvocationSecurityMetadataSource securityMetadataSource;
-	
-	public FilterInvocationSecurityMetadataSource getSecurityMetadataSource() {
-		return securityMetadataSource;
-	}
 	
 	public void setSecurityMetadataSource(
 			FilterInvocationSecurityMetadataSource securityMetadataSource) {
