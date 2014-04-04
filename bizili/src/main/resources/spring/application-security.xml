@@ -138,4 +138,28 @@
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
 		<property name="cacheManager" ref="securityCacheManager"/>
 	</bean>-->
+	
+	
+	
+	<!-- 加载基于aop的方法级别的元数据 -->
+<!-- 	<bean id="methodSecurityMetadataSourceImpl" class="com.vteba.security.spring.meta.MethodSecurityMetadataSourceImpl"> -->
+<!-- 		<constructor-arg ref="authoritiesServiceImpl"/> -->
+<!-- 	</bean> -->
+	
+	<!-- 基于aop的方法级别的拦截器 -->
+<!-- 	<bean id="methodSecurityInterceptorImpl" class="com.vteba.security.spring.interceptor.MethodSecurityInterceptorImpl"> -->
+<!-- 		<property name="authenticationManager" ref="org.springframework.security.authenticationManager"/> -->
+<!-- 		<property name="accessDecisionManager" ref="accessDecisionManagerImpl"/> -->
+<!-- 		<property name="securityMetadataSource" ref="methodSecurityMetadataSourceImpl"/> -->
+<!-- 	</bean> -->
+	
+	<!--为指定包下所有类的所有方法应用权限拦截-->
+<!-- 	<aop:config> -->
+<!-- 		<aop:pointcut expression="execution(* com.vteba.*.*.impl.*.*(..))" id="serviceSECMethodPointCut"/> -->
+<!-- 		<aop:pointcut expression="execution(* com.vteba.*.*.service.impl.*.*(..))" id="financeSECMethodPointCut"/> -->
+<!-- 		<aop:pointcut expression="execution(* com.vteba.*.*.remote.*.*(..))" id="remoteSECMethodPointCut"/>		 -->
+<!-- 		<aop:advisor advice-ref="methodSecurityInterceptorImpl" pointcut-ref="serviceSECMethodPointCut"/> -->
+<!-- 		<aop:advisor advice-ref="methodSecurityInterceptorImpl" pointcut-ref="financeSECMethodPointCut"/> -->
+<!-- 		<aop:advisor advice-ref="methodSecurityInterceptorImpl" pointcut-ref="remoteSECMethodPointCut"/> -->
+<!-- 	</aop:config> -->
 </beans>
