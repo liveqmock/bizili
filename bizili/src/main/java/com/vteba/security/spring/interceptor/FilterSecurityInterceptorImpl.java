@@ -16,7 +16,7 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 
 /**
- * spring security 自定义过滤器实现
+ * spring security 自定义过滤器实现，spring security 会回调FilterInvocationSecurityMetadataSource的实现。
  * @author yinlei
  * date 2012-4-6 下午6:16:28
  */

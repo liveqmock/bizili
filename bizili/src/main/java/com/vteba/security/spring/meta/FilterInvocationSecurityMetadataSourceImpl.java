@@ -21,9 +21,9 @@ import com.vteba.user.service.IAuthoritiesService;
 //import com.vteba.user.service.IEmpUserService;
 
 /**
- * 实现FilterInvocationSecurityMetadataSource接口，进行url级别的拦截，使用servlet filter
- * 实现MethodSecurityMetadataSource接口，进行method级别的拦截，使用aop
- * 
+ * 实现FilterInvocationSecurityMetadataSource接口，进行url级别的拦截，使用servlet filter<br>
+ * 实现MethodSecurityMetadataSource接口，进行method级别的拦截，使用aop <br>
+ * 初始化加载系统所有的权限以及权限和资源的对应关系。
  * @author yinlei
  */
 public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocationSecurityMetadataSource {

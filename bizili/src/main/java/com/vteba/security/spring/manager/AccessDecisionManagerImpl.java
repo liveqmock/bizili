@@ -11,12 +11,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
- * spring security 访问决策管理器
+ * spring security 访问决策管理器，spring security 会回调该决策管理器。
  * @author yinlei
  * date 2012-1-4 下午2:41:34
  */
 public class AccessDecisionManagerImpl implements AccessDecisionManager {
 
+	/**
+	 * authentication 调用者<br/>
+	 * object 被调用的对象<br/>
+	 * configAttributes 被调用的对象，所需要的权限集合，满足其一即可。
+	 */
 	@Override
 	public void decide(Authentication authentication, Object object,
 			Collection<ConfigAttribute> configAttributes)
