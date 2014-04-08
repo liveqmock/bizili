@@ -20,6 +20,10 @@ public class Resources implements AstModel {
 
 	private static final long serialVersionUID = -3656268179709141040L;
 	
+	public static final String URL = "url";
+	public static final String METHOD = "method";
+	public static final String ACTION = "action";
+	
 	private Long resourceId;
 	private String resourceName;
 	private String resourceType;

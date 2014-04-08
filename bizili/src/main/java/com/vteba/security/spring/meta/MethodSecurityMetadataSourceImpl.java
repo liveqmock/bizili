@@ -21,6 +21,8 @@ import com.vteba.user.service.IAuthoritiesService;
  * 2014-4-4 下午5:54:26
  */
 public class MethodSecurityMetadataSourceImpl extends AbstractMethodSecurityMetadataSource implements MethodSecurityMetadataSource {
+	public static final String SHARP = "#";
+	
 	private IAuthoritiesService authoritiesServiceImpl;
 	private Map<String, Collection<ConfigAttribute>> resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
 	
@@ -28,7 +30,7 @@ public class MethodSecurityMetadataSourceImpl extends AbstractMethodSecurityMeta
 			IAuthoritiesService authoritiesServiceImpl) {
 		super();
 		this.authoritiesServiceImpl = authoritiesServiceImpl;
-		loadMethodAuthConfig();
+		loadMethodAuthConfig();// 加载配置
 	}
 
 	@Override
@@ -42,25 +44,24 @@ public class MethodSecurityMetadataSourceImpl extends AbstractMethodSecurityMeta
 
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Method method, Class<?> targetClass) {
-		
-		return null;
+		String methodFullPath = targetClass.getName() + SHARP + method.getName();
+		return resourceMap.get(methodFullPath);
 	}
 
 	public void loadMethodAuthConfig() {
 		List<String> authNameList = authoritiesServiceImpl.getAllAuthorities();
-		Collection<ConfigAttribute> atts = new HashSet<ConfigAttribute>();
 		for (String authName : authNameList) {
-			ConfigAttribute ca = new SecurityConfig(authName);// eg:ROLE_ADMIN
-			atts.add(ca);// 如果atts使用ArrayList实现，则在此处将ca添加到atts，如果atts的实现是Set，则可随便
-			List<String> resourceList = authoritiesServiceImpl.getResourceUrlByAuthName(authName);
+			ConfigAttribute ca = new SecurityConfig(authName);// eg：ROLE_ADMIN
+			List<String> resourceList = authoritiesServiceImpl.getMethodByAuthName(authName);
 			for (String url : resourceList) {
-				// 该资源和权限是否有对应关系，如果已经存在，则将新权限添加到对应的资源上
+				// 该资源和权限是否有对应关系，如果已经存在，则将新权限添加到对应的资源上（这个资源需要哪些权限）
 				if (resourceMap.containsKey(url)) {
 					Collection<ConfigAttribute> attributes = resourceMap.get(url);
 					attributes.add(ca);
 					resourceMap.put(url, attributes);
 				} else {// 如果是新资源，则将权限添加到对应的资源上
-					// atts.add(ca);//如果atts的实现是Set则可在此处将ca添加到atts，如果atts的实现是ArrayList，则必须在上面添加
+					Collection<ConfigAttribute> atts = new HashSet<ConfigAttribute>();
+					atts.add(ca);
 					resourceMap.put(url, atts);
 				}
 			}

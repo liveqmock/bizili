@@ -24,16 +24,6 @@
 	<security:http pattern="/forgetpass.jsp" security="none"/>
 	
 	<security:http auto-config="true">
-		<!--不过滤图片等静态资源
-		<security:intercept-url pattern="/**/*.jpg" filters="none"/>
-		<security:intercept-url pattern="/**/*.png" filters="none"/>
-		<security:intercept-url pattern="/**/*.gif" filters="none"/>
-		<security:intercept-url pattern="/**/*.css" filters="none"/>
-		<security:intercept-url pattern="/**/*.js"  filters="none"/>-->
-		<!--登录页面，首页和忘记密码页面不过滤
-		<security:intercept-url pattern="/login.jsp" security="none"/>
-		<security:intercept-url pattern="/index.jsp" security="none"/>
-		<security:intercept-url pattern="/forgetpass.jsp" security="none"/>	 -->	
 		<security:form-login login-page="/user/userLogin.htm?init=true" authentication-failure-url="/user/userLogin.htm?authError=true" default-target-url="/common/platform-initial.htm"/>
 		<!--"记住我"功能,采用持久化策略,将用户的登录信息存放在数据库表中
 		<security:remember-me data-source-ref="skmbwDataSource" />-->

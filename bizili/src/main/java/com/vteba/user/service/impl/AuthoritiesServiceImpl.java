@@ -95,7 +95,9 @@ public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long
 		List<String> resList = new ArrayList<String>();
 		if (auth != null) {
 			for (Resources res : auth.getResourceSets()) {
-				resList.add(res.getResourceUrl());
+				if (res.getResourceType().equals(Resources.URL)) {
+					resList.add(res.getResourceUrl());
+				}
 			}
 		}
 		return resList;
@@ -143,5 +145,19 @@ public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long
     	String json = FastJsonUtils.toJson(nodeList);
     	authJsonCache.put(Cc.Auth.JSON, json);
 		return json;
+	}
+	
+	public List<String> getMethodByAuthName(String authName) {
+		String hql = "select a from Authorities a where a.authName = ?1";
+		Authorities auth = authoritiesDaoImpl.uniqueResultByHql(hql, authName);
+		List<String> resList = new ArrayList<String>();
+		if (auth != null) {
+			for (Resources res : auth.getResourceSets()) {
+				if (res.getResourceType().equals(Resources.METHOD)) {
+					resList.add(res.getResourceUrl());
+				}
+			}
+		}
+		return resList;
 	}
 }

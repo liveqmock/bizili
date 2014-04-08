@@ -43,4 +43,11 @@ public interface IAuthoritiesService extends IGenericService<Authorities, Long> 
 	 * @return 资源URL list
 	 */
 	public List<String> getResourceUrlByAuthName(String authName);
+	
+	/**
+	 * 根据权限名，获得该权限下的资源（方法路径，含包名），spring security use
+	 * @param authName 权限名
+	 * @return （资源列表）方法名列表
+	 */
+	public List<String> getMethodByAuthName(String authName);
 }
