@@ -1,9 +1,17 @@
 package com.vteba.tm.hibernate.transformer;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.apache.commons.lang3.StringUtils;
+
+import com.alibaba.druid.sql.ast.statement.SQLSelect;
+import com.alibaba.druid.sql.ast.statement.SQLSelectItem;
+import com.alibaba.druid.sql.ast.statement.SQLSelectQueryBlock;
+import com.alibaba.druid.sql.ast.statement.SQLSelectStatement;
+import com.alibaba.druid.sql.parser.SQLParserUtils;
+import com.alibaba.druid.sql.parser.SQLStatementParser;
 
 /**
  * 根据sql/hql语句解析sql/hql语句中字段的别名。<br>
@@ -13,6 +21,8 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class ColumnAliasParser {
 	private static ConcurrentMap<String, String[]> aliasCache = new ConcurrentHashMap<String, String[]>();
+	public static final String MYSQL = "mysql";
+	public static final String WHERE = "where";
 	private static ColumnAliasParser instance = new ColumnAliasParser();
 	
 	private ColumnAliasParser() {
@@ -68,6 +78,32 @@ public class ColumnAliasParser {
 		return columnAlias;
 	}
 	
+	public String[] parserAlias(String sql) {
+		String sqls = StringUtils.substringBefore(sql, WHERE);
+		
+		SQLStatementParser parser = SQLParserUtils.createSQLStatementParser(sqls, MYSQL);
+		SQLSelectStatement sqlSelectStatement = parser.parseSelect();
+		SQLSelect sqlSelect = sqlSelectStatement.getSelect();
+		SQLSelectQueryBlock sqlSelectQuery = (SQLSelectQueryBlock) sqlSelect.getQuery();
+		
+		List<SQLSelectItem> sqlSelectItems = sqlSelectQuery.getSelectList();
+		int length = sqlSelectItems.size();
+		String[] alises = new String[length];
+		for (int i = 0; i < length; i++) {
+			SQLSelectItem selectItem = sqlSelectItems.get(i);
+			if (selectItem.getAlias() != null) {
+				alises[i] = selectItem.getAlias();
+			} else {
+				String column = selectItem.toString();
+				if (column.contains(".")) {
+					column = column.substring(column.indexOf(".") + 1);
+				}
+				alises[i] = column;
+			}
+		}
+		return alises;
+	}
+	
 	/**
 	 * 删除指定sql的别名缓存
 	 * @param sqlKey sql语句
@@ -91,16 +127,16 @@ public class ColumnAliasParser {
 		return aliasCache.replace(sqlKey, sqlAlias);
 	}
 	
-	public boolean isQueryAll(String sql) {
-		String[] columnAlias = ColumnAliasParser.get().parseColumnAlias(sql, true);
+	public boolean isQueryAll(String hql) {
+		String[] columnAlias = ColumnAliasParser.get().parseColumnAlias(hql, true);
 		
-		int start = sql.indexOf("from") + 4;
-		int end = sql.indexOf("where");
+		int start = hql.indexOf("from") + 4;
+		int end = hql.indexOf("where");
 		String tableNames = null;
         if (end == -1) {
-            tableNames = sql.substring(start);
+            tableNames = hql.substring(start);
         } else {
-            tableNames = sql.substring(start, end);
+            tableNames = hql.substring(start, end);
         }  
 		String[] tables = StringUtils.split(tableNames, ",");
 		
