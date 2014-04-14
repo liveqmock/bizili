@@ -2,12 +2,15 @@
 <%@ include file="/WEB-INF/inc/taglib.inc" %>
 <%@ include file="/WEB-INF/inc/constants.inc" %>
 
-<script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/jquery.alerts.js"></script>
 <script type="text/javascript" src="../js/lhgdialog/lhgdialog.min.js"></script>
 <script type="text/javascript" src="../js/common-utils.js"></script>
 <script type="text/javascript" src="../js/number-format.js"></script>
 
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css" media="all" />
 <link rel="stylesheet" type="text/css" href="../css/reset.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="../css/global.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="../css/epMCLayout.css" media="all" />		
