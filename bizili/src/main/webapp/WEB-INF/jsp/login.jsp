@@ -119,11 +119,11 @@
         <input type="hidden" id="msg" value="<c:if test="${sessionScope.SPRING_SECURITY_LAST_EXCEPTION ne null}">您输入的用户名或密码错误。</c:if>">
   <div class="form-group">
     <label for="exampleInputEmail1">用户名：</label>
-    <input type="email" class="form-control" id="username" name="j_username" placeholder="邮箱或用户名">
+    <input type="email" class="form-control" id="username" name="j_username" value="yinlei_nb" placeholder="邮箱或用户名">
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">密码：</label>
-    <input type="password" class="form-control" id="password" name="j_password" placeholder="密码">
+    <input type="password" class="form-control" id="password" name="j_password" value="123456" placeholder="密码">
   </div>
 
   <input type="button" class="btn btn-primary" onclick="javascript:userLogin();" value="登录"/>
@@ -133,8 +133,23 @@
   </div>
  <div class="col-md-3"></div>
  </div>
+ <div class="row"></div>
  <div class="row">
-  
+  <div class="col-md-3"></div>
+  <div class="col-md-1">联系我们</div>
+  <div class="col-md-1">版权所有</div>
+  <div class="col-md-1">招贤纳士</div>
+  <div class="col-md-1">联系合作</div>
+  <div class="col-md-1">帮助中心</div>
+  <div class="col-md-1">友情链接</div>
+  <div class="col-md-3"></div>
+	</div>
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-2">Copyright © 2012 www.vteba.com.</div>
+  <div class="col-md-2">浙ICP备gaga</div>
+  <div class="col-md-3">增值电信业务经营许可证编号：浙A1-g20120130</div>
+  <div class="col-md-2"></div>
 	</div>
   </div>
   
