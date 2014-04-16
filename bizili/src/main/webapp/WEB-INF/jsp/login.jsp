@@ -56,8 +56,8 @@
 
   </head> 
   <body>
-  <div id="container">
-  <div class="col-md-12 column">
+
+  <div class="container">
   <nav class="navbar navbar-default" role="navigation">
   <!-- Brand and toggle get grouped for better mobile display -->
   <div class="navbar-header">
@@ -67,16 +67,16 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="#">Brand</a>
+    <a class="navbar-brand" href="#">微特</a>
   </div>
 
   <!-- Collect the nav links, forms, and other content for toggling -->
-  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+  <div class="collapse navbar-collapse">
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Link</a></li>
-      <li><a href="#">Link</a></li>
+      <li class="active"><a href="#">链接</a></li>
+      <li><a href="#">衣服</a></li>
       <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">下拉菜单 <b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li><a href="#">Action</a></li>
           <li><a href="#">Another action</a></li>
@@ -92,7 +92,7 @@
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Search">
       </div>
-      <button type="submit" class="btn btn-default">Submit</button>
+      <button type="submit" class="btn btn-default">搜索</button>
     </form>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#">Link</a></li>
@@ -110,48 +110,82 @@
   </div><!-- /.navbar-collapse -->
 </nav>
   </div>
+  <div id="container">
+  
   <div class="row">
   <div class="col-md-6"></div>
   <div class="col-md-3">
-
-        <h2 style="float:center;margin-left:50px;margin-bottom:10px;">平台登录</h2>   
-        <form role="form" id="login_form" name="login_form" action="${ctx}/j_spring_security_check" method="post">
+<!--   <form class="form-horizontal" role="form"> -->
+<!--   <div class="form-group"> -->
+<!--     <label for="inputEmail3" class="col-sm-2 control-label">Email</label> -->
+<!--     <div class="col-sm-10"> -->
+<!--       <input type="email" class="form-control" id="inputEmail3" placeholder="Email"> -->
+<!--     </div> -->
+<!--   </div> -->
+<!--   <div class="form-group"> -->
+<!--     <label for="inputPassword3" class="col-sm-2 control-label">Password</label> -->
+<!--     <div class="col-sm-10"> -->
+<!--       <input type="password" class="form-control" id="inputPassword3" placeholder="Password"> -->
+<!--     </div> -->
+<!--   </div> -->
+<!--   <div class="form-group"> -->
+<!--     <div class="col-sm-offset-2 col-sm-10"> -->
+<!--       <div class="checkbox"> -->
+<!--         <label> -->
+<!--           <input type="checkbox"> Remember me -->
+<!--         </label> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!--   <div class="form-group"> -->
+<!--     <div class="col-sm-offset-2 col-sm-10"> -->
+<!--       <button type="submit" class="btn btn-default">Sign in</button> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </form> -->
+	<h3 class="text-center">平台登录</h3>   
+        <form role="form" class="form-horizontal" id="login_form" name="login_form" action="${ctx}/j_spring_security_check" method="post">
         <input type="hidden" id="msg" value="<c:if test="${sessionScope.SPRING_SECURITY_LAST_EXCEPTION ne null}">您输入的用户名或密码错误。</c:if>">
   <div class="form-group">
-    <label for="exampleInputEmail1">用户名：</label>
+    <label for="username">用户名：</label>
     <input type="email" class="form-control" id="username" name="j_username" value="yinlei_nb" placeholder="邮箱或用户名">
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword1">密码：</label>
+    <label for="password">用户名：</label>
     <input type="password" class="form-control" id="password" name="j_password" value="123456" placeholder="密码">
   </div>
-
+<div class="form-group text-center">
   <input type="button" class="btn btn-primary" onclick="javascript:userLogin();" value="登录"/>
   <input name="reset" class="btn btn-default" value="取消" id="reset" type="reset"/>
+</div>
 </form>
+        
 
   </div>
  <div class="col-md-3"></div>
  </div>
- <div class="row"></div>
+ </div>
+ <div class="container">
  <div class="row">
-  <div class="col-md-3"></div>
-  <div class="col-md-1">联系我们</div>
-  <div class="col-md-1">版权所有</div>
-  <div class="col-md-1">招贤纳士</div>
-  <div class="col-md-1">联系合作</div>
-  <div class="col-md-1">帮助中心</div>
-  <div class="col-md-1">友情链接</div>
-  <div class="col-md-3"></div>
-	</div>
-<div class="row">
-  <div class="col-md-3"></div>
-  <div class="col-md-2">Copyright © 2012 www.vteba.com.</div>
-  <div class="col-md-2">浙ICP备gaga</div>
-  <div class="col-md-3">增值电信业务经营许可证编号：浙A1-g20120130</div>
-  <div class="col-md-2"></div>
-	</div>
-  </div>
+ <ul class="list-inline text-center">
+  <li>Copyright © 2012 www.vteba.com.</li>
+  <li>浙ICP备gaga</li>
+  <li>增值电信业务经营许可证编号：浙A1-g20120130</li>
+</ul>
+ </div>
+ 
+ <div class="row">
+ <ul class="list-inline text-center">
+  <li>联系我们</li>
+  <li>版权所有</li>
+  <li>招贤纳士</li>
+  <li>联系合作</li>
+  <li>帮助中心</li>
+  <li>友情链接</li>
+</ul>
+  
+</div>
+ </div>
   
   </body>
   </html>
