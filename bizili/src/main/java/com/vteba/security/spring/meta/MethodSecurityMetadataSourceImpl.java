@@ -53,16 +53,16 @@ public class MethodSecurityMetadataSourceImpl extends AbstractMethodSecurityMeta
 		for (String authName : authNameList) {
 			ConfigAttribute ca = new SecurityConfig(authName);// eg：ROLE_ADMIN
 			List<String> resourceList = authoritiesServiceImpl.getMethodByAuthName(authName);
-			for (String url : resourceList) {
+			for (String method : resourceList) {
 				// 该资源和权限是否有对应关系，如果已经存在，则将新权限添加到对应的资源上（这个资源需要哪些权限）
-				if (resourceMap.containsKey(url)) {
-					Collection<ConfigAttribute> attributes = resourceMap.get(url);
+				if (resourceMap.containsKey(method)) {
+					Collection<ConfigAttribute> attributes = resourceMap.get(method);
 					attributes.add(ca);
-					resourceMap.put(url, attributes);
+					resourceMap.put(method, attributes);
 				} else {// 如果是新资源，则将权限添加到对应的资源上
 					Collection<ConfigAttribute> atts = new HashSet<ConfigAttribute>();
 					atts.add(ca);
-					resourceMap.put(url, atts);
+					resourceMap.put(method, atts);
 				}
 			}
 		}
