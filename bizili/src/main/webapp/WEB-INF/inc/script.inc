@@ -9,5 +9,5 @@
 <script type="text/javascript">
 var api = frameElement.api, W = api.opener;
 </script>
-
+<script type="text/javascript" src="${ctx}/js/bootstrap.min.js"></script>
 

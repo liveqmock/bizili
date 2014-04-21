@@ -122,13 +122,13 @@ img {border-width: 0px 0px 0px 0px}
 								<td class="twof">排序</td><td class="fotf"><select style="width:90px;" name="page.orderBy"><option value="resourceUrl">资源URL</option><option value="resourceType">资源类型</option></select>-<select style="width:70px;" name="page.ascDesc"><option value="asc">升序</option><option value="desc">降序</option></select></td>
 								<td class="twof"></td>
 								<td class="twef">
-								<input type="button" value="查询" class="determination" id="queryButton" style="margin-right:20px;" />
-									<input type="reset" value="清除" class="cancellation" />
+								<button type="button" class="btn btn-primary btn-sm" id="queryButton" style="margin-right:20px;">查询</button>
+								<input type="reset" value="清除" class="btn btn-default btn-sm" />
 								</td>
 							</tr>
 						</table>
 					
-					<table class="tableSteel">
+					<table class="tableSteel table-hover">
               <tr class="title" style="border-right:1px #bfd2ed solid;">
                 <td class="twof"></td>
                 <td class="fouf">资源名</td>
