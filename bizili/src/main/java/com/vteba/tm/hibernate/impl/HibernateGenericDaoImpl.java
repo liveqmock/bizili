@@ -679,12 +679,14 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 			logger.info("sqlQueryForList, sql = [{}], parameter = {}, resultClass = [{}].", sql, Arrays.toString(values), clazz.getName());
 		}
 		SQLQuery query = createSqlQuery(sql, null, values);
-		if (sql.indexOf("nextValue('") > -1) {//sequence
-			query.addScalar("seq", LongType.INSTANCE);
-		} else {
-			String[] columns = ColumnAliasParser.get().parseColumnAlias(sql, true);
-			query.addScalar(columns[0], MatchType.matchResultType(clazz));
-		}
+//		if (sql.indexOf("nextValue('") > -1) {//sequence
+//			query.addScalar("seq", LongType.INSTANCE);
+//		} else {
+//			String[] columns = ColumnAliasParser.get().parseColumnAlias(sql, true);
+//			query.addScalar(columns[0], MatchType.matchResultType(clazz));
+//		}
+		String[] columns = ColumnAliasParser.get().parseColumnAlias(sql, true);
+		query.addScalar(columns[0], MatchType.matchResultType(clazz));
 		List<X> list = query.list();
 		if (list == null) {
 			list = Collections.emptyList();
@@ -770,7 +772,9 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
     
 	public Long getSequenceLongValue(String sequenceName) {
 		String sql = "select nextValue('" + sequenceName + "') seq";
-		Long seq = sqlQueryForObject(sql, Long.class);
+		SQLQuery sqlQuery = getSession().createSQLQuery(sql);
+		sqlQuery.addScalar("seq", LongType.INSTANCE);
+		Long seq = (Long) sqlQuery.uniqueResult();
 		return seq;
 	}
 	
