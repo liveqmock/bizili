@@ -55,7 +55,8 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 		extends GenericDaoImpl<T, ID> implements IHibernateGenericDao<T, ID> {
 
 	private static final Logger logger = LoggerFactory.getLogger(HibernateGenericDaoImpl.class);
-	
+	/**问号*/
+	public static final String QMark = "?";
 	public HibernateGenericDaoImpl() {
 		super();
 	}
@@ -219,12 +220,12 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 	protected Query createQuery(String hql, Object... values) {
 		Query query = getSession().createQuery(hql);
 		for (int i = 0; i < values.length; i++) {
-			if (hql.indexOf("?" + (i + 1)) > 0) {
+			if (hql.indexOf(QMark + (i + 1)) > 0) {
 				logger.info("Use JPA style's position parameter binding.");
 				if (values[i] instanceof List) {
-					query.setParameterList((i + 1) + "", (List<?>)values[i]);
+					query.setParameterList(Integer.toString(i + 1), (List<?>)values[i]);
 				} else {
-					query.setParameter((i + 1) + "", values[i]);
+					query.setParameter(Integer.toString(i + 1), values[i]);
 				}
 			} else if (values[i] instanceof Map){
 				logger.info("Use named parameter binding.");
@@ -349,9 +350,9 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 			} else {
 				logger.info("Use JPA style's position parameter binding.");
 				if (values[i] instanceof List) {//in 语法
-					query.setParameterList((i + 1) + "", (List<?>)values[i]);
+					query.setParameterList(Integer.toString(i + 1), (List<?>)values[i]);
 				} else {
-					query.setParameter((i + 1) + "", values[i]);
+					query.setParameter(Integer.toString(i + 1), values[i]);
 				}
 			}
 		}	
