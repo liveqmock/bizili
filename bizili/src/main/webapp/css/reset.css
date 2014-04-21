@@ -49,6 +49,7 @@ content:" ";
 fieldset, img, abbr, acronym, input{
      border:0
 }
+/*yinlei 2014-4-21*/
 input[type="text"],select{
 	font-size:12px;
 	height:18px;
