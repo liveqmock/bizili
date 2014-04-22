@@ -74,13 +74,85 @@ img {border-width: 0px 0px 0px 0px}
 					</li>
 					<li><a href="<c:url value="/users/resources-input.htm?init=true"/>">新增资源</a></li>
 				</ul>
-				<div class="">
+				<form class="form-horizontal" role="form">
+					  <div class="form-group">
+					  <div class="col-sm-3">
+					  <label for="resourceNameId" class="col-sm-4 control-label">资源名</label>
+					    <div class="col-sm-8">
+					      <input type="text" name="resourceName" id="resourceNameId" class="form-control input-sm" placeholder="资源名">
+					    </div>
+					  </div>
+					  <div class="col-sm-3">
+					  <label for="resourceType" class="col-sm-4 control-label">资源类型</label>
+					    <div class="col-sm-8">
+					      <select id="resourceType" name="resourceType" class="form-control input-sm">
+							<option value="">--请选择--</option>
+							<option value="url">URL</option>
+							<option value="action">Action</option>
+							<option value="method">Method</option>
+						</select>
+					    </div>
+					  </div>
+					  <div class="col-sm-3">
+					  <label for="resourceUrlId" class="col-sm-4 control-label">资源URL</label>
+					    <div class="col-sm-8">
+					      <input type="text" name="resourceUrl" id="resourceUrlId" class="form-control input-sm"/>
+					    </div>
+					  </div>
+					  <div class="col-sm-3">
+					  <label for="moduleId" class="col-sm-4 control-label">菜单模块</label>
+					    <div class="col-sm-8">
+					      <select id="moduleId" name="moduleId" class="form-control input-sm">
+									<option value="">--请选择--</option>
+									<c:forEach items="${list}" var="module">
+										<option value="${module.moduleId}" <c:if test="${module.moduleId == resources.moduleId}">selected="selected"</c:if> >${module.moduleName}</option>
+									</c:forEach>
+							</select>
+					    </div>
+					  </div>  
+					  </div>
+					  <div class="form-group">
+					      <div class="col-sm-3">
+						  <label for="enabled" class="col-sm-4 control-label">是否启用</label>
+						    <div class="col-sm-8">
+						      <select id="enabled" name="enabled" class="form-control input-sm">
+										<option value="">--请选择--</option>
+										<option value="1">是</option>
+										<option value="0">否</option>
+								</select>
+						    </div>
+						  </div>
+						  <div class="col-sm-3">
+						  <label for="defaults" class="col-sm-4 control-label">默认URL</label>
+						    <div class="col-sm-8">
+						      <select id="defaults" name="defaults" class="form-control input-sm">
+										<option value="">--请选择--</option>
+										<option value="true">是</option>
+										<option value="false">否</option>
+								</select>
+						    </div>
+						  </div>
+						  <div class="col-sm-4">
+						  <label for="enabled" class="col-sm-3 control-label">排序</label>
+						    <div class="col-sm-4">
+						      <select class="form-control input-sm" name="page.orderBy"><option value="resourceUrl">资源URL</option><option value="resourceType">资源类型</option></select>
+						    </div>
+						    <div class="col-sm-4">
+						      <select class="form-control input-sm" name="page.ascDesc"><option value="asc">升序</option><option value="desc">降序</option></select>
+						    </div>
+						  </div>
+						  <div class="col-sm-2">
+						      <button type="button" class="btn btn-primary btn-sm" id="queryButton" style="margin-right:20px;">查询</button>
+							  <input type="reset" value="清除" class="btn btn-default btn-sm" />
+						  </div>
+					  </div>
+					</form>
 					<form action="resources-initial.htm" id="queryForm" name="queryForm" method="post">
 					<input type="hidden" name="query" id="query" value="false"/>
 						<table class="bugSteel first" style="border-top: 0;">
 							<tr>
 								<td class="twof">资源名</td>
-								<td class="eigf"><input type="text" name="resourceName" class="tf" /></td>
+								<td class="eigf"><div class="col-xs-10"><input type="text" name="resourceName" class="form-control input-sm" /></div></td>
 								<td class="twof">资源类型</td>
 								<td class="twef">
 								<select id="resourceType" name="resourceType" style="width:140px;">
@@ -91,7 +163,7 @@ img {border-width: 0px 0px 0px 0px}
 								</select>
 								</td>
 								<td class="twof">资源URL</td>
-								<td class="twef"><input type="text" name="resourceUrl" style="width:160px;"/></td>
+								<td class="twef"><div class="col-xs-10"><input type="text" name="resourceUrl" class="form-control input-sm" style="width:160px;"/></div></td>
 								<td class="twof">菜单模块</td>
 								<td class="twef">
 								<select id="moduleId" name="moduleId" style="width:120px;">
@@ -167,7 +239,6 @@ img {border-width: 0px 0px 0px 0px}
 						</p>
 					</div>
 					</form>
-				</div>
 
 
 			</div>

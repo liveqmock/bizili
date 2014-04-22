@@ -7,9 +7,9 @@
 	<link rel="stylesheet" type="text/css" href="${ctx}/css/bootstrap.min.css" media="all" />
 	<link rel="stylesheet" type="text/css" href="${ctx}/css/bootstrap-theme.min.css" media="all" />
 <style type="text/css">
-input {
-	border:1px #ccc solid;
-}
+/* input { */
+/* 	border:1px #ccc solid; */
+/* } */
 </style>
 <div class="container">
   <nav class="navbar navbar-default" role="navigation">

@@ -66,70 +66,75 @@ span.star{
 			<tr>
 			<td class="twof"></td>
 			<td class="fivf">资源名</td>
-			<td><input type="text" name="resourceName" value="${res.resourceName}" class="twf190" /><span class="star">*</span></td>
+			<td><div class="col-xs-8"><input type="text" name="resourceName" value="${res.resourceName}" class="form-control input-sm" /></div><span class="star">*</span></td>
 			
 			<td class="fivf">资源描述</td>
-			<td><input type="text" name="resourceDesc" value="${res.resourceDesc}" class="twf190" /><span class="star">*</span></td>
+			<td><div class="col-xs-8"><input type="text" name="resourceDesc" value="${res.resourceDesc}" class="form-control input-sm" /></div><span class="star">*</span></td>
 			<td class="twof"></td>
 			</tr>
 			<tr>
 			<td class="twof"></td>
 			<td class="fivf">资源URL</td>
-			<td><input type="text" name="resourceUrl" value="${res.resourceUrl}" class="twf190" /><span class="star">*</span></td>
+			<td><div class="col-xs-8"><input type="text" name="resourceUrl" value="${res.resourceUrl}" class="form-control input-sm" /></div><span class="star">*</span></td>
 			
 			<td class="fivf">默认URL</td>
-			<td>
-				<select name="defaults">
+			<td><div class="col-xs-8">
+				<select name="defaults" class="form-control input-sm">
 					<option value="0" <c:if test="${res.defaults == false}">selected="selected"</c:if>>否</option>
 					<option value="1" <c:if test="${res.defaults == true}">selected="selected"</c:if>>是</option>
 				</select>
+				</div>
 			<span class="star">*</span></td>
 			<td class="twof"></td>
 			</tr>
 			<tr>
 			<td class="twof"></td>
 			<td class="fivf">是否启用</td>
-			<td>
-					<select name="enabled">
+			<td><div class="col-xs-8">
+					<select name="enabled" class="form-control input-sm">
 						<option value="1" <c:if test="${res.enabled ==1}">selected="selected"</c:if>>是</option>
 						<option value="0" <c:if test="${res.enabled ==0}">selected="selected"</c:if>>否</option>
 					</select>
+				</div>
 					<span class="star">*</span>
 			</td>
 			
 			<td class="fivf">菜单中显示</td>
-			<td>
-					<select name="showInMenu">
+			<td><div class="col-xs-8">
+					<select name="showInMenu" class="form-control input-sm">
 						<option value="0" <c:if test="${res.showInMenu == false}">selected="selected"</c:if>>否</option>
 						<option value="1" <c:if test="${res.showInMenu == true}">selected="selected"</c:if>>是</option>
-					</select><span class="star">*</span></td>
+					</select>
+				</div>
+					<span class="star">*</span></td>
 			<td class="twof"></td>
 			</tr>
 			<tr>
 			<td class="twof"></td>
 			<td class="fivf">资源类型</td>
-			<td>
-				<select name="resourceType">
+			<td><div class="col-xs-8">
+				<select name="resourceType" class="form-control input-sm">
 					<option value="url" <c:if test="${res.resourceType eq 'url'}">selected="selected"</c:if>>URL</option>
 					<option value="action" <c:if test="${res.resourceType eq 'action'}">selected="selected"</c:if>>Action</option>
 					<option value="method" <c:if test="${res.resourceType eq 'method'}">selected="selected"</c:if>>Method</option>
 				</select>
+				</div>
 			<span class="star">*</span></td>
 			<td class="fivf">菜单模块</td>
-			<td>
-			<select id="moduleId" name="moduleId" style="width:120px;">
+			<td><div class="col-xs-8">
+			<select id="moduleId" name="moduleId" class="form-control input-sm">
 				<option value="">--请选择--</option>
 				<c:forEach items="${list}" var="module">
 					<option value="${module.moduleId}" <c:if test="${module.moduleId == res.moduleId}">selected="selected"</c:if> >${module.moduleName}</option>
 				</c:forEach>
-			</select>
+			</select></div>
 			<span class="star">*</span></td>
 			<td class="twof"></td>
 			</tr>
 		  </table>
 		  
-			<div>
-				<input type="button" class="pageCutSmallBtnSub" id="saveResBtn" value="保存" />
+			<div class="text-center">
+				<input type="button" class="btn btn-primary" id="saveResBtn" value="保存" />
 			</div>
 		</div>
 		
