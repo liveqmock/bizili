@@ -74,7 +74,8 @@ img {border-width: 0px 0px 0px 0px}
 					</li>
 					<li><a href="<c:url value="/users/resources-input.htm?init=true"/>">新增资源</a></li>
 				</ul>
-				<form class="form-horizontal" role="form">
+				<form action="resources-initial.htm" id="queryForm" name="queryForm" method="post" class="form-horizontal" role="form">
+					  <input type="hidden" name="query" id="query" value="false"/>
 					  <div class="form-group">
 					  <div class="col-sm-3">
 					  <label for="resourceNameId" class="col-sm-4 control-label">资源名</label>
@@ -146,59 +147,59 @@ img {border-width: 0px 0px 0px 0px}
 							  <input type="reset" value="清除" class="btn btn-default btn-sm" />
 						  </div>
 					  </div>
-					</form>
-					<form action="resources-initial.htm" id="queryForm" name="queryForm" method="post">
-					<input type="hidden" name="query" id="query" value="false"/>
-						<table class="bugSteel first" style="border-top: 0;">
-							<tr>
-								<td class="twof">资源名</td>
-								<td class="eigf"><div class="col-xs-10"><input type="text" name="resourceName" class="form-control input-sm" /></div></td>
-								<td class="twof">资源类型</td>
-								<td class="twef">
-								<select id="resourceType" name="resourceType" style="width:140px;">
-										<option value="">--请选择--</option>
-										<option value="url">URL</option>
-										<option value="action">Action</option>
-										<option value="method">Method</option>
-								</select>
-								</td>
-								<td class="twof">资源URL</td>
-								<td class="twef"><div class="col-xs-10"><input type="text" name="resourceUrl" class="form-control input-sm" style="width:160px;"/></div></td>
-								<td class="twof">菜单模块</td>
-								<td class="twef">
-								<select id="moduleId" name="moduleId" style="width:120px;">
-									<option value="">--请选择--</option>
-									<c:forEach items="${list}" var="module">
-										<option value="${module.moduleId}" <c:if test="${module.moduleId == resources.moduleId}">selected="selected"</c:if> >${module.moduleName}</option>
-									</c:forEach>
-								</select>
-								</td>
-							</tr>
-							<tr>
-								<td class="twof">是否启用</td>
-								<td class="twef">
-								<select id="enabled" name="enabled" style="width:120px;">
-										<option value="">--请选择--</option>
-										<option value="1">是</option>
-										<option value="0">否</option>
-								</select>
-								</td>
-								<td class="twof">默认URL</td>
-								<td class="twef">
-								<select id="defaults" name="defaults" style="width:120px;">
-										<option value="">--请选择--</option>
-										<option value="true">是</option>
-										<option value="false">否</option>
-								</select>
-								</td>
-								<td class="twof">排序</td><td class="fotf"><select style="width:90px;" name="page.orderBy"><option value="resourceUrl">资源URL</option><option value="resourceType">资源类型</option></select>-<select style="width:70px;" name="page.ascDesc"><option value="asc">升序</option><option value="desc">降序</option></select></td>
-								<td class="twof"></td>
-								<td class="twef">
-								<button type="button" class="btn btn-primary btn-sm" id="queryButton" style="margin-right:20px;">查询</button>
-								<input type="reset" value="清除" class="btn btn-default btn-sm" />
-								</td>
-							</tr>
-						</table>
+<!-- 					</form> -->
+<!-- 					<form action="resources-initial.htm" id="queryForm" name="queryForm" method="post"> -->
+<!-- 					<input type="hidden" name="query" id="query" value="false"/> -->
+<!-- 						<table class="bugSteel first" style="border-top: 0;"> -->
+<!-- 							<tr> -->
+<!-- 								<td class="twof">资源名</td> -->
+<!-- 								<td class="eigf"><div class="col-xs-10"><input type="text" name="resourceName" class="form-control input-sm" /></div></td> -->
+<!-- 								<td class="twof">资源类型</td> -->
+<!-- 								<td class="twef"> -->
+<!-- 								<select id="resourceType" name="resourceType" style="width:140px;"> -->
+<!-- 										<option value="">--请选择--</option> -->
+<!-- 										<option value="url">URL</option> -->
+<!-- 										<option value="action">Action</option> -->
+<!-- 										<option value="method">Method</option> -->
+<!-- 								</select> -->
+<!-- 								</td> -->
+<!-- 								<td class="twof">资源URL</td> -->
+<!-- 								<td class="twef"><div class="col-xs-10"><input type="text" name="resourceUrl" class="form-control input-sm" style="width:160px;"/></div></td> -->
+<!-- 								<td class="twof">菜单模块</td> -->
+<!-- 								<td class="twef"> -->
+<!-- 								<select id="moduleId" name="moduleId" style="width:120px;"> -->
+<!-- 									<option value="">--请选择--</option> -->
+<%-- 									<c:forEach items="${list}" var="module"> --%>
+<%-- 										<option value="${module.moduleId}" <c:if test="${module.moduleId == resources.moduleId}">selected="selected"</c:if> >${module.moduleName}</option> --%>
+<%-- 									</c:forEach> --%>
+<!-- 								</select> -->
+<!-- 								</td> -->
+<!-- 							</tr> -->
+<!-- 							<tr> -->
+<!-- 								<td class="twof">是否启用</td> -->
+<!-- 								<td class="twef"> -->
+<!-- 								<select id="enabled" name="enabled" style="width:120px;"> -->
+<!-- 										<option value="">--请选择--</option> -->
+<!-- 										<option value="1">是</option> -->
+<!-- 										<option value="0">否</option> -->
+<!-- 								</select> -->
+<!-- 								</td> -->
+<!-- 								<td class="twof">默认URL</td> -->
+<!-- 								<td class="twef"> -->
+<!-- 								<select id="defaults" name="defaults" style="width:120px;"> -->
+<!-- 										<option value="">--请选择--</option> -->
+<!-- 										<option value="true">是</option> -->
+<!-- 										<option value="false">否</option> -->
+<!-- 								</select> -->
+<!-- 								</td> -->
+<!-- 								<td class="twof">排序</td><td class="fotf"><select style="width:90px;" name="page.orderBy"><option value="resourceUrl">资源URL</option><option value="resourceType">资源类型</option></select>-<select style="width:70px;" name="page.ascDesc"><option value="asc">升序</option><option value="desc">降序</option></select></td> -->
+<!-- 								<td class="twof"></td> -->
+<!-- 								<td class="twef"> -->
+<!-- 								<button type="button" class="btn btn-primary btn-sm" id="queryButton" style="margin-right:20px;">查询</button> -->
+<!-- 								<input type="reset" value="清除" class="btn btn-default btn-sm" /> -->
+<!-- 								</td> -->
+<!-- 							</tr> -->
+<!-- 						</table> -->
 					
 					<table class="tableSteel table-hover">
               <tr class="title" style="border-right:1px #bfd2ed solid;">

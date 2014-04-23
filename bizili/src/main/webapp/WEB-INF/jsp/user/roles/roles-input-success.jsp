@@ -19,50 +19,16 @@ img {border-width: 0px 0px 0px 0px}
 #footer{
 	width:1340px;
 }
-</style>
-<%@ include file="/WEB-INF/inc/taglib.inc" %>
-<%@ include file="/WEB-INF/inc/constants.inc" %>
-<%@ include file="/WEB-INF/inc/script.inc" %>
-<%@ include file="/WEB-INF/inc/style.inc" %>
-<style type="text/css">
-#container .epMcCtInnerTop h3{
-	line-height:30px;
-	padding-right:16px;
-}
-#container #epMcContent .operatorManage h3.floatRight{
-	padding-right:260px;
-}
-
-input.iptBuySteelReducing{
-	width:16px;
-	height:16px;
-	margin-left:10px;
-	margin-right:5px;
-	background:transparent url('../images/tb1.gif') no-repeat scroll left top;
-}
-input.iptBuySteelAdd{
-	width:16px;
-	height:16px;
-	margin-left:5px;
-	background:transparent url('../images/tb2.gif') no-repeat scroll left top;
-}
-input.inputSubmit{
-	display:block;
-	width:85px;
-	height:24px;
-	clear:both;
-	margin:10px auto 50px;
-	background:transparent url('../images/tb3.gif') no-repeat scroll left bottom ;
-}
-select#operatorNum{
-	width:150px;
-	font-size:12px;
-}
 span.star{
 	padding-left:10px;
 	color:red;
 }
 </style>
+<%@ include file="/WEB-INF/inc/taglib.inc" %>
+<%@ include file="/WEB-INF/inc/constants.inc" %>
+<%@ include file="/WEB-INF/inc/script.inc" %>
+<%@ include file="/WEB-INF/inc/style.inc" %>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	$('#addAuth').click(function(){
@@ -111,43 +77,48 @@ $(document).ready(function(){
 			<tr>
 			<td class="twof"></td>
 			<td class="fivf">角色名</td>
-			<td><input type="text" name="roleName" value="${role.roleName}" class="twf190" /><span class="star">*</span></td>
+			<td><div class="col-xs-8"><input type="text" name="roleName" value="${role.roleName}" class="form-control input-sm" /></div><span class="star">*</span></td>
 			
 			<td class="fivf">角色描述</td>
-			<td><input type="text" name="roleDesc" value="${role.roleDesc}" class="twf190" /><span class="star">*</span></td>
+			<td><div class="col-xs-8"><input type="text" name="roleDesc" value="${role.roleDesc}" class="form-control input-sm" /></div><span class="star">*</span></td>
 			<td class="twof"></td>
 			</tr>
 			<tr>
 			<td class="twof"></td>
 			<td class="fivf">是否启用</td>
-			<td>
-					<select name="enabled">
+			<td><div class="col-xs-8">
+					<select name="enabled" class="form-control input-sm">
 						<option value="1" <c:if test="${role.enabled == 1}">selected="selected"</c:if>>是</option>
 						<option value="0" <c:if test="${role.enabled != 1}">selected="selected"</c:if>>否</option>
 					</select>
+				</div>
 					<span class="star">*</span>
 			</td>
 			
 			<td class="fivf">优先级</td>
-			<td>
-					<select name="priority">
+			<td><div class="col-xs-8">
+					<select name="priority" class="form-control input-sm">
 						<option value="1" <c:if test="${role.priority == 1}">selected="selected"</c:if>>1</option>
 						<option value="2" <c:if test="${role.priority == 2}">selected="selected"</c:if>>2</option>
 						<option value="3" <c:if test="${role.priority == 3}">selected="selected"</c:if>>3</option>
-					</select><span class="star">*</span></td>
+					</select>
+				</div>
+					<span class="star">*</span></td>
 			<td class="twof"></td>
 			</tr>
 			<tr>
 			<td class="twof"></td>
 			<td class="fivf">拥有权限</td>
-			<td class="tenf" colspan="3">
+			<td class="tenf" colspan="4">
 			<input type="hidden" id="authIds" value="${role.authIds}" name="authIds"/>
-			<input type="text" id="authNames" value="${role.authNames}" class="twf250" style="width:600px;"/><span class="star">*</span><img id="addAuth" src="../images/tb2.gif" style="margin-left:6px;cursor:pointer;"></img> </td>
-			<td class="twof"></td>
+			<div class="col-xs-9">
+			<input type="text" id="authNames" value="${role.authNames}" class="form-control input-sm"/>
+			</div>
+			<span class="star">*</span><img id="addAuth" src="../images/tb2.gif" style="margin-left:6px;cursor:pointer;"></img> </td>
 			</tr>
 		  </table>
-			<div>
-				<input type="button" class="pageCutSmallBtnSub" id="saveRole" value="保存" />
+			<div class="text-center">
+				<input type="button" class="btn btn-primary btn-sm" id="saveRole" value="保存" />
 			</div>
 			</form>
 		</div>

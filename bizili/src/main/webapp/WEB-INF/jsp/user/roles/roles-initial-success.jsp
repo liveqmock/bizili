@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Language" content="zh-cn" />
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
-<head><title>会计科目列表</title>
+<head><title>角色列表</title>
 <style type="text/css">
 img {border-width: 0px 0px 0px 0px}
 #middel{
@@ -121,37 +121,52 @@ img {border-width: 0px 0px 0px 0px}
 					<li><a href="<c:url value="/users/roles-input.htm?init=true"/>">新增角色</a></li>
 				</ul>
 				<div class="">
-					<form action="roles-initial.htm" id="queryForm" name="queryForm" method="post">
+					<form action="roles-initial.htm" id="queryForm" name="queryForm" method="post" role="form">
 					<input type="hidden" id="listSize" value="${listResult.size()}">
 					<input type="hidden" id="deletedIds" value="">
 						<table class="bugSteel first" style="border-top: 0;">
 							<tr>
 								<td class="twof">&nbsp;角色名</td>
-								<td class="twef">
-								<input type="text" name="roleName" class="tf" />
+								<td class="tenf">
+								<div class="col-sm-10">
+								<input type="text" name="roleName" class="form-control input-sm" />
+								</div>
 								</td>
 								<td class="twof">说明</td>
-								<td class="twef">
-								<input type="text" name="roleDesc" class="tf" />
+								<td class="tenf">
+								<div class="col-sm-10">
+								<input type="text" name="roleDesc" class="form-control input-sm" />
+								</div>
 								</td>
 								<td class="twof">使用中</td>
-								<td class="twef">
-								<select id="defaults" name="defaults" style="width:120px;">
+								<td class="tenf">
+								<div class="col-sm-9">
+								<select id="defaults" name="defaults" class="form-control input-sm">
 										<option value="">--请选择--</option>
 										<option value="1">是</option>
 										<option value="0">否</option>
 								</select>
+								<div class="col-sm-8">
 								</td>
-								<td class="twof">排序</td><td class="fotf"><select style="width:90px;" name="page.orderBy"><option value="roleName">角色名</option><option value="roleDesc">描述</option></select>-<select style="width:70px;" name="page.ascDesc"><option value="asc">升序</option><option value="desc">降序</option></select></td>
-								<td class="twof"></td>
-								<td class="twef">
-								<input type="button" value="查询" class="determination" id="queryButton" style="margin-right:20px;" />
-									<input type="reset" value="清除" class="cancellation" />
+								<td class="twof">排序</td>
+								<td class="fotf">
+								<div class="col-sm-12">
+								<div class="col-sm-6">
+								<select class="form-control input-sm" name="page.orderBy"><option value="roleName">角色名</option><option value="roleDesc">描述</option></select>
+								</div>
+								<div class="col-sm-6">
+								<select class="form-control input-sm" name="page.ascDesc"><option value="asc">升序</option><option value="desc">降序</option></select>
+								</div>
+								</div>
+								</td>
+								<td class="eigf">
+								<input type="button" value="查询" class="btn btn-primary btn-sm" id="queryButton" style="margin-right:20px;" />
+								<input type="reset" value="清除" class="btn btn-default btn-sm" />
 								</td>
 							</tr>
 						</table>
 					
-					<table class="tableSteel">
+					<table class="tableSteel table-hover">
               <tr class="title" style="border-right:1px #bfd2ed solid;">
                 <td class="twof"></td>
                 <td class="fouf">序号</td>
