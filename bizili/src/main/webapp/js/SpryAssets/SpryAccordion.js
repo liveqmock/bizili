@@ -15,7 +15,7 @@ Spry.Widget.Accordion = function(element, opts)
 	this.currentPanel = null;
 	this.animator = null;
 	this.hasFocus = null;
-	this.duration = 50;
+	this.duration = 10;
 
 	this.previousPanelKeyCode = Spry.Widget.Accordion.KEY_UP;
 	this.nextPanelKeyCode = Spry.Widget.Accordion.KEY_DOWN;
