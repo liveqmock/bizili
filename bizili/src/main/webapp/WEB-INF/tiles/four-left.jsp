@@ -46,6 +46,7 @@
 	-webkit-border-radius:5px;
 	border-radius:5px;
 	margin-bottom:20px;
+	height:476px;
 }
 .epMcNav h3 {
 	line-height:30px;
@@ -54,7 +55,8 @@
 	font-weight:600;
 }
 .epMcNavMcIndex{
-	margin-top:10px;
+ 	margin-top:10px;
+ 	margin-bottom:0px;
 	text-decoration:none;
 	background:transparent url('../images/bgNavMemberCenterIndex.png') no-repeat scroll 10px center ;
 }
@@ -65,12 +67,7 @@
 	background:transparent url('../images/bgepMcNavMcMessageInweb.png') no-repeat scroll 10px center ;
 }
 </style>
-<style type="text/css">
-:focus{
-     /*-moz-outline-style:none;*/
-     outline:0;
-}
-</style>	
+	
 <div class="epMcNav">	
 <h3 class="epMcNavMcIndex"><a href="#"><span>会员首页</span></a></h3>	
 <div id="Accordion1" class="Accordion" tabindex="0">
@@ -85,48 +82,8 @@
       </c:forEach>
     </div>
   </div>
-  </c:forEach><!-- 
-  <div class="AccordionPanel">
-						<div class="AccordionPanelTab">
-							我是卖家
-						</div>
-						<div class="AccordionPanelContent">
-							<p>
-								<a href="#">我的仓库</a>
-							</p>
-							<p>
-								<a href="#">超市挂牌管理</a>
-							</p>
-							<p>
-								<a href="#">洽谈管理</a>
-							</p>
-							<p>
-								<a href="#">合同管理</a>
-							</p>
-						</div>
-					</div>
-		<div class="AccordionPanel">
-						<div class="AccordionPanelTab">
-							我是卖家
-						</div>
-						<div class="AccordionPanelContent">
-							<p>
-								<a href="#">我的仓库</a>
-							</p>
-							<p>
-								<a href="#">超市挂牌管理</a>
-							</p>
-							<p>
-								<a href="#">洽谈管理</a>
-							</p>
-							<p>
-								<a href="#">合同管理</a>
-							</p>
-						</div>
-					</div> -->			
+  </c:forEach>		
 </c:if>
-<!-- 
-  <h3 class="epMcNavMcMessageInweb"><a href="#" style="font-size:14px;text-align:left;"><span>站内短信</span></a></h3> -->	
   <div style="width:127px; margin:2px auto;"><a href="<c:url value="/j_spring_security_logout"/>" ><img src="<c:url value='/images/exit.gif'/>" alt="" /></a></div>
 </div>
 <script type="text/javascript">

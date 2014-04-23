@@ -46,15 +46,15 @@ content:" ";
 .noMargin {
      margin:0 !important
 }
-fieldset, img, abbr, acronym, input{
+fieldset, img, abbr, acronym{
      border:0
 }
 /*yinlei 2014-4-21*/
-input[type="text"],select{
+/*input[type="text"],select{
 	font-size:12px;
 	height:18px;
 	line-height:24px;
-}
+}*/
 .smallFont{
      font:10px/1.4 arial, helvetica, sans-serif ;
 }

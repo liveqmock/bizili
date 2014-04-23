@@ -25,8 +25,6 @@ Spry.Widget.Accordion = function(element, opts)
 
 	Spry.Widget.Accordion.setOptions(this, opts, true);
 
-
-
 	if (Spry.Widget.Accordion.onloadDidFire)
 		this.attachBehaviors();
 	else

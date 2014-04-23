@@ -62,7 +62,9 @@
 	font-weight:600;
 	padding-left:36px;
 }
-
+.AccordionPanelOpen{
+	width:146px;
+}
 .AccordionPanelOpen .AccordionPanelTab {
 	background: url('../../images/bgNavBtnOpens.png') no-repeat 10px center;
 }

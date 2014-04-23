@@ -128,13 +128,13 @@ img {border-width: 0px 0px 0px 0px}
 							<tr>
 								<td class="twof">&nbsp;角色名</td>
 								<td class="tenf">
-								<div class="col-sm-10">
+								<div class="col-sm-11">
 								<input type="text" name="roleName" class="form-control input-sm" />
 								</div>
 								</td>
 								<td class="twof">说明</td>
 								<td class="tenf">
-								<div class="col-sm-10">
+								<div class="col-sm-11">
 								<input type="text" name="roleDesc" class="form-control input-sm" />
 								</div>
 								</td>

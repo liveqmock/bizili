@@ -27,57 +27,6 @@
 }
 
 
-#container .epMcNav{
-	width:148px;
-	border:1px #ccc solid;
-	margin-top:10px;
-	-moz-border-radius:5px;
-	-khtml-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-
-}
-#container .epMcNav h3 {
-	line-height:30px;
-	height:30px;
-	color:#333;
-	font-weight:600;
-}
-#container .epMcNav h3.epMcNavMcIndex{
-	margin-top:10px;
-	text-decoration:none;
-	background:transparent url('../images/bgNavMemberCenterIndex.png') no-repeat scroll 10px center ;
-}
-#container .epMcNav h3.epMcNavMcIndex a span{
-	visibility:hidden;
-}
-#container .epMcNav h3.epMcNavMcMessageInweb a{
-	background:transparent url('../images/bgepMcNavMcMessageInweb.png') no-repeat scroll 10px center ;
-}
-#container .epMcNav p.epMcNavExit{
-	
-}
-#container .epMcNav p.epMcNavExit a:link,#container .epMcNav p.epMcNavExit a:visited{
-	display:block;
-	line-height:50px;
-	height:50px;
-	padding:0;
-	padding-left:50px;
-	color:#333;
-	font-weight:600;
-	text-decoration:none;
-	color:#333;
-	background:transparent url('../images/bgepMcNavExit.png') no-repeat scroll 10px center ;
-}
-
-#container .epMcNav h3 a:link ,#container .epMcNav h3 a:visited{
-	display:block;
-	padding:0 30px;
-	font-size:14px;
-	color:#333;
-	text-decoration:none;
-}
-/*end epMcepMcNav*/
 /*epmcCenter*/
 #container .epMcCenter{
 	width:550px;
