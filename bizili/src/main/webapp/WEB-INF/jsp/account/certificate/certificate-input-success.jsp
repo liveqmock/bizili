@@ -337,7 +337,7 @@ img {border-width: 0px 0px 0px 0px}
 	<div id="header">
 		<jsp:include page="/WEB-INF/tiles/four-header.jsp" />
 	</div>
-	<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+	<div id="menuContent" class="menuContent" style="display:none; position: absolute;z-index:20000;">
 		<ul id="subjectTree" class="ztree" style="margin-top:0; width:280px;"></ul>
 	</div>
 	<div id="middel">
@@ -362,31 +362,46 @@ img {border-width: 0px 0px 0px 0px}
 				<div id="tabContent1">
 		<table class="tableSteelss">
 			<tr>
-				<td class="twof"><span style="margin-left:12px;">日期</span></td>
+				<td class="twof"><span>日期</span></td>
 				<td class="fivf"><input type="text" onclick="WdatePicker()" name="createDate" id="createDate" class="tf Wdate" style="margin-left:15px;"/></td>
-				<td class="fivf"><span style="margin-left:12px;">凭证字号</span></td>
+				<td class="fivf"><span>凭证字号</span></td>
 				<td class="fivf"><select id="codeNo" name="codeNo" style="width:100px;margin-left:15px;">
 										<option value="记">记</option>
 								</select></td>
-				<td class="sixf"><span style="margin-left:12px;">附单据张数</span></td>
+				<td class="sixf"><span>附单据张数</span></td>
 				<td><input type="text" name="attacheSheet" class="tf" style="margin-left:15px;"/></td>
 			</tr>
 		  </table>
 		<table class="tableSteel" style="margin-bottom:0px;border-bottom:0px;">
 							<tr>
 								<td class="twof55">摘要</td>
-								<td class="fivf" colspan="3"><input type="text" value="" id="summaryTemp" class="twf270" />[<a>常用摘要</a>]</td>
+								<td class="fivf" colspan="3">
+								<div class="col-sm-9">
+								<input type="text" value="" id="summaryTemp" class="form-control input-sm" />
+								</div>
+								[<a>常用摘要</a>]</td>
 								<td class="twof">会计科目</td>
-								<td class="twef" colspan="3"><input type="text" class="twf190" value="" id="subjectIdTemp"/>
+								<td class="twef" colspan="3">
+								<div class="col-sm-9">
+								<input type="text" class="form-control input-sm" value="" id="subjectIdTemp"/>
+								</div>
 								<img src="<c:url value='/images/btn_add.gif'/>" id="menuBtn" style="cursor:pointer;" alt="选择科目" title="选择科目" onclick="showMenu();"/>
 								</td>
 								<td class="twof">[<a href="javascript:queryAccountBalance();">查询余额</a>]</td><td class="tenf"><span id="subjectBalance" style="font-weight:600;"></span></td>
 							</tr>
 							<tr style="border-bottom:0px;">
 								<td class="twof55">借方金额</td>
-								<td class="fivf" colspan="3"><input type="text" value="" id="debitAmountTemp" class="twf190"/></td>
+								<td class="fivf" colspan="3">
+								<div class="col-sm-9">
+								<input type="text" value="" id="debitAmountTemp" class="form-control input-sm"/>
+								</div>
+								</td>
 								<td class="twof">贷方金额</td>
-								<td class="twef" colspan="3"><input type="text" value="" id="creditAmountTemp" class="twf190"/></td>
+								<td class="twef" colspan="3">
+								<div class="col-sm-9">
+								<input type="text" value="" id="creditAmountTemp" class="form-control input-sm"/>
+								</div>
+								</td>
 								<td class="tenf">
 								<input type="button" value="添加" class="determination" id="addNewCert" style="margin-right:20px;" />
 								</td>

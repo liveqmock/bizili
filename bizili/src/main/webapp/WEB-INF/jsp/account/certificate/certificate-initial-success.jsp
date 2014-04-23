@@ -72,7 +72,7 @@ img {border-width: 0px 0px 0px 0px}
 		<table class="bugSteel first" style="border-top: 0;">
 							<tr>
 								<td style="width:50px"><span style="margin-left:10px;">凭证编号</span></td>
-								<td class="fivf"><input type="text" name="codeNo" class="tf" /></td>
+								<td class="fivf"><input type="text" name="codeNo" class="form-control input-sm" /></td>
 								<td class="twof">系统</td>
 								<td class="fivf">
 								<select id="system" name="system" style="width:100px;">
@@ -86,12 +86,12 @@ img {border-width: 0px 0px 0px 0px}
 								<td class="twef"><input type="text" style="width:90px;" name="createDate"/>-<input type="text" style="width:90px;" name="createDate"/></td>
 								<td class="twof">制单人</td>
 								<td class="fivf">
-								<input type="text" class="tf" name="createEmp"/>
+								<input type="text" class="form-control input-sm" name="createEmp"/>
 								</td>
 								<td class="twof">排序</td><td class="tenf"><select style="width:80px;" name="page.orderBy"><option value="createEmp">制单人</option><option value="auditEmp">审核人</option><option value="system">系统</option></select>-<select style="width:50px;" name="page.ascDesc"><option value="asc">升序</option><option value="desc">降序</option></select></td>
 							</tr>
 							<tr><td class="twof">摘要</td>
-								<td class="fivf"><input type="text" name="summary" style="width:120px;"/></td>
+								<td class="fivf"><input type="text" name="summary" class="form-control input-sm" style="width:120px;"/></td>
 								
 								<td class="twof">状态</td>
 								<td class="fivf">
@@ -105,7 +105,7 @@ img {border-width: 0px 0px 0px 0px}
 								<td class="twef"><input type="text" style="width:90px;" name="auditDate"/>-<input type="text" style="width:90px;" name="auditDate"/></td>
 								
 								<td class="twof">审核人</td>
-								<td class="fivf"><input type="text" class="tf" name="auditEmp"/></td>
+								<td class="fivf"><input type="text" class="form-control input-sm" name="auditEmp"/></td>
 								<td class="twof"></td>
 								<td class="tenf">
 								<input type="button" value="查询" class="determination" id="queryButton" style="margin-right:20px;" />
