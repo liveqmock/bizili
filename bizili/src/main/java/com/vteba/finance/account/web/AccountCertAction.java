@@ -49,7 +49,7 @@ public class AccountCertAction extends BaseAction<CertTotal> {
 	@RequestMapping("/certificate-initial")
 	public String initial(CertTotal model, PageBean<CertTotal> pageBean, Map<String, Object> maps) throws Exception {
 		Page<CertTotal> pages = new Page<CertTotal>();
-		ReflectUtils.emptyToNull(model);
+		ReflectUtils.emptyToNulls(model);
 		page = pageBean.getPage();
 		pages = certTotalServiceImpl.queryForPageByCriteria(page, model);
 		listResult = pages.getResult();
