@@ -49,10 +49,11 @@ import com.opensymphony.xwork2.util.ValueStack;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
 import com.opensymphony.xwork2.util.profiling.UtilTimerStack;
-import com.vteba.annotation.json.Json;
 import com.vteba.util.common.CamelCaseUtils;
 import com.vteba.util.json.FastJsonUtils;
 import com.vteba.util.reflection.AsmUtils;
+
+import es.cenobit.struts2.json.annotations.Json;
 
 public class JsonActionInvocation extends DefaultActionInvocation implements ActionInvocation {
 
