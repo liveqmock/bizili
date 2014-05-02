@@ -13,16 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package es.cenobit.struts2.json.osgi;
+package com.vteba.struts2.json;
 
 import com.opensymphony.xwork2.config.Configuration;
 import com.opensymphony.xwork2.config.ConfigurationException;
 import com.opensymphony.xwork2.config.PackageProvider;
 import com.opensymphony.xwork2.inject.Container;
 import com.opensymphony.xwork2.inject.Inject;
-
-import es.cenobit.struts2.json.ActionConfigBuilder;
-import es.cenobit.struts2.json.JsonConstants;
 
 /**
  * <p>
@@ -31,27 +28,24 @@ import es.cenobit.struts2.json.JsonConstants;
  * and results correctly. This doesn't contain any logic and instead delegates
  * to the configured instance of the {@link ActionConfigBuilder} interface.
  * </p>
- * 
- * <b>Support for OSGi</b>
  */
 public class ClasspathPackageProvider implements PackageProvider {
+    private ActionConfigBuilder actionConfigBuilder;
 
-	private ActionConfigBuilder actionConfigBuilder;
+    @Inject
+    public ClasspathPackageProvider(Container container) {
+        this.actionConfigBuilder = container.getInstance(ActionConfigBuilder.class,
+                container.getInstance(String.class, JsonConstants.JSON_ACTION_CONFIG_BUILDER));
+    }
 
-	@Inject
-	public ClasspathPackageProvider(Container container) {
-		this.actionConfigBuilder = container.getInstance(ActionConfigBuilder.class,
-				container.getInstance(String.class, JsonConstants.JSON_ACTION_CONFIG_BUILDER));
-	}
+    public void init(Configuration configuration) throws ConfigurationException {
+    }
 
-	public void init(Configuration configuration) throws ConfigurationException {
-	}
+    public boolean needsReload() {
+        return actionConfigBuilder.needsReload();
+    }
 
-	public boolean needsReload() {
-		return actionConfigBuilder.needsReload();
-	}
-
-	public void loadPackages() throws ConfigurationException {
-		actionConfigBuilder.buildActionConfigs();
-	}
+    public void loadPackages() throws ConfigurationException {
+        actionConfigBuilder.buildActionConfigs();
+    }
 }

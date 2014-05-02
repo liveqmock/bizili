@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package es.cenobit.struts2.json;
+package com.vteba.struts2.json;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -54,7 +54,7 @@ import com.opensymphony.xwork2.util.finder.UrlSet;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
-import es.cenobit.struts2.json.annotations.Json;
+import com.vteba.struts2.json.annotations.Json;
 
 public class PackageBasedActionConfigBuilder implements ActionConfigBuilder {
 
@@ -442,7 +442,7 @@ public class PackageBasedActionConfigBuilder implements ActionConfigBuilder {
 			for (String packageLocator : packageLocators) {
 				String[] splitted = classPackageName.split("\\.");
 
-				if (es.cenobit.struts2.json.util.StringUtils.contains(splitted, packageLocator, false))
+				if (com.vteba.struts2.json.util.StringUtils.contains(splitted, packageLocator, false))
 					return true;
 			}
 		}
@@ -565,7 +565,7 @@ public class PackageBasedActionConfigBuilder implements ActionConfigBuilder {
 		urlSet = urlSet.excludePaths(System.getProperty("sun.boot.class.path", ""));
 		urlSet = urlSet.exclude(".*/JavaVM.framework/.*");
 
-		String[] localIncludeJars = es.cenobit.struts2.json.util.StringUtils.concat(includeJars, conventionIncludeJars);
+		String[] localIncludeJars = com.vteba.struts2.json.util.StringUtils.concat(includeJars, conventionIncludeJars);
 
 		if (localIncludeJars == null) {
 			urlSet = urlSet.exclude(".*?\\.jar(!/|/)?");

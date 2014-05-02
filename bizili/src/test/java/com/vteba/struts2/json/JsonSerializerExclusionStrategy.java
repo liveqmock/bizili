@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package es.cenobit.struts2.json;
+package com.vteba.struts2.json;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -22,7 +22,7 @@ import java.util.Set;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 
-import es.cenobit.struts2.json.annotations.DontExpose;
+import com.vteba.struts2.json.annotations.DontExpose;
 
 public class JsonSerializerExclusionStrategy implements ExclusionStrategy {
 

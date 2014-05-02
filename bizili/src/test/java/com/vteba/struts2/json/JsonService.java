@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package es.cenobit.struts2.json;
+package com.vteba.struts2.json;
 
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -25,7 +25,7 @@ import com.opensymphony.xwork2.util.AnnotationUtils;
 import com.opensymphony.xwork2.util.ClassLoaderUtil;
 import com.opensymphony.xwork2.util.finder.ClassLoaderInterface;
 
-import es.cenobit.struts2.json.annotations.Json;
+import com.vteba.struts2.json.annotations.Json;
 
 public class JsonService implements JsonServices {
 

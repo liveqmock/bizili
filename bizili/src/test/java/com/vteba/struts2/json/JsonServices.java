@@ -13,14 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package es.cenobit.struts2.json.annotations;
+package com.vteba.struts2.json;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.opensymphony.xwork2.config.entities.ActionConfig;
 
-@Target({ ElementType.FIELD })
-@Retention(RetentionPolicy.RUNTIME)
-public @interface DontExpose {
+import com.vteba.struts2.json.annotations.Json;
+
+public interface JsonServices {
+
+	public String[] determineExcludedFieldsNames(Class<?> actionClass, String methodName);
+
+	public String[] determineExcludedFieldsNames(ActionConfig actionConfig);
+
+	public Json getJsonAnnotation(Class<?> actionClass, String methodName);
+
+	public Json getJsonAnnotation(ActionConfig actionConfig);
 }

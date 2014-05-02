@@ -1,4 +1,4 @@
-package es.cenobit.struts2.json;
+package com.vteba.struts2.json;
 
 import java.util.Set;
 

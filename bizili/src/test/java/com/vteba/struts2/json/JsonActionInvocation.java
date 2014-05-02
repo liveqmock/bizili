@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package es.cenobit.struts2.json;
+package com.vteba.struts2.json;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -53,7 +53,7 @@ import com.vteba.util.common.CamelCaseUtils;
 import com.vteba.util.json.FastJsonUtils;
 import com.vteba.util.reflection.AsmUtils;
 
-import es.cenobit.struts2.json.annotations.Json;
+import com.vteba.struts2.json.annotations.Json;
 
 public class JsonActionInvocation extends DefaultActionInvocation implements ActionInvocation {
 

@@ -13,19 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package es.cenobit.struts2.json;
+package com.vteba.struts2.json;
 
-import com.opensymphony.xwork2.config.entities.ActionConfig;
+public class JsonConstants {
+	public static final String JSON_ACTION_CONFIG_BUILDER = "struts.json.actionConfigBuilder";
+	public static final String JSON_SERVICES = "struts.json.jsonServices";
 
-import es.cenobit.struts2.json.annotations.Json;
-
-public interface JsonServices {
-
-	public String[] determineExcludedFieldsNames(Class<?> actionClass, String methodName);
-
-	public String[] determineExcludedFieldsNames(ActionConfig actionConfig);
-
-	public Json getJsonAnnotation(Class<?> actionClass, String methodName);
-
-	public Json getJsonAnnotation(ActionConfig actionConfig);
+	// Support for OSGi and Convention integration
+	public static final String CONVENTION_ACTION_CONFIG_BUILDER = "struts.convention.actionConfigBuilder";
+	public static final String CONVENTION_ACTION_CONFIG_BUILDER_CLASS = "org.apache.struts2.convention.ActionConfigBuilder";
+	public static final String CONVENTION_PACKAGE_PROVIDER_CLASS = "org.apache.struts2.convention.ClasspathPackageProvider";
 }

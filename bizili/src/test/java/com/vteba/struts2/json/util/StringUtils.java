@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package es.cenobit.struts2.json.util;
+package com.vteba.struts2.json.util;
 
 public class StringUtils {
 
