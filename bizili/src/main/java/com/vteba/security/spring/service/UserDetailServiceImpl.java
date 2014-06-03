@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserCache;
@@ -45,6 +46,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 		return userCache;
 	}
 
+	@Qualifier(value = "springSecurityUserCache")
 	@Inject
 	public void setUserCache(UserCache userCache) {
 		this.userCache = userCache;

@@ -177,10 +177,10 @@
       <lazyDeserialization enabled="true"/>
 <!--       <transaction transactionManagerLookupClass="com.vteba.tm.bitronix.infinispan.BitronixTransactionManagerLookup" useSynchronization="false" -->
 	  <transaction 
-      		transactionMode="TRANSACTIONAL" autoCommit="false" lockingMode="OPTIMISTIC"/>
+      		transactionMode="NON_TRANSACTIONAL" autoCommit="false" lockingMode="OPTIMISTIC"/>
    </namedCache>
    
-   <namedCache name="com.vteba.common.constant.C$Subject">
+   <namedCache name="com.vteba.common.constant.Cc$Subject">
       <clustering mode="invalidation">
          <stateTransfer fetchInMemoryState="false" timeout="20000"/>
          <sync replTimeout="20000"/>
@@ -197,7 +197,7 @@
       		transactionMode="NON_TRANSACTIONAL" autoCommit="false" lockingMode="OPTIMISTIC"/>
    </namedCache>
    
-   <namedCache name="com.vteba.common.constant.C$Resources">
+   <namedCache name="com.vteba.common.constant.Cc$Resources">
       <clustering mode="invalidation">
          <stateTransfer fetchInMemoryState="false" timeout="20000"/>
          <sync replTimeout="20000"/>

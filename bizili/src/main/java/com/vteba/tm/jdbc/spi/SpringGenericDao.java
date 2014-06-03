@@ -38,5 +38,5 @@ public interface SpringGenericDao<T, ID extends Serializable> {
 	 * 根据主键删除实体
 	 * @param id
 	 */
-	public void delete(ID id);
+	public int delete(ID id);
 }

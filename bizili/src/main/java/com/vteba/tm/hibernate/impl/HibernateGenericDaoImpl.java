@@ -57,6 +57,8 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 	private static final Logger logger = LoggerFactory.getLogger(HibernateGenericDaoImpl.class);
 	/**问号*/
 	public static final String QMark = "?";
+	private static final String SELECT_NEW = "select new";
+	
 	public HibernateGenericDaoImpl() {
 		super();
 	}
@@ -98,7 +100,7 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 					hql, Arrays.toString(values));
 		}
 		Query query = createQuery(hql, values);
-		if (resultClass != null && hql.indexOf("select new") < 0) {
+		if (resultClass != null && hql.indexOf(SELECT_NEW) < 0) {
 			query.setResultTransformer(new AliasedResultTransformer(resultClass, hql, true));
 			//query.setResultTransformer(new FieldAliasedTransformer(resultClass, hql, true));
 			

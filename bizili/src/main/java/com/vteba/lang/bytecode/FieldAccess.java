@@ -1,21 +1,20 @@
 package com.vteba.lang.bytecode;
 
+import static org.objectweb.asm.Opcodes.*;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Type;
 
-import static org.objectweb.asm.Opcodes.*;
-
 public abstract class FieldAccess {
 	private String[] fieldNames;
 	private Class<?>[] fieldTypes;
-	
+
 	public int getIndex (String fieldName) {
 		for (int i = 0, n = fieldNames.length; i < n; i++)
 			if (fieldNames[i].equals(fieldName)) return i;
@@ -33,11 +32,15 @@ public abstract class FieldAccess {
 	public String[] getFieldNames () {
 		return fieldNames;
 	}
-	
-	public Class<?>[] getFieldTypes() {
+
+	public Class<?>[] getFieldTypes () {
 		return fieldTypes;
 	}
-	
+
+	public int getFieldCount () {
+		return fieldTypes.length;
+	}
+
 	abstract public void set (Object instance, int fieldIndex, Object value);
 
 	abstract public void setBoolean (Object instance, int fieldIndex, boolean value);
@@ -76,9 +79,8 @@ public abstract class FieldAccess {
 
 	abstract public float getFloat (Object instance, int fieldIndex);
 
-	public static FieldAccess get (Class<?> type) {
+	static public FieldAccess get (Class<?> type) {
 		ArrayList<Field> fields = new ArrayList<Field>();
-		List<Class<?>> fieldTypes = new ArrayList<Class<?>>();
 		Class<?> nextClass = type;
 		while (nextClass != Object.class) {
 			Field[] declaredFields = nextClass.getDeclaredFields();
@@ -88,14 +90,16 @@ public abstract class FieldAccess {
 				if (Modifier.isStatic(modifiers)) continue;
 				if (Modifier.isPrivate(modifiers)) continue;
 				fields.add(field);
-				fieldTypes.add(field.getType());
 			}
 			nextClass = nextClass.getSuperclass();
 		}
 
 		String[] fieldNames = new String[fields.size()];
-		for (int i = 0, n = fieldNames.length; i < n; i++)
+		Class<?>[] fieldTypes = new Class[fields.size()];
+		for (int i = 0, n = fieldNames.length; i < n; i++) {
 			fieldNames[i] = fields.get(i).getName();
+			fieldTypes[i] = fields.get(i).getType();
+		}
 
 		String className = type.getName();
 		String accessClassName = className + "FieldAccess";
@@ -111,7 +115,7 @@ public abstract class FieldAccess {
 				String classNameInternal = className.replace('.', '/');
 
 				ClassWriter cw = new ClassWriter(0);
-				cw.visit(V1_1, ACC_PUBLIC + ACC_SUPER, accessClassNameInternal, null, "com/vteba/lang/bytecode/FieldAccess",
+				cw.visit(V1_1, ACC_PUBLIC + ACC_SUPER, accessClassNameInternal, null, "com/esotericsoftware/reflectasm/FieldAccess",
 					null);
 				insertConstructor(cw);
 				insertGetObject(cw, classNameInternal, fields);
@@ -140,9 +144,7 @@ public abstract class FieldAccess {
 		try {
 			FieldAccess access = (FieldAccess)accessClass.newInstance();
 			access.fieldNames = fieldNames;
-			Class<?>[] fieldType = new Class<?>[fieldTypes.size()];
-			fieldTypes.toArray(fieldType);
-			access.fieldTypes = fieldType;
+			access.fieldTypes = fieldTypes;
 			return access;
 		} catch (Exception ex) {
 			throw new RuntimeException("Error constructing field access class: " + accessClassName, ex);
@@ -153,7 +155,7 @@ public abstract class FieldAccess {
 		MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
 		mv.visitCode();
 		mv.visitVarInsn(ALOAD, 0);
-		mv.visitMethodInsn(INVOKESPECIAL, "com/vteba/lang/bytecode/FieldAccess", "<init>", "()V");
+		mv.visitMethodInsn(INVOKESPECIAL, "com/esotericsoftware/reflectasm/FieldAccess", "<init>", "()V");
 		mv.visitInsn(RETURN);
 		mv.visitMaxs(1, 1);
 		mv.visitEnd();
@@ -558,3 +560,4 @@ public abstract class FieldAccess {
 	}
 
 }
+

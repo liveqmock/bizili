@@ -10,8 +10,8 @@
 	default-autowire="byName">
 	
 <!-- 	<import resource="application-oxm-jibx.xml"/> -->
-	<import resource="application-cache-memcache.xml"/>
-<!-- 	<import resource="application-cache-infinispan.xml"/> -->
+<!-- 	<import resource="application-cache-memcache.xml"/> -->
+	<import resource="application-cache-infinispan.xml"/>
 	<import resource="application-mybatis.xml"/>
 	<import resource="application-scheduler.xml"/>
 	<import resource="application-security.xml"/>
@@ -20,7 +20,8 @@
 	<!-- auto wire bean -->
 	<context:annotation-config/>
 	<!-- spring cache -->
-	<cache:annotation-driven cache-manager="memcacheBasedCacheManager"/>
+<!-- 	<cache:annotation-driven cache-manager="memcacheBasedCacheManager"/> -->
+	<cache:annotation-driven cache-manager="springEmbeddedCacheManager"/>
 	<!-- auto scan bean base package , 可以有多个值，以逗号分开-->
 	<context:component-scan base-package="com.vteba"/>
 	
@@ -315,13 +316,13 @@
 	<dwr:controller id="dwrController" debug="true"/>
 	
 	<!-- 之所以单独拿出来定义，是因为要和Hibernate二级缓存公用 -->
-	<bean id="nativeEmbeddedCacheManager" class="org.infinispan.manager.DefaultCacheManager">
-		<constructor-arg value="infinispan-configs.xml" index="0"/>
-	</bean>
+<!-- 	<bean id="nativeEmbeddedCacheManager" class="org.infinispan.manager.DefaultCacheManager"> -->
+<!-- 		<constructor-arg value="infinispan-configs.xml" index="0"/> -->
+<!-- 	</bean> -->
 	
-	<bean id="infinispanCacheManager" class="com.vteba.cache.infinispan.InfinispanCacheManagerImpl" destroy-method="destroy">
-		<property name="embeddedCacheManager" ref="nativeEmbeddedCacheManager"/>
-	</bean>
+<!-- 	<bean id="infinispanCacheManager" class="com.vteba.cache.infinispan.InfinispanCacheManagerImpl" destroy-method="destroy"> -->
+<!-- 		<property name="embeddedCacheManager" ref="nativeEmbeddedCacheManager"/> -->
+<!-- 	</bean> -->
 	
 	<!-- Infinispan CacheManager 管理工具类 -->
 <!-- 	<bean id="infinispanCacheManager" class="com.vteba.cache.infinispan.CacheManager"> -->

@@ -32,14 +32,14 @@
   </profiles>
   
   <dependencies>
-    <!-- 
+    
     <dependency>
       <groupId>com.sun</groupId>
       <artifactId>tools</artifactId>
       <version>1.6.0</version>
       <scope>system</scope>
       <systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
-    </dependency> -->
+    </dependency>
     <!-- 
     <dependency>
       <groupId>junit</groupId>
@@ -198,7 +198,7 @@
 <!-- 		<version>3.0.M1</version> -->
 <!-- 	</dependency> -->
 	
-	<dependency>
+	<dependency> 
 	  <groupId>dwr</groupId>
 	  <artifactId>dwr</artifactId>
 	  <version>3.0.rc2</version>
@@ -1281,11 +1281,11 @@
 	  <artifactId>infinispan-core</artifactId>
 	  <version>${infinispan-version}</version>
 	</dependency>
-<!-- 	<dependency> -->
-<!-- 		<groupId>org.infinispan</groupId> -->
-<!-- 		<artifactId>infinispan-spring</artifactId> -->
-<!-- 		<version>${infinispan-version}</version> -->
-<!-- 	</dependency> -->
+	<dependency>
+		<groupId>org.infinispan</groupId>
+		<artifactId>infinispan-spring</artifactId>
+		<version>${infinispan-version}</version>
+	</dependency>
 <!-- 	<dependency> -->
 <!-- 		<groupId>org.infinispan</groupId> -->
 <!-- 		<artifactId>infinispan-cdi</artifactId> -->

@@ -1,14 +1,14 @@
 package com.vteba.lang.bytecode;
 
+import static org.objectweb.asm.Opcodes.*;
+
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 
-import static org.objectweb.asm.Opcodes.*;
-
 public abstract class ConstructorAccess<T> {
-
 	boolean isNonStaticMemberClass;
 
 	public boolean isNonStaticMemberClass () {
@@ -20,14 +20,14 @@ public abstract class ConstructorAccess<T> {
 	 * If the underlying class is a inner (non-static nested) class, a new instance will be created using <code>null</code> as the
 	 * this$0 synthetic reference. The instantiated object will work as long as it actually don't use any member variable or method
 	 * fron the enclosing instance. */
-	public abstract T newInstance ();
+	abstract public T newInstance ();
 
 	/** Constructor for inner classes (non-static nested classes).
 	 * @param enclosingInstance The instance of the enclosing type to which this inner instance is related to (assigned to its
 	 *           synthetic this$0 field). */
-	public abstract T newInstance (Object enclosingInstance);
+	abstract public T newInstance (Object enclosingInstance);
 
-	public static <T> ConstructorAccess<T> get (Class<T> type) {
+	static public <T> ConstructorAccess<T> get (Class<T> type) {
 		Class<?> enclosingType = type.getEnclosingClass();
 		boolean isNonStaticMemberClass = enclosingType != null && type.isMemberClass() && !Modifier.isStatic(type.getModifiers());
 
@@ -45,20 +45,30 @@ public abstract class ConstructorAccess<T> {
 				String classNameInternal = className.replace('.', '/');
 				String enclosingClassNameInternal;
 
+				boolean isPrivate = false;
 				if (!isNonStaticMemberClass) {
 					enclosingClassNameInternal = null;
 					try {
-						type.getConstructor((Class[])null);
+						Constructor<T> constructor = type.getDeclaredConstructor((Class[])null);
+						isPrivate = Modifier.isPrivate(constructor.getModifiers());
 					} catch (Exception ex) {
-						throw new RuntimeException("Class cannot be created (missing no-arg constructor): " + type.getName());
+						throw new RuntimeException("Class cannot be created (missing no-arg constructor): " + type.getName(), ex);
+					}
+					if (isPrivate) {
+						throw new RuntimeException("Class cannot be created (the no-arg constructor is private): " + type.getName());
 					}
 				} else {
 					enclosingClassNameInternal = enclosingType.getName().replace('.', '/');
 					try {
-						type.getConstructor(enclosingType); // Inner classes should have this.
+						Constructor<T> constructor = type.getDeclaredConstructor(enclosingType); // Inner classes should have this.
+						isPrivate = Modifier.isPrivate(constructor.getModifiers());
 					} catch (Exception ex) {
 						throw new RuntimeException("Non-static member class cannot be created (missing enclosing class constructor): "
-							+ type.getName());
+							+ type.getName(), ex);
+					}
+					if (isPrivate) {
+						throw new RuntimeException(
+							"Non-static member class cannot be created (the enclosing class constructor is private): " + type.getName());
 					}
 				}
 

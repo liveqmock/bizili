@@ -1,22 +1,65 @@
 package com.vteba.lang.bytecode;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
+import java.security.ProtectionDomain;
+import java.util.WeakHashMap;
 
 class AccessClassLoader extends ClassLoader {
-	static private final ArrayList<AccessClassLoader> accessClassLoaders = new ArrayList<AccessClassLoader>();
+	// Weak-references to class loaders, to avoid perm gen memory leaks, for example in app servers/web containters if the
+	// reflectasm library (including this class) is loaded outside the deployed applications (WAR/EAR) using ReflectASM/Kryo (exts,
+	// user classpath, etc).
+	// The key is the parent class loader and the value is the AccessClassLoader, both are weak-referenced in the hash table.
+	static private final WeakHashMap<ClassLoader, WeakReference<AccessClassLoader>> accessClassLoaders = new WeakHashMap<ClassLoader, WeakReference<AccessClassLoader>>();
+
+	// Fast-path for classes loaded in the same ClassLoader as this class.
+	static private final ClassLoader selfContextParentClassLoader = getParentClassLoader(AccessClassLoader.class);
+	static private volatile AccessClassLoader selfContextAccessClassLoader = new AccessClassLoader(selfContextParentClassLoader);
 
 	static AccessClassLoader get (Class<?> type) {
-		ClassLoader parent = type.getClassLoader();
+		ClassLoader parent = getParentClassLoader(type);
+		// 1. fast-path:
+		if (selfContextParentClassLoader.equals(parent)) {
+			if (selfContextAccessClassLoader == null) {
+				synchronized (accessClassLoaders) { // DCL with volatile semantics
+					if (selfContextAccessClassLoader == null)
+						selfContextAccessClassLoader = new AccessClassLoader(selfContextParentClassLoader);
+				}
+			}
+			return selfContextAccessClassLoader;
+		}
+		// 2. normal search:
 		synchronized (accessClassLoaders) {
-			for (int i = 0, n = accessClassLoaders.size(); i < n; i++) {
-				AccessClassLoader accessClassLoader = accessClassLoaders.get(i);
-				if (accessClassLoader.getParent() == parent) return accessClassLoader;
+			WeakReference<AccessClassLoader> ref = accessClassLoaders.get(parent);
+			if (ref != null) {
+				AccessClassLoader accessClassLoader = ref.get();
+				if (accessClassLoader != null)
+					return accessClassLoader;
+				else
+					accessClassLoaders.remove(parent); // the value has been GC-reclaimed, but still not the key (defensive sanity)
 			}
 			AccessClassLoader accessClassLoader = new AccessClassLoader(parent);
-			accessClassLoaders.add(accessClassLoader);
+			accessClassLoaders.put(parent, new WeakReference<AccessClassLoader>(accessClassLoader));
 			return accessClassLoader;
 		}
+	}
+
+	public static void remove (ClassLoader parent) {
+		// 1. fast-path:
+		if (selfContextParentClassLoader.equals(parent)) {
+			selfContextAccessClassLoader = null;
+		} else {
+			// 2. normal search:
+			synchronized (accessClassLoaders) {
+				accessClassLoaders.remove(parent);
+			}
+		}
+	}
+
+	public static int activeAccessClassLoaders () {
+		int sz = accessClassLoaders.size();
+		if (selfContextAccessClassLoader != null) sz++;
+		return sz;
 	}
 
 	private AccessClassLoader (ClassLoader parent) {
@@ -36,11 +79,18 @@ class AccessClassLoader extends ClassLoader {
 		try {
 			// Attempt to load the access class in the same loader, which makes protected and default access members accessible.
 			Method method = ClassLoader.class.getDeclaredMethod("defineClass", new Class[] {String.class, byte[].class, int.class,
-				int.class});
-			method.setAccessible(true);
-			return (Class<?>)method.invoke(getParent(), new Object[] {name, bytes, Integer.valueOf(0), Integer.valueOf(bytes.length)});
+				int.class, ProtectionDomain.class});
+			if (!method.isAccessible()) method.setAccessible(true);
+			return (Class<?>)method.invoke(getParent(), new Object[] {name, bytes, Integer.valueOf(0), Integer.valueOf(bytes.length),
+				getClass().getProtectionDomain()});
 		} catch (Exception ignored) {
 		}
-		return defineClass(name, bytes, 0, bytes.length);
+		return defineClass(name, bytes, 0, bytes.length, getClass().getProtectionDomain());
+	}
+
+	private static ClassLoader getParentClassLoader (Class<?> type) {
+		ClassLoader parent = type.getClassLoader();
+		if (parent == null) parent = ClassLoader.getSystemClassLoader();
+		return parent;
 	}
 }
