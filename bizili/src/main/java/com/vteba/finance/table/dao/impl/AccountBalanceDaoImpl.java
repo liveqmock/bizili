@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.table.dao.IAccountBalanceDao;
 import com.vteba.finance.table.model.AccountBalance;
-import com.vteba.tm.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
 
 /**
  * 科目余额表DAO实现

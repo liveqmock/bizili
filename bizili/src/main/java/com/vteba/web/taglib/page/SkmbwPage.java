@@ -9,7 +9,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.vteba.tm.generic.Page;
+import com.vteba.tx.generic.Page;
 
 /**
  * 分页标签实现

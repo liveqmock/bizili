@@ -1,7 +1,7 @@
 package com.vteba.finance.payables.dao;
 
 import com.vteba.finance.payables.model.PayablesSummary;
-import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
 
 /**
  * 应付汇总DAO

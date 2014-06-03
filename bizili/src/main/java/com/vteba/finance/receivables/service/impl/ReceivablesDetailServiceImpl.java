@@ -6,7 +6,7 @@ import javax.inject.Named;
 import com.vteba.finance.receivables.dao.IReceivablesDetailDao;
 import com.vteba.finance.receivables.model.ReceivablesDetail;
 import com.vteba.finance.receivables.service.IReceivablesDetailService;
-import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 
 /**

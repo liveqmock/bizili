@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 import com.vteba.common.constant.DataSourceConst;
 import com.vteba.finance.assets.dao.IDepreDetailsDao;
 import com.vteba.finance.assets.model.DepreDetails;
-import com.vteba.tm.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
 import com.vteba.service.multitenant.annotation.Schema;
 
 /**

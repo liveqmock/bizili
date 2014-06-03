@@ -18,7 +18,7 @@ import com.vteba.finance.account.service.ISubjectService;
 import com.vteba.finance.table.dao.IAccountBalanceDao;
 import com.vteba.finance.table.model.AccountBalance;
 import com.vteba.finance.table.service.IAccountBalanceService;
-import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.util.common.BigDecimalUtils;
 

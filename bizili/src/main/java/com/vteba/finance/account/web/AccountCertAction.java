@@ -17,7 +17,7 @@ import com.vteba.finance.account.form.CertTotalForm;
 import com.vteba.finance.account.model.CertTotal;
 import com.vteba.finance.account.service.ICertTotalService;
 import com.vteba.finance.account.service.ISubjectService;
-import com.vteba.tm.generic.Page;
+import com.vteba.tx.generic.Page;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;

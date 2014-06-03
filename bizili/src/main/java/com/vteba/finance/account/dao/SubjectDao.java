@@ -1,7 +1,7 @@
 package com.vteba.finance.account.dao;
 
 import com.vteba.finance.account.model.Subject;
-import com.vteba.tm.jdbc.mybatis.mapper.BaseMapper;
+import com.vteba.tx.jdbc.mybatis.mapper.BaseMapper;
 
 /**
  * 会计科目MyBatis Dao Mapper

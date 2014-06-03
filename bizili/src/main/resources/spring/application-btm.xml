@@ -48,7 +48,7 @@
     </bean>
     
     <!-- bitronix.tm.resource.jdbc.PoolingDataSource -->
-    <bean id="skmbwDataSource" class="com.vteba.tm.bitronix.datasource.BtmPoolingDataSource" init-method="init" destroy-method="close">
+    <bean id="skmbwDataSource" class="com.vteba.tx.bitronix.datasource.BtmPoolingDataSource" init-method="init" destroy-method="close">
 	    <property name="className" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource" />
 	    <property name="uniqueName" value="mysqlSkmbw" />
 	    <property name="maxPoolSize" value="${jdbc.maxPoolSize}"/>
@@ -66,7 +66,7 @@
 	    <property name="testQuery" value="select 1"/>
 	    <property name="allowLocalTransactions" value="true"/>
 	</bean>
-	<bean id="biziliDataSource" class="com.vteba.tm.bitronix.datasource.BtmPoolingDataSource" init-method="init" destroy-method="close">
+	<bean id="biziliDataSource" class="com.vteba.tx.bitronix.datasource.BtmPoolingDataSource" init-method="init" destroy-method="close">
 	    <property name="className" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource" />
 	    <property name="uniqueName" value="mysqlBizili"/>
 	    <property name="maxPoolSize" value="${jdbc.maxPoolSize}"/>
@@ -83,7 +83,7 @@
 	    </property>
 	    <property name="testQuery" value="select 1"/>
 	</bean>
-<!-- 	<bean id="supplychainDataSource" class="com.vteba.tm.bitronix.datasource.BtmPoolingDataSource" init-method="init" destroy-method="close"> -->
+<!-- 	<bean id="supplychainDataSource" class="com.vteba.tx.bitronix.datasource.BtmPoolingDataSource" init-method="init" destroy-method="close"> -->
 <!-- 	    <property name="className" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource" /> -->
 <!-- 	    <property name="uniqueName" value="mysqlSupplychain"/> -->
 <!-- 	    <property name="maxPoolSize" value="100"/> -->
@@ -211,15 +211,15 @@
 	
 	
 	<!-- SpringJdbcTemplate -->
-	<bean id="biziliJdbcTemplate" class="com.vteba.tm.jdbc.spring.SpringJdbcTemplate">
+	<bean id="biziliJdbcTemplate" class="com.vteba.tx.jdbc.spring.SpringJdbcTemplate">
 		<property name="dataSource" ref="biziliDataSource"/>
 	</bean>
 	
-	<bean id="skmbwJdbcTemplate" class="com.vteba.tm.jdbc.spring.SpringJdbcTemplate">
+	<bean id="skmbwJdbcTemplate" class="com.vteba.tx.jdbc.spring.SpringJdbcTemplate">
 		<property name="dataSource" ref="skmbwDataSource"/>
 	</bean>
 	
-<!-- 	<bean id="supplychainJdbcTemplate" class="com.vteba.tm.jdbc.spring.SpringJdbcTemplate"> -->
+<!-- 	<bean id="supplychainJdbcTemplate" class="com.vteba.tx.jdbc.spring.SpringJdbcTemplate"> -->
 <!-- 		<property name="dataSource" ref="supplychainDataSource"/> -->
 <!-- 	</bean> -->
 	

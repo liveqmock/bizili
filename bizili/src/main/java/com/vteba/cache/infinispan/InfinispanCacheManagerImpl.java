@@ -19,7 +19,7 @@ import bitronix.tm.recovery.RecoveryException;
 import bitronix.tm.resource.ResourceRegistrar;
 
 import com.vteba.common.exception.BasicException;
-import com.vteba.tm.bitronix.infinispan.InfinispanXAResourceProducer;
+import com.vteba.tx.bitronix.infinispan.InfinispanXAResourceProducer;
 
 /**
  * 对Infinispan缓存管理器的封装。

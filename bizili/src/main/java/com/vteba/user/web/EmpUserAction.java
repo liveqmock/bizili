@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vteba.common.constant.CommonConst;
-import com.vteba.tm.generic.Page;
+import com.vteba.tx.generic.Page;
 import com.vteba.security.spring.SecurityContextHolderUtils;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.model.EmpUser;

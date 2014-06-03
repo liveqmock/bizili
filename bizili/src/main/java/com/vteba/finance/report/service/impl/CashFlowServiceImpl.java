@@ -6,7 +6,7 @@ import javax.inject.Named;
 import com.vteba.finance.report.dao.ICashFlowDao;
 import com.vteba.finance.report.model.CashFlow;
 import com.vteba.finance.report.service.ICashFlowService;
-import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 
 /**

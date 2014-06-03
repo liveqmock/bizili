@@ -8,7 +8,7 @@ import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.user.dao.IRolesDao;
 import com.vteba.user.model.Authorities;

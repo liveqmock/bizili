@@ -9,7 +9,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.taglibs.standard.tag.common.core.UrlSupport;
 
-import com.vteba.tm.generic.Page;
+import com.vteba.tx.generic.Page;
 
 public class PageTag extends TagSupport {
 

@@ -160,7 +160,7 @@
       <eviction maxEntries="10000" strategy="LRU"/>
       <expiration maxIdle="100000" wakeUpInterval="5000"/>
       <lazyDeserialization enabled="true"/>
-      <transaction transactionManagerLookupClass="com.vteba.tm.bitronix.infinispan.BitronixTransactionManagerLookup" useSynchronization="false"
+      <transaction transactionManagerLookupClass="com.vteba.tx.bitronix.infinispan.BitronixTransactionManagerLookup" useSynchronization="false"
       		transactionMode="TRANSACTIONAL" autoCommit="false" lockingMode="OPTIMISTIC"/>
    </namedCache>
    <namedCache name="springSecurityUserCache">
@@ -175,7 +175,7 @@
       <eviction maxEntries="10000" strategy="LRU"/>
       <expiration maxIdle="100000" wakeUpInterval="5000"/>
       <lazyDeserialization enabled="true"/>
-<!--       <transaction transactionManagerLookupClass="com.vteba.tm.bitronix.infinispan.BitronixTransactionManagerLookup" useSynchronization="false" -->
+<!--       <transaction transactionManagerLookupClass="com.vteba.tx.bitronix.infinispan.BitronixTransactionManagerLookup" useSynchronization="false" -->
 	  <transaction 
       		transactionMode="NON_TRANSACTIONAL" autoCommit="false" lockingMode="OPTIMISTIC"/>
    </namedCache>
@@ -192,7 +192,7 @@
       <eviction maxEntries="10000" strategy="LRU"/>
       <expiration maxIdle="100000" wakeUpInterval="5000"/>
       <lazyDeserialization enabled="true"/>
-<!--       <transaction transactionManagerLookupClass="com.vteba.tm.bitronix.infinispan.BitronixTransactionManagerLookup" useSynchronization="false" -->
+<!--       <transaction transactionManagerLookupClass="com.vteba.tx.bitronix.infinispan.BitronixTransactionManagerLookup" useSynchronization="false" -->
 	  <transaction 
       		transactionMode="NON_TRANSACTIONAL" autoCommit="false" lockingMode="OPTIMISTIC"/>
    </namedCache>
@@ -209,7 +209,7 @@
       <eviction maxEntries="10000" strategy="LRU"/>
       <expiration maxIdle="100000" wakeUpInterval="5000"/>
       <lazyDeserialization enabled="true"/>
-<!--       <transaction transactionManagerLookupClass="com.vteba.tm.bitronix.infinispan.BitronixTransactionManagerLookup" useSynchronization="false" -->
+<!--       <transaction transactionManagerLookupClass="com.vteba.tx.bitronix.infinispan.BitronixTransactionManagerLookup" useSynchronization="false" -->
 	  <transaction 
       		transactionMode="NON_TRANSACTIONAL" autoCommit="false" lockingMode="OPTIMISTIC"/>
    </namedCache>

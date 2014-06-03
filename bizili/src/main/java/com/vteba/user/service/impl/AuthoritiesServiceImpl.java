@@ -10,7 +10,7 @@ import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.cache.infinispan.InfinispanCache;
 import com.vteba.cache.infinispan.InfinispanCacheManager;
 import com.vteba.common.constant.Cc;

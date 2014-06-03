@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.vteba.finance.account.model.Subject;
 import com.vteba.service.generic.IGenericService;
-import com.vteba.tm.generic.Page;
+import com.vteba.tx.generic.Page;
 
 /**
  * 会计科目Service接口。

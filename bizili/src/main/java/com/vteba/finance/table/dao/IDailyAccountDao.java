@@ -1,7 +1,7 @@
 package com.vteba.finance.table.dao;
 
 import com.vteba.finance.table.model.DailyAccount;
-import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
 
 /**
  * 日记账DAO接口

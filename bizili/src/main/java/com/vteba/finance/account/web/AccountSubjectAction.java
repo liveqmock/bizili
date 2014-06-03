@@ -19,7 +19,7 @@ import com.vteba.common.constant.FileConst;
 import com.vteba.finance.account.model.Subject;
 import com.vteba.finance.account.service.ISubjectService;
 import com.vteba.service.context.RequestContextHolder;
-import com.vteba.tm.generic.Page;
+import com.vteba.tx.generic.Page;
 import com.vteba.util.common.ExcelExportUtils;
 import com.vteba.util.common.ExcelImportUtils;
 import com.vteba.util.reflection.ReflectUtils;

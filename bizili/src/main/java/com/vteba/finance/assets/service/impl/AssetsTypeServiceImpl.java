@@ -6,7 +6,7 @@ import javax.inject.Named;
 import com.vteba.finance.assets.dao.IAssetsTypeDao;
 import com.vteba.finance.assets.model.AssetsType;
 import com.vteba.finance.assets.service.IAssetsTypeService;
-import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 
 /**

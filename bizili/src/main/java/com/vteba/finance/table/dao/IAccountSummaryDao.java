@@ -1,7 +1,7 @@
 package com.vteba.finance.table.dao;
 
 import com.vteba.finance.table.model.AccountSummary;
-import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
 
 /**
  * 科目汇总表DAO interface

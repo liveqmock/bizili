@@ -1,6 +1,6 @@
 package com.vteba.cache.infinispan;
 
-import com.vteba.tm.hibernate.QueryStatement;
+import com.vteba.tx.hibernate.QueryStatement;
 
 /**
  * Infinispan缓存管理器工具类。

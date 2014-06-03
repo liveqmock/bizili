@@ -13,7 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.vteba.service.generic.impl.GenericServiceImpl;
-import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.user.dao.IEmpUserDao;
 import com.vteba.user.model.EmpUser;
 import com.vteba.user.model.Roles;

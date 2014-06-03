@@ -1,7 +1,7 @@
 package com.vteba.finance.setting.dao;
 
 import com.vteba.finance.setting.model.SystemParameter;
-import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
 
 /**
  * 系统参数dao接口

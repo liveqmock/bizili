@@ -1,6 +1,6 @@
 package com.vteba.user.dao;
 
-import com.vteba.tm.jdbc.mybatis.annotation.DaoMapper;
+import com.vteba.tx.jdbc.mybatis.annotation.DaoMapper;
 import com.vteba.user.model.EmpUser;
 
 /**

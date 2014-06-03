@@ -1,7 +1,7 @@
 package com.vteba.finance.report.dao;
 
 import com.vteba.finance.report.model.Profit;
-import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
 
 /**
  * 利润表DAO

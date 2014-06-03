@@ -7,8 +7,8 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.table.dao.IAccountSummaryDao;
 import com.vteba.finance.table.model.AccountSummary;
-import com.vteba.tm.hibernate.impl.HibernateGenericDaoImpl;
-import com.vteba.tm.jdbc.spring.SpringJdbcTemplate;
+import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.jdbc.spring.SpringJdbcTemplate;
 
 /**
  * 科目汇总表DAO implementation

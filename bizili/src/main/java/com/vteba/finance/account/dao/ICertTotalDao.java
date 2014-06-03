@@ -1,7 +1,7 @@
 package com.vteba.finance.account.dao;
 
 import com.vteba.finance.account.model.CertTotal;
-import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
 
 /**
  * 凭证明细汇总DAO接口

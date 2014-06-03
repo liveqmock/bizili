@@ -7,9 +7,9 @@ import java.util.Map;
 import org.hibernate.criterion.DetachedCriteria;
 
 import com.vteba.service.generic.IGenericService;
-import com.vteba.tm.generic.Page;
-import com.vteba.tm.hibernate.IHibernateGenericDao;
-import com.vteba.tm.jdbc.spring.SpringJdbcTemplate;
+import com.vteba.tx.generic.Page;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
+import com.vteba.tx.jdbc.spring.SpringJdbcTemplate;
 
 /**
  * 通用泛型Service实现，供其他Service继承，简化service实现。

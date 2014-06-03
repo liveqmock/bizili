@@ -22,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.vteba.common.constant.CommonConst;
 import com.vteba.service.context.RequestContextHolder;
-import com.vteba.tm.generic.Page;
+import com.vteba.tx.generic.Page;
 import com.vteba.util.json.FastJsonUtils;
 import com.vteba.web.editer.DoubleEditor;
 import com.vteba.web.editer.FloatEditor;

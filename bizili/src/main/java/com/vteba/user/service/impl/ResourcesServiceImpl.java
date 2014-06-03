@@ -6,7 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.cache.infinispan.InfinispanCache;
 import com.vteba.cache.infinispan.InfinispanCacheManager;
 import com.vteba.common.constant.Cc;

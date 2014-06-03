@@ -1,7 +1,7 @@
 package com.vteba.finance.assets.dao;
 
 import com.vteba.finance.assets.model.AssetsType;
-import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
 
 /**
  * 固定资产分类DAO

@@ -1,7 +1,7 @@
 package com.vteba.finance.table.dao;
 
 import com.vteba.finance.table.model.QuantityAmountDetail;
-import com.vteba.tm.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
 
 /**
  * 数量金额明细账DAO接口
