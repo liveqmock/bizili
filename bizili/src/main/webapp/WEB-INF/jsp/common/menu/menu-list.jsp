@@ -92,31 +92,41 @@ img {border-width: 0px 0px 0px 0px}
 					<input type="hidden" name="query" id="query" value="false"/>
 						<table class="bugSteel first" style="border-top: 0;">
 							<tr>
-								<td class="twof"> 模块名</td>
-								<td class="twef">
-								<input type="text" name="moduleName" value="${moduleMenu.moduleName}" class="tf" />
+								<td class="twof">&nbsp;模块名</td>
+								<td class="tenf">
+								<div class="col-sm-11">
+								<input type="text" name="moduleName" value="${moduleMenu.moduleName}" class="form-control input-sm" />
+								</div>
 								</td>
-								<td class="twof">是否可用</td>
-								<td class="twef">
-								<select style="width:70px;" name="enable">
+								<td class="fouf">是否可用</td>
+								<td class="tenf">
+								<div class="col-sm-9">
+								<select name="enable" class="form-control input-sm">
 									<option value="true" <c:if test="${moduleMenu.enable == true}">selected="selected"</c:if>>是</option>
 									<option value="false" <c:if test="${moduleMenu.enable == false}">selected="selected"</c:if>>否</option>
 								</select>
+								<div class="col-sm-8">
 								</td>
-								<td class="twof">排序</td><td class="fotf">
-								<select style="width:90px;" name="page.orderBy">
-								<option value="moduleName" <c:if test="${page.orderBy eq 'moduleName'}">selected="selected"</c:if>>权限名</option>
-								<option value="enable" <c:if test="${page.orderBy eq 'enable'}">selected="selected"</c:if>>是否可用</option>
-								</select>-
-								<select style="width:70px;" name="page.ascDesc">
+								<td class="twof">排序</td>
+								<td class="fotf">
+								<div class="col-sm-12">
+								<div class="col-sm-6">
+								<select class="form-control input-sm" name="page.orderBy">
+									<option value="moduleName" <c:if test="${page.orderBy eq 'moduleName'}">selected="selected"</c:if>>权限名</option>
+									<option value="enable" <c:if test="${page.orderBy eq 'enable'}">selected="selected"</c:if>>是否可用</option>
+								</select>
+								</div>
+								<div class="col-sm-6">
+								<select class="form-control input-sm" name="page.ascDesc">
 									<option value="asc" <c:if test="${page.ascDesc eq 'asc'}">selected="selected"</c:if>>升序</option>
 									<option value="desc" <c:if test="${page.ascDesc eq 'desc'}">selected="selected"</c:if>>降序</option>
 								</select>
+								</div>
+								</div>
 								</td>
-								<td class="twof"></td>
-								<td class="twef">
-								<input type="button" value="查询" class="determination" id="queryButton" style="margin-right:20px;" />
-									<input type="reset" value="清除" class="cancellation" />
+								<td class="eigf">
+								<input type="button" value="查询" class="btn btn-primary btn-sm" id="queryButton" style="margin-right:20px;" />
+								<input type="reset" value="清除" class="btn btn-default btn-sm" />
 								</td>
 							</tr>
 						</table>
