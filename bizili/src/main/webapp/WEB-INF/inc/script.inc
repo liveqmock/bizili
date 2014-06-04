@@ -8,6 +8,7 @@
 <script type="text/javascript" src="${ctx}/dwr/util.js"></script>
 <script type="text/javascript">
 var api = frameElement.api, W = api.opener;
+var ctx = '${ctx}';
 </script>
 <script type="text/javascript" src="${ctx}/js/bootstrap.min.js"></script>
 

@@ -19,6 +19,10 @@
 	<security:http pattern="/**/*.gif" security="none"/>
 	<security:http pattern="/**/*.css" security="none"/>
 	<security:http pattern="/**/*.js" security="none"/>
+	<security:http pattern="*.map" security="none"/>
+	<security:http pattern="*.svg" security="none"/>
+	<security:http pattern="*.ttf" security="none"/>
+	<security:http pattern="*.woff" security="none"/>
 	<security:http pattern="/login.jsp" security="none"/>
 	<security:http pattern="/index.jsp" security="none"/>
 	<security:http pattern="/forgetpass.jsp" security="none"/>
