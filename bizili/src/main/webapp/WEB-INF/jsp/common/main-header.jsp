@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/inc/taglib.inc" %>
+<%@ include file="/WEB-INF/inc/constants.inc" %>
 <div class="header navbar navbar-fixed-top">
 	<!-- BEGIN TOP NAVIGATION BAR -->
 	<div class="header-inner">

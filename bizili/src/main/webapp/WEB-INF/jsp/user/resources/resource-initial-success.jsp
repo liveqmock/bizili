@@ -1,259 +1,607 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="Content-Language" content="zh-cn" />
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<html>
-<head><title>资源管理</title>
-<style type="text/css">
-img {border-width: 0px 0px 0px 0px}
-#middel{
-	width:1340px;
-}
-#left{
-	float:left;
-}
-
-#content{
-	width:1200px;
-}
-#footer{
-	width:1340px;
-}
-</style>
 <%@ include file="/WEB-INF/inc/taglib.inc" %>
 <%@ include file="/WEB-INF/inc/constants.inc" %>
-<%@ include file="/WEB-INF/inc/script.inc" %>
-<%@ include file="/WEB-INF/inc/style.inc" %>
-<script type="text/javascript">
-    $(document).ready(function(){
-    	$('#queryButton').click(function(){
-    		$('#query').val('true');
-    		$("#queryForm").submit();
-    	});
-    });
-    function deleteRes(id) {
-    	$.dialog.confirm('你确定要删除这条资源吗？', function(){
-			$.ajax({
-	            type:"post",
-	            dataType:"text",
-	            url: '${ctx}/users/resources-delete.htm?resourceId=' + id,
-	            success: function(msg){
-	            	$('#tr'+id).remove();
-	            },
-	            error: function (msg) {
-	                alert(msg.responseText);
-	            }
-	        });
-    	}, function(){
-    	    $.dialog.tips('您放弃删除。');
-    	});
-	}
-    
-  	//修改实体
-    function editRes(id) {
-   	 window.location.href = 'resources-input.htm?init=true&resourceId='+id;
-    }
-</script>
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-cn" />
+<title>资源管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+
+<!-- BEGIN GLOBAL MANDATORY STYLES 
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>-->
+<link href="${ctx}/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/assets/plugins/uniform/css/uniform.default.min.css" rel="stylesheet" type="text/css"/>
+<!-- END GLOBAL MANDATORY STYLES -->
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link rel="stylesheet" type="text/css" href="${ctx}/assets/plugins/select2/select2.css"/>
+<link rel="stylesheet" type="text/css" href="${ctx}/assets/plugins/select2/select2-metronic.css"/>
+<link rel="stylesheet" href="${ctx}/assets/plugins/data-tables/DT_bootstrap.css"/>
+<!-- END PAGE LEVEL STYLES -->
+<!-- BEGIN THEME STYLES -->
+<link href="${ctx}/assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/assets/css/style.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/assets/css/plugins.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+<link href="${ctx}/assets/css/custom.css" rel="stylesheet" type="text/css"/>
+<!-- END THEME STYLES -->
+<link rel="shortcut icon" href="favicon.ico"/>
 </head>
-<body>
-<div id="container">
-	<div id="header">
-		<jsp:include page="/WEB-INF/tiles/four-header.jsp" />
-	</div>
-	<div id="middel">
-		<div id="left">
-			<jsp:include page="/WEB-INF/tiles/four-left.jsp" />
-		</div>
-		<div id="content">
-			<div id="epMcContent">
-		<div class="epMcCtContent">
-			<h3 class="bordFont bigFont">资源管理</h3>
-			<div class="tab">
-				<ul class="tabMenu none bordFont floatUl normalFont">
-					<li class="first"><a href="<c:url value="/users/resources-initial.htm"/>" class="current">资源列表</a>
-					</li>
-					<li><a href="<c:url value="/users/resources-input.htm?init=true"/>">新增资源</a></li>
-				</ul>
-				<form action="resources-initial.htm" id="queryForm" name="queryForm" method="post" class="form-horizontal" role="form">
-					  <input type="hidden" name="query" id="query" value="false"/>
-					  <div class="form-group">
-					  <div class="col-sm-3">
-					  <label for="resourceNameId" class="col-sm-4 control-label">资源名</label>
-					    <div class="col-sm-8">
-					      <input type="text" name="resourceName" id="resourceNameId" class="form-control input-sm" placeholder="资源名">
-					    </div>
-					  </div>
-					  <div class="col-sm-3">
-					  <label for="resourceType" class="col-sm-4 control-label">资源类型</label>
-					    <div class="col-sm-8">
-					      <select id="resourceType" name="resourceType" class="form-control input-sm">
-							<option value="">--请选择--</option>
-							<option value="url">URL</option>
-							<option value="action">Action</option>
-							<option value="method">Method</option>
-						</select>
-					    </div>
-					  </div>
-					  <div class="col-sm-3">
-					  <label for="resourceUrlId" class="col-sm-4 control-label">资源URL</label>
-					    <div class="col-sm-8">
-					      <input type="text" name="resourceUrl" id="resourceUrlId" class="form-control input-sm"/>
-					    </div>
-					  </div>
-					  <div class="col-sm-3">
-					  <label for="moduleId" class="col-sm-4 control-label">菜单模块</label>
-					    <div class="col-sm-8">
-					      <select id="moduleId" name="moduleId" class="form-control input-sm">
-									<option value="">--请选择--</option>
-									<c:forEach items="${list}" var="module">
-										<option value="${module.moduleId}" <c:if test="${module.moduleId == resources.moduleId}">selected="selected"</c:if> >${module.moduleName}</option>
-									</c:forEach>
-							</select>
-					    </div>
-					  </div>  
-					  </div>
-					  <div class="form-group">
-					      <div class="col-sm-3">
-						  <label for="enabled" class="col-sm-4 control-label">是否启用</label>
-						    <div class="col-sm-8">
-						      <select id="enabled" name="enabled" class="form-control input-sm">
-										<option value="">--请选择--</option>
-										<option value="1">是</option>
-										<option value="0">否</option>
-								</select>
-						    </div>
-						  </div>
-						  <div class="col-sm-3">
-						  <label for="defaults" class="col-sm-4 control-label">默认URL</label>
-						    <div class="col-sm-8">
-						      <select id="defaults" name="defaults" class="form-control input-sm">
-										<option value="">--请选择--</option>
-										<option value="true">是</option>
-										<option value="false">否</option>
-								</select>
-						    </div>
-						  </div>
-						  <div class="col-sm-4">
-						  <label for="enabled" class="col-sm-3 control-label">排序</label>
-						    <div class="col-sm-4">
-						      <select class="form-control input-sm" name="page.orderBy"><option value="resourceUrl">资源URL</option><option value="resourceType">资源类型</option></select>
-						    </div>
-						    <div class="col-sm-4">
-						      <select class="form-control input-sm" name="page.ascDesc"><option value="asc">升序</option><option value="desc">降序</option></select>
-						    </div>
-						  </div>
-						  <div class="col-sm-2">
-						      <button type="button" class="btn btn-primary btn-sm" id="queryButton" style="margin-right:20px;">查询</button>
-							  <input type="reset" value="清除" class="btn btn-default btn-sm" />
-						  </div>
-					  </div>
-<!-- 					</form> -->
-<!-- 					<form action="resources-initial.htm" id="queryForm" name="queryForm" method="post"> -->
-<!-- 					<input type="hidden" name="query" id="query" value="false"/> -->
-<!-- 						<table class="bugSteel first" style="border-top: 0;"> -->
-<!-- 							<tr> -->
-<!-- 								<td class="twof">资源名</td> -->
-<!-- 								<td class="eigf"><div class="col-xs-10"><input type="text" name="resourceName" class="form-control input-sm" /></div></td> -->
-<!-- 								<td class="twof">资源类型</td> -->
-<!-- 								<td class="twef"> -->
-<!-- 								<select id="resourceType" name="resourceType" style="width:140px;"> -->
-<!-- 										<option value="">--请选择--</option> -->
-<!-- 										<option value="url">URL</option> -->
-<!-- 										<option value="action">Action</option> -->
-<!-- 										<option value="method">Method</option> -->
-<!-- 								</select> -->
-<!-- 								</td> -->
-<!-- 								<td class="twof">资源URL</td> -->
-<!-- 								<td class="twef"><div class="col-xs-10"><input type="text" name="resourceUrl" class="form-control input-sm" style="width:160px;"/></div></td> -->
-<!-- 								<td class="twof">菜单模块</td> -->
-<!-- 								<td class="twef"> -->
-<!-- 								<select id="moduleId" name="moduleId" style="width:120px;"> -->
-<!-- 									<option value="">--请选择--</option> -->
-<%-- 									<c:forEach items="${list}" var="module"> --%>
-<%-- 										<option value="${module.moduleId}" <c:if test="${module.moduleId == resources.moduleId}">selected="selected"</c:if> >${module.moduleName}</option> --%>
-<%-- 									</c:forEach> --%>
-<!-- 								</select> -->
-<!-- 								</td> -->
-<!-- 							</tr> -->
-<!-- 							<tr> -->
-<!-- 								<td class="twof">是否启用</td> -->
-<!-- 								<td class="twef"> -->
-<!-- 								<select id="enabled" name="enabled" style="width:120px;"> -->
-<!-- 										<option value="">--请选择--</option> -->
-<!-- 										<option value="1">是</option> -->
-<!-- 										<option value="0">否</option> -->
-<!-- 								</select> -->
-<!-- 								</td> -->
-<!-- 								<td class="twof">默认URL</td> -->
-<!-- 								<td class="twef"> -->
-<!-- 								<select id="defaults" name="defaults" style="width:120px;"> -->
-<!-- 										<option value="">--请选择--</option> -->
-<!-- 										<option value="true">是</option> -->
-<!-- 										<option value="false">否</option> -->
-<!-- 								</select> -->
-<!-- 								</td> -->
-<!-- 								<td class="twof">排序</td><td class="fotf"><select style="width:90px;" name="page.orderBy"><option value="resourceUrl">资源URL</option><option value="resourceType">资源类型</option></select>-<select style="width:70px;" name="page.ascDesc"><option value="asc">升序</option><option value="desc">降序</option></select></td> -->
-<!-- 								<td class="twof"></td> -->
-<!-- 								<td class="twef"> -->
-<!-- 								<button type="button" class="btn btn-primary btn-sm" id="queryButton" style="margin-right:20px;">查询</button> -->
-<!-- 								<input type="reset" value="清除" class="btn btn-default btn-sm" /> -->
-<!-- 								</td> -->
-<!-- 							</tr> -->
-<!-- 						</table> -->
-					
-					<table class="tableSteel table-hover">
-              <tr class="title" style="border-right:1px #bfd2ed solid;">
-                <td class="twof"></td>
-                <td class="fouf">资源名</td>
-                <td class="fivf">资源类型</td>
-                <td class="fivf">资源URL</td>
-                <td class="fouf">资源描述</td>
-                <td class="fivf">是否可用</td>
-                <td class="fivf">默认URL</td>
-                <td class="fivf">菜单模块</td>
-                <td class="sixf">菜单中显示</td>
-                <td class="fivf" style="border-right:1px #09f solid">操作</td>
-              </tr>
-              <c:forEach items="${listResult}" var="resource" varStatus="st">
-              <tr id="tr${resource.resourceId}" style="${st.count%2==0?'background:#f3f3f3':''}">
-                <td class="twof"></td>
-                <td class="fouf">${resource.resourceName}</td>
-                <td class="sixf">${resource.resourceType }</td>
-                <td class="fivf">${resource.resourceUrl }</td>
-                <td class="fouf">${resource.resourceDesc }</td>
-                <td class="fivf"><c:if test="${resource.enabled eq 1}">是</c:if><c:if test="${resource.enabled eq 0}">否</c:if></td>
-                <td class="sixf"><c:if test="${resource.defaults == true}">是</c:if><c:if test="${resource.defaults == false}">否</c:if></td>
-                <td class="sixf">
-                <c:forEach items="${list}" var="module">
-					<c:if test="${resource.moduleId eq module.moduleId}">${module.moduleName}</c:if>
-				</c:forEach>
-                </td>
-                <td class="fouf"><c:if test="${resource.showInMenu == true}">是</c:if><c:if test="${resource.showInMenu == false}">否</c:if></td>
-                <td class="fivf"><img src="../images/btn_edit.gif" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:editRes('${resource.resourceId}')" title="修改"/>
-                <img src="../images/tu12.gif" style="margin-left:4px;margin-top:4px;cursor:pointer;" onclick="javascript:deleteRes('${resource.resourceId}')" title="删除"/></td>
-              </tr>
-              </c:forEach>
-            </table>
-					<div id="page">
-						<p>
-						<vte:pages hasForm="true" beanName="page" formName="queryForm"/>
-						</p>
-					</div>
-					</form>
-
-
-			</div>
-			<div class="clear"></div>
-			<div class="heiTenpx"></div>
-		</div>
-		<div class="heiTenpx"></div>
-	</div>
-		</div>
-	</div>
-	<div id="footer">
-		<jsp:include page="/WEB-INF/tiles/four-footer.jsp" />
-	</div>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+<!-- BEGIN HEADER -->
+<jsp:include page="/WEB-INF/jsp/common/main-header.jsp"/>
+<!-- END HEADER -->
+<div class="clearfix">
 </div>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+	<!-- BEGIN SIDEBAR -->
+	<jsp:include page="/WEB-INF/jsp/common/main-menu.jsp"/>
+	<!-- END SIDEBAR -->
+	<!-- BEGIN CONTENT -->
+	<div class="page-content-wrapper">
+		<div class="page-content">
+			<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+			<jsp:include page="/WEB-INF/jsp/common/main-style.jsp"/>
+			<!-- END STYLE CUSTOMIZER -->
+			<!-- BEGIN PAGE HEADER-->
+			<div class="row">
+				<div class="col-md-12">
+					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+					<h3 class="page-title">
+					可编辑的数据表格 <small>editable datatable samples</small>
+					</h3>
+					<ul class="page-breadcrumb breadcrumb">
+						<li class="btn-group">
+							<button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+							<span>
+								Actions
+							</span>
+							<i class="fa fa-angle-down"></i>
+							</button>
+							<ul class="dropdown-menu pull-right" role="menu">
+								<li>
+									<a href="#">
+										Action
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										Another action
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										Something else here
+									</a>
+								</li>
+								<li class="divider">
+								</li>
+								<li>
+									<a href="#">
+										Separated link
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="index.html">
+								Home
+							</a>
+							<i class="fa fa-angle-right"></i>
+						</li>
+						<li>
+							<a href="#">
+								Data Tables
+							</a>
+							<i class="fa fa-angle-right"></i>
+						</li>
+						<li>
+							<a href="#">
+								Editable Datatables
+							</a>
+						</li>
+					</ul>
+					<!-- END PAGE TITLE & BREADCRUMB-->
+				</div>
+			</div>
+			<!-- END PAGE HEADER-->
+			<!-- BEGIN PAGE CONTENT-->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="tab-pane " id="tab_2">
+							<div class="portlet box green">
+								<div class="portlet-title">
+									<div class="caption">
+										<i class="fa fa-reorder"></i>Form Sample
+									</div>
+									<div class="tools">
+										<a href="javascript:;" class="collapse"> </a> <a
+											href="#portlet-config" data-toggle="modal" class="config">
+										</a> <a href="javascript:;" class="reload"> </a> <a
+											href="javascript:;" class="remove"> </a>
+									</div>
+								</div>
+								<div class="portlet-body form">
+									<!-- BEGIN FORM-->
+									<form action="#" class="form-horizontal">
+										<div class="form-body">
+											<h3 class="form-section">Person Info</h3>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label col-md-3">First Name</label>
+														<div class="col-md-9">
+															<input type="text" class="form-control"
+																placeholder="Chee Kin"> <span class="help-block">
+																This is inline help </span>
+														</div>
+													</div>
+												</div>
+												<!--/span-->
+												<div class="col-md-6">
+													<div class="form-group has-error">
+														<label class="control-label col-md-3">Last Name</label>
+														<div class="col-md-9">
+															<select name="foo" class="select2me form-control">
+																<option value="1">Abc</option>
+																<option value="1">Abc</option>
+																<option value="1">This is a really long value
+																	that breaks the fluid design for a select2</option>
+															</select> <span class="help-block"> This field has error. </span>
+														</div>
+													</div>
+												</div>
+												<!--/span-->
+											</div>
+											<!--/row-->
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label col-md-3">Gender</label>
+														<div class="col-md-9">
+															<select class="form-control">
+																<option value="">Male</option>
+																<option value="">Female</option>
+															</select> <span class="help-block"> Select your gender. </span>
+														</div>
+													</div>
+												</div>
+												<!--/span-->
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label col-md-3">Date of
+															Birth</label>
+														<div class="col-md-9">
+															<input type="text" class="form-control"
+																placeholder="dd/mm/yyyy">
+														</div>
+													</div>
+												</div>
+												<!--/span-->
+											</div>
+											<!--/row-->
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label col-md-3">Category</label>
+														<div class="col-md-9">
+															<select class="select2_category form-control"
+																data-placeholder="Choose a Category" tabindex="1">
+																<option value="Category 1">Category 1</option>
+																<option value="Category 2">Category 2</option>
+																<option value="Category 3">Category 5</option>
+																<option value="Category 4">Category 4</option>
+															</select>
+														</div>
+													</div>
+												</div>
+												<!--/span-->
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label col-md-3">Membership</label>
+														<div class="col-md-9">
+															<div class="radio-list">
+																<label class="radio-inline"> <input type="radio"
+																	name="optionsRadios2" value="option1" /> Free
+																</label> <label class="radio-inline"> <input
+																	type="radio" name="optionsRadios2" value="option2"
+																	checked /> Professional
+																</label>
+															</div>
+														</div>
+													</div>
+												</div>
+												<!--/span-->
+											</div>
+											<h3 class="form-section">Address</h3>
+											<!--/row-->
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label col-md-3">Address 1</label>
+														<div class="col-md-9">
+															<input type="text" class="form-control">
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label col-md-3">Address 2</label>
+														<div class="col-md-9">
+															<input type="text" class="form-control">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label col-md-3">City</label>
+														<div class="col-md-9">
+															<input type="text" class="form-control">
+														</div>
+													</div>
+												</div>
+												<!--/span-->
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label col-md-3">State</label>
+														<div class="col-md-9">
+															<input type="text" class="form-control">
+														</div>
+													</div>
+												</div>
+												<!--/span-->
+											</div>
+											<!--/row-->
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label col-md-3">Post Code</label>
+														<div class="col-md-9">
+															<input type="text" class="form-control">
+														</div>
+													</div>
+												</div>
+												<!--/span-->
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label col-md-3">Country</label>
+														<div class="col-md-9">
+															<select class="form-control">
+																<option>Country 1</option>
+																<option>Country 2</option>
+															</select>
+														</div>
+													</div>
+												</div>
+												<!--/span-->
+											</div>
+											<!--/row-->
+										</div>
+										<div class="form-actions fluid">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="col-md-offset-3 col-md-9">
+														<button type="submit" class="btn green">Submit</button>
+														<button type="button" class="btn default">Cancel</button>
+													</div>
+												</div>
+												<div class="col-md-6"></div>
+											</div>
+										</div>
+									</form>
+									<!-- END FORM-->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+				<div class="col-md-12">
+					<!-- BEGIN EXAMPLE TABLE PORTLET-->
+					<div class="portlet box blue">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-edit"></i>可编辑表格
+							</div>
+							<div class="tools">
+								<a href="javascript:;" class="collapse">
+								</a>
+								<a href="#portlet-config" data-toggle="modal" class="config">
+								</a>
+								<a href="javascript:;" class="reload">
+								</a>
+								<a href="javascript:;" class="remove">
+								</a>
+							</div>
+						</div>
+						<div class="portlet-body">
+							<div class="table-toolbar">
+								<div class="btn-group">
+									<button id="sample_editable_1_new" class="btn green">
+									Add New <i class="fa fa-plus"></i>
+									</button>
+								</div>
+								<div class="btn-group pull-right">
+									<button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
+									</button>
+									<ul class="dropdown-menu pull-right">
+										<li>
+											<a href="#">
+												 Print
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												 Save as PDF
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												 Export to Excel
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+							<thead>
+							<tr>
+								<th>
+									 Username
+								</th>
+								<th>
+									 Full Name
+								</th>
+								<th>
+									 Points
+								</th>
+								<th>
+									 Notes
+								</th>
+								<th>
+									 Edit
+								</th>
+								<th>
+									 Delete
+								</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>
+									 alex
+								</td>
+								<td>
+									 Alex Nilson
+								</td>
+								<td>
+									 1234
+								</td>
+								<td class="center">
+									 power user
+								</td>
+								<td>
+									<a class="edit" href="javascript:;">
+										 Edit
+									</a>
+								</td>
+								<td>
+									<a class="delete" href="javascript:;">
+										 Delete
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 lisa
+								</td>
+								<td>
+									 Lisa Wong
+								</td>
+								<td>
+									 434
+								</td>
+								<td class="center">
+									 new user
+								</td>
+								<td>
+									<a class="edit" href="javascript:;">
+										 Edit
+									</a>
+								</td>
+								<td>
+									<a class="delete" href="javascript:;">
+										 Delete
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 nick12
+								</td>
+								<td>
+									 Nick Roberts
+								</td>
+								<td>
+									 232
+								</td>
+								<td class="center">
+									 power user
+								</td>
+								<td>
+									<a class="edit" href="javascript:;">
+										 Edit
+									</a>
+								</td>
+								<td>
+									<a class="delete" href="javascript:;">
+										 Delete
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 goldweb
+								</td>
+								<td>
+									 Sergio Jackson
+								</td>
+								<td>
+									 132
+								</td>
+								<td class="center">
+									 elite user
+								</td>
+								<td>
+									<a class="edit" href="javascript:;">
+										 Edit
+									</a>
+								</td>
+								<td>
+									<a class="delete" href="javascript:;">
+										 Delete
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 webriver
+								</td>
+								<td>
+									 Antonio Sanches
+								</td>
+								<td>
+									 462
+								</td>
+								<td class="center">
+									 new user
+								</td>
+								<td>
+									<a class="edit" href="javascript:;">
+										 Edit
+									</a>
+								</td>
+								<td>
+									<a class="delete" href="javascript:;">
+										 Delete
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									 gist124
+								</td>
+								<td>
+									 Nick Roberts
+								</td>
+								<td>
+									 62
+								</td>
+								<td class="center">
+									 new user
+								</td>
+								<td>
+									<a class="edit" href="javascript:;">
+										 Edit
+									</a>
+								</td>
+								<td>
+									<a class="delete" href="javascript:;">
+										 Delete
+									</a>
+								</td>
+							</tr>
+							</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- END EXAMPLE TABLE PORTLET-->
+				</div>
+			</div>
+			<!-- END PAGE CONTENT -->
+		</div>
+	</div>
+	<!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+<jsp:include page="/WEB-INF/jsp/common/main-footer.jsp"/>
+<!-- END FOOTER -->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="${ctx}/assets/plugins/respond.min.js"></script>
+<script src="${ctx}/assets/plugins/excanvas.min.js"></script> 
+<![endif]-->
+<script src="${ctx}/assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
+<script src="${ctx}/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+<script src="${ctx}/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="${ctx}/assets/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="${ctx}/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="${ctx}/assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="${ctx}/assets/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="${ctx}/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script type="text/javascript" src="${ctx}/assets/plugins/select2/select2.min.js"></script>
+<script type="text/javascript" src="${ctx}/assets/plugins/data-tables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="${ctx}/assets/plugins/data-tables/DT_bootstrap.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="${ctx}/assets/scripts/core/app.js"></script>
+<script src="${ctx}/assets/scripts/custom/table-editable.js"></script>
+<script>
+jQuery(document).ready(function() {       
+   App.init();
+   TableEditable.init();
+});
+$(document).ready(function(){
+	$('#queryButton').click(function(){
+		$('#query').val('true');
+		$("#queryForm").submit();
+	});
+});
+function deleteRes(id) {
+	$.dialog.confirm('你确定要删除这条资源吗？', function(){
+		$.ajax({
+            type:"post",
+            dataType:"text",
+            url: '${ctx}/users/resources-delete.htm?resourceId=' + id,
+            success: function(msg){
+            	$('#tr'+id).remove();
+            },
+            error: function (msg) {
+                alert(msg.responseText);
+            }
+        });
+	}, function(){
+	    $.dialog.tips('您放弃删除。');
+	});
+}
 
+	//修改实体
+function editRes(id) {
+	 window.location.href = 'resources-input.htm?init=true&resourceId='+id;
+}
+</script>
 </body>
+<!-- END BODY -->
 </html>
