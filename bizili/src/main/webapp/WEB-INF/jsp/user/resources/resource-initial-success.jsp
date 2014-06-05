@@ -62,61 +62,61 @@
 			<div class="row">
 				<div class="col-md-12">
 					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-					<h3 class="page-title">
-					可编辑的数据表格 <small>editable datatable samples</small>
-					</h3>
-					<ul class="page-breadcrumb breadcrumb">
-						<li class="btn-group">
-							<button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
-							<span>
-								Actions
-							</span>
-							<i class="fa fa-angle-down"></i>
-							</button>
-							<ul class="dropdown-menu pull-right" role="menu">
-								<li>
-									<a href="#">
-										Action
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										Another action
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										Something else here
-									</a>
-								</li>
-								<li class="divider">
-								</li>
-								<li>
-									<a href="#">
-										Separated link
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<i class="fa fa-home"></i>
-							<a href="index.html">
-								Home
-							</a>
-							<i class="fa fa-angle-right"></i>
-						</li>
-						<li>
-							<a href="#">
-								Data Tables
-							</a>
-							<i class="fa fa-angle-right"></i>
-						</li>
-						<li>
-							<a href="#">
-								Editable Datatables
-							</a>
-						</li>
-					</ul>
+					
+						
+					
+<!-- 					<ul class="page-breadcrumb breadcrumb"> -->
+<!-- 						<li class="btn-group"> -->
+<!-- 							<button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true"> -->
+<!-- 							<span> -->
+<!-- 								Actions -->
+<!-- 							</span> -->
+<!-- 							<i class="fa fa-angle-down"></i> -->
+<!-- 							</button> -->
+<!-- 							<ul class="dropdown-menu pull-right" role="menu"> -->
+<!-- 								<li> -->
+<!-- 									<a href="#"> -->
+<!-- 										Action -->
+<!-- 									</a> -->
+<!-- 								</li> -->
+<!-- 								<li> -->
+<!-- 									<a href="#"> -->
+<!-- 										Another action -->
+<!-- 									</a> -->
+<!-- 								</li> -->
+<!-- 								<li> -->
+<!-- 									<a href="#"> -->
+<!-- 										Something else here -->
+<!-- 									</a> -->
+<!-- 								</li> -->
+<!-- 								<li class="divider"> -->
+<!-- 								</li> -->
+<!-- 								<li> -->
+<!-- 									<a href="#"> -->
+<!-- 										Separated link -->
+<!-- 									</a> -->
+<!-- 								</li> -->
+<!-- 							</ul> -->
+<!-- 						</li> -->
+<!-- 						<li> -->
+<!-- 							<i class="fa fa-home"></i> -->
+<!-- 							<a href="index.html"> -->
+<!-- 								Home -->
+<!-- 							</a> -->
+<!-- 							<i class="fa fa-angle-right"></i> -->
+<!-- 						</li> -->
+<!-- 						<li> -->
+<!-- 							<a href="#"> -->
+<!-- 								Data Tables -->
+<!-- 							</a> -->
+<!-- 							<i class="fa fa-angle-right"></i> -->
+<!-- 						</li> -->
+<!-- 						<li> -->
+<!-- 							<a href="#"> -->
+<!-- 								Editable Datatables -->
+<!-- 							</a> -->
+<!-- 						</li> -->
+<!-- 					</ul> -->
 					<!-- END PAGE TITLE & BREADCRUMB-->
 				</div>
 			</div>
@@ -124,28 +124,48 @@
 			<!-- BEGIN PAGE CONTENT-->
 			<div class="row">
 				<div class="col-md-12">
-					<div class="tab-pane " id="tab_2">
+				<div class="tabbable tabbable-custom tabbable-full-width">
+						<ul class="nav nav-tabs">
+							<li class="active">
+								<a data-toggle="tab" href="#tab_2_2">
+									 Booking Search
+								</a>
+							</li>
+							<li>
+								<a data-toggle="tab" href="#tab_1_3">
+									 Classic Search
+								</a>
+							</li>
+							<li>
+								<a data-toggle="tab" href="#tab_1_4">
+									 Company Search
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="tab-content">
+					<div class="tab-pane active" id="tab_2_2">
 								<div class="portlet box green">
 									<div class="portlet-title">
 										<div class="caption">
-											<i class="fa fa-reorder"></i>Form Sample
+											<i class="fa fa-reorder"></i>查询条件
 										</div>
 										<div class="tools">
-											<a href="javascript:;" class="collapse">
+											<a href="javascript:;" class="expand" title="单击展开">
 											</a>
-											<a href="#portlet-config" data-toggle="modal" class="config">
-											</a>
-											<a href="javascript:;" class="reload">
-											</a>
-											<a href="javascript:;" class="remove">
-											</a>
+<!-- 											<a href="#portlet-config" data-toggle="modal" class="config"> -->
+<!-- 											</a> -->
+<!-- 											<a href="javascript:;" class="reload"> -->
+<!-- 											</a> -->
+<!-- 											<a href="javascript:;" class="remove"> -->
+<!-- 											</a> -->
 										</div>
 									</div>
-									<div class="portlet-body form">
+									<div class="portlet-body form" style="display: none;">
 										<!-- BEGIN FORM-->
-										<form action="#" class="form-horizontal">
+										<form action="resources-initial.htm" id="queryForm" name="queryForm" method="post" class="form-horizontal">
 											<div class="form-body">
-												<h3 class="form-section">Person Info</h3>
+<!-- 												<h3 class="form-section">Person Info</h3> -->
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
@@ -236,71 +256,6 @@
 													</div>
 													<!--/span-->
 												</div>
-												<h3 class="form-section">Address</h3>
-												<!--/row-->
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label col-md-3">Address 1</label>
-															<div class="col-md-9">
-																<input type="text" class="form-control">
-															</div>
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label col-md-3">Address 2</label>
-															<div class="col-md-9">
-																<input type="text" class="form-control">
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label col-md-3">City</label>
-															<div class="col-md-9">
-																<input type="text" class="form-control">
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label col-md-3">State</label>
-															<div class="col-md-9">
-																<input type="text" class="form-control">
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-												</div>
-												<!--/row-->
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label col-md-3">Post Code</label>
-															<div class="col-md-9">
-																<input type="text" class="form-control">
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-													<div class="col-md-6">
-														<div class="form-group">
-															<label class="control-label col-md-3">Country</label>
-															<div class="col-md-9">
-																<select class="form-control">
-																	<option>Country 1</option>
-																	<option>Country 2</option>
-																</select>
-															</div>
-														</div>
-													</div>
-													<!--/span-->
-												</div>
-												<!--/row-->
 											</div>
 											<div class="form-actions fluid">
 												<div class="row">
@@ -319,6 +274,7 @@
 									</div>
 								</div>
 							</div>
+						</div>
 				</div>
 			</div>
 			<div class="row">
@@ -327,7 +283,7 @@
 					<div class="portlet box blue">
 						<div class="portlet-title">
 							<div class="caption">
-								<i class="fa fa-edit"></i>可编辑表格
+								<i class="fa fa-edit"></i>资源列表
 							</div>
 							<div class="tools">
 								<a href="javascript:;" class="collapse">
@@ -344,7 +300,7 @@
 							<div class="table-toolbar">
 								<div class="btn-group">
 									<button id="sample_editable_1_new" class="btn green">
-									Add New <i class="fa fa-plus"></i>
+									新增一行 <i class="fa fa-plus"></i>
 									</button>
 								</div>
 								<div class="btn-group pull-right">
@@ -353,17 +309,17 @@
 									<ul class="dropdown-menu pull-right">
 										<li>
 											<a href="#">
-												 Print
+												 打印
 											</a>
 										</li>
 										<li>
 											<a href="#">
-												 Save as PDF
+												 另存为PDF
 											</a>
 										</li>
 										<li>
 											<a href="#">
-												 Export to Excel
+												 导出为Excel
 											</a>
 										</li>
 									</ul>
@@ -373,16 +329,24 @@
 							<thead>
 							<tr>
 								<th>
-									 Username
+									 资源名
 								</th>
 								<th>
-									 Full Name
+									 资源类型
 								</th>
 								<th>
-									 Points
+									 资源URL
 								</th>
 								<th>
-									 Notes
+									 资源描述
+								</th>
+								<th>是否可用
+								</th>
+								<th>默认URL
+								</th>
+								<th>菜单模块
+								</th>
+								<th>菜单中显示
 								</th>
 								<th>
 									 Edit
@@ -393,18 +357,33 @@
 							</tr>
 							</thead>
 							<tbody>
+							<c:forEach items="${listResult}" var="resource" varStatus="st">
 							<tr>
 								<td>
-									 alex
+									 ${resource.resourceName}
 								</td>
 								<td>
-									 Alex Nilson
+									 ${resource.resourceType }
 								</td>
 								<td>
-									 1234
+									 ${resource.resourceUrl }
 								</td>
 								<td class="center">
-									 power user
+									 ${resource.resourceDesc }
+								</td>
+								<td>
+									 <c:if test="${resource.enabled eq 1}">是</c:if><c:if test="${resource.enabled eq 0}">否</c:if>
+								</td>
+								<td>
+									 <c:if test="${resource.defaults == true}">是</c:if><c:if test="${resource.defaults == false}">否</c:if>
+								</td>
+								<td>
+								<c:forEach items="${list}" var="module">
+									<c:if test="${resource.moduleId eq module.moduleId}">${module.moduleName}</c:if>
+								</c:forEach>
+								</td>
+								<td>
+									 <c:if test="${resource.showInMenu == true}">是</c:if><c:if test="${resource.showInMenu == false}">否</c:if>
 								</td>
 								<td>
 									<a class="edit" href="javascript:;">
@@ -417,126 +396,7 @@
 									</a>
 								</td>
 							</tr>
-							<tr>
-								<td>
-									 lisa
-								</td>
-								<td>
-									 Lisa Wong
-								</td>
-								<td>
-									 434
-								</td>
-								<td class="center">
-									 new user
-								</td>
-								<td>
-									<a class="edit" href="javascript:;">
-										 Edit
-									</a>
-								</td>
-								<td>
-									<a class="delete" href="javascript:;">
-										 Delete
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									 nick12
-								</td>
-								<td>
-									 Nick Roberts
-								</td>
-								<td>
-									 232
-								</td>
-								<td class="center">
-									 power user
-								</td>
-								<td>
-									<a class="edit" href="javascript:;">
-										 Edit
-									</a>
-								</td>
-								<td>
-									<a class="delete" href="javascript:;">
-										 Delete
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									 goldweb
-								</td>
-								<td>
-									 Sergio Jackson
-								</td>
-								<td>
-									 132
-								</td>
-								<td class="center">
-									 elite user
-								</td>
-								<td>
-									<a class="edit" href="javascript:;">
-										 Edit
-									</a>
-								</td>
-								<td>
-									<a class="delete" href="javascript:;">
-										 Delete
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									 webriver
-								</td>
-								<td>
-									 Antonio Sanches
-								</td>
-								<td>
-									 462
-								</td>
-								<td class="center">
-									 new user
-								</td>
-								<td>
-									<a class="edit" href="javascript:;">
-										 Edit
-									</a>
-								</td>
-								<td>
-									<a class="delete" href="javascript:;">
-										 Delete
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									 gist124
-								</td>
-								<td>
-									 Nick Roberts
-								</td>
-								<td>
-									 62
-								</td>
-								<td class="center">
-									 new user
-								</td>
-								<td>
-									<a class="edit" href="javascript:;">
-										 Edit
-									</a>
-								</td>
-								<td>
-									<a class="delete" href="javascript:;">
-										 Delete
-									</a>
-								</td>
-							</tr>
+							</c:forEach>
 							</tbody>
 							</table>
 						</div>
@@ -544,6 +404,50 @@
 					<!-- END EXAMPLE TABLE PORTLET-->
 				</div>
 			</div>
+			<div>
+								<ul class="pagination">
+									<li>
+										<a href="#">
+											<i class="fa fa-angle-left"></i>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											 1
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											 2
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											 3
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											 4
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											 5
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											 6
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<i class="fa fa-angle-right"></i>
+										</a>
+									</li>
+								</ul>
+							</div>
 			<!-- END PAGE CONTENT -->
 		</div>
 	</div>

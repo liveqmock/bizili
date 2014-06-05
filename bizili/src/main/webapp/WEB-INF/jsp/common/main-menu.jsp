@@ -62,7 +62,7 @@
 					<a href="index.html">
 						<i class="fa fa-home"></i>
 						<span class="title">
-							Dashboard
+							控制台
 						</span>
 						<c:if test="${0 == panel}"><span class="selected"></span></c:if>
 					</a>
@@ -98,7 +98,7 @@
 					<a href="javascript:;">
 						<i class="fa fa-th"></i>
 						<span class="title">
-							Data Tables
+							数据表格
 						</span>
 						<span class="arrow ">
 						</span>
@@ -125,7 +125,7 @@
 					<a href="charts.html">
 						<i class="fa fa-bar-chart-o"></i>
 						<span class="title">
-							Visual Charts
+							可视化图表
 						</span>
 					</a>
 				</li>

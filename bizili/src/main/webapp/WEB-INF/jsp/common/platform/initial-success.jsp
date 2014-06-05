@@ -64,7 +64,7 @@
 				<div class="col-md-12">
 					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 					<h3 class="page-title">
-					Dashboard <small>业务统计和报表</small>
+					控制台 <small>业务统计和报表</small>
 					</h3>
 					<ul class="page-breadcrumb breadcrumb">
 						<li>
@@ -76,7 +76,7 @@
 						</li>
 						<li>
 							<a href="#">
-								Dashboard
+								控制台
 							</a>
 						</li>
 						<li class="pull-right">
