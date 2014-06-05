@@ -170,10 +170,20 @@ var App = function () {
     // Handle sidebar menu
     var handleSidebarMenu = function () {
         jQuery('.page-sidebar').on('click', 'li > a', function (e) {
-            if ($(this).next().hasClass('sub-menu') == false) {
+        	if ($(this).next().hasClass('sub-menu') == false) {
                 if ($('.btn-navbar').hasClass('collapsed') == false) {
                     $('.btn-navbar').click();
                 }
+//            	var menuContainer = jQuery('.page-sidebar ul');
+//                menuContainer.children('li.active').removeClass('active');
+//                menuContainer.children('arrow.open').removeClass('open');
+//
+//                $(this).parents('li').each(function () {
+//                    $(this).addClass('active');
+//                    $(this).children('a > span.arrow').addClass('open');
+//                    $(this).children('a').append('<span class="selected"></span>');
+//                });
+//                $(this).parents('li').addClass('active');
                 return;
             }
 
@@ -222,12 +232,13 @@ var App = function () {
                     handleSidebarAndContentHeight();
                 });
             }
-
+            
             e.preventDefault();
         });
 
         // handle ajax links within sidebar menu
         jQuery('.page-sidebar').on('click', ' li > a.ajaxify', function (e) {
+        	alert('li > a.ajaxify');
             e.preventDefault();
             App.scrollTop();
 
@@ -271,6 +282,7 @@ var App = function () {
 
         // handle ajax link within main content
         jQuery('.page-content').on('click', '.ajaxify', function (e) {
+        	alert('.ajaxify');
             e.preventDefault();
             App.scrollTop();
 
