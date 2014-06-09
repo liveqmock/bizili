@@ -142,6 +142,8 @@
 							<div id="tab_2_2" class="tab-pane active">
 								<div class="row">
 									<div class="col-md-12">
+									<!-- BEGIN FORM-->
+										<form action="resources-initial.htm" id="queryForm" name="queryForm" method="post" class="form-horizontal">
 										<div class="portlet box blue">
 									<div class="portlet-title">
 										<div class="caption">
@@ -159,8 +161,7 @@
 										</div>
 									</div>
 									<div class="portlet-body form" style="display: none;">
-										<!-- BEGIN FORM-->
-										<form action="resources-initial.htm" id="queryForm" name="queryForm" method="post" class="form-horizontal">
+										
 											<div class="form-body">
 <!-- 												<h3 class="form-section">Person Info</h3> -->
 												<div class="row">
@@ -266,11 +267,9 @@
 													</div>
 												</div>
 											</div>
-										</form>
-										<!-- END FORM-->
+										
 									</div>
 								</div>
-								
 								<!-- BEGIN EXAMPLE TABLE PORTLET-->
 					<div class="portlet box blue">
 						<div class="portlet-title">
@@ -395,50 +394,10 @@
 						
 						
 					</div>
-					<div>
-								<ul class="pagination">
-									<li>
-										<a href="#">
-											<i class="fa fa-angle-left"></i>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											 1
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											 2
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											 3
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											 4
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											 5
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											 6
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<i class="fa fa-angle-right"></i>
-										</a>
-									</li>
-								</ul>
-							</div>
+					</form>
+										<!-- END FORM-->			
+					<!-- 分页标签 -->
+					<vte:page formName="queryForm" beanName="page"></vte:page>
 					<!-- END EXAMPLE TABLE PORTLET-->
 									</div>
 									
@@ -530,8 +489,9 @@
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="${ctx}/assets/scripts/core/app.js"></script>
 <script src="${ctx}/assets/scripts/custom/table-editable.js"></script>
+<script type="text/javascript" src="<c:url value='/js/common-utils.js'/>"></script>
 <script>
-jQuery(document).ready(function() {       
+jQuery(document).ready(function() {   
    App.init();
    TableEditable.init();
 });
