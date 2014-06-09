@@ -428,17 +428,17 @@
 				<ul class="dropdown-menu">
 					<li>
 						<a href="extra_profile.html">
-							<i class="fa fa-user"></i> My Profile
+							<i class="fa fa-user"></i> 我的用户资料
 						</a>
 					</li>
 					<li>
 						<a href="page_calendar.html">
-							<i class="fa fa-calendar"></i> My Calendar
+							<i class="fa fa-calendar"></i> 我的工作日历
 						</a>
 					</li>
 					<li>
 						<a href="inbox.html">
-							<i class="fa fa-envelope"></i> My Inbox
+							<i class="fa fa-envelope"></i> 我的消息
 							<span class="badge badge-danger">
 								 3
 							</span>
@@ -446,7 +446,7 @@
 					</li>
 					<li>
 						<a href="#">
-							<i class="fa fa-tasks"></i> My Tasks
+							<i class="fa fa-tasks"></i> 我的任务
 							<span class="badge badge-success">
 								 7
 							</span>
@@ -456,12 +456,12 @@
 					</li>
 					<li>
 						<a href="javascript:;" id="trigger_fullscreen">
-							<i class="fa fa-arrows"></i> Full Screen
+							<i class="fa fa-arrows"></i> 全屏
 						</a>
 					</li>
 					<li>
 						<a href="extra_lock.html">
-							<i class="fa fa-lock"></i> Lock Screen
+							<i class="fa fa-lock"></i> 锁屏
 						</a>
 					</li>
 					<li>

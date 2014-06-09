@@ -167,7 +167,7 @@
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<label class="control-label col-md-3">First Name</label>
+															<label class="control-label col-md-3">资源名</label>
 															<div class="col-md-9">
 																<input type="text" class="form-control" placeholder="Chee Kin">
 																<span class="help-block">
@@ -179,7 +179,7 @@
 													<!--/span-->
 													<div class="col-md-6">
 														<div class="form-group has-error">
-															<label class="control-label col-md-3">Last Name</label>
+															<label class="control-label col-md-3">资源URL</label>
 															<div class="col-md-9">
 																<select name="foo" class="select2me form-control">
 																	<option value="1">Abc</option>
@@ -198,7 +198,7 @@
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<label class="control-label col-md-3">Gender</label>
+															<label class="control-label col-md-3">资源类型</label>
 															<div class="col-md-9">
 																<select class="form-control">
 																	<option value="">Male</option>
@@ -213,7 +213,7 @@
 													<!--/span-->
 													<div class="col-md-6">
 														<div class="form-group">
-															<label class="control-label col-md-3">Date of Birth</label>
+															<label class="control-label col-md-3">菜单模块</label>
 															<div class="col-md-9">
 																<input type="text" class="form-control" placeholder="dd/mm/yyyy">
 															</div>
@@ -225,7 +225,7 @@
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<label class="control-label col-md-3">Category</label>
+															<label class="control-label col-md-3">是否启用</label>
 															<div class="col-md-9">
 																<select class="select2_category form-control" data-placeholder="Choose a Category" tabindex="1">
 																	<option value="Category 1">Category 1</option>
@@ -239,7 +239,7 @@
 													<!--/span-->
 													<div class="col-md-6">
 														<div class="form-group">
-															<label class="control-label col-md-3">Membership</label>
+															<label class="control-label col-md-3">默认URL</label>
 															<div class="col-md-9">
 																<div class="radio-list">
 																	<label class="radio-inline">
