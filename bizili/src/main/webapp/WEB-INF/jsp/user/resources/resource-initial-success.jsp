@@ -62,61 +62,61 @@
 			<div class="row">
 				<div class="col-md-12">
 					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-					
-						
-					
-<!-- 					<ul class="page-breadcrumb breadcrumb"> -->
-<!-- 						<li class="btn-group"> -->
-<!-- 							<button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true"> -->
-<!-- 							<span> -->
-<!-- 								Actions -->
-<!-- 							</span> -->
-<!-- 							<i class="fa fa-angle-down"></i> -->
-<!-- 							</button> -->
-<!-- 							<ul class="dropdown-menu pull-right" role="menu"> -->
-<!-- 								<li> -->
-<!-- 									<a href="#"> -->
-<!-- 										Action -->
-<!-- 									</a> -->
-<!-- 								</li> -->
-<!-- 								<li> -->
-<!-- 									<a href="#"> -->
-<!-- 										Another action -->
-<!-- 									</a> -->
-<!-- 								</li> -->
-<!-- 								<li> -->
-<!-- 									<a href="#"> -->
-<!-- 										Something else here -->
-<!-- 									</a> -->
-<!-- 								</li> -->
-<!-- 								<li class="divider"> -->
-<!-- 								</li> -->
-<!-- 								<li> -->
-<!-- 									<a href="#"> -->
-<!-- 										Separated link -->
-<!-- 									</a> -->
-<!-- 								</li> -->
-<!-- 							</ul> -->
-<!-- 						</li> -->
-<!-- 						<li> -->
-<!-- 							<i class="fa fa-home"></i> -->
-<!-- 							<a href="index.html"> -->
-<!-- 								Home -->
-<!-- 							</a> -->
-<!-- 							<i class="fa fa-angle-right"></i> -->
-<!-- 						</li> -->
-<!-- 						<li> -->
-<!-- 							<a href="#"> -->
-<!-- 								Data Tables -->
-<!-- 							</a> -->
-<!-- 							<i class="fa fa-angle-right"></i> -->
-<!-- 						</li> -->
-<!-- 						<li> -->
-<!-- 							<a href="#"> -->
-<!-- 								Editable Datatables -->
-<!-- 							</a> -->
-<!-- 						</li> -->
-<!-- 					</ul> -->
+					<h3 class="page-title">
+					资源管理 <small>系统中所有可以使用的资源</small>
+					</h3>
+					<ul class="page-breadcrumb breadcrumb">
+						<li class="btn-group">
+							<button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+							<span>
+								Actions
+							</span>
+							<i class="fa fa-angle-down"></i>
+							</button>
+							<ul class="dropdown-menu pull-right" role="menu">
+								<li>
+									<a href="#">
+										Action
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										Another action
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										Something else here
+									</a>
+								</li>
+								<li class="divider">
+								</li>
+								<li>
+									<a href="#">
+										Separated link
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<i class="fa fa-home"></i>
+							<a href="index.html">
+								首页
+							</a>
+							<i class="fa fa-angle-right"></i>
+						</li>
+						<li>
+							<a href="#">
+								权限管理
+							</a>
+							<i class="fa fa-angle-right"></i>
+						</li>
+						<li>
+							<a href="#">
+								资源管理
+							</a>
+						</li>
+					</ul>
 					<!-- END PAGE TITLE & BREADCRUMB-->
 				</div>
 			</div>
@@ -128,24 +128,21 @@
 						<ul class="nav nav-tabs">
 							<li class="active">
 								<a data-toggle="tab" href="#tab_2_2">
-									 Booking Search
+									 资源列表
 								</a>
 							</li>
 							<li>
 								<a data-toggle="tab" href="#tab_1_3">
-									 Classic Search
+									 新增资源
 								</a>
 							</li>
-							<li>
-								<a data-toggle="tab" href="#tab_1_4">
-									 Company Search
-								</a>
-							</li>
+							
 						</ul>
-					</div>
-					<div class="tab-content">
-					<div class="tab-pane active" id="tab_2_2">
-								<div class="portlet box green">
+						<div class="tab-content">
+							<div id="tab_2_2" class="tab-pane active">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="portlet box blue">
 									<div class="portlet-title">
 										<div class="caption">
 											<i class="fa fa-reorder"></i>查询条件
@@ -273,13 +270,8 @@
 										<!-- END FORM-->
 									</div>
 								</div>
-							</div>
-						</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<!-- BEGIN EXAMPLE TABLE PORTLET-->
+								
+								<!-- BEGIN EXAMPLE TABLE PORTLET-->
 					<div class="portlet box blue">
 						<div class="portlet-title">
 							<div class="caption">
@@ -400,11 +392,10 @@
 							</tbody>
 							</table>
 						</div>
+						
+						
 					</div>
-					<!-- END EXAMPLE TABLE PORTLET-->
-				</div>
-			</div>
-			<div>
+					<div>
 								<ul class="pagination">
 									<li>
 										<a href="#">
@@ -448,6 +439,65 @@
 									</li>
 								</ul>
 							</div>
+					<!-- END EXAMPLE TABLE PORTLET-->
+									</div>
+									
+								</div>
+								
+							</div>
+							<!--end tab-pane-->
+							<div id="tab_1_3" class="tab-pane">
+								<div class="margin-top-20">
+									<ul class="pagination">
+										<li>
+											<a href="#">
+												 Prev
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												 1
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												 2
+											</a>
+										</li>
+										<li class="active">
+											<a href="#">
+												 3
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												 4
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												 5
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												 Next
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<!--end tab-pane-->
+							
+							
+						</div>
+					</div>
+							
+					
+				</div>
+			</div>
+			
+			
 			<!-- END PAGE CONTENT -->
 		</div>
 	</div>
