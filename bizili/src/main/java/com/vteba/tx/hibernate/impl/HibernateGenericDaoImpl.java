@@ -38,7 +38,6 @@ import com.vteba.tx.generic.Page;
 import com.vteba.tx.generic.impl.GenericDaoImpl;
 import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.tx.hibernate.MatchType;
-import com.vteba.tx.hibernate.transformer.AliasedResultTransformer;
 import com.vteba.tx.hibernate.transformer.ColumnAliasParser;
 import com.vteba.tx.hibernate.transformer.FieldAliasedTransformer;
 import com.vteba.tx.hibernate.transformer.HqlAliasedResultTransformer;
@@ -653,13 +652,11 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 	public T uniqueResultByHql(String hql, Object... values) {
 		Query query = createQuery(hql, values);
 		return (T) query.uniqueResult();
-		//return uniqueResultByHql(hql, entityClass, false, values);
 	}
 	
 	public T uniqueResultByNamedHql(String hql, Object... values) {
 		Query query = createNamedQuery(hql, values);
 		return (T) query.uniqueResult();
-		//return uniqueResultByHql(hql, entityClass, true, values);
 	}
 	
 	public <X> X uniqueResultByHql(String hql, Class<X> resultClass, Object... values) {
@@ -667,20 +664,15 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 	}
 	
 	public <X> X uniqueResultByHql(String hql, Class<X> resultClass, boolean namedQuery, Object... values) {
-		if (resultClass == null) {
-			throw new BasicException("resultClass can't be null.");
-		}
 		Query query = null;
 		if (namedQuery) {
 			query = createNamedQuery(hql, values);
 		} else {
 			query = createQuery(hql, values);
 		}
-		if (logger.isInfoEnabled()) {
-			logger.info("uniqueResultByHql, hql = [{}], parameter = {}, resultClass = [{}].", 
-					(namedQuery ? query.getQueryString() : hql), Arrays.toString(values), resultClass.getName());
+		if (resultClass != null) {
+			query.setResultTransformer(new HqlAliasedResultTransformer(resultClass, hql));
 		}
-		query.setResultTransformer(new AliasedResultTransformer(resultClass, hql, true));
 		return (X) query.uniqueResult();
 	}
 	
