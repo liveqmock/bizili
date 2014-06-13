@@ -37,7 +37,7 @@ public class SqlAliasedResultTransformer extends AliasedTupleSubsetResultTransfo
 	 * @param resultClass 结果集类型
 	 * @param sql sql语句
 	 */
-	public <T> SqlAliasedResultTransformer(Class<T> resultClass, String sql, boolean hql) {
+	public <T> SqlAliasedResultTransformer(Class<T> resultClass, String sql) {
 		this.resultClass = resultClass;
 		this.constructorAccess = AsmUtils.get().createConstructorAccess(resultClass);
 		this.methodAccess = AsmUtils.get().createMethodAccess(resultClass);

@@ -43,6 +43,7 @@ import com.vteba.tx.hibernate.transformer.ColumnAliasParser;
 import com.vteba.tx.hibernate.transformer.FieldAliasedTransformer;
 import com.vteba.tx.hibernate.transformer.HqlAliasedResultTransformer;
 import com.vteba.tx.hibernate.transformer.PrimitiveResultTransformer;
+import com.vteba.tx.hibernate.transformer.SqlAliasedResultTransformer;
 
 /**
  * 泛型DAO Hibernate实现，简化Entity DAO实现。
@@ -58,7 +59,6 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 	private static final Logger logger = LoggerFactory.getLogger(HibernateGenericDaoImpl.class);
 	/**问号*/
 	public static final String QMARK = "?";
-	private static final String SELECT_NEW = "select new";
 	
 	public HibernateGenericDaoImpl() {
 		super();
@@ -94,16 +94,28 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 		return list;
 	}
 	
-	@OK
-	public <E> List<E> getListByHql(String hql, Class<E> resultClass, Object... values){
+	public <E> List<E> getListByHql(String hql, Object... values){
 		if (logger.isInfoEnabled()) {
-			logger.info("HQL query, will use AliasedResultTransformer mapping the result, hql = [{}], parameter = {}.",
+			logger.info("HQL query, 建议使用 select new 语法 , hql = [{}], parameter = {}.",
 					hql, Arrays.toString(values));
 		}
 		Query query = createQuery(hql, values);
-		if (resultClass != null && hql.indexOf(SELECT_NEW) < 0) {
-			query.setResultTransformer(new AliasedResultTransformer(resultClass, hql, true));
-			
+		List<E> list = query.list();
+		if (list == null) {
+			list = Collections.emptyList();
+		}
+		return list;
+	}
+	
+	@OK
+	public <E> List<E> getListByHql(String hql, Class<E> resultClass, Object... values){
+		if (logger.isInfoEnabled()) {
+			logger.info("HQL query, 使用HqlAliasedResultTransformer转换结果集, hql = [{}], parameter = {}.",
+					hql, Arrays.toString(values));
+		}
+		Query query = createQuery(hql, values);
+		if (resultClass != null) {
+			query.setResultTransformer(new HqlAliasedResultTransformer(resultClass, hql));
 		}
 		List<E> list = query.list();
 		if (list == null) {
@@ -133,14 +145,27 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 		return list;
 	}
 	
+	public <E> List<E> getListByNamedHql(String namedQuery, Object... values){
+		Query query = createNamedQuery(namedQuery, values);
+		if (logger.isInfoEnabled()) {
+			logger.info("HQL named query, 使用 select new 语法映射结果集, hql = [{}], parameter = {}.", 
+					query.getQueryString(), Arrays.toString(values));
+		}
+		List<E> list = query.list();
+		if (list == null) {
+			list = Collections.emptyList();
+		}
+		return list;
+	}
+	
 	public <E> List<E> getListByNamedHql(String namedQuery, Class<E> resultClass, Object... values){
 		Query query = createNamedQuery(namedQuery, values);
 		if (logger.isInfoEnabled()) {
-			logger.info("HQL named query, will use AliasedResultTransformer mapping the result, hql = [{}], parameter = {}.", 
+			logger.info("HQL named query, 使用HqlAliasedResultTransformer转换结果集, hql = [{}], parameter = {}.", 
 					query.getQueryString(), Arrays.toString(values));
 		}
 		if (resultClass != null) {
-			query.setResultTransformer(new AliasedResultTransformer(resultClass, query.getQueryString(), true));
+			query.setResultTransformer(new HqlAliasedResultTransformer(resultClass, query.getQueryString()));
 		}
 		List<E> list = query.list();
 		if (list == null) {
@@ -154,7 +179,7 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 			logger.info("SQL query, will use AliasedResultTransformer mapping the result, sql = [{}], parameter = {}.", 
 					sql, Arrays.toString(values));
 		}
-		SQLQuery query = createSqlQuery(sql, entityClass, values);
+		SQLQuery query = createSqlQuery(sql, null, values);
 		List<T> list = query.list();
 		if (list == null) {
 			list = Collections.emptyList();
@@ -185,7 +210,7 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 	
 	public <E> List<E> getListBySql(String sql, Class<E> resultClass, Object... values){
 		if (logger.isInfoEnabled()) {
-			logger.info("SQL query, will use AliasedResultTransformer mapping the result, sql = [{}], parameter = {}.", 
+			logger.info("SQL query, 使用SqlAliasedResultTransformer转换结果集, sql = [{}], parameter = {}.", 
 					sql, Arrays.toString(values));
 		}
 		SQLQuery query = createSqlQuery(sql, resultClass, values);
@@ -207,11 +232,10 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 	public <E> List<E> getListByNamedSql(String namedSql, Class<E> resultClass, Object... values){
 		SQLQuery sqlQuery = createNamedSQLQuery(namedSql, values);// 事实上就是SQLQuery
 		if (logger.isInfoEnabled()) {
-			logger.info("SQL query, will use AliasedResultTransformer mapping the result, sql = [{}], parameter = {}.", 
+			logger.info("SQL query, 使用SqlAliasedResultTransformer转换结果集, sql = [{}], parameter = {}.", 
 					sqlQuery.getQueryString(), Arrays.toString(values));
 		}
 		setResultTransformer(sqlQuery, resultClass, sqlQuery.getQueryString());
-		//setFieldAliasTransformer(sqlQuery, resultClass, sqlQuery.getQueryString());
 		List<E> list = sqlQuery.list();
 		if (list == null) {
 			list = Collections.emptyList();
@@ -295,7 +319,6 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 			}
 		}
 		setResultTransformer(sqlQuery, resultClass, sql);
-		//setFieldAliasTransformer(sqlQuery, resultClass, sql);
 		return sqlQuery;
 	}
 	
@@ -309,7 +332,7 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 	 */
 	protected void setResultTransformer(SQLQuery sqlQuery, Class<?> resultClass, String sql) {
 		if (resultClass != null) {
-			AliasedResultTransformer transformer = new AliasedResultTransformer(resultClass, sql, false);
+			SqlAliasedResultTransformer transformer = new SqlAliasedResultTransformer(resultClass, sql);
 			Class<?>[][] argsTypes = transformer.getArgsTypes();
 			String[] columnAlias = transformer.getColumnAlias();
 			for (int j = 0; j < columnAlias.length; j++) {

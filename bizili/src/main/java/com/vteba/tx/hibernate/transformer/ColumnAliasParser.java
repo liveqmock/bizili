@@ -23,6 +23,8 @@ public class ColumnAliasParser {
 	private static ConcurrentMap<String, String[]> aliasCache = new ConcurrentHashMap<String, String[]>();
 	public static final String MYSQL = "mysql";
 	public static final String WHERE = "where";
+	public static final String SELECT = "select";
+	public static final String FROM = "from";
 	private static ColumnAliasParser instance = new ColumnAliasParser();
 	
 	private ColumnAliasParser() {
@@ -59,8 +61,8 @@ public class ColumnAliasParser {
 	}
 
 	private String[] aliasParser(String sql) {
-		int from = sql.indexOf("select") + 6;
-		int to = sql.indexOf("from");
+		int from = sql.indexOf(SELECT) + 6;
+		int to = sql.indexOf(FROM);
 		String sqlAlias = sql.substring(from, to);
 		
 		String[] columns = StringUtils.split(sqlAlias, ",");

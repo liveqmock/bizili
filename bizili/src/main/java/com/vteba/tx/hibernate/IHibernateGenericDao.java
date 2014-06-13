@@ -18,52 +18,91 @@ import com.vteba.tx.generic.Page;
  */
 public interface IHibernateGenericDao<T, ID extends Serializable> extends IGenericDao<T, ID> {
 	/** 
-     * 查询当前PO Bean List，一般查询单实体。<br>
+     * 查询当前PO List，一般查询单实体。多实体关联查询，请使用{@link #getListByHql(String, Class, Object...)}。<br>
+     * 用法：<br>
      * 1、查询全部栏位，select u from User u where...<br>
-     * 2、使用select new查询部分栏位，select new User(u.id,u.name) from User u where...，实体类中要有相应的构造函数<br>
-     * 3、直接查询部分栏位，则返回List&lt;Object[]&gt;，不建议这么使用。如果是单实体，建议使用2中的select new，如果是多实体关联，<br>
-     *    建议使用{@link #getListByHql(String, Class, Object...)}可以直接返回JavaBean<br>
+     * 2、使用select new查询部分栏位，select new User(u.id,u.name) from User u where...，<br>
+     *   &nbsp;&nbsp;&nbsp;&nbsp;实体类中要有相应的构造函数<br>
+     * 3、直接查询部分栏位，则返回List&lt;Object[]&gt;，不建议这么使用。建议使用第二点中的<br>
+     *   &nbsp;&nbsp;&nbsp;&nbsp;select new语法；或使用{@link #getListByHql(String, Class, Object...)}可直接返回JavaBean<br>
+     *   &nbsp;&nbsp;&nbsp;&nbsp;<br>
 	 * @param hql 可用Jpa风格参数： ?1、?2。命名参数： :subjectName。Hibernate参数： ? (deprecated)。
 	 * @param values hql参数，可以使用单个参数，Map，List，AstModel实例，传参。
 	 */
 	public List<T> getEntityListByHql(String hql, Object... values);
 	
 	/**
-	 * 通过命名hql查询当前实体Class&lt;T&gt;实例的List&lt;T&gt;。<br>
+	 * 命名hql查询当前实体Class&lt;T&gt;实例List。是{@link #getEntityListByHql(String, Object...)}的命名参数版。 <br>
+	 * 用法：<br>
 	 * 1、hql应查询Class&lt;T&gt;实例所有的属性，如：select s from Subject s where .... 。<br>
-	 * 2、使用new T()构造函数指定属性，如：select new Subject(id, subjectCode, subjectName, level) 
-	 *    from Subject s where .... 同时Subject实体中要有对应的构造函数才行。<br>
-	 * 3、否则返回List&lt;Object[]&gt;。
-	 * @param namedQuery 命名hql语句名，可用Jpa风格参数： ?1、?2，命名参数： :subjectName
+	 * 2、使用select new T()查询指定属性，如：select new Subject(id, subjectCode) from Subject s where ....<br>
+	 *   &nbsp;&nbsp;&nbsp;&nbsp;同时Subject实体中要有对应的构造函数。<br>
+	 * 3、直接查询部分栏位，返回List&lt;Object[]&gt;。不建议这么使用。建议使用第二点中的<br>
+     *   &nbsp;&nbsp;&nbsp;&nbsp;select new语法；或使用{@link #getListByHql(String, Class, Object...)}可直接返回JavaBean<br>
+     *   &nbsp;&nbsp;&nbsp;&nbsp;<br>
+	 * @param namedQuery 命名hql语句名，可用Jpa风格参数： ?1、?2，命名参数： :subjectCode
 	 * @param values hql参数，可以使用单个参数，Map，List，AstModel实例，传参。
 	 */
 	public List<T> getEntityListByNamedHql(String namedQuery, Object... values);
 	
 	/** 
-     * hql查询VO Bean List，一般用于多实体连接<br> 
-     * 1、使用select new查询VO Bean，select new com.vteba.warehouse.model.AUser(i.sbillno,u) from Inventory i, User u 
-     *    where i.scustomerno = u.userAccount，VO中要有对应的构造函数<br>
-     * 2、使用别名查询VO Bean，select i.sbillno as id,u as user from Inventory i, User u where i.scustomerno<br>
-     *    = u.userAccount，栏位别名要和VO中的属性名一致<br>
-     * 3、如果不使用别名，则返回List&lt;Object[]&gt;，对于2中的结果返回{“sbillno”, User}，不建议这么使用<br> 
-     * 4、查询PO也是可以的，但是强烈建议使用{@link #getEntityListByHql(String, Object...)}代替<br> 
+     * hql查询VO Bean List，一般用于多实体连接查询部分栏位。主要基于别名进行结果集转换。<br> 
+     * 用法：<br>
+     * 1、使用select new查询VO Bean，select new com.vteba.model.AUser(i.sbillno,u) from Inventory i, User u 
+     *   &nbsp;&nbsp;&nbsp;&nbsp;where i.scustomerno = u.userAccount，VO中要有对应的构造函数，且要使用包名全路径。<br>
+     * 2、直接select i.sbillno,u from Inventory i, User u...，则返回List&lt;Object[]&gt;，其中Object[]是{"billno", User}<br>
+     *   &nbsp;&nbsp;&nbsp;&nbsp;，不建议这么用，建议使用{@link #getListByHql(String, Class, Object...)}根据别名进行结果集转换 <br> 
+     * 3、直接查询PO也是可以的，但是建议使用{@link #getEntityListByHql(String, Object...)}代替<br> 
 	 * @param hql 可用Jpa风格参数： ?1、?2，命名参数： :subjectName，Hibernate参数： ? (deprecated)
-	 * @param clazz 结果类型Class&lt;E&gt;。如果使用select new语法，该参数请设为null
+	 * @param values hql参数，可以使用单个参数，Map，List，AstModel实例，传参。
+	 * @author yinlei
+	 * date 2012-12-17 下午10:35:09
+	 */
+	public <E> List<E> getListByHql(String hql, Object... values);
+	
+	/** 
+     * hql查询VO Bean List，一般用于多实体连接查询部分栏位。主要基于别名进行结果集转换。<br> 
+     * 用法：<br>
+     * 1、使用别名查询VO Bean，select i.billNo as id,u as user from Inventory i, User u where i.customerNo<br>
+     *   &nbsp;&nbsp;&nbsp;&nbsp;= u.userAccount...，栏位别名要和VO中的属性名一致<br>
+     * 2、如果不使用别名进行转换（clazz参数设为null），则返回List&lt;Object[]&gt;，对于第二点中的结果返回<br>
+     *   &nbsp;&nbsp;&nbsp;&nbsp;的Object[]是{"billno", User}，不建议这么使用<br> 
+     * 3、查询PO也是可以的（clazz参数设为null），但是建议使用{@link #getEntityListByHql(String, Object...)}代替<br> 
+	 * @param hql 可用Jpa风格参数： ?1、?2，命名参数： :subjectName，Hibernate参数： ? (deprecated)
+	 * @param clazz 结果类型Class&lt;E&gt;。
 	 * @param values hql参数，可以使用单个参数，Map，List，AstModel实例，传参。
 	 * @author yinlei
 	 * date 2012-12-17 下午10:35:09
 	 */
 	public <E> List<E> getListByHql(String hql, Class<E> clazz, Object... values);
 	
+	/** 
+     * hql查询VO Bean List，一般用于多实体连接查询部分栏位。主要基于别名进行结果集转换。<br>
+     * 是{@link #getListByHql(String, Object...)}的命名参数版。 <br> 
+     * 用法：<br>
+     * 1、使用select new查询VO Bean，select new com.vteba.model.AUser(i.sbillno,u) from Inventory i, User u 
+     *   &nbsp;&nbsp;&nbsp;&nbsp;where i.scustomerno = u.userAccount，VO中要有对应的构造函数，且要使用包名全路径。<br>
+     * 2、直接select i.sbillno,u from Inventory i, User u...，则返回List&lt;Object[]&gt;，其中Object[]是{"billno", User}<br>
+     *   &nbsp;&nbsp;&nbsp;&nbsp;，不建议这么用，建议使用{@link #getListByHql(String, Class, Object...)}根据别名进行结果集转换 <br> 
+     * 3、直接查询PO也是可以的，但是建议使用{@link #getEntityListByHql(String, Object...)}代替<br> 
+	 * @param hql 可用Jpa风格参数： ?1、?2，命名参数： :subjectName，Hibernate参数： ? (deprecated)
+	 * @param values hql参数，可以使用单个参数，Map，List，AstModel实例，传参。
+	 * @author yinlei
+	 * date 2012-12-17 下午10:35:09
+	 */
+	public <E> List<E> getListByNamedHql(String hql, Object... values);
+	
 	/**
-	 * 通过hql查询Class&lt;E&gt;实例的List&lt;E&gt;。hql语句可进行多实体连接。<br>
-	 * 1、hql应查询Class&lt;E&gt;实例所有的属性，如：select s from Subject s where .... 。<br>
-	 * 2、使用new E()构造函数指定属性，如：select new Subject(id, subjectCode, subjectName, level) 
-	 *    from Subject s where .... 同时Subject实体中要有对应的构造函数才行。<br>
-	 * 3、查询任意栏位，hql中的栏位名或别名要和Class&lt;E&gt;实例中的属性名一致。使用AliasedResultTransformer转换任意列。<br>
-	 * 4、否则返回List&lt;Object[]&gt;。
+	 * 命名hql查询VO List。一般用于多实体连接查询部分栏位。主要基于别名进行结果集转换。<br>
+	 * 是{@link #getListByHql(String, Class, Object...)}的命名参数版。 <br>
+	 * 用法：<br>
+	 * 1、使用别名查询VO Bean，select i.billNo as id,u as user from Inventory i, User u where i.customerNo<br>
+     *   &nbsp;&nbsp;&nbsp;&nbsp;= u.userAccount...，栏位别名要和VO中的属性名一致<br>
+     * 2、如果不使用别名进行转换（clazz参数设为null），则返回List&lt;Object[]&gt;，对于第二点中的结果返回<br>
+     *   &nbsp;&nbsp;&nbsp;&nbsp;的Object[]是{"billno", User}，不建议这么使用<br>
+     * 3、查询PO也是可以的（clazz参数设为null），但是强烈建议使用{@link #getEntityListByHql(String, Object...)}代替<br> 
 	 * @param namedQuery 命名hql语句名，可用Jpa风格参数： ?1、?2，命名参数： :subjectName
-	 * @param clazz 结果类型Class&lt;E&gt;。如果使用select new语法，该参数请设为null
+	 * @param clazz 结果类型Class&lt;E&gt;
 	 * @param values hql参数，可以使用单个参数，Map，List，AstModel实例，传参。
 	 * @author yinlei
 	 * date 2012-12-17 下午10:35:09
@@ -99,7 +138,7 @@ public interface IHibernateGenericDao<T, ID extends Serializable> extends IGener
 	 * 1、sql栏位或者别名要和实体的属性一致，栏位和实体属性名不一致要指定别名。<br>
 	 *    如：select id, subject_code subjectCode, subject_name subjectName from subject s where ....<br>
 	 *    其中id属性和sql栏位一样，不需要指定别名。<br>
-	 * 2、查询全部栏位select * from user where...，此时VO中的属性要和数据库表中的栏位一一对应，不多不少。否则使用spring jdbc。
+	 * 2、查询全部栏位select * from user where...，此时VO中的属性要和数据库表中的栏位一一对应，不多不少。否则使用spring jdbc。<br>
 	 * 3、基于别名，使用AliasedResultTransformer，可转换任意列。
 	 * @param sql sql语句
 	 * @param clazz 结果集Class&lt;E&gt;类
@@ -114,7 +153,7 @@ public interface IHibernateGenericDao<T, ID extends Serializable> extends IGener
 	 * 1、sql栏位或者别名要和实体的属性一致，栏位和实体属性名不一致要指定别名。<br>
 	 *    如：select id, subject_code subjectCode, subject_name subjectName from subject s where ....<br>
 	 *    其中id属性和sql栏位一样，不需要指定别名。<br>
-	 * 2、查询全部栏位select * from user where...
+	 * 2、查询全部栏位select * from user where...<br>
 	 * 3、基于别名，使用AliasedResultTransformer，可转换任意列。
 	 * @param namedSql 命名sql名
 	 * @param resultClass 结果集Class&lt;E&gt;类
