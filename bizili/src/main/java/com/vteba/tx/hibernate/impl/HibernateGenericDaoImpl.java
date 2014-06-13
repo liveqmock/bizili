@@ -41,6 +41,7 @@ import com.vteba.tx.hibernate.MatchType;
 import com.vteba.tx.hibernate.transformer.AliasedResultTransformer;
 import com.vteba.tx.hibernate.transformer.ColumnAliasParser;
 import com.vteba.tx.hibernate.transformer.FieldAliasedTransformer;
+import com.vteba.tx.hibernate.transformer.HqlAliasedResultTransformer;
 import com.vteba.tx.hibernate.transformer.PrimitiveResultTransformer;
 
 /**
@@ -56,7 +57,7 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 
 	private static final Logger logger = LoggerFactory.getLogger(HibernateGenericDaoImpl.class);
 	/**问号*/
-	public static final String QMark = "?";
+	public static final String QMARK = "?";
 	private static final String SELECT_NEW = "select new";
 	
 	public HibernateGenericDaoImpl() {
@@ -102,8 +103,28 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 		Query query = createQuery(hql, values);
 		if (resultClass != null && hql.indexOf(SELECT_NEW) < 0) {
 			query.setResultTransformer(new AliasedResultTransformer(resultClass, hql, true));
-			//query.setResultTransformer(new FieldAliasedTransformer(resultClass, hql, true));
 			
+		}
+		List<E> list = query.list();
+		if (list == null) {
+			list = Collections.emptyList();
+		}
+		return list;
+	}
+	
+	/**
+	 * 根据hql查询po/vo list，结果集使用hql栏位别名转换成Class&lt;E&gt;类型。<br>
+	 * hql
+	 * @param hql hql语句
+	 * @param resultClass 结果集类型
+	 * @param queryType 查询类型
+	 * @param values hql参数
+	 * @return 结果集List&lt;E&gt;
+	 */
+	public <E> List<E> getListByHqlAlias(String hql, Class<E> resultClass, Object... values){
+		Query query = createQuery(hql, values);
+		if (resultClass != null) {
+			query.setResultTransformer(new HqlAliasedResultTransformer(resultClass, hql));
 		}
 		List<E> list = query.list();
 		if (list == null) {
@@ -120,7 +141,6 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 		}
 		if (resultClass != null) {
 			query.setResultTransformer(new AliasedResultTransformer(resultClass, query.getQueryString(), true));
-			//query.setResultTransformer(new FieldAliasedTransformer(resultClass, query.getQueryString(), true));
 		}
 		List<E> list = query.list();
 		if (list == null) {
@@ -222,7 +242,7 @@ public abstract class HibernateGenericDaoImpl<T, ID extends Serializable>
 	protected Query createQuery(String hql, Object... values) {
 		Query query = getSession().createQuery(hql);
 		for (int i = 0; i < values.length; i++) {
-			if (hql.indexOf(QMark + (i + 1)) > 0) {
+			if (hql.indexOf(QMARK + (i + 1)) > 0) {
 				logger.info("Use JPA style's position parameter binding.");
 				if (values[i] instanceof List) {
 					query.setParameterList(Integer.toString(i + 1), (List<?>)values[i]);
