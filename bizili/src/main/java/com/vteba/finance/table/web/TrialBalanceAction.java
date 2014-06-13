@@ -1,5 +1,6 @@
 package com.vteba.finance.table.web;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.finance.table.model.TrialBalance;
 import com.vteba.finance.table.service.ITrialBalanceService;
+import com.vteba.service.generic.IGenericService;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 
@@ -38,6 +40,13 @@ public class TrialBalanceAction extends BaseAction<TrialBalance> {
 	public void setTrialBalanceServiceImpl(
 			ITrialBalanceService trialBalanceServiceImpl) {
 		this.trialBalanceServiceImpl = trialBalanceServiceImpl;
+	}
+
+	@Override
+	public void setGenericServiceImpl(
+			IGenericService<TrialBalance, ? extends Serializable> genericServiceImpl) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

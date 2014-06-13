@@ -1,5 +1,6 @@
 package com.vteba.finance.report.web;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -14,6 +15,7 @@ import com.vteba.finance.account.model.AccountPeriod;
 import com.vteba.finance.account.service.IAccountPeriodService;
 import com.vteba.finance.report.model.AssetsLiabilities;
 import com.vteba.finance.report.service.IAssetsLiabilitiesService;
+import com.vteba.service.generic.IGenericService;
 import com.vteba.util.common.ObjectUtils;
 import com.vteba.util.date.JodaTimeUtils;
 import com.vteba.util.reflection.ReflectUtils;
@@ -81,6 +83,13 @@ public class AssetsLiabilitiesAction extends BaseAction<AssetsLiabilities> {
 	public void setAccountPeriodServiceImpl(
 			IAccountPeriodService accountPeriodServiceImpl) {
 		this.accountPeriodServiceImpl = accountPeriodServiceImpl;
+	}
+
+	@Override
+	public void setGenericServiceImpl(
+			IGenericService<AssetsLiabilities, ? extends Serializable> genericServiceImpl) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

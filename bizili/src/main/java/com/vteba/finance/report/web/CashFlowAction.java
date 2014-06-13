@@ -1,5 +1,6 @@
 package com.vteba.finance.report.web;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.finance.report.model.CashFlow;
 import com.vteba.finance.report.service.ICashFlowService;
+import com.vteba.service.generic.IGenericService;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 
@@ -37,6 +39,13 @@ public class CashFlowAction extends BaseAction<CashFlow> {
 	@Inject
 	public void setCashFlowServiceImpl(ICashFlowService cashFlowServiceImpl) {
 		this.cashFlowServiceImpl = cashFlowServiceImpl;
+	}
+
+	@Override
+	public void setGenericServiceImpl(
+			IGenericService<CashFlow, ? extends Serializable> genericServiceImpl) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

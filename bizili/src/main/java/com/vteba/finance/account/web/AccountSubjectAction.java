@@ -2,6 +2,7 @@ package com.vteba.finance.account.web;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import com.vteba.common.constant.FileConst;
 import com.vteba.finance.account.model.Subject;
 import com.vteba.finance.account.service.ISubjectService;
 import com.vteba.service.context.RequestContextHolder;
+import com.vteba.service.generic.IGenericService;
 import com.vteba.tx.generic.Page;
 import com.vteba.util.common.ExcelExportUtils;
 import com.vteba.util.common.ExcelImportUtils;
@@ -213,6 +215,13 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 
 	public void setSavePath(String savePath) {
 		this.savePath = savePath;
+	}
+
+	@Override
+	public void setGenericServiceImpl(
+			IGenericService<Subject, ? extends Serializable> genericServiceImpl) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

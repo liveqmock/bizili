@@ -1,5 +1,6 @@
 package com.vteba.user.web;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.common.constant.CommonConst;
+import com.vteba.service.generic.IGenericService;
 import com.vteba.user.model.Roles;
 import com.vteba.user.service.IRolesService;
 import com.vteba.util.reflection.ReflectUtils;
@@ -89,6 +91,13 @@ public class RolesAction extends BaseAction<Roles> {
 		listResult = rolesServiceImpl.getListByCriteriaLike(entity);
 		maps.put("listResult", listResult);
 		return "user/roles/roles-list";
+	}
+
+	@Override
+	public void setGenericServiceImpl(
+			IGenericService<Roles, ? extends Serializable> genericServiceImpl) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

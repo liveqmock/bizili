@@ -1,5 +1,6 @@
 package com.vteba.user.web;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.vteba.common.constant.CommonConst;
 import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
+import com.vteba.service.generic.IGenericService;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.service.IAuthoritiesService;
 import com.vteba.user.service.IResourcesService;
@@ -120,5 +122,12 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 		model = authoritiesServiceImpl.loadAuthoritiesEager(model.getAuthId());
 		maps.put("list", model.getResourceSets());
 		return "user/authorities/auth-resource";
+	}
+
+	@Override
+	public void setGenericServiceImpl(
+			IGenericService<Authorities, ? extends Serializable> genericServiceImpl) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -1,5 +1,6 @@
 package com.vteba.finance.table.web;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.finance.table.model.AccountBalance;
 import com.vteba.finance.table.service.IAccountBalanceService;
+import com.vteba.service.generic.IGenericService;
 import com.vteba.user.dao.UserDao;
 import com.vteba.user.model.EmpUser;
 import com.vteba.util.common.BigDecimalUtils;
@@ -81,6 +83,13 @@ public class AccountBalanceAction extends BaseAction<AccountBalance> {
 		setAttributeToRequest("endDebit", endDebit);
 		setAttributeToRequest("endCredit", endCredit);
 		return "table/accountbalance/accountbalance-initial-success";
+	}
+
+	@Override
+	public void setGenericServiceImpl(
+			IGenericService<AccountBalance, ? extends Serializable> genericServiceImpl) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.vteba.finance.account.web;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -17,6 +18,7 @@ import com.vteba.finance.account.form.CertTotalForm;
 import com.vteba.finance.account.model.CertTotal;
 import com.vteba.finance.account.service.ICertTotalService;
 import com.vteba.finance.account.service.ISubjectService;
+import com.vteba.service.generic.IGenericService;
 import com.vteba.tx.generic.Page;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
@@ -77,6 +79,13 @@ public class AccountCertAction extends BaseAction<CertTotal> {
 			certTotalServiceImpl.saveCertAndDetail(model, certTotalForm.getCertList());//保存凭证汇总和凭证明细
 		}
 		return "account/certificate/certificate-input-success";
+	}
+
+	@Override
+	public void setGenericServiceImpl(
+			IGenericService<CertTotal, ? extends Serializable> genericServiceImpl) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

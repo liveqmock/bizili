@@ -1,5 +1,6 @@
 package com.vteba.user.web;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.vteba.common.constant.CommonConst;
 import com.vteba.tx.generic.Page;
 import com.vteba.security.spring.SecurityContextHolderUtils;
+import com.vteba.service.generic.IGenericService;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.model.EmpUser;
 import com.vteba.user.model.Roles;
@@ -184,6 +186,13 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 
 	public void setIds(List<Long> ids) {
 		this.ids = ids;
+	}
+
+	@Override
+	public void setGenericServiceImpl(
+			IGenericService<EmpUser, ? extends Serializable> genericServiceImpl) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

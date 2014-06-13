@@ -1,5 +1,6 @@
 package com.vteba.common.web;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.vteba.common.constant.CommonConst;
 import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
+import com.vteba.service.generic.IGenericService;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
@@ -60,5 +62,12 @@ public class ModuleMenuAction extends BaseAction<ModuleMenu> {
 	public String delete(String moduleId) {
 		moduleMenuServiceImpl.delete(moduleId);
 		return SUCCESS;
+	}
+
+	@Override
+	public void setGenericServiceImpl(
+			IGenericService<ModuleMenu, ? extends Serializable> genericServiceImpl) {
+		// TODO Auto-generated method stub
+		
 	}
 }

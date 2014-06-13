@@ -1,5 +1,6 @@
 package com.vteba.finance.table.web;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.vteba.finance.account.model.Subject;
 import com.vteba.finance.table.model.DailyAccount;
 import com.vteba.finance.table.service.IDailyAccountService;
+import com.vteba.service.generic.IGenericService;
 import com.vteba.util.common.BigDecimalUtils;
 import com.vteba.util.common.ObjectUtils;
 import com.vteba.util.reflection.ReflectUtils;
@@ -83,6 +85,13 @@ public class DailyAccountAction extends BaseAction<DailyAccount> {
 	public void setDailyAccountServiceImpl(
 			IDailyAccountService dailyAccountServiceImpl) {
 		this.dailyAccountServiceImpl = dailyAccountServiceImpl;
+	}
+
+	@Override
+	public void setGenericServiceImpl(
+			IGenericService<DailyAccount, ? extends Serializable> genericServiceImpl) {
+		// TODO Auto-generated method stub
+		
 	}
 
 //	public String getTypes() {

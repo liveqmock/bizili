@@ -1,6 +1,7 @@
 package com.vteba.web.action;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,8 +23,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.vteba.common.constant.CommonConst;
 import com.vteba.service.context.RequestContextHolder;
+import com.vteba.service.generic.IGenericService;
 import com.vteba.tx.generic.Page;
 import com.vteba.util.json.FastJsonUtils;
+import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.editer.DoubleEditor;
 import com.vteba.web.editer.FloatEditor;
 import com.vteba.web.editer.IntegerEditor;
@@ -43,8 +46,13 @@ public abstract class  BaseAction<T> {
 	
 	public final static String MSG = "msg";
 	
+	public static final String HQL = "hqlQuery";
+	
 	private static final Random RANDOM = new Random();
 	protected Logger logger = LoggerFactory.getLogger(getClass());
+	
+	protected IGenericService<T, ? extends Serializable> genericServiceImpl;
+	
 //	protected T entity;
 //	/**
 //	 * 存放任意对象list到view中
@@ -379,4 +387,28 @@ public abstract class  BaseAction<T> {
 	public void renderText(String text) {
 		response(getHttpServletResponse(), text, "text/plain;charset=UTF-8");
 	}
+	
+	protected void queryForPage(T model, PageBean<T> pageBean, Map<String, Object> maps) {
+		Map<String, Object> params = new HashMap<>();
+		if (isQuery()) {
+			params = ReflectUtils.emptyToNulls(model);
+		} else {
+			String hql = new StringBuilder("select tbs from ")
+				.append(model.getClass().getSimpleName())
+				.append(" tbs ").toString();
+			params.put(HQL, hql);
+		}
+		page = pageBean.getPage();
+		String hql = params.get(HQL).toString();
+		params.remove(HQL);
+		//具体查询回调
+		genericServiceImpl.queryForPageByHql(page, hql, params);
+		listResult = page.getResult();
+		maps.put("listResult", listResult);
+		setAttributeToRequest(CommonConst.PAGE_NAME, page);
+	}
+	
+	public abstract void setGenericServiceImpl(IGenericService<T, ? extends Serializable> genericServiceImpl);
+
+	//protected abstract void pageQueryCallback(Page<T> page, String hql, Map<String, Object> params);
 }

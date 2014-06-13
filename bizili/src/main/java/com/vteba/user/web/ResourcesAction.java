@@ -1,5 +1,6 @@
 package com.vteba.user.web;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -13,9 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.vteba.common.constant.CommonConst;
 import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
+import com.vteba.service.generic.IGenericService;
 import com.vteba.user.model.Resources;
 import com.vteba.user.service.IResourcesService;
-import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
 
@@ -28,21 +29,13 @@ import com.vteba.web.action.PageBean;
 @RequestMapping("/users")
 public class ResourcesAction extends BaseAction<Resources> {
 
-	@Inject
 	private IResourcesService resourcesServiceImpl;
 	@Inject
 	private IModuleMenuService moduleMenuServiceImpl;
 	
 	@RequestMapping("/resources-initial")
 	public String initial(Resources model, PageBean<Resources> pageBean, Map<String, Object> maps) throws Exception {
-		if (isQuery()) {
-			ReflectUtils.emptyToNulls(model);
-		}
-		page = pageBean.getPage();
-		resourcesServiceImpl.queryForPageByCriteria(page, model);
-		listResult = page.getResult();
-		maps.put("listResult", listResult);
-		setAttributeToRequest(CommonConst.PAGE_NAME, page);
+		queryForPage(model, pageBean, maps);
 		
 		List<ModuleMenu> list = moduleMenuServiceImpl.loadModuleMenus();
 		maps.put("list", list);
@@ -102,6 +95,18 @@ public class ResourcesAction extends BaseAction<Resources> {
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, page);
 		return "user/resources/resource-list";
+	}
+
+//	@Override
+//	protected void pageQueryCallback(Page<Resources> page, String hql, Map<String, Object> params) {
+//		resourcesServiceImpl.queryForPageByHql(page, hql, params);
+//	}
+
+	@Inject
+	@Override
+	public void setGenericServiceImpl(IGenericService<Resources, ? extends Serializable> resourcesServiceImpl) {
+		this.genericServiceImpl = resourcesServiceImpl;
+		this.resourcesServiceImpl = (IResourcesService) resourcesServiceImpl;
 	}
 
 }

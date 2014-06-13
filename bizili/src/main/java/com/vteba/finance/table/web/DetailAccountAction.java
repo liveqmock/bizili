@@ -1,5 +1,6 @@
 package com.vteba.finance.table.web;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.finance.table.model.DetailAccount;
 import com.vteba.finance.table.service.IDetailAccountService;
+import com.vteba.service.generic.IGenericService;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 
@@ -41,6 +43,13 @@ public class DetailAccountAction extends BaseAction<DetailAccount> {
 		listResult = detailAccountServiceImpl.getListByCriteria(DetailAccount.class, model, param);
 		maps.put("listResult", listResult);
 		return "table/detailaccount/detailaccount-initial-success";
+	}
+
+	@Override
+	public void setGenericServiceImpl(
+			IGenericService<DetailAccount, ? extends Serializable> genericServiceImpl) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

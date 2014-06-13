@@ -5,6 +5,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ import org.springframework.util.Assert;
 
 import com.vteba.lang.bytecode.MethodAccess;
 import com.vteba.util.web.struts.StrutsUtils;
+import com.vteba.web.action.BaseAction;
 
 /**
  * 反射工具类。
@@ -233,10 +236,14 @@ public class ReflectUtils {
 	}
 	
 	/**
-	 * 如果对象的String属性值为""，则将其转换为null
+	 * 如果对象的String属性值为""，则将其转换为null。
 	 * @param object 要转换的对象
 	 */
-	public static void emptyToNulls(Object object){
+	public static Map<String, Object> emptyToNulls(Object object) {
+		StringBuilder hql = new StringBuilder("select tbs from ")
+			.append(object.getClass().getSimpleName())
+			.append(" tbs where 1=1");
+		Map<String, Object> params = new HashMap<String, Object>();
 		MethodAccess methodAccess = AsmUtils.get().createMethodAccess(object.getClass());
 		String[] methodNames = methodAccess.getMethodNames();
 		Class<?>[][] paramTypes = methodAccess.getParameterTypes();
@@ -247,15 +254,21 @@ public class ReflectUtils {
 				if (clazz == String.class) {
 					String methodName = methodNames[i];
 					if (methodName.startsWith(SET)) {
-						Object value = methodAccess.invoke(object, GET + methodName.substring(3));
+						String attrName = methodName.substring(3);
+						Object value = methodAccess.invoke(object, GET + attrName);
 						if (value != null && value.equals("")) {
-							methodAccess.invoke(object, methodName, new Object[]{ null });
+							hql.append(" and ").append(attrName).append(" = :").append(attrName);
+							params.put(attrName, value);
+							//这一句没有调用的必要了，提升性能。
+							//methodAccess.invoke(object, methodName, new Object[]{ null });
 						}
 					}
 				}
 			}
 			i++;
 		}
+		params.put(BaseAction.HQL, hql.toString());
+		return params;
 	}
 	
 	protected static void convertStringToNull(Class<?> clazz, Object obj)

@@ -1,5 +1,6 @@
 package com.vteba.finance.report.web;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.vteba.finance.account.service.IAccountPeriodService;
 import com.vteba.finance.report.model.Profit;
 import com.vteba.finance.report.service.IProfitService;
+import com.vteba.service.generic.IGenericService;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 
@@ -48,6 +50,13 @@ public class ProfitAction extends BaseAction<Profit> {
 	public void setAccountPeriodServiceImpl(
 			IAccountPeriodService accountPeriodServiceImpl) {
 		this.accountPeriodServiceImpl = accountPeriodServiceImpl;
+	}
+
+	@Override
+	public void setGenericServiceImpl(
+			IGenericService<Profit, ? extends Serializable> genericServiceImpl) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

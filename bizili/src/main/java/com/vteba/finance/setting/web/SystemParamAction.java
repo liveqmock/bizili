@@ -1,5 +1,6 @@
 package com.vteba.finance.setting.web;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.finance.setting.model.SystemParameter;
 import com.vteba.finance.setting.service.ISystemParameterService;
+import com.vteba.service.generic.IGenericService;
 import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 
@@ -34,6 +36,13 @@ public class SystemParamAction extends BaseAction<SystemParameter> {
 		listResult = systemParameterServiceImpl.getListByCriteria(model);
 		maps.put("listResult", listResult);
 		return "setting/systemparam/systemparam-initial-success";
+	}
+
+	@Override
+	public void setGenericServiceImpl(
+			IGenericService<SystemParameter, ? extends Serializable> genericServiceImpl) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

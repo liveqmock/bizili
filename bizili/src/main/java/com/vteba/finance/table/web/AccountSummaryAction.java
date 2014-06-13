@@ -1,5 +1,6 @@
 package com.vteba.finance.table.web;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.vteba.finance.currency.model.Currency;
 import com.vteba.finance.table.model.AccountSummary;
 import com.vteba.finance.table.service.IAccountSummaryService;
+import com.vteba.service.generic.IGenericService;
 import com.vteba.util.common.BigDecimalUtils;
 import com.vteba.util.common.ObjectUtils;
 import com.vteba.web.action.BaseAction;
@@ -73,6 +75,13 @@ public class AccountSummaryAction extends BaseAction<AccountSummary> {
 	public void setAccountSummaryServiceImpl(
 			IAccountSummaryService accountSummaryServiceImpl) {
 		this.accountSummaryServiceImpl = accountSummaryServiceImpl;
+	}
+
+	@Override
+	public void setGenericServiceImpl(
+			IGenericService<AccountSummary, ? extends Serializable> genericServiceImpl) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
