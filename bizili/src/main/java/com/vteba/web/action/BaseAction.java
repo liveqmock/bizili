@@ -408,6 +408,10 @@ public abstract class  BaseAction<T> {
 		setAttributeToRequest(CommonConst.PAGE_NAME, page);
 	}
 	
+	/**
+	 * 抽象分页查询方法，同时规范该Action对应的service的注入。genericServiceImpl参数名，要改成具体的service的名字。
+	 * @param genericServiceImpl 延迟到子类中，注入具体的servie实现。
+	 */
 	public abstract void setGenericServiceImpl(IGenericService<T, ? extends Serializable> genericServiceImpl);
 
 	//protected abstract void pageQueryCallback(Page<T> page, String hql, Map<String, Object> params);
