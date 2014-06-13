@@ -397,7 +397,7 @@
 					</form>
 										<!-- END FORM-->			
 					<!-- 分页标签 -->
-					<vte:page formName="queryForm" beanName="page"></vte:page>
+					<v:page formName="queryForm" beanName="page"></v:page>
 					<!-- END EXAMPLE TABLE PORTLET-->
 									</div>
 									

@@ -5,4 +5,4 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="vte" uri="/WEB-INF/tld/" %>
-<%@ taglib prefix="vte" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="v" tagdir="/WEB-INF/tags" %>
