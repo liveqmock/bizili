@@ -98,7 +98,21 @@ public interface IGenericService<T, ID extends Serializable> {
 	 * @see com.vteba.tx.generic.IGenericDao#delete(java.io.Serializable)
 	 */
 	public void delete(ID id);
+	
+	/**
+	 * @param entity
+	 * @see com.vteba.tx.generic.IGenericDao#delete(java.lang.Object)
+	 */
+	public void delete(T entity);
 
+	/**
+	 * @param hql
+	 * @param values
+	 * @return
+	 * @see com.vteba.tx.hibernate.IHibernateGenericDao#getListByHql(java.lang.String, java.lang.Object[])
+	 */
+	public <E> List<E> getListByHql(String hql, Object... values);
+	
 	/**
 	 * @param hql
 	 * @param clazz
@@ -109,11 +123,13 @@ public interface IGenericService<T, ID extends Serializable> {
 	public <E> List<E> getListByHql(String hql, Class<E> clazz, Object... values);
 
 	/**
-	 * @param entity
-	 * @see com.vteba.tx.generic.IGenericDao#delete(java.lang.Object)
+	 * @param namedQuery
+	 * @param values
+	 * @return
+	 * @see com.vteba.tx.hibernate.IHibernateGenericDao#getListByNamedHql(java.lang.String, java.lang.Object[])
 	 */
-	public void delete(T entity);
-
+	public <E> List<E> getListByNamedHql(String namedQuery, Object... values);
+	
 	/**
 	 * @param namedQuery
 	 * @param clazz

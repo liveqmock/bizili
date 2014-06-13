@@ -106,6 +106,11 @@ public abstract class GenericServiceImpl<T, ID extends Serializable> implements 
 	}
 
 	@Override
+	public <E> List<E> getListByHql(String hql, Object... values) {
+		return hibernateGenericDaoImpl.getListByHql(hql, values);
+	}
+	
+	@Override
 	public <E> List<E> getListByHql(String hql, Class<E> clazz,
 			Object... values) {
 		return hibernateGenericDaoImpl.getListByHql(hql, clazz, values);
@@ -116,6 +121,11 @@ public abstract class GenericServiceImpl<T, ID extends Serializable> implements 
 		hibernateGenericDaoImpl.delete(entity);
 	}
 
+	@Override
+	public <E> List<E> getListByNamedHql(String namedQuery, Object... values) {
+		return hibernateGenericDaoImpl.getListByNamedHql(namedQuery, values);
+	}
+	
 	@Override
 	public <E> List<E> getListByNamedHql(String namedQuery, Class<E> clazz,
 			Object... values) {
