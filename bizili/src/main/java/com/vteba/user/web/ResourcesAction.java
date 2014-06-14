@@ -1,6 +1,5 @@
 package com.vteba.user.web;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -97,14 +96,9 @@ public class ResourcesAction extends BaseAction<Resources> {
 		return "user/resources/resource-list";
 	}
 
-//	@Override
-//	protected void pageQueryCallback(Page<Resources> page, String hql, Map<String, Object> params) {
-//		resourcesServiceImpl.queryForPageByHql(page, hql, params);
-//	}
-
 	@Inject
 	@Override
-	public void setGenericServiceImpl(IGenericService<Resources, ? extends Serializable> resourcesServiceImpl) {
+	public void setGenericServiceImpl(IGenericService<Resources, ?> resourcesServiceImpl) {
 		this.genericServiceImpl = resourcesServiceImpl;
 		this.resourcesServiceImpl = (IResourcesService) resourcesServiceImpl;
 	}

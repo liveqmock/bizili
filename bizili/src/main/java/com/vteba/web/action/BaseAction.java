@@ -420,5 +420,13 @@ public abstract class  BaseAction<T> {
 	 */
 	public abstract void setGenericServiceImpl(IGenericService<T, ? extends Serializable> genericServiceImpl);
 
-	//protected abstract void pageQueryCallback(Page<T> page, String hql, Map<String, Object> params);
+	/**
+	 * 每一个模组的初始化方法
+	 * @param model 表单模型数据
+	 * @param pageBean 分页数据
+	 * @param maps 返回给view的数据
+	 * @return 逻辑视图名
+	 * @throws Exception
+	 */
+	//public abstract String initial(T model, PageBean<T> pageBean, Map<String, Object> maps) throws Exception;
 }

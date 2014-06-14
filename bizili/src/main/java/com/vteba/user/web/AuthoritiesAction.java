@@ -17,7 +17,6 @@ import com.vteba.service.generic.IGenericService;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.service.IAuthoritiesService;
 import com.vteba.user.service.IResourcesService;
-import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
 
@@ -36,25 +35,13 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 	private IResourcesService resourcesServiceImpl;
 	
 	@Inject
-	public void setAuthoritiesServiceImpl(IAuthoritiesService authoritiesServiceImpl) {
-		this.authoritiesServiceImpl = authoritiesServiceImpl;
-	}
-	
-	@Inject
 	public void setModuleMenuServiceImpl(IModuleMenuService moduleMenuServiceImpl) {
 		this.moduleMenuServiceImpl = moduleMenuServiceImpl;
 	}
 
 	@RequestMapping("/authorities-initial")
 	public String initial(Authorities model, PageBean<Authorities> pageBean, Map<String, Object> maps) throws Exception {
-		page = pageBean.getPage();
-		if (isQuery()) {
-			ReflectUtils.emptyToNulls(model);
-		}
-		authoritiesServiceImpl.queryForPageByCriteria(page, model);
-		listResult = page.getResult();
-		maps.put("listResult", listResult);
-		setAttributeToRequest(CommonConst.PAGE_NAME, page);
+		queryForPage(model, pageBean, maps);
 		return "user/authorities/auth-initial-success";
 	}
 	
@@ -124,10 +111,11 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 		return "user/authorities/auth-resource";
 	}
 
+	@Inject
 	@Override
 	public void setGenericServiceImpl(
-			IGenericService<Authorities, ? extends Serializable> genericServiceImpl) {
-		// TODO Auto-generated method stub
-		
+			IGenericService<Authorities, ? extends Serializable> authoritiesServiceImpl) {
+		this.genericServiceImpl = authoritiesServiceImpl;
+		this.authoritiesServiceImpl = (IAuthoritiesService) authoritiesServiceImpl;
 	}
 }

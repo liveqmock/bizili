@@ -1,6 +1,7 @@
 package com.vteba.user.web;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -11,6 +12,7 @@ import com.vteba.service.generic.IGenericService;
 import com.vteba.user.model.EmpUser;
 import com.vteba.user.service.IEmpUserService;
 import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.PageBean;
 
 /**
  * 用户登录跳转 
@@ -33,7 +35,7 @@ public class UserLoginAction extends BaseAction<EmpUser> {
 	}
 
 	@RequestMapping("/userLogin")
-	public String initial() throws Exception {
+	public String initial(EmpUser model, PageBean<EmpUser> pageBean, Map<String, Object> maps) throws Exception {
 		if (isInit()) {
 			return "login";
 		} else if (isAuthError()) {

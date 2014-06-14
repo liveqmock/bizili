@@ -1,6 +1,5 @@
 package com.vteba.user.web;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -177,8 +176,7 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 
 	@Inject
 	@Override
-	public void setGenericServiceImpl(
-			IGenericService<EmpUser, ? extends Serializable> empUserServiceImpl) {
+	public void setGenericServiceImpl(IGenericService<EmpUser, ?> empUserServiceImpl) {
 		this.genericServiceImpl = empUserServiceImpl;
 		this.empUserServiceImpl = (IEmpUserService) empUserServiceImpl;
 		
