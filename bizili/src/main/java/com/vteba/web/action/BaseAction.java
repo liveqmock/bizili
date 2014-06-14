@@ -388,8 +388,14 @@ public abstract class  BaseAction<T> {
 		response(getHttpServletResponse(), text, "text/plain;charset=UTF-8");
 	}
 	
+	/**
+	 * 默认方式的分页查询方式
+	 * @param model 表单model数据
+	 * @param pageBean 分页数据
+	 * @param maps 返回给页面view的数据
+	 */
 	protected void queryForPage(T model, PageBean<T> pageBean, Map<String, Object> maps) {
-		Map<String, Object> params = new HashMap<>();
+		Map<String, Object> params = new HashMap<String, Object>();
 		if (isQuery()) {
 			params = ReflectUtils.emptyToNulls(model);
 		} else {

@@ -14,15 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vteba.common.constant.CommonConst;
-import com.vteba.tx.generic.Page;
 import com.vteba.security.spring.SecurityContextHolderUtils;
 import com.vteba.service.generic.IGenericService;
+import com.vteba.tx.generic.Page;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.model.EmpUser;
 import com.vteba.user.model.Roles;
 import com.vteba.user.service.IAuthoritiesService;
 import com.vteba.user.service.IEmpUserService;
-import com.vteba.util.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
 
@@ -41,11 +40,6 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 	private List<Long> ids;//封装页面的选择的id
 	
 	@Inject
-	public void setEmpUserServiceImpl(IEmpUserService empUserServiceImpl) {
-		this.empUserServiceImpl = empUserServiceImpl;
-	}
-	
-	@Inject
 	public void setAuthoritiesServiceImpl(IAuthoritiesService authoritiesServiceImpl) {
 		this.authoritiesServiceImpl = authoritiesServiceImpl;
 	}
@@ -57,14 +51,7 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 	
 	@RequestMapping("/empUser-initial")
 	public String initial(EmpUser model, PageBean<EmpUser> pageBean, Map<String, Object> maps) throws Exception {
-		page = pageBean.getPage();
-		if (isQuery()) {
-			ReflectUtils.emptyToNulls(model);
-		}
-		empUserServiceImpl.queryForPageByCriteria(page, model);
-		listResult = page.getResult();
-		maps.put("listResult", listResult);
-		setAttributeToRequest(CommonConst.PAGE_NAME, page);
+		queryForPage(model, pageBean, maps);
 		return "user/empUser/empUser-initial-success";
 	}
 	
@@ -188,10 +175,12 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 		this.ids = ids;
 	}
 
+	@Inject
 	@Override
 	public void setGenericServiceImpl(
-			IGenericService<EmpUser, ? extends Serializable> genericServiceImpl) {
-		// TODO Auto-generated method stub
+			IGenericService<EmpUser, ? extends Serializable> empUserServiceImpl) {
+		this.genericServiceImpl = empUserServiceImpl;
+		this.empUserServiceImpl = (IEmpUserService) empUserServiceImpl;
 		
 	}
 

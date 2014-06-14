@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 import com.vteba.lang.bytecode.MethodAccess;
+import com.vteba.service.context.RequestContextHolder;
 import com.vteba.util.web.struts.StrutsUtils;
 import com.vteba.web.action.BaseAction;
 
@@ -236,10 +237,10 @@ public class ReflectUtils {
 	}
 	
 	/**
-	 * 如果对象的String属性值为""，则将其转换为null。
+	 * 如果对象的String属性值为""，则将其转换为null。同时构建hql语句。（业务有问题，只处理了string属性）
 	 * @param object 要转换的对象
 	 */
-	public static Map<String, Object> emptyToNulls(Object object) {
+	public static Map<String, Object> emptyToNulls4(Object object) {
 		StringBuilder hql = new StringBuilder("select tbs from ")
 			.append(object.getClass().getSimpleName())
 			.append(" tbs where 1=1");
@@ -266,6 +267,88 @@ public class ReflectUtils {
 				}
 			}
 			i++;
+		}
+		params.put(BaseAction.HQL, hql.toString());
+		return params;
+	}
+	
+	//性能最差，字节码获取方法，字节码获取其值
+	public static Map<String, Object> emptyToNulls1(Object object) {
+		StringBuilder hql = new StringBuilder("select tbs from ")
+			.append(object.getClass().getSimpleName())
+			.append(" tbs where 1=1");
+		Map<String, Object> params = new HashMap<String, Object>();
+		MethodAccess methodAccess = AsmUtils.get().createMethodAccess(object.getClass());
+		String[] methodNames = methodAccess.getMethodNames();
+		Class<?>[][] paramTypes = methodAccess.getParameterTypes();
+		int i = 0;
+		for (Class<?>[] paramType : paramTypes) {
+			if (paramType.length > 0) {
+				Class<?> clazz = paramType[0];
+				String methodName = methodNames[i];
+				if (methodName.startsWith(SET)) {
+					String attrName = methodName.substring(3);
+					Object value = null;
+					if (clazz == boolean.class || clazz == Boolean.class) {
+						value = methodAccess.invoke(object, "is" + attrName);
+					} else {
+						value = methodAccess.invoke(object, GET + attrName);
+					}
+					if (value != null && value.equals("")) {
+						hql.append(" and ").append(attrName).append(" = :").append(attrName);
+						params.put(attrName, value);
+					}
+				}
+			}
+			i++;
+		}
+		params.put(BaseAction.HQL, hql.toString());
+		return params;
+	}
+	
+	//性能次差，使用字节码获取方法，request获取其值
+	public static Map<String, Object> emptyToNulls2(Object object) {
+		StringBuilder hql = new StringBuilder("select tbs from ")
+			.append(object.getClass().getSimpleName())
+			.append(" tbs where 1=1");
+		Map<String, Object> params = new HashMap<String, Object>();
+		MethodAccess methodAccess = AsmUtils.get().createMethodAccess(object.getClass());
+		String[] methodNames = methodAccess.getMethodNames();
+		for (String methodName : methodNames) {
+			if (methodName.startsWith(SET)) {
+				String attrName = StringUtils.uncapitalize(methodName.substring(3));
+				Object value = RequestContextHolder.getRequest().getParameter(attrName);
+				if (value != null && !value.equals("")) {
+					hql.append(" and ").append(attrName).append(" = :").append(attrName);
+					params.put(attrName, value);
+				}
+			}
+		}
+		params.put(BaseAction.HQL, hql.toString());
+		return params;
+	}
+	
+	/**
+	 * 反射获得Field，request获取其值，遍历对象构建hql语句和参数。返回Map。（相对性能最好）
+	 * @param object 要遍历的对象
+	 * @return hql语句和参数
+	 */
+	public static Map<String, Object> emptyToNulls(Object object) {
+		StringBuilder hql = new StringBuilder("select tbs from ")
+			.append(object.getClass().getSimpleName())
+			.append(" tbs where 1=1");
+		Map<String, Object> params = new HashMap<String, Object>();
+		Field[] fieldList = object.getClass().getDeclaredFields();
+		for (Field field : fieldList) {
+			String fieldName = field.getName();
+			if (fieldName.equals("serialVersionUID")) {
+				continue;
+			}
+			Object value = RequestContextHolder.getRequest().getParameter(fieldName);
+			if (value != null && !value.equals("")) {
+				hql.append(" and ").append(fieldName).append(" = :").append(fieldName);
+				params.put(fieldName, value);
+			}
 		}
 		params.put(BaseAction.HQL, hql.toString());
 		return params;
