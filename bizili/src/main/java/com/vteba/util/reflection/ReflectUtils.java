@@ -15,6 +15,7 @@ import org.springframework.util.Assert;
 
 import com.vteba.lang.bytecode.MethodAccess;
 import com.vteba.service.context.RequestContextHolder;
+import com.vteba.util.common.TypeConverter;
 import com.vteba.util.web.struts.StrutsUtils;
 import com.vteba.web.action.BaseAction;
 
@@ -306,6 +307,37 @@ public class ReflectUtils {
 		return params;
 	}
 	
+	//字节码获取方法，request取值，手工转换类型值
+	public static Map<String, Object> emptyToNulls6(Object object) {
+		StringBuilder hql = new StringBuilder("select tbs from ")
+			.append(object.getClass().getSimpleName())
+			.append(" tbs where 1=1");
+		Map<String, Object> params = new HashMap<String, Object>();
+		MethodAccess methodAccess = AsmUtils.get().createMethodAccess(object.getClass());
+		String[] methodNames = methodAccess.getMethodNames();
+		Class<?>[][] paramTypes = methodAccess.getParameterTypes();
+		int i = 0;
+		for (Class<?>[] paramType : paramTypes) {
+			if (paramType.length > 0) {
+				Class<?> clazz = paramType[0];
+				String methodName = methodNames[i];
+				if (methodName.startsWith(SET)) {
+					String attrName = StringUtils.uncapitalize(methodName.substring(3));
+					String value = RequestContextHolder.getRequest().getParameter(attrName);
+
+					if (value != null && !value.equals("")) {
+						Object typedValue = TypeConverter.convertValue(value, clazz);
+						hql.append(" and ").append(attrName).append(" = :").append(attrName);
+						params.put(attrName, typedValue);
+					}
+				}
+			}
+			i++;
+		}
+		params.put(BaseAction.HQL, hql.toString());
+		return params;
+	}
+	
 	//性能次差，使用字节码获取方法，request获取其值
 	public static Map<String, Object> emptyToNulls2(Object object) {
 		StringBuilder hql = new StringBuilder("select tbs from ")
@@ -348,6 +380,33 @@ public class ReflectUtils {
 			if (value != null && !value.equals("")) {
 				hql.append(" and ").append(fieldName).append(" = :").append(fieldName);
 				params.put(fieldName, value);
+			}
+		}
+		params.put(BaseAction.HQL, hql.toString());
+		return params;
+	}
+	
+	/**
+	 * 构建hql查询语句，获取属性使用反射（只获取Fileds）,然后使用request获取值，手动转换。
+	 * @param object 携带参数的对象
+	 * @return hql语句
+	 */
+	public static Map<String, Object> buildHql(Object object) {
+		StringBuilder hql = new StringBuilder("select tbs from ")
+			.append(object.getClass().getSimpleName())
+			.append(" tbs where 1=1");
+		Map<String, Object> params = new HashMap<String, Object>();
+		Field[] fieldList = object.getClass().getDeclaredFields();
+		for (Field field : fieldList) {
+			String fieldName = field.getName();
+			if (fieldName.equals("serialVersionUID")) {
+				continue;
+			}
+			String value = RequestContextHolder.getRequest().getParameter(fieldName);
+			if (value != null && !value.equals("")) {
+				Object typedValue = TypeConverter.simpleConvertValue(value, field.getType());
+				hql.append(" and ").append(fieldName).append(" = :").append(fieldName);
+				params.put(fieldName, typedValue);
 			}
 		}
 		params.put(BaseAction.HQL, hql.toString());

@@ -3,7 +3,10 @@ package com.vteba.util.common;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -99,6 +102,47 @@ public class TypeConverter {
         return result;
     }
 
+	public static Object simpleConvertValue(String value, Class<?> toType) {
+        Object result = null;
+
+        if (value != null) {
+        	if (toType == String.class) {
+				result = value;
+			} else if ((toType == Integer.class) || (toType == Integer.TYPE)) {
+				result = Integer.valueOf(value);
+			} else if ((toType == Double.class) || (toType == Double.TYPE)) {
+				result = Double.valueOf(value);
+			} else if ((toType == Long.class) || (toType == Long.TYPE)) {
+				result = Long.valueOf(value);
+			} else if ((toType == Boolean.class) || (toType == Boolean.TYPE)) {
+				result = booleanValue(value) ? Boolean.TRUE : Boolean.FALSE;
+			} else if (toType == Date.class) {
+				try {
+					result = DateFormat.getInstance().parse(value);
+				} catch (ParseException e) {
+					// do nothing
+				}
+			} else if (toType == BigInteger.class) {
+				result = bigIntValue(value);
+			} else if (toType == BigDecimal.class) {
+				result = bigDecValue(value);
+			} else if ((toType == Byte.class) || (toType == Byte.TYPE)) {
+				result = Byte.valueOf((byte) longValue(value));
+			} else if ((toType == Character.class) || (toType == Character.TYPE)) {
+				result = new Character((char) longValue(value));
+			} else if ((toType == Short.class) || (toType == Short.TYPE)) {
+				result = Short.valueOf((short) longValue(value));
+			} else if ((toType == Float.class) || (toType == Float.TYPE)) {
+				result = new Float(doubleValue(value));
+			} 
+        } else {
+            if (toType.isPrimitive()) {
+                result = primitiveDefaults.get(toType);
+            }
+        }
+        return result;
+    }
+	
     /**
      * Evaluates the given object as a boolean: if it is a Boolean object, it's
      * easy; if it's a Number or a Character, returns true for non-zero objects;

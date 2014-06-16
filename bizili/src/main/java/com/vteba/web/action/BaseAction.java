@@ -397,7 +397,7 @@ public abstract class  BaseAction<T> {
 	protected void queryForPage(T model, PageBean<T> pageBean, Map<String, Object> maps) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (isQuery()) {
-			params = ReflectUtils.emptyToNulls(model);
+			params = ReflectUtils.buildHql(model);
 		} else {
 			String hql = new StringBuilder("select tbs from ")
 				.append(model.getClass().getSimpleName())
