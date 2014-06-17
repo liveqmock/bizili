@@ -34,6 +34,18 @@
   <dependencies>
     
     <dependency>
+    	<groupId>com.vteba</groupId>
+    	<artifactId>vteba-utils</artifactId>
+    	<version>1.0.1</version>
+    </dependency>
+    
+<!--     <dependency> -->
+<!--     	<groupId>com.vteba</groupId> -->
+<!--     	<artifactId>vteba-ext</artifactId> -->
+<!--     	<version>1.0.1</version> -->
+<!--     </dependency> -->
+    
+    <dependency>
       <groupId>com.sun</groupId>
       <artifactId>tools</artifactId>
       <version>1.6.0</version>

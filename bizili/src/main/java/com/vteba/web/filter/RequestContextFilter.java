@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.vteba.service.context.RequestContextHolder;
+import com.vteba.utils.web.RequestContextHolder;
 
 /**
  * Servlet Filter that exposes the request/response to the current thread,

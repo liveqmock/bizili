@@ -5,8 +5,8 @@ import java.io.ByteArrayInputStream;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.vteba.service.context.RequestContextHolder;
 import com.vteba.utils.common.RandomNumber;
+import com.vteba.utils.web.RequestContextHolder;
 
 /**
  * 随机验证码action 

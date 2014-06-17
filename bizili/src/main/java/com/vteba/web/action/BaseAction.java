@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.vteba.common.constant.CommonConst;
-import com.vteba.service.context.RequestContextHolder;
 import com.vteba.service.generic.IGenericService;
 import com.vteba.tx.generic.Page;
 import com.vteba.utils.json.FastJsonUtils;
 import com.vteba.utils.reflection.ReflectUtils;
+import com.vteba.utils.web.RequestContextHolder;
 import com.vteba.web.editer.DoubleEditor;
 import com.vteba.web.editer.FloatEditor;
 import com.vteba.web.editer.IntegerEditor;
