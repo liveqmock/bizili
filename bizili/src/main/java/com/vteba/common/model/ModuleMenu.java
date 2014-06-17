@@ -39,7 +39,7 @@ public class ModuleMenu implements AstModel{
 	private Boolean enable;//是否可用
 	private Integer orders;//显示顺序
 	private List<Authorities> authorities = new ArrayList<Authorities>();//用户权限
-	
+
 	public ModuleMenu() {
 	}
 
@@ -93,7 +93,7 @@ public class ModuleMenu implements AstModel{
 	public void setEnable(Boolean enable) {
 		this.enable = enable;
 	}
-	
+
 	@Column
 	public Integer getOrders() {
 		return orders;
