@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.apache.commons.collections.functors.CloneTransformer;
 
-import com.vteba.util.cryption.CryptionUtils;
+import com.vteba.utils.cryption.CryptionUtils;
 
 /**
  * 抽象缓存对象封装

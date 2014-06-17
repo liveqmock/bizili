@@ -10,7 +10,7 @@ import com.vteba.finance.table.model.TrialBalance;
 import com.vteba.finance.table.service.ITrialBalanceService;
 import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
-import com.vteba.util.common.ObjectUtils;
+import com.vteba.utils.common.ObjectUtils;
 
 /**
  * 试算平衡表Service实现

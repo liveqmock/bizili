@@ -2,7 +2,7 @@ package com.vteba.tx.hibernate.transformer;
 
 import org.hibernate.transform.BasicTransformerAdapter;
 
-import com.vteba.util.common.TypeConverter;
+import com.vteba.utils.common.TypeConverter;
 
 /**
  * 原生类型及其封转类，String，大数据，日期，结果集转化器

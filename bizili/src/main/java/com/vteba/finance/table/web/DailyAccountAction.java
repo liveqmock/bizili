@@ -12,9 +12,9 @@ import com.vteba.finance.account.model.Subject;
 import com.vteba.finance.table.model.DailyAccount;
 import com.vteba.finance.table.service.IDailyAccountService;
 import com.vteba.service.generic.IGenericService;
-import com.vteba.util.common.BigDecimalUtils;
-import com.vteba.util.common.ObjectUtils;
-import com.vteba.util.reflection.ReflectUtils;
+import com.vteba.utils.common.BigDecimalUtils;
+import com.vteba.utils.common.ObjectUtils;
+import com.vteba.utils.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 
 /**

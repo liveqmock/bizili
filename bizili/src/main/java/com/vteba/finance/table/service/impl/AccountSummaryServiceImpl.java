@@ -18,7 +18,7 @@ import com.vteba.finance.table.model.AccountSummary;
 import com.vteba.finance.table.service.IAccountSummaryService;
 import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
-import com.vteba.util.common.ObjectUtils;
+import com.vteba.utils.common.ObjectUtils;
 
 /**
  * 凭证汇总表service实现

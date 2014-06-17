@@ -14,8 +14,8 @@ import com.vteba.finance.table.service.IAccountBalanceService;
 import com.vteba.service.generic.IGenericService;
 import com.vteba.user.dao.UserDao;
 import com.vteba.user.model.EmpUser;
-import com.vteba.util.common.BigDecimalUtils;
-import com.vteba.util.reflection.ReflectUtils;
+import com.vteba.utils.common.BigDecimalUtils;
+import com.vteba.utils.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 
 /**

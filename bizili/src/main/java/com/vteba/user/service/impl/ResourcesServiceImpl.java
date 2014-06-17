@@ -16,8 +16,8 @@ import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.user.dao.IResourcesDao;
 import com.vteba.user.model.Resources;
 import com.vteba.user.service.IResourcesService;
-import com.vteba.util.json.FastJsonUtils;
-import com.vteba.util.json.Node;
+import com.vteba.utils.json.FastJsonUtils;
+import com.vteba.utils.json.Node;
 
 /**
  * 资源service实现。
@@ -68,7 +68,7 @@ public class ResourcesServiceImpl extends GenericServiceImpl<Resources, Long> im
 		for (ModuleMenu menu : moduleMenus) {
 			Node node = new Node(menu.getModuleId(), menu.getModuleName());
 			children.add(node);
-			String hql = "select new com.vteba.util.json.Node(r.resourceId, r.resourceName) from Resources r where r.moduleId = ?1";
+			String hql = "select new com.vteba.utils.json.Node(r.resourceId, r.resourceName) from Resources r where r.moduleId = ?1";
 			List<Node> nodeChildList = resourcesDaoImpl.getListByHql(hql, Node.class, menu.getModuleId());
 			node.setChildren(nodeChildList);
 		}

@@ -1,6 +1,6 @@
 package com.vteba.cache.memcached.manager;
 
-import com.vteba.util.cryption.CryptionUtils;
+import com.vteba.utils.cryption.CryptionUtils;
 
 /**
  * 缓存值封转

@@ -19,7 +19,7 @@ import com.vteba.finance.table.model.AccountBalance;
 import com.vteba.finance.table.service.IAccountBalanceService;
 import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
-import com.vteba.util.common.BigDecimalUtils;
+import com.vteba.utils.common.BigDecimalUtils;
 
 /**
  * 资产负债表service实现

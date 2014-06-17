@@ -21,8 +21,8 @@ import com.vteba.user.dao.IAuthoritiesDao;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.model.Resources;
 import com.vteba.user.service.IAuthoritiesService;
-import com.vteba.util.json.FastJsonUtils;
-import com.vteba.util.json.Node;
+import com.vteba.utils.json.FastJsonUtils;
+import com.vteba.utils.json.Node;
 
 /**
  * 权限service实现。
@@ -136,7 +136,7 @@ public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long
 		for (ModuleMenu menu : moduleMenus) {
 			Node node = new Node(menu.getModuleId(), menu.getModuleName());
 			children.add(node);
-			String hql = "select new com.vteba.util.json.Node(r.authId, r.authName) from Authorities r where r.moduleId = ?1";
+			String hql = "select new com.vteba.utils.json.Node(r.authId, r.authName) from Authorities r where r.moduleId = ?1";
 			List<Node> nodeChildList = authoritiesDaoImpl.getListByHql(hql, Node.class, menu.getModuleId());
 			node.setChildren(nodeChildList);
 		}

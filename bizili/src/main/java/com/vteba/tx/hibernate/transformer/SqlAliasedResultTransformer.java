@@ -11,8 +11,8 @@ import com.vteba.lang.bytecode.ConstructorAccess;
 import com.vteba.lang.bytecode.MethodAccess;
 import com.vteba.tx.hibernate.QueryStatement;
 import com.vteba.tx.hibernate.QueryStatementCache;
-import com.vteba.util.common.CamelCaseUtils;
-import com.vteba.util.reflection.AsmUtils;
+import com.vteba.utils.common.CamelCaseUtils;
+import com.vteba.utils.reflection.AsmUtils;
 
 /**
  * Hibernate SQL查询结果集转换器，基于SQL别名进行JavaBean的转换。使用asm处理。<br>

@@ -22,10 +22,10 @@ import com.vteba.finance.account.service.ISubjectService;
 import com.vteba.service.context.RequestContextHolder;
 import com.vteba.service.generic.IGenericService;
 import com.vteba.tx.generic.Page;
-import com.vteba.util.common.ExcelExportUtils;
-import com.vteba.util.common.ExcelImportUtils;
-import com.vteba.util.reflection.ReflectUtils;
-import com.vteba.util.web.struts.StrutsUtils;
+import com.vteba.utils.common.ExcelExportUtils;
+import com.vteba.utils.common.ExcelImportUtils;
+import com.vteba.utils.reflection.ReflectUtils;
+import com.vteba.utils.web.ServletUtils;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
 
@@ -157,7 +157,7 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 		ExcelExportUtils excel = new ExcelExportUtils(title);
 		HSSFWorkbook book = excel.makeObjectToExcel(dataList, "sheet1");
 		
-		HttpServletResponse response = StrutsUtils.getResponse();
+		HttpServletResponse response = ServletUtils.getResponse();
 		response.setContentType("application/vnd.ms-excel");
 		response.setHeader("content-disposition", "attachment;filename=\"" + "subject.xls" + "\"");
 		

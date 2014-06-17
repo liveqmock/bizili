@@ -10,8 +10,8 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.vteba.lang.bytecode.ConstructorAccess;
 import com.vteba.lang.bytecode.MethodAccess;
-import com.vteba.util.common.CamelCaseUtils;
-import com.vteba.util.reflection.AsmUtils;
+import com.vteba.utils.common.CamelCaseUtils;
+import com.vteba.utils.reflection.AsmUtils;
 
 /**
  * Spring JdbcTemplate 通用RowMapper，基于getter，setter实现。

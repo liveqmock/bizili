@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.vteba.finance.table.model.DetailAccount;
 import com.vteba.finance.table.service.IDetailAccountService;
 import com.vteba.service.generic.IGenericService;
-import com.vteba.util.reflection.ReflectUtils;
+import com.vteba.utils.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 
 /**

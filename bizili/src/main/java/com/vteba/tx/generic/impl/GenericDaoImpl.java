@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.vteba.tx.generic.IGenericDao;
 import com.vteba.tx.jdbc.spring.SpringJdbcTemplate;
-import com.vteba.util.reflection.ReflectUtils;
+import com.vteba.utils.reflection.ReflectUtils;
 
 /**
  * 泛型DAO抽象类。用于继承，简化子类实现。

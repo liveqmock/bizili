@@ -13,7 +13,7 @@ import com.vteba.finance.account.service.IAccountPeriodService;
 import com.vteba.finance.report.model.Profit;
 import com.vteba.finance.report.service.IProfitService;
 import com.vteba.service.generic.IGenericService;
-import com.vteba.util.reflection.ReflectUtils;
+import com.vteba.utils.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 
 /**

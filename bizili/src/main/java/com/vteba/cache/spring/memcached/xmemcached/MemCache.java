@@ -5,7 +5,7 @@ import net.rubyeye.xmemcached.MemcachedClient;
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.SimpleValueWrapper;
 
-import com.vteba.util.cryption.CryptionUtils;
+import com.vteba.utils.cryption.CryptionUtils;
 
 /**
  * Spring缓存，使用xmemcache实现，整合spring的缓存抽象

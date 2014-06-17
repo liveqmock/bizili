@@ -18,8 +18,8 @@ import com.vteba.finance.report.service.IProfitService;
 import com.vteba.finance.table.service.IAccountBalanceService;
 import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
-import com.vteba.util.common.BigDecimalUtils;
-import com.vteba.util.date.JodaTimeUtils;
+import com.vteba.utils.common.BigDecimalUtils;
+import com.vteba.utils.date.JodaTimeUtils;
 
 /**
  * 利润表service实现

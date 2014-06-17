@@ -19,7 +19,7 @@ import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.security.spring.SecurityContextHolderUtils;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.user.model.EmpUser;
-import com.vteba.util.common.ObjectUtils;
+import com.vteba.utils.common.ObjectUtils;
 
 /**
  * 凭证明细汇总service实现

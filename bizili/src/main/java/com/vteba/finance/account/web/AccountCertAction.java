@@ -20,7 +20,7 @@ import com.vteba.finance.account.service.ICertTotalService;
 import com.vteba.finance.account.service.ISubjectService;
 import com.vteba.service.generic.IGenericService;
 import com.vteba.tx.generic.Page;
-import com.vteba.util.reflection.ReflectUtils;
+import com.vteba.utils.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
 

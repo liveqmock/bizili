@@ -49,9 +49,9 @@ import com.opensymphony.xwork2.util.ValueStack;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
 import com.opensymphony.xwork2.util.profiling.UtilTimerStack;
-import com.vteba.util.common.CamelCaseUtils;
-import com.vteba.util.json.FastJsonUtils;
-import com.vteba.util.reflection.AsmUtils;
+import com.vteba.utils.common.CamelCaseUtils;
+import com.vteba.utils.json.FastJsonUtils;
+import com.vteba.utils.reflection.AsmUtils;
 
 import com.vteba.struts2.json.annotations.Json;
 

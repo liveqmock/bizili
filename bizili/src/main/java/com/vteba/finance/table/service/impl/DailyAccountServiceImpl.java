@@ -15,8 +15,8 @@ import com.vteba.finance.table.service.IAccountBalanceService;
 import com.vteba.finance.table.service.IDailyAccountService;
 import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
-import com.vteba.util.common.BigDecimalUtils;
-import com.vteba.util.common.ObjectUtils;
+import com.vteba.utils.common.BigDecimalUtils;
+import com.vteba.utils.common.ObjectUtils;
 
 /**
  * 日记账service实现

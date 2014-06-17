@@ -12,7 +12,7 @@ import com.vteba.common.constant.CommonConst;
 import com.vteba.service.generic.IGenericService;
 import com.vteba.user.model.Roles;
 import com.vteba.user.service.IRolesService;
-import com.vteba.util.reflection.ReflectUtils;
+import com.vteba.utils.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
 

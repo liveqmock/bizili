@@ -10,7 +10,7 @@ import com.vteba.lang.bytecode.ConstructorAccess;
 import com.vteba.lang.bytecode.FieldAccess;
 import com.vteba.tx.hibernate.QueryStatement;
 import com.vteba.tx.hibernate.QueryStatementCache;
-import com.vteba.util.common.CamelCaseUtils;
+import com.vteba.utils.common.CamelCaseUtils;
 
 /**
  * 基于别名的hibernate结果集转换器。基于JavaBean属性访问实现。且JavaBean的属性必须是protected的。

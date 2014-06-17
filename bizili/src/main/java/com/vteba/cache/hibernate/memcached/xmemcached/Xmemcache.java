@@ -16,7 +16,7 @@ import com.vteba.cache.hibernate.memcached.MemcacheExceptionHandler;
 import com.vteba.cache.memcached.Element;
 import com.vteba.cache.memcached.Store;
 import com.vteba.cache.memcached.manager.XMemcachedManager;
-import com.vteba.util.cryption.CryptionUtils;
+import com.vteba.utils.cryption.CryptionUtils;
 
 /**
  * Hibernate二级缓存，使用xmemcache implementation。

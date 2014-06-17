@@ -15,8 +15,8 @@ import com.vteba.finance.currency.model.Currency;
 import com.vteba.finance.table.model.AccountSummary;
 import com.vteba.finance.table.service.IAccountSummaryService;
 import com.vteba.service.generic.IGenericService;
-import com.vteba.util.common.BigDecimalUtils;
-import com.vteba.util.common.ObjectUtils;
+import com.vteba.utils.common.BigDecimalUtils;
+import com.vteba.utils.common.ObjectUtils;
 import com.vteba.web.action.BaseAction;
 
 /**

@@ -14,7 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import com.vteba.tx.jpa.spi.IJpaGenericDao;
-import com.vteba.util.reflection.ReflectUtils;
+import com.vteba.utils.reflection.ReflectUtils;
 
 public abstract class JpaGenericDaoImpl<T, ID extends Serializable> implements IJpaGenericDao<T, ID> {
 	//private EntityManagerFactory entityManagerFactory;

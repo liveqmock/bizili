@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
-import com.vteba.util.cryption.DESUtils;
+import com.vteba.utils.cryption.DESUtils;
 
 /**
  * Properties属性密文配置

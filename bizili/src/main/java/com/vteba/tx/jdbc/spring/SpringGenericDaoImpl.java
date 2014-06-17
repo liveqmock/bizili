@@ -18,8 +18,8 @@ import javax.persistence.Table;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import com.vteba.tx.jdbc.spi.SpringGenericDao;
-import com.vteba.util.reflection.BeanCopyUtils;
-import com.vteba.util.reflection.ReflectUtils;
+import com.vteba.utils.reflection.BeanCopyUtils;
+import com.vteba.utils.reflection.ReflectUtils;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;

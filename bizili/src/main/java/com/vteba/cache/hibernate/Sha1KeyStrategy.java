@@ -1,6 +1,6 @@
 package com.vteba.cache.hibernate;
 
-import com.vteba.util.cryption.CryptionUtils;
+import com.vteba.utils.cryption.CryptionUtils;
 
 /**
  * SHA1 digest，hibernate second level cache the default key strategy
