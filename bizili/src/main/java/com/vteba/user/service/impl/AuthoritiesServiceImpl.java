@@ -16,6 +16,7 @@ import com.vteba.cache.infinispan.InfinispanCacheManager;
 import com.vteba.common.constant.Cc;
 import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
+import com.vteba.security.spi.AuthoritiesService;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.user.dao.IAuthoritiesDao;
 import com.vteba.user.model.Authorities;
@@ -30,7 +31,7 @@ import com.vteba.utils.json.Node;
  * 2012-4-12 下午1:52:10
  */
 @Named
-public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long> implements IAuthoritiesService {
+public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long> implements IAuthoritiesService, AuthoritiesService {
 
 	public AuthoritiesServiceImpl() {
 		super();
@@ -89,7 +90,7 @@ public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long
 		return authorities;
 	}
 	
-	public List<String> getResourceUrlByAuthName(String authName) {
+	public List<String> getResourceByAuthName(String authName) {
 		String hql = "select a from Authorities a where a.authName = ?1";
 		Authorities auth = authoritiesDaoImpl.uniqueResultByHql(hql, authName);
 		List<String> resList = new ArrayList<String>();

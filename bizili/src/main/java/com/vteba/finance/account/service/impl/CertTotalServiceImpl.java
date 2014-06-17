@@ -58,7 +58,7 @@ public class CertTotalServiceImpl extends GenericServiceImpl<CertTotal, String> 
 
 	public boolean saveCertAndDetail(CertTotal certTotal, List<Certificate> certList) {
 		boolean ret = false;
-		EmpUser user = SecurityContextHolderUtils.getCurrentUserInfo();
+		EmpUser user = (EmpUser) SecurityContextHolderUtils.getCurrentUserInfo();
 		certTotal.setCreateEmp(user.getName());//创建人
 		certTotal.setState(CertTotal.STATE_NEW);//凭证状态
 		Long code = certTotalDaoImpl.getSequenceLongValue(Sequence.SEQ_CERT);

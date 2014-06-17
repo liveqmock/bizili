@@ -1,7 +1,5 @@
 package com.vteba.user.service;
 
-import java.util.List;
-
 import com.vteba.service.generic.IGenericService;
 import com.vteba.user.model.Authorities;
 
@@ -35,19 +33,19 @@ public interface IAuthoritiesService extends IGenericService<Authorities, Long> 
 	 * 获得系统所有的权限名 spring security use
 	 * @return List<String> 系统所有的权限名
 	 */
-	public List<String> getAllAuthorities();
+	//public List<String> getAllAuthorities();
 	
 	/**
 	 * 根据权限名，获得该权限下的资源 spring security use
 	 * @param authName 权限名
 	 * @return 资源URL list
 	 */
-	public List<String> getResourceUrlByAuthName(String authName);
+	//public List<String> getResourceUrlByAuthName(String authName);
 	
 	/**
 	 * 根据权限名，获得该权限下的资源（方法路径，含包名），spring security use
 	 * @param authName 权限名
 	 * @return （资源列表）方法名列表
 	 */
-	public List<String> getMethodByAuthName(String authName);
+	//public List<String> getMethodByAuthName(String authName);
 }

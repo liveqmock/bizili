@@ -1,4 +1,4 @@
-package com.vteba.security.spring.service;
+package com.vteba.user.service.impl;
 
 import java.util.HashSet;
 import java.util.List;
@@ -31,7 +31,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	private IModuleMenuService moduleMenuServiceImpl;
 	private UserCache userCache;
 	private static final Logger logger = LoggerFactory.getLogger(UserDetailServiceImpl.class);
-	
+
 	@Inject
 	public void setEmpUserServiceImpl(IEmpUserService empUserServiceImpl) {
 		this.empUserServiceImpl = empUserServiceImpl;
@@ -51,7 +51,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	public void setUserCache(UserCache userCache) {
 		this.userCache = userCache;
 	}
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException, DataAccessException {

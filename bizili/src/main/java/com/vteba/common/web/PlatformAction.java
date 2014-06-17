@@ -25,7 +25,7 @@ public class PlatformAction extends BaseAction<EmpUser> {
 
 	@RequestMapping("/platform-initial")
 	public String initial() throws Exception {
-		EmpUser user = SecurityContextHolderUtils.getCurrentUserInfo();
+		EmpUser user = (EmpUser)SecurityContextHolderUtils.getCurrentUserInfo();
 		if (user != null) {
 			setAttributeToSession(CommonConst.CONTEXT_USER, user);
 		}
