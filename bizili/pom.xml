@@ -45,11 +45,11 @@
     	<version>1.0.1</version>
     </dependency>
     
-<!--     <dependency> -->
-<!--     	<groupId>com.vteba</groupId> -->
-<!--     	<artifactId>vteba-ext</artifactId> -->
-<!--     	<version>1.0.1</version> -->
-<!--     </dependency> -->
+    <dependency>
+    	<groupId>com.vteba</groupId>
+    	<artifactId>vteba-web</artifactId>
+    	<version>1.0.1</version>
+    </dependency>
     
     <dependency>
       <groupId>com.sun</groupId>

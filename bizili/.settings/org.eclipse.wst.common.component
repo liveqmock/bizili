@@ -11,6 +11,9 @@
         <dependent-module archiveName="vteba-core-1.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/vteba-core/vteba-core">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="vteba-web-1.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/vteba-web/vteba-web">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
 	    <property name="java-output-path" value="/target/classes"/>
         <property name="context-root" value="bizili"/>
         <property name="component.exclusion.patterns" value="WEB-INF/web.xml"/>
