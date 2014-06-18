@@ -20,6 +20,7 @@ import com.vteba.security.spring.SecurityContextHolderUtils;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.user.model.EmpUser;
 import com.vteba.utils.common.ObjectUtils;
+import com.vteba.utils.date.DateUtils;
 
 /**
  * 凭证明细汇总service实现
@@ -64,7 +65,7 @@ public class CertTotalServiceImpl extends GenericServiceImpl<CertTotal, String> 
 		Long code = certTotalDaoImpl.getSequenceLongValue(Sequence.SEQ_CERT);
 		certTotal.setCodeNo(certTotal.getCodeNo() + "-" + ObjectUtils.fillLeft(code.toString(), "0", 5));//凭证字号
 		//会计期间
-		String accountPeriod = ObjectUtils.toDateString("yyyy-MM");
+		String accountPeriod = DateUtils.toDateString("yyyy-MM");
 		certTotal.setAccountPeriod(accountPeriod);//会计期间
 		certTotalDaoImpl.save(certTotal);
 		for (Certificate model : certList) {

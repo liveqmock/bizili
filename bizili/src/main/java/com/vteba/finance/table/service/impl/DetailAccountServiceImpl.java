@@ -20,6 +20,7 @@ import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.utils.common.BigDecimalUtils;
 import com.vteba.utils.common.ObjectUtils;
+import com.vteba.utils.date.DateUtils;
 import com.vteba.utils.date.JodaTimeUtils;
 
 /**
@@ -47,7 +48,7 @@ public class DetailAccountServiceImpl extends GenericServiceImpl<DetailAccount, 
 		//4、构造期末余额，本年累计额
 		//5、对于没有审核的凭证，如果更改、删除或者作废凭证，要更新这里的数值
 		
-		String period = ObjectUtils.toDateString("yyyy-MM");//会计期间
+		String period = DateUtils.toDateString("yyyy-MM");//会计期间
 		
 		//删除原有数据
 		String delHql = " delete from DetailAccount d where d.accountPeriod = ?1 ";

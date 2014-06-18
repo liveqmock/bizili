@@ -16,10 +16,10 @@ import com.vteba.finance.table.model.Ledger;
 import com.vteba.finance.table.service.IAccountBalanceService;
 import com.vteba.finance.table.service.IAccountSummaryService;
 import com.vteba.finance.table.service.ILedgerService;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.utils.common.BigDecimalUtils;
-import com.vteba.utils.common.ObjectUtils;
+import com.vteba.utils.date.DateUtils;
 import com.vteba.utils.date.JodaTimeUtils;
 
 /**
@@ -41,7 +41,7 @@ public class LedgerServiceImpl extends GenericServiceImpl<Ledger, String> implem
 	}
 
 	public void autoGenerateLedgerTask() {
-		String period = ObjectUtils.toDateString("yyyy-MM");
+		String period = DateUtils.toDateString("yyyy-MM");
 		//本期发生的一级会计科目，需要处理，期初，期末，本年累计
 		StringBuilder oneHql = new StringBuilder("select new Ledger(c.accountPeriod,c.oneLevel,c.currency,c.summary,sum(c.debitAmount),sum(c.creditAmount)) ");
 		oneHql.append(" from Certificate c where c.accountPeriod = ?1 ");

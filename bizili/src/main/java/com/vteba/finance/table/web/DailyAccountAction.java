@@ -13,7 +13,7 @@ import com.vteba.finance.table.model.DailyAccount;
 import com.vteba.finance.table.service.IDailyAccountService;
 import com.vteba.service.generic.IGenericService;
 import com.vteba.utils.common.BigDecimalUtils;
-import com.vteba.utils.common.ObjectUtils;
+import com.vteba.utils.date.DateUtils;
 import com.vteba.utils.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 
@@ -36,7 +36,7 @@ public class DailyAccountAction extends BaseAction<DailyAccount> {
 		} else if(types.equals("bank")) {
 			model.setType("100201");
 		}
-		String period = ObjectUtils.toDateString("yyyy-MM");
+		String period = DateUtils.toDateString("yyyy-MM");
 		model.setAccountPeriod(period);
 		String hql = " select d from DailyAccount d where d.type = :type and d.accountPeriod = :accountPeriod order by d.createDate asc,isnull(d.codeNo),d.codeNo asc,d.orders asc";
 		listResult = dailyAccountServiceImpl.getEntityListByHql(hql, model);

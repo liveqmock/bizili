@@ -16,7 +16,7 @@ import com.vteba.finance.table.model.AccountSummary;
 import com.vteba.finance.table.service.IAccountSummaryService;
 import com.vteba.service.generic.IGenericService;
 import com.vteba.utils.common.BigDecimalUtils;
-import com.vteba.utils.common.ObjectUtils;
+import com.vteba.utils.date.DateUtils;
 import com.vteba.web.action.BaseAction;
 
 /**
@@ -31,7 +31,7 @@ public class AccountSummaryAction extends BaseAction<AccountSummary> {
 	
 	@RequestMapping("/accountsummary-initial")
 	public String initial(AccountSummary model, Map<String, Object> maps) throws Exception {
-		String currentPeriod = ObjectUtils.toDateString("yyyy-MM");
+		String currentPeriod = DateUtils.toDateString("yyyy-MM");
 		Map<String, Object> param = new HashMap<String, Object>();
 		if (model.getAccountPeriod() == null) {//默认查询当前会计期间
 			model.setAccountPeriod(currentPeriod);

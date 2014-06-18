@@ -16,9 +16,9 @@ import com.vteba.finance.currency.model.Currency;
 import com.vteba.finance.table.dao.IAccountSummaryDao;
 import com.vteba.finance.table.model.AccountSummary;
 import com.vteba.finance.table.service.IAccountSummaryService;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
-import com.vteba.utils.common.ObjectUtils;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
+import com.vteba.utils.date.DateUtils;
 
 /**
  * 凭证汇总表service实现
@@ -55,7 +55,7 @@ public class AccountSummaryServiceImpl extends GenericServiceImpl<AccountSummary
 		String twohql = "select twoLevel, sum(c.creditAmount), sum(c.debitAmount),2 from Certificate c where c.accountPeriod = ?1 and c.twoLevel is not null group by twoLevel ";
 		String thrhql = "select threeLevel,sum(c.creditAmount),sum(c.debitAmount),3 from Certificate c where c.accountPeriod = ?1 and c.threeLevel is not null group by threeLevel";
 		
-		String period = ObjectUtils.toDateString("yyyy-MM");//会计期间
+		String period = DateUtils.toDateString("yyyy-MM");//会计期间
 		List<Object[]> oneList = certificateServiceImpl.hqlQueryForObject(onehql, false, period);
 		List<Object[]> twoList = certificateServiceImpl.hqlQueryForObject(twohql, false, period);
 		List<Object[]> thrList = certificateServiceImpl.hqlQueryForObject(thrhql, false, period);

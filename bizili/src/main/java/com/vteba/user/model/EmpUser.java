@@ -32,6 +32,7 @@ import org.springframework.util.Assert;
 
 import com.vteba.common.model.AstModel;
 import com.vteba.common.model.ModuleMenu;
+import com.vteba.security.user.IUserDetails;
 
 /**
  * 用户

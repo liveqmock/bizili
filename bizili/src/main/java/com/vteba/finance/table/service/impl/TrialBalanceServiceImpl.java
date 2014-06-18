@@ -8,9 +8,9 @@ import javax.inject.Named;
 import com.vteba.finance.table.dao.ITrialBalanceDao;
 import com.vteba.finance.table.model.TrialBalance;
 import com.vteba.finance.table.service.ITrialBalanceService;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
-import com.vteba.utils.common.ObjectUtils;
+import com.vteba.tx.hibernate.IHibernateGenericDao;
+import com.vteba.utils.date.DateUtils;
 
 /**
  * 试算平衡表Service实现
@@ -41,7 +41,7 @@ public class TrialBalanceServiceImpl extends GenericServiceImpl<TrialBalance, St
 	}
 	
 	public void autoGenerateTrialBalanceTask() {
-		String period = ObjectUtils.toDateString("yyyy-MM");
+		String period = DateUtils.toDateString("yyyy-MM");
 		createTrialBalance(period);
 	}
 	

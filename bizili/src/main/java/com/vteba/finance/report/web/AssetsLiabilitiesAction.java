@@ -16,7 +16,7 @@ import com.vteba.finance.account.service.IAccountPeriodService;
 import com.vteba.finance.report.model.AssetsLiabilities;
 import com.vteba.finance.report.service.IAssetsLiabilitiesService;
 import com.vteba.service.generic.IGenericService;
-import com.vteba.utils.common.ObjectUtils;
+import com.vteba.utils.date.DateUtils;
 import com.vteba.utils.date.JodaTimeUtils;
 import com.vteba.utils.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
@@ -56,7 +56,7 @@ public class AssetsLiabilitiesAction extends BaseAction<AssetsLiabilities> {
 		for (int i = 0; i < 100; i++) {
 			Date startDate = JodaTimeUtils.getFirstDayOfMonth(dateTime);
 			Date endDate = JodaTimeUtils.getLastDayOfMonth(dateTime);
-			String period = ObjectUtils.toDateString(startDate, "yyyy-MM");
+			String period = DateUtils.toDateString(startDate, "yyyy-MM");
 			
 			AccountPeriod entity = new AccountPeriod();
 			
