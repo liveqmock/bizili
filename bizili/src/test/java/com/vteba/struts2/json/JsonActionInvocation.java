@@ -49,11 +49,10 @@ import com.opensymphony.xwork2.util.ValueStack;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
 import com.opensymphony.xwork2.util.profiling.UtilTimerStack;
-import com.vteba.utils.common.CamelCaseUtils;
+import com.vteba.struts2.json.annotations.Json;
+import com.vteba.utils.common.CaseUtils;
 import com.vteba.utils.json.FastJsonUtils;
 import com.vteba.utils.reflection.AsmUtils;
-
-import com.vteba.struts2.json.annotations.Json;
 
 public class JsonActionInvocation extends DefaultActionInvocation implements ActionInvocation {
 
@@ -379,7 +378,7 @@ public class JsonActionInvocation extends DefaultActionInvocation implements Act
 			            
 			        	Object obj = FastJsonUtils.fromJson(buffer.toString(), json.target());
 			
-			        	AsmUtils.get().invokeMethod(action, "set" + CamelCaseUtils.toCapitalizeCamelCase(json.name()), obj);
+			        	AsmUtils.get().invokeMethod(action, "set" + CaseUtils.toCapCamelCase(json.name()), obj);
 			        } else {
 			        	LOG.error("客户端没有设置正确的contentType，json的mediaType一般是application/json或text/json");
 			        }
