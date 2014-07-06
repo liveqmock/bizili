@@ -23,7 +23,7 @@ import com.vteba.tx.generic.Page;
 import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.tx.hibernate.QueryStatement;
 import com.vteba.tx.jdbc.spring.SpringJdbcTemplate;
-import com.vteba.user.dao.UserDao;
+import com.vteba.user.dao.UserMapper;
 import com.vteba.user.model.EmpUser;
 import com.vteba.user.service.IEmpUserService;
 import com.vteba.utils.json.FastJsonUtils;
@@ -50,7 +50,7 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
 	private SubjectDao subjectDao;
 	
 	@Inject
-	private UserDao userDao;
+	private UserMapper userDao;
 	
 	public SubjectServiceImpl() {
 		super();

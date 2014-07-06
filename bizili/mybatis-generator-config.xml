@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<!-- jdbc驱动的jar文件位置 -->
+	<classPathEntry location="D:\java\repository\mysql\mysql-connector-java\5.1.25\mysql-connector-java-5.1.25.jar" />
+	<context id="context1">
+		<property name="javaFileEncoding" value="UTF-8"/>
+		<!-- jdbc连接配置 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/skmbw" userId="root" password="3416763" />
+		
+		<!-- 实体文件的位置 -->
+		<javaModelGenerator targetPackage="com.skmbw.user.model" targetProject="bizili" />
+		
+		<!-- Mapper.xml文件的位置 -->
+		<sqlMapGenerator targetPackage="com.skmbw.user.mapper" targetProject="bizili" />
+		
+		<!-- Mapper.java文件的位置 -->
+		<javaClientGenerator targetPackage="com.skmbw.user.dao" targetProject="bizili" type="XMLMAPPER" />
+		
+		<!-- 要映射的表，schema可以不指定 -->
+		<table schema="" tableName="user">
+			<!-- 如果字段名和属性名不一致，在此处重载。column是DB字段 ，property是Model属性-->
+			<!-- <columnOverride column="user_name" property="name" /> -->
+		</table>
+	</context>
+</generatorConfiguration>

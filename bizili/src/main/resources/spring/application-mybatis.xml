@@ -17,7 +17,8 @@
 		可以不配置该选项。或者在mybatis基本配置文件中配置，不在此处配置-->
 		<property name="mapperLocations">
 			<list>
-				<value>classpath:/mybatis/skmbw/*Mapper.xml</value>
+				<value>classpath:mybatis/skmbw/*Mapper.xml</value>
+				<value>classpath:com/skmbw/user/mapper/*Mapper.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -32,7 +33,7 @@
 	<!-- 注册Mapper方式二：也可不指定特定mapper，而使用自动扫描包的方式来注册各种Mapper ，配置如下-->
 	<bean id="skmbwMapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<!-- 如果只指定了basePackage属性，扫描全部借口 -->
-		<property name="basePackage" value="com.vteba.user,com.vteba.common,com.vteba.hr,com.vteba.oa" />
+		<property name="basePackage" value="com.vteba.user,com.vteba.common,com.vteba.hr,com.vteba.oa,com.skmbw.user" />
 		<property name="markerInterface" value="com.vteba.tx.jdbc.mybatis.mapper.BaseMapper"/><!-- 扫描该接口的子接口 -->
 		<property name="annotationClass" value="com.vteba.tx.jdbc.mybatis.annotation.DaoMapper"/><!-- 扫描被该注解标注的接口 -->
 		<property name="sqlSessionFactoryBeanName" value="skmbwSqlSessionFactory"/>

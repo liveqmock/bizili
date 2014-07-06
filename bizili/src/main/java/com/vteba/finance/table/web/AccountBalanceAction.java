@@ -1,20 +1,22 @@
 package com.vteba.finance.table.web;
 
 import java.io.Serializable;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.skmbw.user.dao.UserDao;
+import com.skmbw.user.model.User;
+import com.skmbw.user.model.UserBean;
+import com.skmbw.user.service.UserServcie;
 import com.vteba.finance.table.model.AccountBalance;
 import com.vteba.finance.table.service.IAccountBalanceService;
 import com.vteba.service.generic.IGenericService;
-import com.vteba.user.dao.UserDao;
-import com.vteba.user.model.EmpUser;
+import com.vteba.user.service.IEmpUserService;
 import com.vteba.utils.common.BigDecimalUtils;
+import com.vteba.utils.ofbiz.Lang;
 import com.vteba.utils.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 
@@ -29,28 +31,21 @@ public class AccountBalanceAction extends BaseAction<AccountBalance> {
 	
 	private IAccountBalanceService accountBalanceServiceImpl;
 	
-	@Inject //mybatis
+	@Inject // mybatis
 	private UserDao userDao;
 	
-	@Inject
-	public void setAccountBalanceServiceImpl(
-			IAccountBalanceService accountBalanceServiceImpl) {
-		this.accountBalanceServiceImpl = accountBalanceServiceImpl;
-	}
-
+	@Inject // spring
+	private UserServcie userServcieImpl;
+	
+	@Inject // hibernate
+	private IEmpUserService empUserServiceImpl;
+	
 	@RequestMapping("/accountbalance-initial")
 	public String initial(AccountBalance model) throws Exception {
-		System.out.println(getHttpServletRequest().getParameter("name"));
-		long s = System.currentTimeMillis();
-		@SuppressWarnings("unused")
-		EmpUser user = userDao.get(123);
-		long e = System.currentTimeMillis();
-		System.out.println(e-s);
+		test();
 		
 		ReflectUtils.emptyToNull(model);
-		Map<String, String> param = new LinkedHashMap<String, String>();
-		param.put("subjectCode", "asc");
-		listResult = accountBalanceServiceImpl.getListByCriteria(AccountBalance.class, model, param);
+		listResult = accountBalanceServiceImpl.getListByCriteria(model, Lang.toMap("subjectCode", "asc"));
 		
 		//String hql = "select sum(ab.startBalanceDebit),sum(ab.startBalanceCredit) from AccountBalance ab";
 		//可以使用hql汇总来做，但是where条件
@@ -85,11 +80,48 @@ public class AccountBalanceAction extends BaseAction<AccountBalance> {
 		return "table/accountbalance/accountbalance-initial-success";
 	}
 
+	protected void test() {
+		long d = System.currentTimeMillis();
+		userDao.selectByPrimaryKey(2L);
+		//logger.info("mybatis, get by id time=[{}]", (System.currentTimeMillis() - d));
+		print("mybatis get id : ", d);
+		
+		d = System.currentTimeMillis();
+		userServcieImpl.get(3L);
+		print("spring get id : ", d);
+		
+		d = System.currentTimeMillis();
+		empUserServiceImpl.get(4L);
+		print("hibernate get id : ", d);
+		
+		UserBean userBean = new UserBean();
+		userBean.createCriteria().andUserAccountEqualTo("tongku2008@126.com");
+		d = System.currentTimeMillis();
+		userDao.selectByExample(userBean);
+		print("mybatis query list : ", d);
+		
+		User entity = new User();
+		entity.setUserAccount("tongku2008@126.com");
+		d = System.currentTimeMillis();
+		userServcieImpl.query(Lang.toMap("user_account", "tongku2008@126.com"));
+		print("spring query list : ", d);
+		
+		String hql = "select u from EmpUser u where u.userAccount = ?1";
+		d = System.currentTimeMillis();
+		empUserServiceImpl.getEntityListByHql(hql, "tongku2008@126.com");
+		print("hibernate query list ：", d);
+	}
+	
+	protected void print(String type, long d) {
+		System.out.println(type + (System.currentTimeMillis() - d));
+	}
+	
+	@Inject
 	@Override
 	public void setGenericServiceImpl(
-			IGenericService<AccountBalance, ? extends Serializable> genericServiceImpl) {
-		// TODO Auto-generated method stub
-		
+			IGenericService<AccountBalance, ? extends Serializable> accountBalanceServiceImpl) {
+		this.genericServiceImpl = accountBalanceServiceImpl; 
+		this.accountBalanceServiceImpl = (IAccountBalanceService) accountBalanceServiceImpl;
 	}
 
 }
