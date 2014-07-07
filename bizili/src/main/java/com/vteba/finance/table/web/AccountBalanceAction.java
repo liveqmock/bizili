@@ -16,7 +16,7 @@ import com.vteba.finance.table.service.IAccountBalanceService;
 import com.vteba.service.generic.IGenericService;
 import com.vteba.user.service.IEmpUserService;
 import com.vteba.utils.common.BigDecimalUtils;
-import com.vteba.utils.ofbiz.Lang;
+import com.vteba.utils.ofbiz.LangUtils;
 import com.vteba.utils.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 
@@ -45,7 +45,7 @@ public class AccountBalanceAction extends BaseAction<AccountBalance> {
 		test();
 		
 		ReflectUtils.emptyToNull(model);
-		listResult = accountBalanceServiceImpl.getListByCriteria(model, Lang.toMap("subjectCode", "asc"));
+		listResult = accountBalanceServiceImpl.getListByCriteria(model, LangUtils.toMap("subjectCode", "asc"));
 		
 		//String hql = "select sum(ab.startBalanceDebit),sum(ab.startBalanceCredit) from AccountBalance ab";
 		//可以使用hql汇总来做，但是where条件
@@ -103,7 +103,7 @@ public class AccountBalanceAction extends BaseAction<AccountBalance> {
 		User entity = new User();
 		entity.setUserAccount("tongku2008@126.com");
 		d = System.currentTimeMillis();
-		userServcieImpl.query(Lang.toMap("user_account", "tongku2008@126.com"));
+		userServcieImpl.query(LangUtils.toMap("user_account", "tongku2008@126.com"));
 		print("spring query list : ", d);
 		
 		String hql = "select u from EmpUser u where u.userAccount = ?1";
