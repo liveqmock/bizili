@@ -33,6 +33,6 @@ public class CertificateServiceImpl extends
 	}
 	
 	public List<Certificate> getAllList(){
-		return certificateDaoImpl.getAll(Certificate.class);
+		return certificateDaoImpl.getAll();
 	}
 }

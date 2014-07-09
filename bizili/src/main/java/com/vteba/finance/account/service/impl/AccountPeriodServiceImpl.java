@@ -7,6 +7,7 @@ import com.vteba.finance.account.dao.IAccountPeriodDao;
 import com.vteba.finance.account.model.AccountPeriod;
 import com.vteba.finance.account.service.IAccountPeriodService;
 import com.vteba.tx.hibernate.IHibernateGenericDao;
+import com.vteba.utils.ofbiz.LangUtils;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 
 /**
@@ -38,8 +39,8 @@ public class AccountPeriodServiceImpl extends GenericServiceImpl<AccountPeriod, 
 	
 	public String getCurrentPeriod() {
 		//没有结账，当前会计期间
-		String hql = "select a from AccountPeriod a where a.checkout = false and a.currentPeriod = true";
-		AccountPeriod model = accountPeriodDaoImpl.uniqueResultByHql(hql);
+		//String hql = "select a from AccountPeriod a where a.checkout = false and a.currentPeriod = true";
+		AccountPeriod model = accountPeriodDaoImpl.uniqueResult(LangUtils.toMap("checkout", false, "currentPeriod", true));
 		return model.getPeriod();
 	}
 	

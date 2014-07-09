@@ -19,7 +19,6 @@ import com.vteba.tx.generic.Page;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.model.EmpUser;
 import com.vteba.user.model.Roles;
-import com.vteba.user.service.IAuthoritiesService;
 import com.vteba.user.service.IEmpUserService;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
@@ -34,14 +33,14 @@ import com.vteba.web.action.PageBean;
 public class EmpUserAction extends BaseAction<EmpUser> {
 
 	private IEmpUserService empUserServiceImpl;
-	private IAuthoritiesService authoritiesServiceImpl;
+	//private IAuthoritiesService authoritiesServiceImpl;
 	private ShaPasswordEncoder shaPasswordEncoder;
 	private List<Long> ids;//封装页面的选择的id
 	
-	@Inject
-	public void setAuthoritiesServiceImpl(IAuthoritiesService authoritiesServiceImpl) {
-		this.authoritiesServiceImpl = authoritiesServiceImpl;
-	}
+//	@Inject
+//	public void setAuthoritiesServiceImpl(IAuthoritiesService authoritiesServiceImpl) {
+//		this.authoritiesServiceImpl = authoritiesServiceImpl;
+//	}
 
 	@Inject
 	public void setShaPasswordEncoder(ShaPasswordEncoder shaPasswordEncoder) {
@@ -159,9 +158,9 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 		authPage.setOrderBy(page.getOrderBy());
 		authPage.setAscDesc(page.getAscDesc());
 		
-		StringBuilder sql = new StringBuilder("");
+		//StringBuilder sql = new StringBuilder("");
 		
-		authoritiesServiceImpl.queryForPageBySql(authPage, sql.toString(), "");
+		//authoritiesServiceImpl.queryForPageBySql(authPage, sql.toString(), "");
 		
 		return "";
 	}

@@ -87,7 +87,7 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
     }
     
     public Map<String, List<Subject>> getSubjectTreeList(Object... objects){
-    	empUserServiceImpl.getAll(Subject.class);
+    	empUserServiceImpl.getAll();
     	StringBuilder hql = new StringBuilder(" select distinct p from Subject p ");
     	hql.append(" left join fetch p.childSubjects order by p.subjectCode desc ");
     	//hql.append(" where (p.level = 1 or p.level = 2) ");
@@ -224,7 +224,7 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
     	long d2 = System.currentTimeMillis();
     	String hql1 = "select s from Subject s where s.subjectCode = ?1";
     	for (int i=0; i< times; i++) {
-    		List<Subject> subjectList212 = subjectDaoImpl.getEntityListByHql(hql1, "2711");
+    		List<Subject> subjectList212 = subjectDaoImpl.getEntityList("subjectCode", "2711");
     	}
     	System.out.println("getEntityListByHql: " + (System.currentTimeMillis() - d2));
     	

@@ -93,7 +93,7 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 	public String list(Authorities authorities, PageBean<Authorities> pageBean, Map<String, Object> maps) {
 		page = pageBean.getPage();
 		page.setPageSize(30);
-		authoritiesServiceImpl.queryForPageByCriteria(page, authorities);
+		authoritiesServiceImpl.queryForPage(page, authorities);
 		listResult = page.getResult();
 		maps.put("listResult", listResult);
 		

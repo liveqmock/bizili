@@ -89,7 +89,7 @@ public class ResourcesAction extends BaseAction<Resources> {
 	public String list(Resources model, PageBean<Resources> pageBean, Map<String, Object> maps) throws Exception {
 		page = pageBean.getPage();
 		//page.setPageSize(20);
-		resourcesServiceImpl.queryForPageByCriteria(page, model);
+		resourcesServiceImpl.queryForPage(page, model);
 		listResult = page.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, page);
