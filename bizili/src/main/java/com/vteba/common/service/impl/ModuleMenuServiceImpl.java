@@ -20,6 +20,7 @@ import com.vteba.user.model.EmpUser;
 import com.vteba.user.model.Resources;
 import com.vteba.user.model.Roles;
 import com.vteba.user.service.IEmpUserService;
+import com.vteba.utils.ofbiz.LangUtils;
 
 /**
  * 菜单service实现
@@ -54,8 +55,8 @@ public class ModuleMenuServiceImpl extends GenericServiceImpl<ModuleMenu, String
 	public List<ModuleMenu> getModuleMenuList(EmpUser user){
 		user = empUserServiceImpl.get(user.getUserId());
 		//获得所有的菜单
-		String hql = "select mm from ModuleMenu mm where mm.enable = true order by orders asc";
-		List<ModuleMenu> menuList = moduleMenuDaoImpl.getEntityListByHql(hql);
+		//String hql = "select mm from ModuleMenu mm where mm.enable = true order by orders asc";
+		List<ModuleMenu> menuList = moduleMenuDaoImpl.getEntityList("enable", true, LangUtils.toMap("orders", "asc"));
 		List<Authorities> authorities = new ArrayList<Authorities>();
 		for (Roles role : user.getRoleSet()) {
 			Set<Authorities> authSets = role.getAuthSets();
@@ -140,8 +141,8 @@ public class ModuleMenuServiceImpl extends GenericServiceImpl<ModuleMenu, String
 	}
 
 	public List<ModuleMenu> loadModuleMenus() {
-		String hql = "select a from ModuleMenu a where a.enable = true";
-		List<ModuleMenu> list = moduleMenuDaoImpl.getEntityListByHql(hql);
+		//String hql = "select a from ModuleMenu a where a.enable = true";
+		List<ModuleMenu> list = moduleMenuDaoImpl.getEntityList("enable", true);
 		return list;
 	}
 }

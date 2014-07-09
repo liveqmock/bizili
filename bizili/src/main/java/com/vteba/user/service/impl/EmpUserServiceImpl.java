@@ -52,7 +52,7 @@ public class EmpUserServiceImpl extends GenericServiceImpl<EmpUser, Long> implem
 //	}
 	
 	public List<EmpUser> getEmpUserLists() {
-		List<EmpUser> list = empUserDaoImpl.getAll(EmpUser.class);
+		List<EmpUser> list = empUserDaoImpl.getAll();
 		return list;
 	}
 	
@@ -84,7 +84,7 @@ public class EmpUserServiceImpl extends GenericServiceImpl<EmpUser, Long> implem
 	}
 	public EmpUser queryEmpUserByUserAccount(String userAccount){
 		EmpUser empUser = new EmpUser();
-		empUser = empUserDaoImpl.uniqueResultByCriteria("userAccount", userAccount);
+		empUser = empUserDaoImpl.uniqueResult("userAccount", userAccount);
 		return empUser;
 	}
 	

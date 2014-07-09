@@ -91,8 +91,8 @@ public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long
 	}
 	
 	public List<String> getResourceByAuthName(String authName) {
-		String hql = "select a from Authorities a where a.authName = ?1";
-		Authorities auth = authoritiesDaoImpl.uniqueResultByHql(hql, authName);
+		//String hql = "select a from Authorities a where a.authName = ?1";
+		Authorities auth = authoritiesDaoImpl.uniqueResult("authName", authName);
 		List<String> resList = new ArrayList<String>();
 		if (auth != null) {
 			for (Resources res : auth.getResourceSets()) {
@@ -149,8 +149,8 @@ public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long
 	}
 	
 	public List<String> getMethodByAuthName(String authName) {
-		String hql = "select a from Authorities a where a.authName = ?1";
-		Authorities auth = authoritiesDaoImpl.uniqueResultByHql(hql, authName);
+		//String hql = "select a from Authorities a where a.authName = ?1";
+		Authorities auth = authoritiesDaoImpl.uniqueResult("authName", authName);
 		List<String> resList = new ArrayList<String>();
 		if (auth != null) {
 			for (Resources res : auth.getResourceSets()) {

@@ -31,7 +31,7 @@ public class ModuleMenuAction extends BaseAction<ModuleMenu> {
 			ReflectUtils.emptyToNulls(model);
 		}
 		page = pageBean.getPage();
-		moduleMenuServiceImpl.queryForPageByCriteria(page, model);
+		moduleMenuServiceImpl.queryForPage(page, model);
 		maps.put("listResult", page.getResult());
 		setAttributeToRequest(CommonConst.PAGE_NAME, page);
 		return "common/menu/menu-list";
@@ -51,8 +51,10 @@ public class ModuleMenuAction extends BaseAction<ModuleMenu> {
 			if (StringUtils.isBlank(model.getModuleId())) {
 				model.setModuleId(null);
 				model.setCreateTime(new Date());
+				moduleMenuServiceImpl.save(model);
+			} else {
+				moduleMenuServiceImpl.update(model);
 			}
-			moduleMenuServiceImpl.saveOrUpdate(model);
 		}
 		return "common/menu/menu-add";
 	}
