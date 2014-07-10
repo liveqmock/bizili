@@ -68,7 +68,7 @@ public class DetailAccountServiceImpl extends GenericServiceImpl<DetailAccount, 
 	public void createDetailAccount(List<String> subjectList, String period, Integer level) {
 		if (subjectList != null && subjectList.size() > 0) {
 			for (String code : subjectList) {
-				Subject sub = subjectServiceImpl.uniqueResultByCriteria(Subject.class, "subjectCode", code);
+				Subject sub = subjectServiceImpl.uniqueResult("subjectCode", code);
 				//查询该科目及子科目的凭证
 				StringBuilder hql = new StringBuilder(" select new DetailAccount(t.accountPeriod,c.subjectId,c.subjectName,c.currency,t.createDate,t.codeNo,c.summary,c.debitAmount,c.creditAmount) ");
 				hql.append(" from CertTotal t join t.childCerts c ");

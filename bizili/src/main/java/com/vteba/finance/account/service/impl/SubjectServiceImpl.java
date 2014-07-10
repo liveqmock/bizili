@@ -214,12 +214,12 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
     	QueryStatement stmt = queryStatementCache.get("sql1");
     	
     	int times = 10;
-    	long d = System.currentTimeMillis();
-    	String sql1 = "select id, subject_code subjectCode, subject_name subjectName, level from subject where subject_code = ?";
-    	for (int i=0; i< times; i++) {
-    		List<Subject> subject12 = subjectDaoImpl.getEntityListBySql(sql1, "2711");
-    	}
-    	System.out.println("getEntityListBySql: " + (System.currentTimeMillis() - d));
+//    	long d = System.currentTimeMillis();
+//    	String sql1 = "select id, subject_code subjectCode, subject_name subjectName, level from subject where subject_code = ?";
+//    	for (int i=0; i< times; i++) {
+//    		List<Subject> subject12 = subjectDaoImpl.getEntityListBySql(sql1, "2711");
+//    	}
+//    	System.out.println("getEntityListBySql: " + (System.currentTimeMillis() - d));
     	
     	long d2 = System.currentTimeMillis();
     	String hql1 = "select s from Subject s where s.subjectCode = ?1";

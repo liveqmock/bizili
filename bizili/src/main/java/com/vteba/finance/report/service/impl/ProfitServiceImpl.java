@@ -20,6 +20,7 @@ import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.utils.common.BigDecimalUtils;
 import com.vteba.utils.date.JodaTimeUtils;
+import com.vteba.utils.ofbiz.LangUtils;
 
 /**
  * 利润表service实现
@@ -46,10 +47,10 @@ public class ProfitServiceImpl extends GenericServiceImpl<Profit, String> implem
 	public void createProfit() {
 		
 		//新建，取得利润表模板
-		StringBuilder hql = new StringBuilder("select p from Profit p ");
-		hql.append(" where p.accountPeriod = ?1 and p.industry = ?2 order by p.rowNumber asc ");
+//		StringBuilder hql = new StringBuilder("select p from Profit p ");
+//		hql.append(" where p.accountPeriod = ?1 and p.industry = ?2 order by p.rowNumber asc ");
 		String period = accountPeriodServiceImpl.getCurrentPeriod();
-		List<Profit> profitList = profitDaoImpl.getEntityListByHql(hql.toString(), "period", ReportConst.COMPANY_TYPE_SMALL);
+		List<Profit> profitList = profitDaoImpl.getEntityList("industry",ReportConst.COMPANY_TYPE_SMALL, "accountPeriod", "period", LangUtils.toMap("rowNumber", "asc"));
 		
 		//缓存临时计算的结果，供后续合计项计算使用
 		Map<String, Double> cacheMap = new HashMap<String, Double>();
@@ -96,7 +97,7 @@ public class ProfitServiceImpl extends GenericServiceImpl<Profit, String> implem
 		StringBuilder hql = new StringBuilder("select p from Profit p ");
 		hql.append(" where p.accountPeriod = ?1 and p.industry = ?2 order by p.rowNumber asc ");
 		String period = accountPeriodServiceImpl.getCurrentPeriod();
-		List<Profit> profitList = profitDaoImpl.getEntityListByHql(hql.toString(), period, ReportConst.COMPANY_TYPE_SMALL);
+		List<Profit> profitList = profitDaoImpl.getEntityList("industry",ReportConst.COMPANY_TYPE_SMALL, "accountPeriod", period, LangUtils.toMap("rowNumber", "asc"));
 		
 		//缓存临时计算的结果，供后续合计项计算使用
 		Map<String, Double> cacheMap = new HashMap<String, Double>();

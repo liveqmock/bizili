@@ -17,6 +17,7 @@ import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.utils.common.BigDecimalUtils;
 import com.vteba.utils.date.DateUtils;
+import com.vteba.utils.ofbiz.LangUtils;
 
 /**
  * 日记账service实现
@@ -51,8 +52,8 @@ public class DailyAccountServiceImpl extends GenericServiceImpl<DailyAccount, St
 		codeList.add("100201");
 		codeList.add("100202");
 		//删除原有的数据
-		String delHql = " delete from DailyAccount d where d.accountPeriod = ?1 ";
-		dailyAccountDaoImpl.executeHqlUpdate(delHql, false, period);
+		//String delHql = " delete from DailyAccount d where d.accountPeriod = ?1 ";
+		dailyAccountDaoImpl.deleteBatch(LangUtils.toMap("accountPeriod", period));
 		
 		for (String code : codeList) {
 			//--------------上日余额--------------//
@@ -61,8 +62,8 @@ public class DailyAccountServiceImpl extends GenericServiceImpl<DailyAccount, St
 			//lastDayBalance.setAccountPeriod(period);
 			//lastDayBalance.setBalanceDirection(Subject.DIR_DEBIT);//日记账的余额方向都在借方
 			Double startBalance = 0D;//期初余额，供后续计算使用
-			String startBalHql = " select b from AccountBalance b where b.subjectCode =?1 and b.accountPeriod = ?2 ";
-			AccountBalance startAccBal = accountBalanceServiceImpl.uniqueResultByHql(startBalHql, false, code, period);//父级科目余额
+			//String startBalHql = " select b from AccountBalance b where b.subjectCode =?1 and b.accountPeriod = ?2 ";
+			AccountBalance startAccBal = accountBalanceServiceImpl.uniqueResult(LangUtils.toMap("accountPeriod", period, "subjectCode", code));//父级科目余额
 			startBalance = BigDecimalUtils.subtract(startAccBal.getStartBalanceDebit(), startAccBal.getStartBalanceCredit());
 			//该科目当天以前的本期发生额
 			/*String curHql = " select sum(c.debitAmount),sum(c.creditAmount) from Certificate c where c.subjectId = ?1 and c.createTime < ?2 and c.accountPeriod = ?3 ";

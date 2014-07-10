@@ -20,6 +20,7 @@ import com.vteba.finance.table.service.IAccountBalanceService;
 import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.utils.common.BigDecimalUtils;
+import com.vteba.utils.ofbiz.LangUtils;
 
 /**
  * 资产负债表service实现
@@ -50,15 +51,15 @@ public class AssetsLiabilitiesServiceImpl extends GenericServiceImpl<AssetsLiabi
 	 * date 2012-7-29 下午10:03:46
 	 */
 	public boolean decideUpdateAssetsLiabOrNot() {
-		StringBuilder hql = new StringBuilder(" select al from AssetsLiabilities al ");
-		hql.append(" where al.industry = :industry and al.accountPeriod = :period ");
+//		StringBuilder hql = new StringBuilder(" select al from AssetsLiabilities al ");
+//		hql.append(" where al.industry = :industry and al.accountPeriod = :period ");
 		String period = accountPeriodServiceImpl.getCurrentPeriod();//会计期间
 		Map<String, Object> param = new HashMap<String, Object>();//传递参数
-		param.put("period", period);
 		param.put("industry", "small_business");
+		param.put("accountPeriod", period);
 		
 		//获得资产负债表
-		List<AssetsLiabilities> assetsLiabList = assetsLiabilitiesDaoImpl.getEntityListByHql(hql.toString(), param);
+		List<AssetsLiabilities> assetsLiabList = assetsLiabilitiesDaoImpl.getEntityList(param);
 		if (assetsLiabList.size() > 0) {//已有资产负债表，更新
 			return true;
 		}
@@ -66,15 +67,14 @@ public class AssetsLiabilitiesServiceImpl extends GenericServiceImpl<AssetsLiabi
 	}
 	
 	public void createAssetsLiabilities() {
-		StringBuilder hql = new StringBuilder(" select al from AssetsLiabilities al ");
-		hql.append(" where al.industry = :industry and al.accountPeriod = :period ");
-		
+//		StringBuilder hql = new StringBuilder(" select al from AssetsLiabilities al ");
+//		hql.append(" where al.industry = :industry and al.accountPeriod = :period ");
 		Map<String, Object> param = new HashMap<String, Object>();//传递参数
-		param.put("period", "period");
+		param.put("accountPeriod", "period");
 		param.put("industry", "small_business");
 		
 		//获得资产负债表模板
-		List<AssetsLiabilities> assetsLiabList = assetsLiabilitiesDaoImpl.getEntityListByHql(hql.toString(), param);
+		List<AssetsLiabilities> assetsLiabList = assetsLiabilitiesDaoImpl.getEntityList(param);
 		Map<String, Double> cacheMap = new HashMap<String, Double>();//用于缓存计算的结果，供后续计算使用
 		String period = accountPeriodServiceImpl.getCurrentPeriod();//会计期间
 		
@@ -188,15 +188,15 @@ public class AssetsLiabilitiesServiceImpl extends GenericServiceImpl<AssetsLiabi
 		
 		String period = accountPeriodServiceImpl.getCurrentPeriod();//会计期间
 		
-		StringBuilder hql = new StringBuilder(" select al from AssetsLiabilities al ");
-		hql.append(" where al.industry = :industry and al.accountPeriod = :period ");
+//		StringBuilder hql = new StringBuilder(" select al from AssetsLiabilities al ");
+//		hql.append(" where al.industry = :industry and al.accountPeriod = :period ");
 		
 		Map<String, Object> param = new HashMap<String, Object>();//传递参数
-		param.put("period", period);
+		param.put("accountPeriod", period);
 		param.put("industry", "small_business");
 		
 		//获得资产负债表
-		List<AssetsLiabilities> assetsLiabList = assetsLiabilitiesDaoImpl.getEntityListByHql(hql.toString(), param);
+		List<AssetsLiabilities> assetsLiabList = assetsLiabilitiesDaoImpl.getEntityList(param);
 		Map<String, Double> cacheMap = new HashMap<String, Double>();//用于缓存计算的结果
 		
 		for(AssetsLiabilities entity : assetsLiabList) {
@@ -312,11 +312,11 @@ public class AssetsLiabilitiesServiceImpl extends GenericServiceImpl<AssetsLiabi
 	 */
 	protected Double getItemBalance(AssetsLiabilities entity, String period, Map<String, Double> cacheMap, String orient) {
 		String[] codes = StringUtils.split(entity.getItemCode(), "#");
-		String balanceHql = "select ab from AccountBalance ab where ab.accountPeriod = ?1 and ab.subjectCode = ?2 ";
+		//String balanceHql = "select ab from AccountBalance ab where ab.accountPeriod = ?1 and ab.subjectCode = ?2 ";
 		
 		String code = codes[0];
 		String subjectCode = code.substring(1);//科目代码
-		AccountBalance balanceBean = accountBalanceServiceImpl.uniqueResultByHql(balanceHql, false, period, subjectCode);
+		AccountBalance balanceBean = accountBalanceServiceImpl.uniqueResult(LangUtils.toMap("accountPeriod", period, "subjectCode", subjectCode));
 		
 		Double balance = 0D;
 		if (balanceBean != null) {
@@ -346,13 +346,13 @@ public class AssetsLiabilitiesServiceImpl extends GenericServiceImpl<AssetsLiabi
 			}
 			if (entity.getAccountMethod().equals("BalanceOrReverse")) {//取余额，不在本方向，则取反方余额
 				String[] codes = StringUtils.split(entity.getItemCode(), "#");
-				String balanceHql = "select ab from AccountBalance ab where ab.accountPeriod = ?1 and ab.subjectCode = ?2 ";
+				//String balanceHql = "select ab from AccountBalance ab where ab.accountPeriod = ?1 and ab.subjectCode = ?2 ";
 				
 				String code = codes[0];//该项目要取的科目
 				String symbol = code.substring(0, 1);//符号
 				String subjectCode = code.substring(1);//科目代码
 				String reverseCode = codes[1];//反方科目
-				AccountBalance balanceBean = accountBalanceServiceImpl.uniqueResultByHql(balanceHql, false, period, subjectCode);
+				AccountBalance balanceBean = accountBalanceServiceImpl.uniqueResult(LangUtils.toMap("accountPeriod", period, "subjectCode", subjectCode));
 				
 				if (balanceBean != null) {
 					Double balance = 0D;

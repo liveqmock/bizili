@@ -21,6 +21,7 @@ import com.vteba.finance.table.service.IAccountBalanceService;
 import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.utils.common.BigDecimalUtils;
+import com.vteba.utils.ofbiz.LangUtils;
 
 /**
  * 科目余额表service实现
@@ -116,7 +117,7 @@ public class AccountBalanceServiceImpl extends GenericServiceImpl<AccountBalance
 				balance.setYearSumBalanceDebit(yearDebit.doubleValue());
 				
 				//会计科目相关
-				Subject sub = subjectServiceImpl.uniqueResultByCriteria(Subject.class, "subjectCode", subjectCode);//这里有缓存，无影响
+				Subject sub = subjectServiceImpl.uniqueResult("subjectCode", subjectCode);//这里有缓存，无影响
 				balance.setAccountPeriod(period);
 				balance.setSubjectCode(subjectCode);
 				balance.setSubjectName(sub.getSubjectName());
@@ -157,14 +158,14 @@ public class AccountBalanceServiceImpl extends GenericServiceImpl<AccountBalance
 		if (StringUtils.isBlank(subjectCode)) {
 			return -1D;
 		}
-		StringBuilder hql = new StringBuilder(" select ab from AccountBalance ab ");
-		hql.append(" where ab.subjectCode = :subjectCode ");
-		hql.append(" and ab.accountPeriod = :accountPeriod ");
+//		StringBuilder hql = new StringBuilder(" select ab from AccountBalance ab ");
+//		hql.append(" where ab.subjectCode = :subjectCode ");
+//		hql.append(" and ab.accountPeriod = :accountPeriod ");
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("subjectCode", subjectCode);
 		String period = accountPeriodServiceImpl.getCurrentPeriod();//当前会计期间
 		param.put("accountPeriod", period);
-		AccountBalance bean = accountBalanceDaoImpl.uniqueResultByHql(hql.toString(), false, param);
+		AccountBalance bean = accountBalanceDaoImpl.uniqueResult(param);
 		double balance = 0D;
 		if (bean != null) {
 			//借方汇总
@@ -183,12 +184,12 @@ public class AccountBalanceServiceImpl extends GenericServiceImpl<AccountBalance
 	public Double calculateItemBalance(String period, String itemCode) {
 		String[] codes = StringUtils.split(itemCode, "#");
 		Double balance = 0D;//该项目的金额，初始为0
-		String balanceHql = "select ab from AccountBalance ab where ab.accountPeriod = ?1 and ab.subjectCode = ?2 ";
+		//String balanceHql = "select ab from AccountBalance ab where ab.accountPeriod = ?1 and ab.subjectCode = ?2 ";
 		
 		for (String code : codes) {
 			String symbol = code.substring(0, 1);//符号
 			String subjectCode = code.substring(1);//科目代码
-			AccountBalance model = accountBalanceDaoImpl.uniqueResultByHql(balanceHql, false, period, subjectCode);
+			AccountBalance model = accountBalanceDaoImpl.uniqueResult(LangUtils.toMap("accountPeriod", period, "subjectCode", subjectCode));
 			if (model != null) {
 				if (symbol.equals("+")) {//相加
 					if (model.getBalanceDirection().equals(Subject.DIR_DEBIT)) {//余额在借方

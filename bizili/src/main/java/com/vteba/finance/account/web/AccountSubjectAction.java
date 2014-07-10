@@ -65,7 +65,7 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 			page.setOrderBy("subjectCode");
 		}
 		//subjectServiceImpl.test();
-		pages = subjectServiceImpl.queryForPageByCriteria(page, model);
+		pages = subjectServiceImpl.queryForPage(page, model);
 		listResult = pages.getResult();
 		maps.put("listResult", listResult);
 		setAttributeToRequest(CommonConst.PAGE_NAME, pages);

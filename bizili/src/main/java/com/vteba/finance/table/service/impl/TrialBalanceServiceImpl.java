@@ -11,6 +11,7 @@ import com.vteba.finance.table.service.ITrialBalanceService;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.utils.date.DateUtils;
+import com.vteba.utils.ofbiz.LangUtils;
 
 /**
  * 试算平衡表Service实现
@@ -57,8 +58,8 @@ public class TrialBalanceServiceImpl extends GenericServiceImpl<TrialBalance, St
 		List<TrialBalance> trialList = trialBalanceDaoImpl.getEntityListByHql(hql.toString(), period);
 		
 		//删除原有的数据
-		String delHql = " delete from TrialBalance where accountPeriod = ?1 ";
-		trialBalanceDaoImpl.executeHqlUpdate(delHql, false, period);
+		//String delHql = " delete from TrialBalance where accountPeriod = ?1 ";
+		trialBalanceDaoImpl.deleteBatch(LangUtils.toMap("accountPeriod", period));
 		
 		for (TrialBalance entity : trialList) {
 			trialBalanceDaoImpl.persist(entity);

@@ -53,7 +53,7 @@ public class AccountCertAction extends BaseAction<CertTotal> {
 		Page<CertTotal> pages = new Page<CertTotal>();
 		ReflectUtils.emptyToNulls(model);
 		page = pageBean.getPage();
-		pages = certTotalServiceImpl.queryForPageByCriteria(page, model);
+		pages = certTotalServiceImpl.queryForPage(page, model);
 		listResult = pages.getResult();
 		maps.put("listResult", listResult);
 		

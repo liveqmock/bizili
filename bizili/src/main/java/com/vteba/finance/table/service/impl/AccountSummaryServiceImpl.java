@@ -19,6 +19,7 @@ import com.vteba.finance.table.service.IAccountSummaryService;
 import com.vteba.service.generic.impl.GenericServiceImpl;
 import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.utils.date.DateUtils;
+import com.vteba.utils.ofbiz.LangUtils;
 
 /**
  * 凭证汇总表service实现
@@ -65,7 +66,7 @@ public class AccountSummaryServiceImpl extends GenericServiceImpl<AccountSummary
 		list.addAll(oneList);
 		list.addAll(twoList);
 		list.addAll(thrList);
-		String hql = "select s from AccountSummary s where s.subjectCode = ?1 and s.accountPeriod = ?2 ";
+		//String hql = "select s from AccountSummary s where s.subjectCode = ?1 and s.accountPeriod = ?2 ";
 		for (Object[] obj : list) {
 			String code = (String)obj[0];
 			Double debit = (Double)obj[2];
@@ -73,7 +74,7 @@ public class AccountSummaryServiceImpl extends GenericServiceImpl<AccountSummary
 			Integer level = (Integer)obj[3];//科目级别
 			
 			AccountSummary summary = null;
-			summary = accountSummaryDaoImpl.uniqueResultByHql(hql, false, code, period);
+			summary = accountSummaryDaoImpl.uniqueResult(LangUtils.toMap("accountPeriod", period, "subjectCode", code));
 			if (summary != null) {//如果已经有了，更新借方和贷方金额即可
 				summary.setCredit(credit);
 				summary.setDebit(debit);

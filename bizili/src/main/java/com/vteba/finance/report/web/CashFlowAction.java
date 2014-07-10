@@ -31,7 +31,7 @@ public class CashFlowAction extends BaseAction<CashFlow> {
 		ReflectUtils.emptyToNulls(model);
 		Map<String, String> param = new LinkedHashMap<String, String>();
 		param.put("orders", "asc");
-		listResult = cashFlowServiceImpl.getListByCriteria(CashFlow.class, model, param);
+		listResult = cashFlowServiceImpl.getEntityList(model, param);
 		maps.put("listResult", listResult);
 		return "report/cashflow/cashflow-initial-success";
 	}

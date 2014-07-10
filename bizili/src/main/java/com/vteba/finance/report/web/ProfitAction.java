@@ -36,7 +36,7 @@ public class ProfitAction extends BaseAction<Profit> {
 		}
 		Map<String, String> param = new LinkedHashMap<String, String>();
 		param.put("rowNumber", "asc");
-		listResult = profitServiceImpl.getListByCriteria(Profit.class, model, param);
+		listResult = profitServiceImpl.getEntityList(model, param);
 		maps.put("listResult", listResult);
 		return "report/profit/profit-initial-success";
 	}

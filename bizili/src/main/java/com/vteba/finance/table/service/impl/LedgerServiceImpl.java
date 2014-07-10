@@ -65,7 +65,7 @@ public class LedgerServiceImpl extends GenericServiceImpl<Ledger, String> implem
 		if (ledgerList != null && ledgerList.size() > 0) {
 			for (Ledger bean : ledgerList) {
 				//科目
-				Subject sub = subjectServiceImpl.uniqueResultByCriteria(Subject.class, "subjectCode", bean.getSubjectCode());
+				Subject sub = subjectServiceImpl.uniqueResult("subjectCode", bean.getSubjectCode());
 				
 				double startBalance = 0D;//期初余额
 				String startAccBalHql = " select b from AccountBalance b where b.subjectCode =?1 and b.accountPeriod = ?2 ";

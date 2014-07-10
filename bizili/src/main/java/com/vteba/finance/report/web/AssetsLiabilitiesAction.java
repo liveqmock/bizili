@@ -41,7 +41,7 @@ public class AssetsLiabilitiesAction extends BaseAction<AssetsLiabilities> {
 		}
 		Map<String, String> param = new LinkedHashMap<String, String>();
 		param.put("orders", "asc");
-		listResult = assetsLiabilitiesServiceImpl.getListByCriteria(AssetsLiabilities.class, model, param);
+		listResult = assetsLiabilitiesServiceImpl.getEntityList(model, param);
 		maps.put("listResult", listResult);
 		return "report/assetsliabilities/assetsliabilities-initial-success";
 	}
