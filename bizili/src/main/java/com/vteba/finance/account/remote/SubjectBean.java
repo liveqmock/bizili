@@ -32,8 +32,8 @@ public class SubjectBean {
 	 */
 	@RemoteMethod
 	public String checkSubjectExist(String subjectId){
-		String hql = " select s from Subject s where s.subjectCode = ?1 ";
-		Subject bean = subjectServiceImpl.uniqueResultByHql(hql, subjectId);
+		//String hql = " select s from Subject s where s.subjectCode = ?1 ";
+		Subject bean = subjectServiceImpl.uniqueResult("subjectCode", subjectId);
 		String result = "error";
 		if (bean != null) {
 			result = bean.getSubjectName();
