@@ -27,7 +27,6 @@ import com.vteba.user.model.EmpUser;
 import com.vteba.user.service.IEmpUserService;
 import com.vteba.utils.json.FastJsonUtils;
 import com.vteba.utils.json.Node;
-import com.vteba.utils.ofbiz.LangUtils;
 
 /**
  * 会计科目service实现
@@ -146,8 +145,8 @@ public class SubjectServiceImpl extends BaseServiceImpl<Subject, String> impleme
     	if (StringUtils.isBlank(subjectCode)) {
     		throw new NullPointerException("科目代码为空。"); 
     	}
-    	//String hql = "select count(*) from Certificate where subject_id = ?1";
-    	Integer count = subjectDaoImpl.statsPrimitive("count(*)", Integer.class, LangUtils.toMap("subject_id", subjectCode));
+    	String hql = "select count(*) from Certificate where subject_id = ?1";
+    	Integer count = subjectDaoImpl.queryForObject(hql, Integer.class, subjectCode);//statsPrimitive("count(*)", Integer.class, LangUtils.toMap("subject_id", subjectCode));
     	if (count > 0) {// 使用中
     		return 1;
     	}

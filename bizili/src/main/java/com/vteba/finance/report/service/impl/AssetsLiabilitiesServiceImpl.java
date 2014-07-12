@@ -270,9 +270,9 @@ public class AssetsLiabilitiesServiceImpl extends BaseServiceImpl<AssetsLiabilit
 		String period = accountPeriodServiceImpl.getCurrentPeriod();
 		//String lastYear = (Integer.valueOf(period.substring(0, 4)).intValue()-1) + "-12";//去年最后一期
 		//计算年初数hql
-		//String yearBeginCountHql = "select a.yearBeginCount from AssetsLiabilities a where a.accountPeriod =?1 and a.itemCode = ?2 ";
+		String yearBeginCountHql = "select a.yearBeginCount from AssetsLiabilities a where a.accountPeriod =?1 and a.itemCode = ?2 ";
 		Map<String, ?> params = LangUtils.toMap("accountPeriod", period, "itemCode", itemCode);
-		List<Double> doubleList = assetsLiabilitiesDaoImpl.queryPrimitiveList("yearBeginCount", Double.class, params);
+		List<Double> doubleList = assetsLiabilitiesDaoImpl.queryForList(yearBeginCountHql, Double.class, params);//queryPrimitiveList("yearBeginCount", Double.class, params);
 		Double yearBeginCount = 0D;
 		if (doubleList.size() == 1) {
 			yearBeginCount = BigDecimalUtils.add(yearBeginCount, doubleList.get(0));
