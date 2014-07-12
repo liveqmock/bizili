@@ -1,14 +1,14 @@
 package com.vteba.finance.report.service;
 
 import com.vteba.finance.report.model.AssetsLiabilities;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 
 /**
  * 资产负债表service
  * @author yinlei 
  * date 2012-7-23 上午10:36:47
  */
-public interface IAssetsLiabilitiesService extends IGenericService<AssetsLiabilities, String> {
+public interface IAssetsLiabilitiesService extends BaseService<AssetsLiabilities, String> {
 	
 	/**
 	 * 定时任务，自动产生资产负债表数据

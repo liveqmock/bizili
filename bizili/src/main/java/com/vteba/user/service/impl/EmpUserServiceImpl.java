@@ -12,8 +12,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import com.vteba.service.generic.impl.GenericServiceImpl;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
+import com.vteba.service.generic.impl.BaseServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
 import com.vteba.user.dao.IEmpUserDao;
 import com.vteba.user.model.EmpUser;
 import com.vteba.user.model.Roles;
@@ -25,7 +25,7 @@ import com.vteba.user.service.IEmpUserService;
  * @date 2012-4-12 下午7:09:51
  */
 @Named
-public class EmpUserServiceImpl extends GenericServiceImpl<EmpUser, Long> implements IEmpUserService {
+public class EmpUserServiceImpl extends BaseServiceImpl<EmpUser, Long> implements IEmpUserService {
 	
 	public EmpUserServiceImpl() {
 		super();
@@ -41,8 +41,8 @@ public class EmpUserServiceImpl extends GenericServiceImpl<EmpUser, Long> implem
 	
 	@Inject
 	@Override
-	public void setHibernateGenericDaoImpl(IHibernateGenericDao<EmpUser, Long> empUserDaoImpl) {
-		this.hibernateGenericDaoImpl = empUserDaoImpl;
+	public void setBaseGenericDaoImpl(BaseGenericDao<EmpUser, Long> empUserDaoImpl) {
+		this.baseGenericDaoImpl = empUserDaoImpl;
 		this.empUserDaoImpl = (IEmpUserDao) empUserDaoImpl;
 	}
 	
@@ -92,7 +92,7 @@ public class EmpUserServiceImpl extends GenericServiceImpl<EmpUser, Long> implem
 	public List<String> getAllAuthorities(){
 		List<String> authList = new ArrayList<String>();
 		String hql = "select a.authName from Authorities a where a.enabled = 1";
-		authList = empUserDaoImpl.hqlQueryForList(hql, String.class);
+		authList = empUserDaoImpl.queryForList(hql, String.class);
 		return authList;
 	}
 	

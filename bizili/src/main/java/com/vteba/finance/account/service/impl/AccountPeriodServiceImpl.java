@@ -6,9 +6,9 @@ import javax.inject.Named;
 import com.vteba.finance.account.dao.IAccountPeriodDao;
 import com.vteba.finance.account.model.AccountPeriod;
 import com.vteba.finance.account.service.IAccountPeriodService;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.BaseGenericDao;
 import com.vteba.utils.ofbiz.LangUtils;
-import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.service.generic.impl.BaseServiceImpl;
 
 /**
  * 会计期间service实现
@@ -16,7 +16,7 @@ import com.vteba.service.generic.impl.GenericServiceImpl;
  * date 2012-7-27 下午4:21:19
  */
 @Named
-public class AccountPeriodServiceImpl extends GenericServiceImpl<AccountPeriod, String>
+public class AccountPeriodServiceImpl extends BaseServiceImpl<AccountPeriod, String>
 		implements IAccountPeriodService {
 	
 	private IAccountPeriodDao accountPeriodDaoImpl;
@@ -27,9 +27,9 @@ public class AccountPeriodServiceImpl extends GenericServiceImpl<AccountPeriod, 
 
 	@Override
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<AccountPeriod, String> accountPeriodDaoImpl) {
-		this.hibernateGenericDaoImpl = accountPeriodDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<AccountPeriod, String> accountPeriodDaoImpl) {
+		this.baseGenericDaoImpl = accountPeriodDaoImpl;
 		this.accountPeriodDaoImpl = (IAccountPeriodDao) accountPeriodDaoImpl;
 	}
 

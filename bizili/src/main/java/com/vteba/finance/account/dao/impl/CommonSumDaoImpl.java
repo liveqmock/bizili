@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.account.dao.ICommonSumDao;
 import com.vteba.finance.account.model.CommonSum;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 常用摘要DAO实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-7-5 下午11:06:37
  */
 @Named
-public class CommonSumDaoImpl extends HibernateGenericDaoImpl<CommonSum, String> implements
+public class CommonSumDaoImpl extends BaseGenericDaoImpl<CommonSum, String> implements
 		ICommonSumDao {
 
 	public CommonSumDaoImpl() {

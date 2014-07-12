@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.payables.dao.IPayablesDetailDao;
 import com.vteba.finance.payables.model.PayablesDetail;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 应付明细表DAO实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-8-1 下午3:42:30
  */
 @Named
-public class PayablesDetailDaoImpl extends HibernateGenericDaoImpl<PayablesDetail, String>
+public class PayablesDetailDaoImpl extends BaseGenericDaoImpl<PayablesDetail, String>
 		implements IPayablesDetailDao {
 
 	public PayablesDetailDaoImpl() {

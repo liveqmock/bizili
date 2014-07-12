@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.table.dao.IDailyAccountDao;
 import com.vteba.finance.table.model.DailyAccount;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 日记账DAO实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-7-6 下午10:36:19
  */
 @Named
-public class DailyAccountDaoImpl extends HibernateGenericDaoImpl<DailyAccount, String>
+public class DailyAccountDaoImpl extends BaseGenericDaoImpl<DailyAccount, String>
 		implements IDailyAccountDao {
 
 	public DailyAccountDaoImpl() {

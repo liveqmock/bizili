@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.vteba.common.constant.CommonConst;
 import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.utils.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 import com.vteba.web.action.PageBean;
@@ -67,8 +67,8 @@ public class ModuleMenuAction extends BaseAction<ModuleMenu> {
 	}
 
 	@Override
-	public void setGenericServiceImpl(
-			IGenericService<ModuleMenu, ? extends Serializable> genericServiceImpl) {
+	public void setBaseServiceImpl(
+			BaseService<ModuleMenu, ? extends Serializable> BaseServiceImpl) {
 		// TODO Auto-generated method stub
 		
 	}

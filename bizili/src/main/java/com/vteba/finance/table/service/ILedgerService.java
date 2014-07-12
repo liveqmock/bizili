@@ -3,14 +3,14 @@ package com.vteba.finance.table.service;
 import java.util.List;
 
 import com.vteba.finance.table.model.Ledger;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 
 /**
  * 总账service接口
  * @author yinlei 
  * date 2012-7-6 下午10:55:00
  */
-public interface ILedgerService extends IGenericService<Ledger, String> {
+public interface ILedgerService extends BaseService<Ledger, String> {
 	
 	/**
 	 * 自动产生总账，定时任务调用

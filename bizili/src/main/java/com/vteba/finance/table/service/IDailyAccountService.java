@@ -1,14 +1,14 @@
 package com.vteba.finance.table.service;
 
 import com.vteba.finance.table.model.DailyAccount;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 
 /**
  * 日记账service接口
  * @author yinlei 
  * date 2012-7-6 下午10:52:46
  */
-public interface IDailyAccountService extends IGenericService<DailyAccount, String> {
+public interface IDailyAccountService extends BaseService<DailyAccount, String> {
 	
 	/**
 	 * 自动产生日记账，定时任务调用

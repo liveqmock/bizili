@@ -15,9 +15,9 @@ import com.vteba.finance.account.model.Certificate;
 import com.vteba.finance.account.service.ICertTotalService;
 import com.vteba.finance.account.service.ICertificateService;
 import com.vteba.finance.currency.model.Currency;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.BaseGenericDao;
 import com.vteba.security.spring.SecurityContextHolderUtils;
-import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.service.generic.impl.BaseServiceImpl;
 import com.vteba.user.model.EmpUser;
 import com.vteba.utils.common.ObjectUtils;
 import com.vteba.utils.date.DateUtils;
@@ -28,7 +28,7 @@ import com.vteba.utils.date.DateUtils;
  * date 2012-6-14 下午2:44:26
  */
 @Named
-public class CertTotalServiceImpl extends GenericServiceImpl<CertTotal, String> implements
+public class CertTotalServiceImpl extends BaseServiceImpl<CertTotal, String> implements
 		ICertTotalService {
 	
 	private ICertTotalDao certTotalDaoImpl;
@@ -41,9 +41,9 @@ public class CertTotalServiceImpl extends GenericServiceImpl<CertTotal, String> 
 
 	@Override
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<CertTotal, String> certTotalDaoImpl) {
-		this.hibernateGenericDaoImpl = certTotalDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<CertTotal, String> certTotalDaoImpl) {
+		this.baseGenericDaoImpl = certTotalDaoImpl;
 		this.certTotalDaoImpl = (ICertTotalDao) certTotalDaoImpl;
 	}
 	

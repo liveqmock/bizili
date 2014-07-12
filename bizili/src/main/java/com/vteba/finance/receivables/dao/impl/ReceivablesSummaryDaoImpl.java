@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.receivables.dao.IReceivablesSummaryDao;
 import com.vteba.finance.receivables.model.ReceivablesSummary;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 应收汇总表DAO实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-8-1 下午4:06:18
  */
 @Named
-public class ReceivablesSummaryDaoImpl extends HibernateGenericDaoImpl<ReceivablesSummary, String>
+public class ReceivablesSummaryDaoImpl extends BaseGenericDaoImpl<ReceivablesSummary, String>
 		implements IReceivablesSummaryDao {
 
 	public ReceivablesSummaryDaoImpl() {

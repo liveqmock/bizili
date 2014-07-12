@@ -6,8 +6,8 @@ import javax.inject.Named;
 import com.vteba.finance.payables.dao.IPayablesDetailDao;
 import com.vteba.finance.payables.model.PayablesDetail;
 import com.vteba.finance.payables.service.IPayablesDetailService;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
-import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
+import com.vteba.service.generic.impl.BaseServiceImpl;
 
 /**
  * 应付明细表service实现
@@ -15,7 +15,7 @@ import com.vteba.service.generic.impl.GenericServiceImpl;
  * date 2012-8-1 下午3:51:01
  */
 @Named
-public class PayablesDetailServiceImpl extends GenericServiceImpl<PayablesDetail, String>
+public class PayablesDetailServiceImpl extends BaseServiceImpl<PayablesDetail, String>
 		implements IPayablesDetailService {
 
 	private IPayablesDetailDao payablesDetailDaoImpl;
@@ -26,9 +26,9 @@ public class PayablesDetailServiceImpl extends GenericServiceImpl<PayablesDetail
 
 	@Override
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<PayablesDetail, String> payablesDetailDaoImpl) {
-		this.hibernateGenericDaoImpl = payablesDetailDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<PayablesDetail, String> payablesDetailDaoImpl) {
+		this.baseGenericDaoImpl = payablesDetailDaoImpl;
 		this.payablesDetailDaoImpl = (IPayablesDetailDao) payablesDetailDaoImpl;
 	}
 

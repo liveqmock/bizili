@@ -6,8 +6,8 @@ import javax.inject.Named;
 import com.vteba.finance.setting.dao.ICodeRuleDao;
 import com.vteba.finance.setting.model.CodeRule;
 import com.vteba.finance.setting.service.ICodeRuleService;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
-import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
+import com.vteba.service.generic.impl.BaseServiceImpl;
 
 /**
  * 基础数据编码规则service实现
@@ -15,7 +15,7 @@ import com.vteba.service.generic.impl.GenericServiceImpl;
  * date 2012-6-29 下午11:19:25
  */
 @Named
-public class CodeRuleServiceImpl extends GenericServiceImpl<CodeRule, String>
+public class CodeRuleServiceImpl extends BaseServiceImpl<CodeRule, String>
 		implements ICodeRuleService {
 
 	private ICodeRuleDao codeRuleDaoImpl;
@@ -26,9 +26,9 @@ public class CodeRuleServiceImpl extends GenericServiceImpl<CodeRule, String>
 
 	@Override
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<CodeRule, String> codeRuleDaoImpl) {
-		this.hibernateGenericDaoImpl = codeRuleDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<CodeRule, String> codeRuleDaoImpl) {
+		this.baseGenericDaoImpl = codeRuleDaoImpl;
 		this.codeRuleDaoImpl = (ICodeRuleDao) codeRuleDaoImpl;
 	}
 

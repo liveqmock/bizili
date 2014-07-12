@@ -1,14 +1,14 @@
 package com.vteba.finance.table.service;
 
 import com.vteba.finance.table.model.TrialBalance;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 
 /**
  * 试算平衡表Service接口
  * @author yinlei 
  * date 2012-6-30 下午12:43:45
  */
-public interface ITrialBalanceService extends IGenericService<TrialBalance, String> {
+public interface ITrialBalanceService extends BaseService<TrialBalance, String> {
 	
 	/**
 	 * 自动产生试算平衡表，定时任务调用

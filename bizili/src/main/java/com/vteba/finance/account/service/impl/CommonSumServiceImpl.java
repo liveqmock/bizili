@@ -5,8 +5,8 @@ import javax.inject.Named;
 
 import com.vteba.finance.account.dao.ICommonSumDao;
 import com.vteba.finance.account.model.CommonSum;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
-import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
+import com.vteba.service.generic.impl.BaseServiceImpl;
 
 /**
  * 常用摘要service实现
@@ -14,7 +14,7 @@ import com.vteba.service.generic.impl.GenericServiceImpl;
  * date 2012-7-5 下午11:10:16
  */
 @Named
-public class CommonSumServiceImpl extends GenericServiceImpl<CommonSum, String> {
+public class CommonSumServiceImpl extends BaseServiceImpl<CommonSum, String> {
 	
 	private ICommonSumDao commonSumDaoImpl;
 	
@@ -24,9 +24,9 @@ public class CommonSumServiceImpl extends GenericServiceImpl<CommonSum, String> 
 
 	@Override
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<CommonSum, String> commonSumDaoImpl) {
-		this.hibernateGenericDaoImpl = commonSumDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<CommonSum, String> commonSumDaoImpl) {
+		this.baseGenericDaoImpl = commonSumDaoImpl;
 		this.commonSumDaoImpl = (ICommonSumDao) commonSumDaoImpl;
 	}
 

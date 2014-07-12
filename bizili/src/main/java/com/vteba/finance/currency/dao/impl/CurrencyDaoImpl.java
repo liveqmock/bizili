@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.currency.dao.ICurrencyDao;
 import com.vteba.finance.currency.model.Currency;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 货币币别DAO实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-6-29 下午11:24:47
  */
 @Named
-public class CurrencyDaoImpl extends HibernateGenericDaoImpl<Currency, String> implements
+public class CurrencyDaoImpl extends BaseGenericDaoImpl<Currency, String> implements
 		ICurrencyDao {
 	
 	public CurrencyDaoImpl() {

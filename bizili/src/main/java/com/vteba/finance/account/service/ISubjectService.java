@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.vteba.finance.account.model.Subject;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.tx.generic.Page;
 
 /**
@@ -12,7 +12,7 @@ import com.vteba.tx.generic.Page;
  * @author yinlei
  * date 2012-6-24 下午10:40:05
  */
-public interface ISubjectService extends IGenericService<Subject, String> {
+public interface ISubjectService extends BaseService<Subject, String> {
 	
 	/**
      * 分页查询，使用criteria实现,立即第二次查询初始化延迟加载的集合

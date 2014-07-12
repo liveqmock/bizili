@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.payables.dao.IPayablesSummaryDao;
 import com.vteba.finance.payables.model.PayablesSummary;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 应付汇总表DAO实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-8-1 下午3:37:49
  */
 @Named
-public class PayablesSummaryDaoImpl extends HibernateGenericDaoImpl<PayablesSummary, String>
+public class PayablesSummaryDaoImpl extends BaseGenericDaoImpl<PayablesSummary, String>
 		implements IPayablesSummaryDao {
 
 	public PayablesSummaryDaoImpl() {

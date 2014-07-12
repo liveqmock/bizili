@@ -5,7 +5,7 @@ import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.user.model.EmpUser;
 
 /**
@@ -13,7 +13,7 @@ import com.vteba.user.model.EmpUser;
  * @author yinlei
  * date 2012-1-4 下午2:43:57
  */
-public interface IEmpUserService extends IGenericService<EmpUser, Long>{
+public interface IEmpUserService extends BaseService<EmpUser, Long>{
 	
 	public List<EmpUser> getEmpUserLists();
 	/**

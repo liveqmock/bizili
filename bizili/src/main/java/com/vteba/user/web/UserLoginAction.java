@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.user.model.EmpUser;
 import com.vteba.user.service.IEmpUserService;
 import com.vteba.web.action.BaseAction;
@@ -65,8 +65,8 @@ public class UserLoginAction extends BaseAction<EmpUser> {
 	}
 
 	@Override
-	public void setGenericServiceImpl(
-			IGenericService<EmpUser, ? extends Serializable> genericServiceImpl) {
+	public void setBaseServiceImpl(
+			BaseService<EmpUser, ? extends Serializable> BaseServiceImpl) {
 		// TODO Auto-generated method stub
 		
 	}

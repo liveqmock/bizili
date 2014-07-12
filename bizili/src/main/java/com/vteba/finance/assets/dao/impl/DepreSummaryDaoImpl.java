@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 import com.vteba.common.constant.DataSourceConst;
 import com.vteba.finance.assets.dao.IDepreSummaryDao;
 import com.vteba.finance.assets.model.DepreSummary;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 import com.vteba.service.multitenant.annotation.Schema;
 
 /**
@@ -19,7 +19,7 @@ import com.vteba.service.multitenant.annotation.Schema;
 @Named
 @Schema(schemaName = DataSourceConst.BIZILI)
 public class DepreSummaryDaoImpl extends
-		HibernateGenericDaoImpl<DepreSummary, String> implements IDepreSummaryDao {
+		BaseGenericDaoImpl<DepreSummary, String> implements IDepreSummaryDao {
 
 	public DepreSummaryDaoImpl() {
 		super();

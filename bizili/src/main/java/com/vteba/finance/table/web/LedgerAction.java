@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.finance.table.model.Ledger;
 import com.vteba.finance.table.service.ILedgerService;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.utils.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 
@@ -40,14 +40,14 @@ public class LedgerAction extends BaseAction<Ledger> {
 		order.put("subjectCode", "asc");
 		order.put("createDate", "asc");
 		order.put("summary", "desc");
-		listResult = ledgerServiceImpl.getListByCriteria(Ledger.class, model, order);
+		listResult = ledgerServiceImpl.getEntityList(model, order);
 		maps.put("listResult", listResult);
 		return "/table/ledger/ledger-initial-success";
 	}
 
 	@Override
-	public void setGenericServiceImpl(
-			IGenericService<Ledger, ? extends Serializable> genericServiceImpl) {
+	public void setBaseServiceImpl(
+			BaseService<Ledger, ? extends Serializable> BaseServiceImpl) {
 		// TODO Auto-generated method stub
 		
 	}

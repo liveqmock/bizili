@@ -10,14 +10,14 @@ import javax.inject.Named;
 
 import com.vteba.finance.account.model.Subject;
 import com.vteba.finance.account.service.ISubjectService;
+import com.vteba.finance.table.dao.IAccountBalanceDao;
+import com.vteba.finance.table.dao.IAccountSummaryDao;
 import com.vteba.finance.table.dao.ILedgerDao;
 import com.vteba.finance.table.model.AccountBalance;
 import com.vteba.finance.table.model.Ledger;
-import com.vteba.finance.table.service.IAccountBalanceService;
-import com.vteba.finance.table.service.IAccountSummaryService;
 import com.vteba.finance.table.service.ILedgerService;
-import com.vteba.service.generic.impl.GenericServiceImpl;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
+import com.vteba.service.generic.impl.BaseServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
 import com.vteba.utils.common.BigDecimalUtils;
 import com.vteba.utils.date.DateUtils;
 import com.vteba.utils.date.JodaTimeUtils;
@@ -28,13 +28,15 @@ import com.vteba.utils.date.JodaTimeUtils;
  * date 2012-7-6 下午11:15:56
  */
 @Named
-public class LedgerServiceImpl extends GenericServiceImpl<Ledger, String> implements
+public class LedgerServiceImpl extends BaseServiceImpl<Ledger, String> implements
 		ILedgerService {
 	
 	private ILedgerDao ledgerDaoImpl;
-	private IAccountSummaryService accountSummaryServiceImpl;
+	@Inject
+	private IAccountSummaryDao accountSummaryDaoImpl;
 	private ISubjectService subjectServiceImpl;
-	private IAccountBalanceService accountBalanceServiceImpl;
+	@Inject
+	private IAccountBalanceDao accountBalanceDaoImpl;
 	
 	public LedgerServiceImpl() {
 		super();
@@ -47,20 +49,20 @@ public class LedgerServiceImpl extends GenericServiceImpl<Ledger, String> implem
 		oneHql.append(" from Certificate c where c.accountPeriod = ?1 ");
 		oneHql.append(" group by c.oneLevel ");
 		oneHql.append(" order by c.oneLevel asc ");
-		List<Ledger> oneLedgerList = ledgerDaoImpl.getEntityListByHql(oneHql.toString(), period);
+		List<Ledger> oneLedgerList = ledgerDaoImpl.getListByHql(oneHql.toString(), period);
 		createLedger(oneLedgerList, period, 1);
 		StringBuilder twoHql = new StringBuilder("select new Ledger(c.accountPeriod,c.twoLevel,c.currency,c.summary,sum(c.debitAmount),sum(c.creditAmount)) ");
 		twoHql.append(" from Certificate c where c.accountPeriod = ?1 ");
 		twoHql.append(" and c.twoLevel is not null ");
 		twoHql.append(" group by c.twoLevel ");
 		twoHql.append(" order by c.twoLevel asc ");
-		List<Ledger> twoLedgerList = ledgerDaoImpl.getEntityListByHql(twoHql.toString(), period);
+		List<Ledger> twoLedgerList = ledgerDaoImpl.getListByHql(twoHql.toString(), period);
 		createLedger(twoLedgerList, period, 2);
 	}
 	
 	public void createLedger(List<Ledger> ledgerList, String period, int level) {
-		String delHql = "delete from Ledger l where l.accountPeriod = ?1 and l.level = ?2 ";
-		ledgerDaoImpl.executeHqlUpdate(delHql, false, period, level);
+		//String delHql = "delete from Ledger l where l.accountPeriod = ?1 and l.level = ?2 ";
+		ledgerDaoImpl.deleteBatch("accountPeriod", period, "level", level);
 		
 		if (ledgerList != null && ledgerList.size() > 0) {
 			for (Ledger bean : ledgerList) {
@@ -68,8 +70,8 @@ public class LedgerServiceImpl extends GenericServiceImpl<Ledger, String> implem
 				Subject sub = subjectServiceImpl.uniqueResult("subjectCode", bean.getSubjectCode());
 				
 				double startBalance = 0D;//期初余额
-				String startAccBalHql = " select b from AccountBalance b where b.subjectCode =?1 and b.accountPeriod = ?2 ";
-				AccountBalance startAccBal = accountBalanceServiceImpl.uniqueResultByHql(startAccBalHql, false, bean.getSubjectCode(), period);
+				//String startAccBalHql = " select b from AccountBalance b where b.subjectCode =?1 and b.accountPeriod = ?2 ";
+				AccountBalance startAccBal = accountBalanceDaoImpl.uniqueResult("subjectCode", bean.getSubjectCode(), "accountPeriod", period);
 				
 				//----------期初余额----------//
 				Ledger periodStart = new Ledger();
@@ -133,7 +135,7 @@ public class LedgerServiceImpl extends GenericServiceImpl<Ledger, String> implem
 				param.put("subjectCode", sub.getSubjectCode());
 				param.put("periodStart", period.substring(0, 5) + "01");
 				param.put("periodEnd", period.substring(0, 5) + "12");
-				List<Object[]> summary = accountSummaryServiceImpl.hqlQueryForObject(yearSumHql, false, param);
+				List<Object[]> summary = accountSummaryDaoImpl.queryForObject(yearSumHql, param);
 				if (summary != null && summary.size() == 1) {
 					Double debit = (Double) summary.get(0)[0];
 					thisYearSum.setDebitBalance(debit);
@@ -156,16 +158,10 @@ public class LedgerServiceImpl extends GenericServiceImpl<Ledger, String> implem
 	//---------getter and setter--------//
 	@Override
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<Ledger, String> ledgerDaoImpl) {
-		this.hibernateGenericDaoImpl = ledgerDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<Ledger, String> ledgerDaoImpl) {
+		this.baseGenericDaoImpl = ledgerDaoImpl;
 		this.ledgerDaoImpl = (ILedgerDao) ledgerDaoImpl;
-	}
-	
-	@Inject
-	public void setAccountSummaryServiceImpl(
-			IAccountSummaryService accountSummaryServiceImpl) {
-		this.accountSummaryServiceImpl = accountSummaryServiceImpl;
 	}
 	
 	@Inject
@@ -173,9 +169,4 @@ public class LedgerServiceImpl extends GenericServiceImpl<Ledger, String> implem
 		this.subjectServiceImpl = subjectServiceImpl;
 	}
 	
-	@Inject
-	public void setAccountBalanceServiceImpl(
-			IAccountBalanceService accountBalanceServiceImpl) {
-		this.accountBalanceServiceImpl = accountBalanceServiceImpl;
-	}
 }

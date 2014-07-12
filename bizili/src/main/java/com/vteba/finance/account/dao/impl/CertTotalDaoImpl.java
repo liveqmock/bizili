@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.account.dao.ICertTotalDao;
 import com.vteba.finance.account.model.CertTotal;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 凭证汇总DAO实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-6-25 下午11:07:13
  */
 @Named
-public class CertTotalDaoImpl extends HibernateGenericDaoImpl<CertTotal, String> implements
+public class CertTotalDaoImpl extends BaseGenericDaoImpl<CertTotal, String> implements
 		ICertTotalDao {
 	
 	public CertTotalDaoImpl() {

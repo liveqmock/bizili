@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.finance.setting.model.SystemParameter;
 import com.vteba.finance.setting.service.ISystemParameterService;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.utils.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 
@@ -39,8 +39,8 @@ public class SystemParamAction extends BaseAction<SystemParameter> {
 	}
 
 	@Override
-	public void setGenericServiceImpl(
-			IGenericService<SystemParameter, ? extends Serializable> genericServiceImpl) {
+	public void setBaseServiceImpl(
+			BaseService<SystemParameter, ? extends Serializable> BaseServiceImpl) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -7,10 +7,10 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.account.dao.ICertificateDao;
 import com.vteba.finance.account.model.Certificate;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 @Named
-public class CertificateDaoImpl extends HibernateGenericDaoImpl<Certificate, String>
+public class CertificateDaoImpl extends BaseGenericDaoImpl<Certificate, String>
 		implements ICertificateDao {
 
 	public CertificateDaoImpl() {

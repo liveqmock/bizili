@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 import com.vteba.common.constant.DataSourceConst;
 import com.vteba.finance.assets.dao.IAssetsTypeDao;
 import com.vteba.finance.assets.model.AssetsType;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 import com.vteba.service.multitenant.annotation.Schema;
 
 /**
@@ -19,7 +19,7 @@ import com.vteba.service.multitenant.annotation.Schema;
 @Named
 @Schema(schemaName = DataSourceConst.BIZILI)
 public class AssetsTypeDaoImpl extends
-		HibernateGenericDaoImpl<AssetsType, String> implements IAssetsTypeDao {
+		BaseGenericDaoImpl<AssetsType, String> implements IAssetsTypeDao {
 
 	public AssetsTypeDaoImpl() {
 		super();

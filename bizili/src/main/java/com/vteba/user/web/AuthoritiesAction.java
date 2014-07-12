@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.vteba.common.constant.CommonConst;
 import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.service.IAuthoritiesService;
 import com.vteba.user.service.IResourcesService;
@@ -113,9 +113,9 @@ public class AuthoritiesAction extends BaseAction<Authorities> {
 
 	@Inject
 	@Override
-	public void setGenericServiceImpl(
-			IGenericService<Authorities, ? extends Serializable> authoritiesServiceImpl) {
-		this.genericServiceImpl = authoritiesServiceImpl;
+	public void setBaseServiceImpl(
+			BaseService<Authorities, ? extends Serializable> authoritiesServiceImpl) {
+		this.baseServiceImpl = authoritiesServiceImpl;
 		this.authoritiesServiceImpl = (IAuthoritiesService) authoritiesServiceImpl;
 	}
 }

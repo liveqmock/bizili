@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.report.dao.IProfitDao;
 import com.vteba.finance.report.model.Profit;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 利润表DAO实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-6-29 下午11:22:32
  */
 @Named
-public class ProfitDaoImpl extends HibernateGenericDaoImpl<Profit, String> implements
+public class ProfitDaoImpl extends BaseGenericDaoImpl<Profit, String> implements
 		IProfitDao {
 
 	public ProfitDaoImpl() {

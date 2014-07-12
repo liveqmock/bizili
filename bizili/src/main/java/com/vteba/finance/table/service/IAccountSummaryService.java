@@ -4,14 +4,14 @@ import java.util.List;
 
 import com.vteba.finance.account.model.Certificate;
 import com.vteba.finance.table.model.AccountSummary;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 
 /**
  * 凭证汇总表service 接口
  * @author yinlei 
  * date 2012-7-9 下午9:08:00
  */
-public interface IAccountSummaryService extends IGenericService<AccountSummary, String> {
+public interface IAccountSummaryService extends BaseService<AccountSummary, String> {
 	
 	/**
 	 * 自动产生一次凭证汇总，定时任务调用

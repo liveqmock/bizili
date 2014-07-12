@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.finance.table.model.TrialBalance;
 import com.vteba.finance.table.service.ITrialBalanceService;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.utils.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 
@@ -31,7 +31,7 @@ public class TrialBalanceAction extends BaseAction<TrialBalance> {
 		Map<String, String> param = new LinkedHashMap<String, String>();
 		param.put("subjectCode", "asc");
 		
-		listResult = trialBalanceServiceImpl.getListByCriteria(TrialBalance.class, model, param);
+		listResult = trialBalanceServiceImpl.getEntityList(model, param);
 		maps.put("listResult", listResult);
 		return "table/trialbalance/trialbalance-initial-success";
 	}
@@ -43,8 +43,8 @@ public class TrialBalanceAction extends BaseAction<TrialBalance> {
 	}
 
 	@Override
-	public void setGenericServiceImpl(
-			IGenericService<TrialBalance, ? extends Serializable> genericServiceImpl) {
+	public void setBaseServiceImpl(
+			BaseService<TrialBalance, ? extends Serializable> BaseServiceImpl) {
 		// TODO Auto-generated method stub
 		
 	}

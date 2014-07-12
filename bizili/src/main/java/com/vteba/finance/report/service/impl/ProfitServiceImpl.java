@@ -16,8 +16,8 @@ import com.vteba.finance.report.dao.IProfitDao;
 import com.vteba.finance.report.model.Profit;
 import com.vteba.finance.report.service.IProfitService;
 import com.vteba.finance.table.service.IAccountBalanceService;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
-import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
+import com.vteba.service.generic.impl.BaseServiceImpl;
 import com.vteba.utils.common.BigDecimalUtils;
 import com.vteba.utils.date.JodaTimeUtils;
 import com.vteba.utils.ofbiz.LangUtils;
@@ -28,7 +28,7 @@ import com.vteba.utils.ofbiz.LangUtils;
  * date 2012-7-23 上午10:36:20
  */
 @Named
-public class ProfitServiceImpl extends GenericServiceImpl<Profit, String> implements
+public class ProfitServiceImpl extends BaseServiceImpl<Profit, String> implements
 		IProfitService {
 
 	private IProfitDao profitDaoImpl;
@@ -165,9 +165,9 @@ public class ProfitServiceImpl extends GenericServiceImpl<Profit, String> implem
 	protected void calculateThisYearCount(Profit model, String itemCode, String period) {
 		String lastPeriod = JodaTimeUtils.getLastPeriod(period);
 		//计算年初数hql
-		String thisYearCountHql = "select a.thisYearSum from Profit a where a.accountPeriod =?1 and a.itemCode = ?2 ";
-		
-		List<Double> doubleList = profitDaoImpl.hqlQueryForList(thisYearCountHql, Double.class, lastPeriod, itemCode);
+		//String thisYearCountHql = "select a.thisYearSum from Profit a where a.accountPeriod =?1 and a.itemCode = ?2 ";
+		Map<String, ?> params = LangUtils.toMap("accountPeriod", lastPeriod, "itemCode", itemCode);
+		List<Double> doubleList = profitDaoImpl.queryPrimitiveList("thisYearSum", Double.class, params);
 		Double thisYearSum = 0D;
 		if (doubleList.size() == 1) {
 			thisYearSum = BigDecimalUtils.add(thisYearSum, doubleList.get(0));
@@ -177,9 +177,9 @@ public class ProfitServiceImpl extends GenericServiceImpl<Profit, String> implem
 	}
 	
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<Profit, String> profitDaoImpl) {
-		this.hibernateGenericDaoImpl = profitDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<Profit, String> profitDaoImpl) {
+		this.baseGenericDaoImpl = profitDaoImpl;
 		this.profitDaoImpl = (IProfitDao) profitDaoImpl;
 	}
 	

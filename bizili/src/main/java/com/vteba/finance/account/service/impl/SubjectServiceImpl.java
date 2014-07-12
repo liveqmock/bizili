@@ -18,16 +18,16 @@ import com.vteba.finance.account.dao.SubjectDao;
 import com.vteba.finance.account.model.Subject;
 import com.vteba.finance.account.service.ISubjectService;
 import com.vteba.finance.cache.FinanceCacheName;
-import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.service.generic.impl.BaseServiceImpl;
 import com.vteba.tx.generic.Page;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.BaseGenericDao;
 import com.vteba.tx.hibernate.QueryStatement;
-import com.vteba.tx.jdbc.spring.SpringJdbcTemplate;
 import com.vteba.user.dao.UserMapper;
 import com.vteba.user.model.EmpUser;
 import com.vteba.user.service.IEmpUserService;
 import com.vteba.utils.json.FastJsonUtils;
 import com.vteba.utils.json.Node;
+import com.vteba.utils.ofbiz.LangUtils;
 
 /**
  * 会计科目service实现
@@ -35,7 +35,7 @@ import com.vteba.utils.json.Node;
  * date 2012-6-30 下午8:32:28
  */
 @Named
-public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> implements
+public class SubjectServiceImpl extends BaseServiceImpl<Subject, String> implements
 		ISubjectService {
 
 	private ISubjectDao subjectDaoImpl;
@@ -56,15 +56,10 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
 		super();
 	}
 	
-	@Inject
-	public void setSpringJdbcTemplate(SpringJdbcTemplate biziliJdbcTemplate) {
-		this.springJdbcTemplate = biziliJdbcTemplate;
-	}
-	
 	@Override
 	@Inject
-	public void setHibernateGenericDaoImpl(IHibernateGenericDao<Subject, String> subjectDaoImpl) {
-		this.hibernateGenericDaoImpl = subjectDaoImpl;
+	public void setBaseGenericDaoImpl(BaseGenericDao<Subject, String> subjectDaoImpl) {
+		this.baseGenericDaoImpl = subjectDaoImpl;
 		this.subjectDaoImpl = (ISubjectDao) subjectDaoImpl;
 	}
 	
@@ -91,7 +86,7 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
     	StringBuilder hql = new StringBuilder(" select distinct p from Subject p ");
     	hql.append(" left join fetch p.childSubjects order by p.subjectCode desc ");
     	//hql.append(" where (p.level = 1 or p.level = 2) ");
-    	List<Subject> tempList = subjectDaoImpl.getEntityListByHql(hql.toString());
+    	List<Subject> tempList = subjectDaoImpl.getListByHql(hql.toString());
     	List<Subject> zcList = new ArrayList<Subject>();
     	List<Subject> fzList = new ArrayList<Subject>();
     	List<Subject> gtList = new ArrayList<Subject>();
@@ -151,8 +146,8 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
     	if (StringUtils.isBlank(subjectCode)) {
     		throw new NullPointerException("科目代码为空。"); 
     	}
-    	String hql = "select count(*) from Certificate where subject_id = ?1";
-    	Integer count = subjectDaoImpl.hqlQueryForObject(hql, Integer.class, subjectCode);
+    	//String hql = "select count(*) from Certificate where subject_id = ?1";
+    	Integer count = subjectDaoImpl.statsPrimitive("count(*)", Integer.class, LangUtils.toMap("subject_id", subjectCode));
     	if (count > 0) {// 使用中
     		return 1;
     	}
@@ -244,7 +239,7 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
 //					return subject;
 //				}
 //			}, new Object[]{"2711"});
-			List<Subject> bList = springJdbcTemplate.query(sql22, Subject.class, "2711");
+			//List<Subject> bList = springJdbcTemplate.query(sql22, Subject.class, "2711");
     	}
     	System.out.println("spring jdbc : " + (System.currentTimeMillis() - d3));
     	
@@ -313,7 +308,7 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, String> impl
 		StringBuilder hql = new StringBuilder();
 		hql.append(" select distinct p from Subject p ");
     	hql.append(" left join fetch p.childSubjects order by p.subjectCode desc ");
-    	List<Subject> subjectList = subjectDaoImpl.getEntityListByHql(hql.toString());
+    	List<Subject> subjectList = subjectDaoImpl.getListByHql(hql.toString());
     	
     	//只取一级科目，因为二级和三级会包含在一级的树形list中
     	for (Subject subject : subjectList) {

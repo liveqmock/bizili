@@ -10,18 +10,19 @@ import javax.inject.Named;
 
 import com.vteba.finance.account.model.Subject;
 import com.vteba.finance.account.service.ISubjectService;
+import com.vteba.finance.table.dao.IAccountBalanceDao;
+import com.vteba.finance.table.dao.IAccountSummaryDao;
 import com.vteba.finance.table.dao.IDetailAccountDao;
 import com.vteba.finance.table.model.AccountBalance;
 import com.vteba.finance.table.model.DetailAccount;
-import com.vteba.finance.table.service.IAccountBalanceService;
-import com.vteba.finance.table.service.IAccountSummaryService;
 import com.vteba.finance.table.service.IDetailAccountService;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
-import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.service.generic.impl.BaseServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
 import com.vteba.utils.common.BigDecimalUtils;
 import com.vteba.utils.common.ObjectUtils;
 import com.vteba.utils.date.DateUtils;
 import com.vteba.utils.date.JodaTimeUtils;
+import com.vteba.utils.ofbiz.LangUtils;
 
 /**
  * 明细账service实现
@@ -29,13 +30,15 @@ import com.vteba.utils.date.JodaTimeUtils;
  * date 2012-7-6 下午11:14:23
  */
 @Named
-public class DetailAccountServiceImpl extends GenericServiceImpl<DetailAccount, String>
+public class DetailAccountServiceImpl extends BaseServiceImpl<DetailAccount, String>
 		implements IDetailAccountService {
 	
 	private IDetailAccountDao detailAccountDaoImpl;
-	private IAccountBalanceService accountBalanceServiceImpl;
+	@Inject
+	private IAccountBalanceDao accountBalanceDaoImpl;
 	private ISubjectService subjectServiceImpl;
-	private IAccountSummaryService accountSummaryServiceImpl;
+	@Inject
+	private IAccountSummaryDao accountSummaryDaoImpl;
 	
 	public DetailAccountServiceImpl() {
 		super();
@@ -51,17 +54,17 @@ public class DetailAccountServiceImpl extends GenericServiceImpl<DetailAccount, 
 		String period = DateUtils.toDateString("yyyy-MM");//会计期间
 		
 		//删除原有数据
-		String delHql = " delete from DetailAccount d where d.accountPeriod = ?1 ";
-		detailAccountDaoImpl.executeHqlUpdate(delHql, false, period);
+		//String delHql = " delete from DetailAccount d where d.accountPeriod = ?1 ";
+		detailAccountDaoImpl.deleteBatch("accountPeriod", period);
 		
 		//本期发生的一级会计科目，需要处理，期初，本期，期末，本年累计
-		String oneHql = " select distinct c.oneLevel from Certificate c where c.accountPeriod = ?1 ";
-		List<String> subjectList = detailAccountDaoImpl.hqlQueryForList(oneHql, String.class, period);
+		//String oneHql = " select distinct c.oneLevel from Certificate c where c.accountPeriod = ?1 ";
+		List<String> subjectList = detailAccountDaoImpl.queryPrimitiveList("oneLevel", String.class, LangUtils.toMap("accountPeriod", period));
 		createDetailAccount(subjectList, period, 1);
 		
 		//本期发生的二级会计科目
-		String twoHql = " select distinct c.twoLevel from Certificate c where c.accountPeriod = ?1 and c.twoLevel is not null ";
-		List<String> twoSubjectList = detailAccountDaoImpl.hqlQueryForList(twoHql, String.class, period);
+		//String twoHql = " select distinct c.twoLevel from Certificate c where c.accountPeriod = ?1 and c.twoLevel is not null ";
+		List<String> twoSubjectList = detailAccountDaoImpl.queryPrimitiveList("twoLevel", String.class, LangUtils.toMap("accountPeriod", period));
 		createDetailAccount(twoSubjectList, period, 2);
 	}
 	
@@ -75,15 +78,15 @@ public class DetailAccountServiceImpl extends GenericServiceImpl<DetailAccount, 
 				hql.append(" where t.accountPeriod = ?1 ");
 				hql.append(" and c.subjectId like ?2 ");
 				hql.append(" order by t.createDate asc, t.codeNo asc, c.subjectId asc ");
-				List<DetailAccount> detailAccountList = detailAccountDaoImpl.getEntityListByHql(hql.toString(), period, ObjectUtils.sqlLike(code));
+				List<DetailAccount> detailAccountList = detailAccountDaoImpl.getListByHql(hql.toString(), period, ObjectUtils.sqlLike(code));
 				if (detailAccountList != null && detailAccountList.size() > 0) {
 					//----------科目期初余额----------//
 					DetailAccount account = new DetailAccount();
 					account.setSummary("期初余额");
 					account.setCreateDate(JodaTimeUtils.getFirstDayOfMonth(new Date()));
 					double parentBalance = 0D;//期初余额
-					String parentAccBalHql = " select b from AccountBalance b where b.subjectCode =?1 and b.accountPeriod = ?2 ";
-					AccountBalance parentAccBal = accountBalanceServiceImpl.uniqueResultByHql(parentAccBalHql, false, code, period);//父级科目余额
+					//String parentAccBalHql = " select b from AccountBalance b where b.subjectCode =?1 and b.accountPeriod = ?2 ";
+					AccountBalance parentAccBal = accountBalanceDaoImpl.uniqueResult("subjectCode", code, "accountPeriod", period);//父级科目余额
 					if (sub.getBalanceDirection().equals(Subject.DIR_DEBIT)) {
 						parentBalance = BigDecimalUtils.subtract(parentAccBal.getStartBalanceDebit(), parentAccBal.getStartBalanceCredit());
 					} else {
@@ -113,9 +116,9 @@ public class DetailAccountServiceImpl extends GenericServiceImpl<DetailAccount, 
 						
 						//科目期初余额，用于计算后续每个凭证发生后的余额
 						if (first) {
-							String accBalHql = " select b from AccountBalance b where b.subjectCode =?1 and b.accountPeriod = ?2 ";
+							//String accBalHql = " select b from AccountBalance b where b.subjectCode =?1 and b.accountPeriod = ?2 ";
 							//AccountBalance accBal = accountBalanceServiceImpl.uniqueResultByHql(accBalHql, false, subject.getSubjectCode(),period);
-							AccountBalance accBal = accountBalanceServiceImpl.uniqueResultByHql(accBalHql, false, bean.getSubjectCode(), period);
+							AccountBalance accBal = accountBalanceDaoImpl.uniqueResult("subjectCode", bean.getSubjectCode(), "accountPeriod", period);
 							if (sub.getBalanceDirection().equals(Subject.DIR_DEBIT)) {//余额在借方
 								balance = BigDecimalUtils.subtract(accBal.getStartBalanceDebit(), accBal.getStartBalanceCredit());
 							} else {//余额在贷方
@@ -178,7 +181,7 @@ public class DetailAccountServiceImpl extends GenericServiceImpl<DetailAccount, 
 					param.put("subjectCode", sub.getSubjectCode());
 					param.put("periodStart", period.substring(0, 5) + "01");
 					param.put("periodEnd", period.substring(0, 5) + "12");
-					List<Object[]> summary = accountSummaryServiceImpl.hqlQueryForObject(yearSumHql, false, param);
+					List<Object[]> summary = accountSummaryDaoImpl.queryForObject(yearSumHql, param);
 					if (summary != null && summary.size() == 1) {
 						Double debit = (Double) summary.get(0)[0];
 						thisYearSum.setDebitBalance(debit);
@@ -201,16 +204,10 @@ public class DetailAccountServiceImpl extends GenericServiceImpl<DetailAccount, 
 	
 	@Override
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<DetailAccount, String> detailAccountDaoImpl) {
-		this.hibernateGenericDaoImpl = detailAccountDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<DetailAccount, String> detailAccountDaoImpl) {
+		this.baseGenericDaoImpl = detailAccountDaoImpl;
 		this.detailAccountDaoImpl = (IDetailAccountDao) detailAccountDaoImpl;
-	}
-	
-	@Inject
-	public void setAccountBalanceServiceImpl(
-			IAccountBalanceService accountBalanceServiceImpl) {
-		this.accountBalanceServiceImpl = accountBalanceServiceImpl;
 	}
 	
 	@Inject
@@ -218,9 +215,4 @@ public class DetailAccountServiceImpl extends GenericServiceImpl<DetailAccount, 
 		this.subjectServiceImpl = subjectServiceImpl;
 	}
 	
-	@Inject
-	public void setAccountSummaryServiceImpl(
-			IAccountSummaryService accountSummaryServiceImpl) {
-		this.accountSummaryServiceImpl = accountSummaryServiceImpl;
-	}
 }

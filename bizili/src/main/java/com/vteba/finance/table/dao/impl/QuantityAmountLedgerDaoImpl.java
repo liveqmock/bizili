@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.table.dao.IQuantityAmountLedgerDao;
 import com.vteba.finance.table.model.QuantityAmountLedger;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 数量金额总账DAO实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-7-6 下午10:49:28
  */
 @Named
-public class QuantityAmountLedgerDaoImpl extends HibernateGenericDaoImpl<QuantityAmountLedger, String>
+public class QuantityAmountLedgerDaoImpl extends BaseGenericDaoImpl<QuantityAmountLedger, String>
 		implements IQuantityAmountLedgerDao {
 
 	public QuantityAmountLedgerDaoImpl() {

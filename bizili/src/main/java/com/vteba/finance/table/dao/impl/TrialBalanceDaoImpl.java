@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.table.dao.ITrialBalanceDao;
 import com.vteba.finance.table.model.TrialBalance;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 试算平衡表DAO实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-6-30 下午12:41:26
  */
 @Named
-public class TrialBalanceDaoImpl extends HibernateGenericDaoImpl<TrialBalance, String>
+public class TrialBalanceDaoImpl extends BaseGenericDaoImpl<TrialBalance, String>
 		implements ITrialBalanceDao {
 
 	public TrialBalanceDaoImpl() {

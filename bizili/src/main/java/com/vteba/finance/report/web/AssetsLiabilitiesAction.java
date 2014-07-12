@@ -15,7 +15,7 @@ import com.vteba.finance.account.model.AccountPeriod;
 import com.vteba.finance.account.service.IAccountPeriodService;
 import com.vteba.finance.report.model.AssetsLiabilities;
 import com.vteba.finance.report.service.IAssetsLiabilitiesService;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.utils.date.DateUtils;
 import com.vteba.utils.date.JodaTimeUtils;
 import com.vteba.utils.reflection.ReflectUtils;
@@ -86,8 +86,8 @@ public class AssetsLiabilitiesAction extends BaseAction<AssetsLiabilities> {
 	}
 
 	@Override
-	public void setGenericServiceImpl(
-			IGenericService<AssetsLiabilities, ? extends Serializable> genericServiceImpl) {
+	public void setBaseServiceImpl(
+			BaseService<AssetsLiabilities, ? extends Serializable> BaseServiceImpl) {
 		// TODO Auto-generated method stub
 		
 	}

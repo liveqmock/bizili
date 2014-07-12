@@ -1,6 +1,6 @@
 package com.vteba.user.dao;
 
-import com.vteba.tx.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.BaseGenericDao;
 import com.vteba.user.model.Resources;
 
 /**
@@ -8,6 +8,6 @@ import com.vteba.user.model.Resources;
  * @author yinlei
  * 2012-3-21 下午12:33:51
  */
-public interface IResourcesDao extends IHibernateGenericDao<Resources, Long> {
+public interface IResourcesDao extends BaseGenericDao<Resources, Long> {
 
 }

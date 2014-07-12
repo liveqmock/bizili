@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.report.dao.ICashFlowDao;
 import com.vteba.finance.report.model.CashFlow;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 现金流量表DAO实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-6-29 下午11:22:13
  */
 @Named
-public class CashFlowDaoImpl extends HibernateGenericDaoImpl<CashFlow, String> implements
+public class CashFlowDaoImpl extends BaseGenericDaoImpl<CashFlow, String> implements
 		ICashFlowDao {
 
 	public CashFlowDaoImpl() {

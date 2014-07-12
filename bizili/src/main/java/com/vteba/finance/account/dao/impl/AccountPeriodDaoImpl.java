@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.account.dao.IAccountPeriodDao;
 import com.vteba.finance.account.model.AccountPeriod;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 会计期间DAO实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-7-27 下午4:15:52
  */
 @Named
-public class AccountPeriodDaoImpl extends HibernateGenericDaoImpl<AccountPeriod, String>
+public class AccountPeriodDaoImpl extends BaseGenericDaoImpl<AccountPeriod, String>
 		implements IAccountPeriodDao {
 	private SessionFactory biziliSessionFactory;
 	

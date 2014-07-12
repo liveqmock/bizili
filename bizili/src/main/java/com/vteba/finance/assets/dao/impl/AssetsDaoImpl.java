@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.assets.dao.IAssetsDao;
 import com.vteba.finance.assets.model.Assets;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 资产DAO实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-6-29 下午11:24:02
  */
 @Named
-public class AssetsDaoImpl extends HibernateGenericDaoImpl<Assets, String> implements
+public class AssetsDaoImpl extends BaseGenericDaoImpl<Assets, String> implements
 		IAssetsDao {
 
 	public AssetsDaoImpl() {

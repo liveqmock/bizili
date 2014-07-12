@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.setting.dao.ISystemParameterDao;
 import com.vteba.finance.setting.model.SystemParameter;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 系统参数设定Dao实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-6-29 下午11:13:55
  */
 @Named
-public class SystemParameterDaoImpl extends HibernateGenericDaoImpl<SystemParameter, String>
+public class SystemParameterDaoImpl extends BaseGenericDaoImpl<SystemParameter, String>
 		implements ISystemParameterDao {
 
 	public SystemParameterDaoImpl() {

@@ -5,8 +5,8 @@ import javax.inject.Named;
 import com.vteba.finance.assets.dao.IAssetsDao;
 import com.vteba.finance.assets.model.Assets;
 import com.vteba.finance.assets.service.IAssetsService;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
-import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
+import com.vteba.service.generic.impl.BaseServiceImpl;
 
 /**
  * 资产service实现
@@ -14,7 +14,7 @@ import com.vteba.service.generic.impl.GenericServiceImpl;
  * date 2012-6-29 下午11:23:25
  */
 @Named
-public class AssetsServiceImpl extends GenericServiceImpl<Assets, String> implements
+public class AssetsServiceImpl extends BaseServiceImpl<Assets, String> implements
 		IAssetsService {
 
 	private IAssetsDao assetsDaoImpl;
@@ -24,9 +24,9 @@ public class AssetsServiceImpl extends GenericServiceImpl<Assets, String> implem
 	}
 
 	@Override
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<Assets, String> assetsDaoImpl) {
-		this.hibernateGenericDaoImpl = assetsDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<Assets, String> assetsDaoImpl) {
+		this.baseGenericDaoImpl = assetsDaoImpl;
 		this.assetsDaoImpl = (IAssetsDao) assetsDaoImpl;
 	}
 

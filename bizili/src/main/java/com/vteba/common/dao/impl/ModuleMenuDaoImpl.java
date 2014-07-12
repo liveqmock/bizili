@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.common.dao.IModuleMenuDao;
 import com.vteba.common.model.ModuleMenu;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 菜单模组DAO实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-5-11 下午7:52:37
  */
 @Named
-public class ModuleMenuDaoImpl extends HibernateGenericDaoImpl<ModuleMenu, String> implements
+public class ModuleMenuDaoImpl extends BaseGenericDaoImpl<ModuleMenu, String> implements
 		IModuleMenuDao {
 
 	public ModuleMenuDaoImpl() {

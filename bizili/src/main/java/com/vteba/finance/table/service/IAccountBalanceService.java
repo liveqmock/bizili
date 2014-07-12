@@ -1,14 +1,14 @@
 package com.vteba.finance.table.service;
 
 import com.vteba.finance.table.model.AccountBalance;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 
 /**
  * 科目余额表service接口
  * @author yinlei 
  * date 2012-6-3 下午9:15:02
  */
-public interface IAccountBalanceService extends IGenericService<AccountBalance, String> {
+public interface IAccountBalanceService extends BaseService<AccountBalance, String> {
 	
 	/**
 	 * 定时任务执行科目余额汇总

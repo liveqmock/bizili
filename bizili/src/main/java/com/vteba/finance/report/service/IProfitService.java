@@ -1,14 +1,14 @@
 package com.vteba.finance.report.service;
 
 import com.vteba.finance.report.model.Profit;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 
 /**
  * 利润表service
  * @author yinlei 
  * date 2012-7-23 上午10:36:01
  */
-public interface IProfitService extends IGenericService<Profit, String> {
+public interface IProfitService extends BaseService<Profit, String> {
 	
 	/**
 	 * 自动产生利润表，定时任务调用

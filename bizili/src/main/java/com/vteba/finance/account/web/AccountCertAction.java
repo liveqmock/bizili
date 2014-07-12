@@ -18,7 +18,7 @@ import com.vteba.finance.account.form.CertTotalForm;
 import com.vteba.finance.account.model.CertTotal;
 import com.vteba.finance.account.service.ICertTotalService;
 import com.vteba.finance.account.service.ISubjectService;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.tx.generic.Page;
 import com.vteba.utils.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
@@ -82,8 +82,8 @@ public class AccountCertAction extends BaseAction<CertTotal> {
 	}
 
 	@Override
-	public void setGenericServiceImpl(
-			IGenericService<CertTotal, ? extends Serializable> genericServiceImpl) {
+	public void setBaseServiceImpl(
+			BaseService<CertTotal, ? extends Serializable> BaseServiceImpl) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -8,16 +8,16 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.vteba.common.constant.CommonConst;
+import com.vteba.finance.account.dao.ICertificateDao;
 import com.vteba.finance.account.model.Certificate;
 import com.vteba.finance.account.model.Subject;
-import com.vteba.finance.account.service.ICertificateService;
 import com.vteba.finance.account.service.ISubjectService;
 import com.vteba.finance.currency.model.Currency;
 import com.vteba.finance.table.dao.IAccountSummaryDao;
 import com.vteba.finance.table.model.AccountSummary;
 import com.vteba.finance.table.service.IAccountSummaryService;
-import com.vteba.service.generic.impl.GenericServiceImpl;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
+import com.vteba.service.generic.impl.BaseServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
 import com.vteba.utils.date.DateUtils;
 import com.vteba.utils.ofbiz.LangUtils;
 
@@ -27,11 +27,12 @@ import com.vteba.utils.ofbiz.LangUtils;
  * date 2012-7-9 下午9:09:25
  */
 @Named
-public class AccountSummaryServiceImpl extends GenericServiceImpl<AccountSummary, String>
+public class AccountSummaryServiceImpl extends BaseServiceImpl<AccountSummary, String>
 		implements IAccountSummaryService {
 	
 	private IAccountSummaryDao accountSummaryDaoImpl;
-	private ICertificateService certificateServiceImpl;
+	@Inject
+	private ICertificateDao certificateDaoImpl;
 	private ISubjectService subjectServiceImpl;
 	
 	public AccountSummaryServiceImpl() {
@@ -40,9 +41,9 @@ public class AccountSummaryServiceImpl extends GenericServiceImpl<AccountSummary
 
 	@Override
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<AccountSummary, String> accountSummaryDaoImpl) {
-		this.hibernateGenericDaoImpl = accountSummaryDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<AccountSummary, String> accountSummaryDaoImpl) {
+		this.baseGenericDaoImpl = accountSummaryDaoImpl;
 		this.accountSummaryDaoImpl = (IAccountSummaryDao) accountSummaryDaoImpl;
 	}
 
@@ -57,9 +58,9 @@ public class AccountSummaryServiceImpl extends GenericServiceImpl<AccountSummary
 		String thrhql = "select threeLevel,sum(c.creditAmount),sum(c.debitAmount),3 from Certificate c where c.accountPeriod = ?1 and c.threeLevel is not null group by threeLevel";
 		
 		String period = DateUtils.toDateString("yyyy-MM");//会计期间
-		List<Object[]> oneList = certificateServiceImpl.hqlQueryForObject(onehql, false, period);
-		List<Object[]> twoList = certificateServiceImpl.hqlQueryForObject(twohql, false, period);
-		List<Object[]> thrList = certificateServiceImpl.hqlQueryForObject(thrhql, false, period);
+		List<Object[]> oneList = certificateDaoImpl.queryForObject(onehql, period);
+		List<Object[]> twoList = certificateDaoImpl.queryForObject(twohql, period);
+		List<Object[]> thrList = certificateDaoImpl.queryForObject(thrhql, period);
 		
 		//将三次的查询结果放在一起
 		List<Object[]> list = new ArrayList<Object[]>();
@@ -82,7 +83,7 @@ public class AccountSummaryServiceImpl extends GenericServiceImpl<AccountSummary
 			} else {//还没有，创建
 				summary = new AccountSummary();
 				//获得科目信息
-				Subject subject = subjectServiceImpl.uniqueResultByHql("subject.querySubByCode" , true, code);
+				Subject subject = subjectServiceImpl.uniqueResult("subjectCode" , code);
 				summary.setSubjectCode(subject.getSubjectCode());
 				summary.setSubjectName(subject.getSubjectName());
 				summary.setAccountPeriod(period);
@@ -100,11 +101,6 @@ public class AccountSummaryServiceImpl extends GenericServiceImpl<AccountSummary
 	public boolean updateAccountSummary(List<Certificate> certList) {
 		
 		return true;
-	}
-	
-	@Inject
-	public void setCertificateServiceImpl(ICertificateService certificateServiceImpl) {
-		this.certificateServiceImpl = certificateServiceImpl;
 	}
 	
 	@Inject

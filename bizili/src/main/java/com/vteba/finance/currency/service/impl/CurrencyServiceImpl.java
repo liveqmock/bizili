@@ -6,8 +6,8 @@ import javax.inject.Named;
 import com.vteba.finance.currency.dao.ICurrencyDao;
 import com.vteba.finance.currency.model.Currency;
 import com.vteba.finance.currency.service.ICurrencyService;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
-import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
+import com.vteba.service.generic.impl.BaseServiceImpl;
 
 /**
  * 货币币别Service实现
@@ -15,7 +15,7 @@ import com.vteba.service.generic.impl.GenericServiceImpl;
  * date 2012-6-29 下午11:25:26
  */
 @Named
-public class CurrencyServiceImpl extends GenericServiceImpl<Currency, String> implements
+public class CurrencyServiceImpl extends BaseServiceImpl<Currency, String> implements
 		ICurrencyService {
 
 	private ICurrencyDao currencyDaoImpl;
@@ -26,9 +26,9 @@ public class CurrencyServiceImpl extends GenericServiceImpl<Currency, String> im
 	
 	@Override
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<Currency, String> currencyDaoImpl) {
-		this.hibernateGenericDaoImpl = currencyDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<Currency, String> currencyDaoImpl) {
+		this.baseGenericDaoImpl = currencyDaoImpl;
 		this.currencyDaoImpl = (ICurrencyDao) currencyDaoImpl;
 	}
 

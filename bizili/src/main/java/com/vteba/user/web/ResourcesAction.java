@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.vteba.common.constant.CommonConst;
 import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.user.model.Resources;
 import com.vteba.user.service.IResourcesService;
 import com.vteba.web.action.BaseAction;
@@ -98,8 +98,8 @@ public class ResourcesAction extends BaseAction<Resources> {
 
 	@Inject
 	@Override
-	public void setGenericServiceImpl(IGenericService<Resources, ?> resourcesServiceImpl) {
-		this.genericServiceImpl = resourcesServiceImpl;
+	public void setBaseServiceImpl(BaseService<Resources, ?> resourcesServiceImpl) {
+		this.baseServiceImpl = resourcesServiceImpl;
 		this.resourcesServiceImpl = (IResourcesService) resourcesServiceImpl;
 	}
 

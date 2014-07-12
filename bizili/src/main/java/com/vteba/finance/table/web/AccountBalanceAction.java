@@ -13,7 +13,7 @@ import com.skmbw.user.model.UserBean;
 import com.skmbw.user.service.UserServcie;
 import com.vteba.finance.table.model.AccountBalance;
 import com.vteba.finance.table.service.IAccountBalanceService;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.user.service.IEmpUserService;
 import com.vteba.utils.common.BigDecimalUtils;
 import com.vteba.utils.ofbiz.LangUtils;
@@ -45,7 +45,7 @@ public class AccountBalanceAction extends BaseAction<AccountBalance> {
 		test();
 		
 		ReflectUtils.emptyToNull(model);
-		listResult = accountBalanceServiceImpl.getListByCriteria(model, LangUtils.toMap("subjectCode", "asc"));
+		listResult = accountBalanceServiceImpl.getEntityList(model, LangUtils.toMap("subjectCode", "asc"));
 		
 		//String hql = "select sum(ab.startBalanceDebit),sum(ab.startBalanceCredit) from AccountBalance ab";
 		//可以使用hql汇总来做，但是where条件
@@ -106,9 +106,9 @@ public class AccountBalanceAction extends BaseAction<AccountBalance> {
 		userServcieImpl.query(LangUtils.toMap("user_account", "tongku2008@126.com"));
 		print("spring query list : ", d);
 		
-		String hql = "select u from EmpUser u where u.userAccount = ?1";
+		//String hql = "select u from EmpUser u where u.userAccount = ?1";
 		d = System.currentTimeMillis();
-		empUserServiceImpl.getEntityListByHql(hql, "tongku2008@126.com");
+		empUserServiceImpl.getEntityList("userAccount", "tongku2008@126.com");
 		print("hibernate query list ：", d);
 	}
 	
@@ -118,9 +118,9 @@ public class AccountBalanceAction extends BaseAction<AccountBalance> {
 	
 	@Inject
 	@Override
-	public void setGenericServiceImpl(
-			IGenericService<AccountBalance, ? extends Serializable> accountBalanceServiceImpl) {
-		this.genericServiceImpl = accountBalanceServiceImpl; 
+	public void setBaseServiceImpl(
+			BaseService<AccountBalance, ? extends Serializable> accountBalanceServiceImpl) {
+		this.baseServiceImpl = accountBalanceServiceImpl; 
 		this.accountBalanceServiceImpl = (IAccountBalanceService) accountBalanceServiceImpl;
 	}
 

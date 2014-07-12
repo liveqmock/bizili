@@ -6,8 +6,8 @@ import javax.inject.Named;
 import com.vteba.finance.report.dao.ICashFlowDao;
 import com.vteba.finance.report.model.CashFlow;
 import com.vteba.finance.report.service.ICashFlowService;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
-import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
+import com.vteba.service.generic.impl.BaseServiceImpl;
 
 /**
  * 现金流量表service实现
@@ -15,7 +15,7 @@ import com.vteba.service.generic.impl.GenericServiceImpl;
  * date 2012-7-23 上午10:34:59
  */
 @Named
-public class CashFlowServiceImpl extends GenericServiceImpl<CashFlow, String> implements
+public class CashFlowServiceImpl extends BaseServiceImpl<CashFlow, String> implements
 		ICashFlowService {
 
 	private ICashFlowDao cashFlowDaoImpl;
@@ -29,9 +29,9 @@ public class CashFlowServiceImpl extends GenericServiceImpl<CashFlow, String> im
 	}
 
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<CashFlow, String> cashFlowDaoImpl) {
-		this.hibernateGenericDaoImpl = cashFlowDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<CashFlow, String> cashFlowDaoImpl) {
+		this.baseGenericDaoImpl = cashFlowDaoImpl;
 		this.cashFlowDaoImpl = (ICashFlowDao) cashFlowDaoImpl;
 	}
 

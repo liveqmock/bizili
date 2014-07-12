@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.table.dao.IAccountSummaryDao;
 import com.vteba.finance.table.model.AccountSummary;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 import com.vteba.tx.jdbc.spring.SpringJdbcTemplate;
 
 /**
@@ -16,7 +16,7 @@ import com.vteba.tx.jdbc.spring.SpringJdbcTemplate;
  * date 2012-7-9 下午9:05:55
  */
 @Named
-public class AccountSummaryDaoImpl extends HibernateGenericDaoImpl<AccountSummary, String>
+public class AccountSummaryDaoImpl extends BaseGenericDaoImpl<AccountSummary, String>
 		implements IAccountSummaryDao {
 	
 	public AccountSummaryDaoImpl() {

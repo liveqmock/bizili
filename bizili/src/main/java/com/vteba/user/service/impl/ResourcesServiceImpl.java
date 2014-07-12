@@ -6,13 +6,13 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.vteba.tx.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.BaseGenericDao;
 import com.vteba.cache.infinispan.InfinispanCache;
 import com.vteba.cache.infinispan.InfinispanCacheManager;
 import com.vteba.common.constant.Cc;
 import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
-import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.service.generic.impl.BaseServiceImpl;
 import com.vteba.user.dao.IResourcesDao;
 import com.vteba.user.model.Resources;
 import com.vteba.user.service.IResourcesService;
@@ -25,7 +25,7 @@ import com.vteba.utils.json.Node;
  * 2012-3-21 下午12:33:14
  */
 @Named
-public class ResourcesServiceImpl extends GenericServiceImpl<Resources, Long> implements IResourcesService {
+public class ResourcesServiceImpl extends BaseServiceImpl<Resources, Long> implements IResourcesService {
 	private IResourcesDao resourcesDaoImpl;
 	@Inject
 	private IModuleMenuService moduleMenuServiceImpl;
@@ -38,9 +38,9 @@ public class ResourcesServiceImpl extends GenericServiceImpl<Resources, Long> im
 	
 	@Inject
 	@Override
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<Resources, Long> resourcesDaoImpl) {
-		this.hibernateGenericDaoImpl = resourcesDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<Resources, Long> resourcesDaoImpl) {
+		this.baseGenericDaoImpl = resourcesDaoImpl;
 		this.resourcesDaoImpl = (IResourcesDao) resourcesDaoImpl;
 		
 	}

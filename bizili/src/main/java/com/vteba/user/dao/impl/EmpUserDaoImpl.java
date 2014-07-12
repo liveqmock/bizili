@@ -5,7 +5,7 @@ import javax.inject.Named;
 
 import org.hibernate.SessionFactory;
 
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 import com.vteba.service.multitenant.annotation.Schema;
 import com.vteba.user.dao.IEmpUserDao;
 import com.vteba.user.model.EmpUser;
@@ -17,7 +17,7 @@ import com.vteba.user.model.EmpUser;
  */
 @Named
 @Schema(schemaName = "skmbw")
-public class EmpUserDaoImpl extends HibernateGenericDaoImpl<EmpUser, Long>
+public class EmpUserDaoImpl extends BaseGenericDaoImpl<EmpUser, Long>
 		implements IEmpUserDao {
 
 	public EmpUserDaoImpl() {

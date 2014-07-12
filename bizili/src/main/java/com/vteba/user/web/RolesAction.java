@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.common.constant.CommonConst;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.user.model.Roles;
 import com.vteba.user.service.IRolesService;
 import com.vteba.utils.reflection.ReflectUtils;
@@ -94,8 +94,8 @@ public class RolesAction extends BaseAction<Roles> {
 	}
 
 	@Override
-	public void setGenericServiceImpl(
-			IGenericService<Roles, ? extends Serializable> genericServiceImpl) {
+	public void setBaseServiceImpl(
+			BaseService<Roles, ? extends Serializable> BaseServiceImpl) {
 		// TODO Auto-generated method stub
 		
 	}

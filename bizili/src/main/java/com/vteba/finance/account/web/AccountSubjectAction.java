@@ -19,7 +19,7 @@ import com.vteba.common.constant.CommonConst;
 import com.vteba.common.constant.FileConst;
 import com.vteba.finance.account.model.Subject;
 import com.vteba.finance.account.service.ISubjectService;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.tx.generic.Page;
 import com.vteba.utils.common.ExcelExportUtils;
 import com.vteba.utils.common.ExcelImportUtils;
@@ -218,8 +218,8 @@ public class AccountSubjectAction extends BaseAction<Subject> {
 	}
 
 	@Override
-	public void setGenericServiceImpl(
-			IGenericService<Subject, ? extends Serializable> genericServiceImpl) {
+	public void setBaseServiceImpl(
+			BaseService<Subject, ? extends Serializable> BaseServiceImpl) {
 		// TODO Auto-generated method stub
 		
 	}

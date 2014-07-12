@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.table.dao.ILedgerDao;
 import com.vteba.finance.table.model.Ledger;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 总账DAO实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-7-6 下午10:41:21
  */
 @Named
-public class LedgerDaoImpl extends HibernateGenericDaoImpl<Ledger, String> implements
+public class LedgerDaoImpl extends BaseGenericDaoImpl<Ledger, String> implements
 		ILedgerDao {
 
 	public LedgerDaoImpl() {

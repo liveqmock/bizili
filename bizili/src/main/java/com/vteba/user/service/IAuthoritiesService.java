@@ -1,6 +1,6 @@
 package com.vteba.user.service;
 
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.user.model.Authorities;
 
 /**
@@ -8,7 +8,7 @@ import com.vteba.user.model.Authorities;
  * @author yinlei
  * @date 2012-4-20
  */
-public interface IAuthoritiesService extends IGenericService<Authorities, Long> {
+public interface IAuthoritiesService extends BaseService<Authorities, Long> {
 	/**
 	 * 保存权限，同时级联保存权限对应的资源。
 	 * @param authorities 权限

@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.table.dao.IDetailAccountDao;
 import com.vteba.finance.table.model.DetailAccount;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 明细账DAO实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-7-6 下午10:38:28
  */
 @Named
-public class DetailAccountDaoImpl extends HibernateGenericDaoImpl<DetailAccount, String>
+public class DetailAccountDaoImpl extends BaseGenericDaoImpl<DetailAccount, String>
 		implements IDetailAccountDao {
 
 	public DetailAccountDaoImpl() {

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.finance.assets.model.AssetsType;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.web.action.BaseAction;
 
 /**
@@ -25,8 +25,8 @@ public class AssetsTypeAction extends BaseAction<AssetsType> {
 	}
 
 	@Override
-	public void setGenericServiceImpl(
-			IGenericService<AssetsType, ? extends Serializable> genericServiceImpl) {
+	public void setBaseServiceImpl(
+			BaseService<AssetsType, ? extends Serializable> BaseServiceImpl) {
 		// TODO Auto-generated method stub
 		
 	}

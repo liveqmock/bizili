@@ -11,15 +11,15 @@ import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.vteba.finance.account.dao.ICertificateDao;
 import com.vteba.finance.account.model.Subject;
 import com.vteba.finance.account.service.IAccountPeriodService;
-import com.vteba.finance.account.service.ICertificateService;
 import com.vteba.finance.account.service.ISubjectService;
 import com.vteba.finance.table.dao.IAccountBalanceDao;
 import com.vteba.finance.table.model.AccountBalance;
 import com.vteba.finance.table.service.IAccountBalanceService;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
-import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.service.generic.impl.BaseServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
 import com.vteba.utils.common.BigDecimalUtils;
 import com.vteba.utils.ofbiz.LangUtils;
 
@@ -29,11 +29,12 @@ import com.vteba.utils.ofbiz.LangUtils;
  * date 2012-6-12 下午3:47:42
  */
 @Named
-public class AccountBalanceServiceImpl extends GenericServiceImpl<AccountBalance, String>
+public class AccountBalanceServiceImpl extends BaseServiceImpl<AccountBalance, String>
 		implements IAccountBalanceService {
 
 	private IAccountBalanceDao accountBalanceDaoImpl;
-	private ICertificateService certificateServiceImpl;
+	@Inject
+	private ICertificateDao certificateDaoImpl;
 	private ISubjectService subjectServiceImpl;
 	private IAccountPeriodService accountPeriodServiceImpl;
 	
@@ -52,7 +53,7 @@ public class AccountBalanceServiceImpl extends GenericServiceImpl<AccountBalance
 		currentSql.append(" select c2.two_level, sum(c2.credit_amount),sum(c2.debit_amount) from certificate c2 where c2.account_period = ? and two_level is not null group by c2.two_level ");
 		String period = accountPeriodServiceImpl.getCurrentPeriod();//ObjectUtils.toDateString("yyyy-MM");//会计期间
 		//本期借方和贷方发生额
-		List<Object[]> currentList = certificateServiceImpl.sqlQueryForObject(currentSql.toString(), period, period);
+		List<Object[]> currentList = certificateDaoImpl.sqlQueryForObject(currentSql.toString(), period, period);
 		
 		StringBuilder sql = new StringBuilder();
 		sql.append(" select c1.one_level, sum(c1.credit_amount),sum(c1.debit_amount) from certificate c1 where c1.account_period between ? and ? group by c1.one_level ");
@@ -62,7 +63,7 @@ public class AccountBalanceServiceImpl extends GenericServiceImpl<AccountBalance
 		String start = year + "-01";
 		String end = year + "-12";
 		//本年借方和贷方累计发生额
-		List<Object[]> yearList = certificateServiceImpl.sqlQueryForObject(sql.toString(), start, end, start, end);
+		List<Object[]> yearList = certificateDaoImpl.sqlQueryForObject(sql.toString(), start, end, start, end);
 		
 		List<AccountBalance> balanceList = new ArrayList<AccountBalance>();
 		List<String> list = new ArrayList<String>();//存放科目代码，供in()查询
@@ -72,7 +73,7 @@ public class AccountBalanceServiceImpl extends GenericServiceImpl<AccountBalance
 		if (list.size() > 0) {
 			String hql = " select ab from AccountBalance ab where ab.subjectCode in (?1) and ab.accountPeriod = ?2 ";
 			//期初借方和贷方余额
-			balanceList = accountBalanceDaoImpl.getEntityListByHql(hql,list, period);
+			balanceList = accountBalanceDaoImpl.getListByHql(hql,list, period);
 		}
 		
 		if (yearList.size() > 0) {
@@ -210,15 +211,10 @@ public class AccountBalanceServiceImpl extends GenericServiceImpl<AccountBalance
 	}
 	
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<AccountBalance, String> accountBalanceDaoImpl) {
-		this.hibernateGenericDaoImpl = accountBalanceDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<AccountBalance, String> accountBalanceDaoImpl) {
+		this.baseGenericDaoImpl = accountBalanceDaoImpl;
 		this.accountBalanceDaoImpl = (IAccountBalanceDao) accountBalanceDaoImpl;
-	}
-	
-	@Inject
-	public void setCertificateServiceImpl(ICertificateService certificateServiceImpl) {
-		this.certificateServiceImpl = certificateServiceImpl;
 	}
 	
 	@Inject

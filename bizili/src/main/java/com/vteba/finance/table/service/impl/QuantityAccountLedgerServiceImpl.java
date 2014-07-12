@@ -6,8 +6,8 @@ import javax.inject.Named;
 import com.vteba.finance.table.dao.IQuantityAmountLedgerDao;
 import com.vteba.finance.table.model.QuantityAmountLedger;
 import com.vteba.finance.table.service.IQuantityAccountLedgerService;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
-import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.service.generic.impl.BaseServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
 
 /**
  * 数量金额总账service实现
@@ -15,7 +15,7 @@ import com.vteba.service.generic.impl.GenericServiceImpl;
  * date 2012-7-6 下午11:04:05
  */
 @Named
-public class QuantityAccountLedgerServiceImpl extends GenericServiceImpl<QuantityAmountLedger, String>
+public class QuantityAccountLedgerServiceImpl extends BaseServiceImpl<QuantityAmountLedger, String>
 		implements IQuantityAccountLedgerService {
 	
 	private IQuantityAmountLedgerDao quantityAmountLedgerDaoImpl;
@@ -26,9 +26,9 @@ public class QuantityAccountLedgerServiceImpl extends GenericServiceImpl<Quantit
 
 	@Override
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<QuantityAmountLedger, String> quantityAmountLedgerDaoImpl) {
-		this.hibernateGenericDaoImpl = quantityAmountLedgerDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<QuantityAmountLedger, String> quantityAmountLedgerDaoImpl) {
+		this.baseGenericDaoImpl = quantityAmountLedgerDaoImpl;
 		this.quantityAmountLedgerDaoImpl = (IQuantityAmountLedgerDao) quantityAmountLedgerDaoImpl;
 	}
 

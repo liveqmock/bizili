@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import com.vteba.finance.account.model.CommonSum;
 import com.vteba.finance.account.service.ICommonSumService;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.web.action.BaseAction;
 
 /**
@@ -36,8 +36,8 @@ public class CommonSumAction extends BaseAction<CommonSum> {
 	}
 
 	@Override
-	public void setGenericServiceImpl(
-			IGenericService<CommonSum, ? extends Serializable> genericServiceImpl) {
+	public void setBaseServiceImpl(
+			BaseService<CommonSum, ? extends Serializable> BaseServiceImpl) {
 		// TODO Auto-generated method stub
 		
 	}

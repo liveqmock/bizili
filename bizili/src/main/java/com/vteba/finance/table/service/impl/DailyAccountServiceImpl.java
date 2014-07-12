@@ -13,8 +13,8 @@ import com.vteba.finance.table.model.AccountBalance;
 import com.vteba.finance.table.model.DailyAccount;
 import com.vteba.finance.table.service.IAccountBalanceService;
 import com.vteba.finance.table.service.IDailyAccountService;
-import com.vteba.service.generic.impl.GenericServiceImpl;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
+import com.vteba.service.generic.impl.BaseServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
 import com.vteba.utils.common.BigDecimalUtils;
 import com.vteba.utils.date.DateUtils;
 import com.vteba.utils.ofbiz.LangUtils;
@@ -25,7 +25,7 @@ import com.vteba.utils.ofbiz.LangUtils;
  * date 2012-7-6 下午11:09:12
  */
 @Named
-public class DailyAccountServiceImpl extends GenericServiceImpl<DailyAccount, String>
+public class DailyAccountServiceImpl extends BaseServiceImpl<DailyAccount, String>
 		implements IDailyAccountService {
 	
 	private IDailyAccountDao dailyAccountDaoImpl;
@@ -84,7 +84,7 @@ public class DailyAccountServiceImpl extends GenericServiceImpl<DailyAccount, St
 			dailyHql.append(" select cc.parentCert from Certificate cc where cc.subjectId = ?1) ");
 			dailyHql.append(" and c.subjectId != ?2 ");
 			dailyHql.append(" order by c.createTime asc,isnull(t.codeNo),t.codeNo asc ");
-			List<DailyAccount> dailyList = dailyAccountDaoImpl.getEntityListByHql(dailyHql.toString(), code, code);
+			List<DailyAccount> dailyList = dailyAccountDaoImpl.getListByHql(dailyHql.toString(), code, code);
 			
 			if (dailyList != null && dailyList.size() > 0) {
 				Date tempDate = new Date();//用来判断两条记录是否是同一天的
@@ -183,9 +183,9 @@ public class DailyAccountServiceImpl extends GenericServiceImpl<DailyAccount, St
 
 	@Override
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<DailyAccount, String> dailyAccountDaoImpl) {
-		this.hibernateGenericDaoImpl = dailyAccountDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<DailyAccount, String> dailyAccountDaoImpl) {
+		this.baseGenericDaoImpl = dailyAccountDaoImpl;
 		this.dailyAccountDaoImpl = (IDailyAccountDao) dailyAccountDaoImpl;
 	}
 	

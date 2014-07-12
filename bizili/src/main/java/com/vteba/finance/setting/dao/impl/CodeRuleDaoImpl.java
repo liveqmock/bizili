@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.setting.dao.ICodeRuleDao;
 import com.vteba.finance.setting.model.CodeRule;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 
 /**
  * 基础数据编码规则DAO实现
@@ -15,7 +15,7 @@ import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
  * date 2012-6-29 下午11:14:23
  */
 @Named
-public class CodeRuleDaoImpl extends HibernateGenericDaoImpl<CodeRule, String> implements
+public class CodeRuleDaoImpl extends BaseGenericDaoImpl<CodeRule, String> implements
 		ICodeRuleDao {
 	
 	

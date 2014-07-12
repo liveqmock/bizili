@@ -10,20 +10,21 @@ import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.vteba.tx.hibernate.IHibernateGenericDao;
 import com.vteba.cache.infinispan.InfinispanCache;
 import com.vteba.cache.infinispan.InfinispanCacheManager;
 import com.vteba.common.constant.Cc;
 import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
 import com.vteba.security.spi.AuthoritiesService;
-import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.service.generic.impl.BaseServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
 import com.vteba.user.dao.IAuthoritiesDao;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.model.Resources;
 import com.vteba.user.service.IAuthoritiesService;
 import com.vteba.utils.json.FastJsonUtils;
 import com.vteba.utils.json.Node;
+import com.vteba.utils.ofbiz.LangUtils;
 
 /**
  * 权限service实现。
@@ -31,7 +32,7 @@ import com.vteba.utils.json.Node;
  * 2012-4-12 下午1:52:10
  */
 @Named
-public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long> implements IAuthoritiesService, AuthoritiesService {
+public class AuthoritiesServiceImpl extends BaseServiceImpl<Authorities, Long> implements IAuthoritiesService, AuthoritiesService {
 
 	public AuthoritiesServiceImpl() {
 		super();
@@ -46,9 +47,9 @@ public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long
 	
 	@Inject
 	@Override
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<Authorities, Long> authoritiesDaoImpl) {
-		this.hibernateGenericDaoImpl = authoritiesDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<Authorities, Long> authoritiesDaoImpl) {
+		this.baseGenericDaoImpl = authoritiesDaoImpl;
 		this.authoritiesDaoImpl = (IAuthoritiesDao) authoritiesDaoImpl;
 		
 	}
@@ -108,8 +109,8 @@ public class AuthoritiesServiceImpl extends GenericServiceImpl<Authorities, Long
 	@Override
 	public List<String> getAllAuthorities() {
 		List<String> authList = new ArrayList<String>();
-		String hql = "select a.authName from Authorities a where a.enabled = 1";
-		authList = authoritiesDaoImpl.hqlQueryForList(hql, String.class);
+		//String hql = "select a.authName from Authorities a where a.enabled = 1";
+		authList = authoritiesDaoImpl.queryPrimitiveList("authName", String.class, LangUtils.toMap("enabled", 1));
 		return authList;
 	}
 	

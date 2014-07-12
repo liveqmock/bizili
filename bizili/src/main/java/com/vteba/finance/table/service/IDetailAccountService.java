@@ -3,14 +3,14 @@ package com.vteba.finance.table.service;
 import java.util.List;
 
 import com.vteba.finance.table.model.DetailAccount;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 
 /**
  * 明细账service接口
  * @author yinlei 
  * date 2012-7-6 下午10:53:52
  */
-public interface IDetailAccountService extends IGenericService<DetailAccount, String> {
+public interface IDetailAccountService extends BaseService<DetailAccount, String> {
 	
 	/**
 	 * 自动产生明细账，定时任务调用

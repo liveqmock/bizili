@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.vteba.finance.currency.model.Currency;
 import com.vteba.finance.table.model.AccountSummary;
 import com.vteba.finance.table.service.IAccountSummaryService;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.utils.common.BigDecimalUtils;
 import com.vteba.utils.date.DateUtils;
 import com.vteba.web.action.BaseAction;
@@ -33,6 +33,7 @@ public class AccountSummaryAction extends BaseAction<AccountSummary> {
 	public String initial(AccountSummary model, Map<String, Object> maps) throws Exception {
 		String currentPeriod = DateUtils.toDateString("yyyy-MM");
 		Map<String, Object> param = new HashMap<String, Object>();
+		String equalQuery = "select a from AccountSummary a where a.accountPeriod between :accountPeriod and :endPeriod and level = :level and currency = :currency order by a.subjectCode asc";
 		if (model.getAccountPeriod() == null) {//默认查询当前会计期间
 			model.setAccountPeriod(currentPeriod);
 		}
@@ -44,16 +45,19 @@ public class AccountSummaryAction extends BaseAction<AccountSummary> {
 		}
 		if (model.getLevel() == null) {
 			model.setLevel(1);//默认查一级科目
-			listResult = accountSummaryServiceImpl.getEntityListByNamedHql("accountSummary.queryAccountSumByEq", model);
+			
+			listResult = accountSummaryServiceImpl.getListByHql(equalQuery, model);
 		} else if (model.getLevel() == 0) {
 			List<Integer> level = new ArrayList<Integer>();
 			level.add(1);
 			level.add(2);
 			level.add(3);
+			
 			param.put("levels", level);
-			listResult = accountSummaryServiceImpl.getEntityListByNamedHql("accountSummary.queryAccountSumByIn", param, model);
+			String query = "select a from AccountSummary a where a.accountPeriod between :accountPeriod and :endPeriod and level in (:levels) and currency = :currency order by a.subjectCode asc";
+			listResult = accountSummaryServiceImpl.getListByHql(query, param, model);
 		} else {
-			listResult = accountSummaryServiceImpl.getEntityListByNamedHql("accountSummary.queryAccountSumByEq", model);
+			listResult = accountSummaryServiceImpl.getListByHql(equalQuery, model);
 		}
 		maps.put("listResult", listResult);
 		
@@ -78,8 +82,8 @@ public class AccountSummaryAction extends BaseAction<AccountSummary> {
 	}
 
 	@Override
-	public void setGenericServiceImpl(
-			IGenericService<AccountSummary, ? extends Serializable> genericServiceImpl) {
+	public void setBaseServiceImpl(
+			BaseService<AccountSummary, ? extends Serializable> BaseServiceImpl) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -17,8 +17,8 @@ import com.vteba.finance.report.model.AssetsLiabilities;
 import com.vteba.finance.report.service.IAssetsLiabilitiesService;
 import com.vteba.finance.table.model.AccountBalance;
 import com.vteba.finance.table.service.IAccountBalanceService;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
-import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
+import com.vteba.service.generic.impl.BaseServiceImpl;
 import com.vteba.utils.common.BigDecimalUtils;
 import com.vteba.utils.ofbiz.LangUtils;
 
@@ -28,7 +28,7 @@ import com.vteba.utils.ofbiz.LangUtils;
  * date 2012-6-23 上午11:31:52
  */
 @Named
-public class AssetsLiabilitiesServiceImpl extends GenericServiceImpl<AssetsLiabilities, String>
+public class AssetsLiabilitiesServiceImpl extends BaseServiceImpl<AssetsLiabilities, String>
 		implements IAssetsLiabilitiesService {
 
 	private IAssetsLiabilitiesDao assetsLiabilitiesDaoImpl;
@@ -268,11 +268,11 @@ public class AssetsLiabilitiesServiceImpl extends GenericServiceImpl<AssetsLiabi
 	protected void calculateYearBeginCount(AssetsLiabilities model, String itemCode) {
 		//当前会计期间
 		String period = accountPeriodServiceImpl.getCurrentPeriod();
-		String lastYear = (Integer.valueOf(period.substring(0, 4)).intValue()-1) + "-12";//去年最后一期
+		//String lastYear = (Integer.valueOf(period.substring(0, 4)).intValue()-1) + "-12";//去年最后一期
 		//计算年初数hql
-		String yearBeginCountHql = "select a.yearBeginCount from AssetsLiabilities a where a.accountPeriod =?1 and a.itemCode = ?2 ";
-		
-		List<Double> doubleList = assetsLiabilitiesDaoImpl.hqlQueryForList(yearBeginCountHql, Double.class, lastYear,itemCode);
+		//String yearBeginCountHql = "select a.yearBeginCount from AssetsLiabilities a where a.accountPeriod =?1 and a.itemCode = ?2 ";
+		Map<String, ?> params = LangUtils.toMap("accountPeriod", period, "itemCode", itemCode);
+		List<Double> doubleList = assetsLiabilitiesDaoImpl.queryPrimitiveList("yearBeginCount", Double.class, params);
 		Double yearBeginCount = 0D;
 		if (doubleList.size() == 1) {
 			yearBeginCount = BigDecimalUtils.add(yearBeginCount, doubleList.get(0));
@@ -383,9 +383,9 @@ public class AssetsLiabilitiesServiceImpl extends GenericServiceImpl<AssetsLiabi
 	}
 	
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<AssetsLiabilities, String> assetsLiabilitiesDaoImpl) {
-		this.hibernateGenericDaoImpl = assetsLiabilitiesDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<AssetsLiabilities, String> assetsLiabilitiesDaoImpl) {
+		this.baseGenericDaoImpl = assetsLiabilitiesDaoImpl;
 		this.assetsLiabilitiesDaoImpl = (IAssetsLiabilitiesDao) assetsLiabilitiesDaoImpl;
 	}
 	

@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import com.vteba.finance.account.dao.ISubjectDao;
 import com.vteba.finance.account.model.Subject;
-import com.vteba.tx.hibernate.impl.HibernateGenericDaoImpl;
+import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 import com.vteba.tx.jdbc.spring.SpringJdbcTemplate;
 import com.vteba.service.multitenant.annotation.Schema;
 
@@ -18,7 +18,7 @@ import com.vteba.service.multitenant.annotation.Schema;
  */
 @Named
 @Schema(schemaName = "bizili")
-public class SubjectDaoImpl extends HibernateGenericDaoImpl<Subject, String> implements
+public class SubjectDaoImpl extends BaseGenericDaoImpl<Subject, String> implements
 		ISubjectDao {
 
 	public SubjectDaoImpl() {

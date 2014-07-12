@@ -6,8 +6,8 @@ import javax.inject.Named;
 import com.vteba.finance.assets.dao.IDepreSummaryDao;
 import com.vteba.finance.assets.model.DepreSummary;
 import com.vteba.finance.assets.service.IDepreSummaryService;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
-import com.vteba.service.generic.impl.GenericServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
+import com.vteba.service.generic.impl.BaseServiceImpl;
 
 /**
  * 折旧汇总表service实现
@@ -15,7 +15,7 @@ import com.vteba.service.generic.impl.GenericServiceImpl;
  * date 2012-9-4 下午10:02:25
  */
 @Named
-public class DepreSummaryServiceImpl extends GenericServiceImpl<DepreSummary, String>
+public class DepreSummaryServiceImpl extends BaseServiceImpl<DepreSummary, String>
 		implements IDepreSummaryService {
 	private IDepreSummaryDao depreSummaryDaoImpl;
 	
@@ -25,9 +25,9 @@ public class DepreSummaryServiceImpl extends GenericServiceImpl<DepreSummary, St
 
 	@Override
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<DepreSummary, String> depreSummaryDaoImpl) {
-		this.hibernateGenericDaoImpl = depreSummaryDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<DepreSummary, String> depreSummaryDaoImpl) {
+		this.baseGenericDaoImpl = depreSummaryDaoImpl;
 		this.depreSummaryDaoImpl = (IDepreSummaryDao) depreSummaryDaoImpl;
 	}
 

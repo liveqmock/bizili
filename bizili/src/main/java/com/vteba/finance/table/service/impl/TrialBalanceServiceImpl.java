@@ -8,8 +8,8 @@ import javax.inject.Named;
 import com.vteba.finance.table.dao.ITrialBalanceDao;
 import com.vteba.finance.table.model.TrialBalance;
 import com.vteba.finance.table.service.ITrialBalanceService;
-import com.vteba.service.generic.impl.GenericServiceImpl;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
+import com.vteba.service.generic.impl.BaseServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
 import com.vteba.utils.date.DateUtils;
 import com.vteba.utils.ofbiz.LangUtils;
 
@@ -19,7 +19,7 @@ import com.vteba.utils.ofbiz.LangUtils;
  * date 2012-6-30 下午12:45:39
  */
 @Named
-public class TrialBalanceServiceImpl extends GenericServiceImpl<TrialBalance, String>
+public class TrialBalanceServiceImpl extends BaseServiceImpl<TrialBalance, String>
 		implements ITrialBalanceService {
 
 	
@@ -31,9 +31,9 @@ public class TrialBalanceServiceImpl extends GenericServiceImpl<TrialBalance, St
 
 	@Override
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<TrialBalance, String> trialBalanceDaoImpl) {
-		this.hibernateGenericDaoImpl = trialBalanceDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<TrialBalance, String> trialBalanceDaoImpl) {
+		this.baseGenericDaoImpl = trialBalanceDaoImpl;
 		this.trialBalanceDaoImpl = (ITrialBalanceDao) trialBalanceDaoImpl;
 	}
 
@@ -55,7 +55,7 @@ public class TrialBalanceServiceImpl extends GenericServiceImpl<TrialBalance, St
 		hql.append(" from AccountBalance ab ");
 		hql.append(" where ab.accountPeriod = ?1 ");
 		
-		List<TrialBalance> trialList = trialBalanceDaoImpl.getEntityListByHql(hql.toString(), period);
+		List<TrialBalance> trialList = trialBalanceDaoImpl.getListByHql(hql.toString(), period);
 		
 		//删除原有的数据
 		//String delHql = " delete from TrialBalance where accountPeriod = ?1 ";

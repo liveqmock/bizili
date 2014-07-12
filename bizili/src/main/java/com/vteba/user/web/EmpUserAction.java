@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vteba.common.constant.CommonConst;
 import com.vteba.security.spring.SecurityContextHolderUtils;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.tx.generic.Page;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.model.EmpUser;
@@ -175,8 +175,8 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 
 	@Inject
 	@Override
-	public void setGenericServiceImpl(IGenericService<EmpUser, ?> empUserServiceImpl) {
-		this.genericServiceImpl = empUserServiceImpl;
+	public void setBaseServiceImpl(BaseService<EmpUser, ?> empUserServiceImpl) {
+		this.baseServiceImpl = empUserServiceImpl;
 		this.empUserServiceImpl = (IEmpUserService) empUserServiceImpl;
 		
 	}

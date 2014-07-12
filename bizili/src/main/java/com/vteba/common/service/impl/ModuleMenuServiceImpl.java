@@ -13,8 +13,8 @@ import org.apache.commons.lang3.StringUtils;
 import com.vteba.common.dao.IModuleMenuDao;
 import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
-import com.vteba.service.generic.impl.GenericServiceImpl;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
+import com.vteba.service.generic.impl.BaseServiceImpl;
+import com.vteba.tx.hibernate.BaseGenericDao;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.model.EmpUser;
 import com.vteba.user.model.Resources;
@@ -28,7 +28,7 @@ import com.vteba.utils.ofbiz.LangUtils;
  * date 2012-6-12 下午12:22:38
  */
 @Named
-public class ModuleMenuServiceImpl extends GenericServiceImpl<ModuleMenu, String> implements
+public class ModuleMenuServiceImpl extends BaseServiceImpl<ModuleMenu, String> implements
 		IModuleMenuService {
 
 	private IModuleMenuDao moduleMenuDaoImpl;
@@ -46,9 +46,9 @@ public class ModuleMenuServiceImpl extends GenericServiceImpl<ModuleMenu, String
 //	}
 
 	@Inject
-	public void setHibernateGenericDaoImpl(
-			IHibernateGenericDao<ModuleMenu, String> moduleMenuDaoImpl) {
-		this.hibernateGenericDaoImpl = moduleMenuDaoImpl;
+	public void setBaseGenericDaoImpl(
+			BaseGenericDao<ModuleMenu, String> moduleMenuDaoImpl) {
+		this.baseGenericDaoImpl = moduleMenuDaoImpl;
 		this.moduleMenuDaoImpl = (IModuleMenuDao) moduleMenuDaoImpl;
 	}
 	

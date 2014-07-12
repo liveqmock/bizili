@@ -1,8 +1,8 @@
 package com.vteba.finance.setting.dao;
 
 import com.vteba.finance.setting.model.CodeRule;
-import com.vteba.tx.hibernate.IHibernateGenericDao;
+import com.vteba.tx.hibernate.BaseGenericDao;
 
-public interface ICodeRuleDao extends IHibernateGenericDao<CodeRule, String>{
+public interface ICodeRuleDao extends BaseGenericDao<CodeRule, String>{
 
 }

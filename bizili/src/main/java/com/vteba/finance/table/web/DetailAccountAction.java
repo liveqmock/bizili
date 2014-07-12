@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.finance.table.model.DetailAccount;
 import com.vteba.finance.table.service.IDetailAccountService;
-import com.vteba.service.generic.IGenericService;
+import com.vteba.service.generic.BaseService;
 import com.vteba.utils.reflection.ReflectUtils;
 import com.vteba.web.action.BaseAction;
 
@@ -40,14 +40,14 @@ public class DetailAccountAction extends BaseAction<DetailAccount> {
 		param.put("codeNo", "asc");
 		param.put("subjectCode", "asc");
 		param.put("summary", "desc");
-		listResult = detailAccountServiceImpl.getListByCriteria(DetailAccount.class, model, param);
+		listResult = detailAccountServiceImpl.getEntityList(model, param);
 		maps.put("listResult", listResult);
 		return "table/detailaccount/detailaccount-initial-success";
 	}
 
 	@Override
-	public void setGenericServiceImpl(
-			IGenericService<DetailAccount, ? extends Serializable> genericServiceImpl) {
+	public void setBaseServiceImpl(
+			BaseService<DetailAccount, ? extends Serializable> BaseServiceImpl) {
 		// TODO Auto-generated method stub
 		
 	}
