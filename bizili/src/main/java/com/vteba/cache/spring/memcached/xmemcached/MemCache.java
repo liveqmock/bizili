@@ -5,7 +5,7 @@ import net.rubyeye.xmemcached.MemcachedClient;
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.SimpleValueWrapper;
 
-import com.vteba.utils.cryption.CryptionUtils;
+import com.vteba.utils.cryption.CryptUtils;
 
 /**
  * Spring缓存，使用xmemcache实现，整合spring的缓存抽象
@@ -34,7 +34,7 @@ public class MemCache implements Cache {
 	public ValueWrapper get(Object key) {
 		Object object;
 		try {
-			object = cache.get(CryptionUtils.toHexString(key));
+			object = cache.get(CryptUtils.toHexString(key));
 			if (object != null) {
 				return new SimpleValueWrapper(object);
 			}
@@ -47,7 +47,7 @@ public class MemCache implements Cache {
 	@Override
 	public void put(Object key, Object value) {
 		try {
-			String k = CryptionUtils.toHexString(key);
+			String k = CryptUtils.toHexString(key);
 			cache.add(k, 0, value);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -57,7 +57,7 @@ public class MemCache implements Cache {
 	@Override
 	public void evict(Object key) {
 		try {
-			String k = CryptionUtils.toHexString(key);
+			String k = CryptUtils.toHexString(key);
 			cache.delete(k);
 		} catch (Exception e) {
 			e.printStackTrace();

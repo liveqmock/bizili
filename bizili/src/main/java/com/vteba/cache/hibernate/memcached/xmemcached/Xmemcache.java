@@ -16,7 +16,7 @@ import com.vteba.cache.hibernate.memcached.MemcacheExceptionHandler;
 import com.vteba.cache.memcached.Element;
 import com.vteba.cache.memcached.Store;
 import com.vteba.cache.memcached.manager.XMemcachedManager;
-import com.vteba.utils.cryption.CryptionUtils;
+import com.vteba.utils.cryption.CryptUtils;
 
 /**
  * Hibernate二级缓存，使用xmemcache implementation。
@@ -71,7 +71,7 @@ public class Xmemcache implements Memcache {
 			//return this.memcachedClient.get(Arrays.asList(keys));
 			return getMultiInternal(keys);
 		} catch (Exception e) {
-			this.exceptionHandler.handleErrorOnGet(CryptionUtils.join(keys, ", "), e);
+			this.exceptionHandler.handleErrorOnGet(CryptUtils.join(keys, ", "), e);
 		}
 		return null;
 	}
