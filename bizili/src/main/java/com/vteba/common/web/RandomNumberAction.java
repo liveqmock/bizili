@@ -21,7 +21,7 @@ public class RandomNumberAction {
 
 	@RequestMapping("/randomNumber")
 	public String execute() throws Exception {
-		RandomNumber randomNum = RandomNumber.Instance();
+		RandomNumber randomNum = RandomNumber.get();
 		setInputStream(randomNum.getImage());// 取得带有随机字符串的图片
 		String authCode = randomNum.getString().toString().toLowerCase();
 		RequestContextHolder.getSession().setAttribute("random", authCode);// 取得随机字符串放入HttpSession
