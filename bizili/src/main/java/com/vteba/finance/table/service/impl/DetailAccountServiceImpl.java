@@ -58,13 +58,13 @@ public class DetailAccountServiceImpl extends BaseServiceImpl<DetailAccount, Str
 		detailAccountDaoImpl.deleteBatch("accountPeriod", period);
 		
 		//本期发生的一级会计科目，需要处理，期初，本期，期末，本年累计
-		//String oneHql = " select distinct c.oneLevel from Certificate c where c.accountPeriod = ?1 ";
-		List<String> subjectList = detailAccountDaoImpl.queryPrimitiveList("oneLevel", String.class, LangUtils.toMap("accountPeriod", period));
+		String oneHql = " select distinct c.oneLevel from Certificate c where c.accountPeriod = ?1 ";
+		List<String> subjectList = detailAccountDaoImpl.queryForList(oneHql, String.class, LangUtils.toMap("accountPeriod", period));
 		createDetailAccount(subjectList, period, 1);
 		
 		//本期发生的二级会计科目
-		//String twoHql = " select distinct c.twoLevel from Certificate c where c.accountPeriod = ?1 and c.twoLevel is not null ";
-		List<String> twoSubjectList = detailAccountDaoImpl.queryPrimitiveList("twoLevel", String.class, LangUtils.toMap("accountPeriod", period));
+		String twoHql = " select distinct c.twoLevel from Certificate c where c.accountPeriod = ?1 and c.twoLevel is not null ";
+		List<String> twoSubjectList = detailAccountDaoImpl.queryForList(twoHql, String.class, LangUtils.toMap("accountPeriod", period));
 		createDetailAccount(twoSubjectList, period, 2);
 	}
 	

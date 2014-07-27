@@ -165,9 +165,9 @@ public class ProfitServiceImpl extends BaseServiceImpl<Profit, String> implement
 	protected void calculateThisYearCount(Profit model, String itemCode, String period) {
 		String lastPeriod = JodaTimeUtils.getLastPeriod(period);
 		//计算年初数hql
-		//String thisYearCountHql = "select a.thisYearSum from Profit a where a.accountPeriod =?1 and a.itemCode = ?2 ";
+		String thisYearCountHql = "select a.thisYearSum from Profit a where a.accountPeriod =?1 and a.itemCode = ?2 ";
 		Map<String, ?> params = LangUtils.toMap("accountPeriod", lastPeriod, "itemCode", itemCode);
-		List<Double> doubleList = profitDaoImpl.queryPrimitiveList("thisYearSum", Double.class, params);
+		List<Double> doubleList = profitDaoImpl.queryForList(thisYearCountHql, Double.class, params);//("thisYearSum", Double.class, params);
 		Double thisYearSum = 0D;
 		if (doubleList.size() == 1) {
 			thisYearSum = BigDecimalUtils.add(thisYearSum, doubleList.get(0));

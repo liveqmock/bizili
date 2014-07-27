@@ -109,8 +109,8 @@ public class AuthoritiesServiceImpl extends BaseServiceImpl<Authorities, Long> i
 	@Override
 	public List<String> getAllAuthorities() {
 		List<String> authList = new ArrayList<String>();
-		//String hql = "select a.authName from Authorities a where a.enabled = 1";
-		authList = authoritiesDaoImpl.queryPrimitiveList("authName", String.class, LangUtils.toMap("enabled", 1));
+		String hql = "select a.authName from Authorities a where a.enabled = 1";
+		authList = authoritiesDaoImpl.queryForList(hql, String.class, LangUtils.toMap("enabled", 1));
 		return authList;
 	}
 	
