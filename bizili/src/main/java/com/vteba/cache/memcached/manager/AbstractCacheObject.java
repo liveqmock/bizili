@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.apache.commons.collections.functors.CloneTransformer;
 
-import com.vteba.utils.serialize.NativeSerializerUtils;
+import com.vteba.utils.serialize.SerializerUtils;
 
 /**
  * 抽象缓存对象封装
@@ -44,7 +44,7 @@ public class AbstractCacheObject implements Serializable {
 		Object dist = null;
 		if(isSerializable) {
 			try {
-				dist = NativeSerializerUtils.serialize(src);
+				dist = SerializerUtils.serialize(src);
 			} catch (Exception e) {
 				isSerializable = false;
 			}

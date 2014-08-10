@@ -1,6 +1,6 @@
 package com.vteba.cache.memcached.manager;
 
-import com.vteba.utils.serialize.NativeSerializerUtils;
+import com.vteba.utils.serialize.SerializerUtils;
 
 /**
  * 缓存值封转
@@ -37,7 +37,7 @@ public class CacheValue extends AbstractCacheObject {
 			return value;
 		} else {
 			if (serializable) {
-				return NativeSerializerUtils.deserialize((byte[])value);
+				return SerializerUtils.deserialize((byte[])value);
 			} else {
 				return value;
 			}

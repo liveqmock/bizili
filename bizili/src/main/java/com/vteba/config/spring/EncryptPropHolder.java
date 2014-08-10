@@ -23,7 +23,7 @@ public class EncryptPropHolder extends PropertyPlaceholderConfigurer {
 	@Override
 	protected String convertProperty(String propertyName, String propertyValue) {
 		if (isEncryptProp(propertyName)) {
-			String decryptValue = DESUtils.getDecryptString(propertyValue);
+			String decryptValue = DESUtils.getDecrypt(propertyValue);
 			return decryptValue;
 		} else {
 			propertiesMap.put(propertyName, propertyValue);
