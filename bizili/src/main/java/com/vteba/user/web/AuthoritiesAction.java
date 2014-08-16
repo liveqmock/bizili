@@ -17,7 +17,7 @@ import com.vteba.service.generic.BaseService;
 import com.vteba.user.model.Authorities;
 import com.vteba.user.service.IAuthoritiesService;
 import com.vteba.user.service.IResourcesService;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 import com.vteba.web.action.PageBean;
 
 /**
@@ -27,7 +27,7 @@ import com.vteba.web.action.PageBean;
  */
 @Controller
 @RequestMapping("/users")
-public class AuthoritiesAction extends BaseAction<Authorities> {
+public class AuthoritiesAction extends BasicAction<Authorities> {
 
 	private IAuthoritiesService authoritiesServiceImpl;
 	private IModuleMenuService moduleMenuServiceImpl;

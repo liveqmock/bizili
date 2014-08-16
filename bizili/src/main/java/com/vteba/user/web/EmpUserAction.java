@@ -20,7 +20,7 @@ import com.vteba.user.model.Authorities;
 import com.vteba.user.model.EmpUser;
 import com.vteba.user.model.Roles;
 import com.vteba.user.service.IEmpUserService;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 import com.vteba.web.action.PageBean;
 
 /**
@@ -30,7 +30,7 @@ import com.vteba.web.action.PageBean;
  */
 @Controller
 @RequestMapping("/users")
-public class EmpUserAction extends BaseAction<EmpUser> {
+public class EmpUserAction extends BasicAction<EmpUser> {
 
 	private IEmpUserService empUserServiceImpl;
 	//private IAuthoritiesService authoritiesServiceImpl;
@@ -82,7 +82,7 @@ public class EmpUserAction extends BaseAction<EmpUser> {
 			empUserServiceImpl.deleteEntityBatch(ids);
 			return "1";
 		} catch (Exception e) {
-			logger.info("delete user " + e.getMessage());
+			//logger.info("delete user " + e.getMessage());
 			return e.getMessage();
 		}
 		

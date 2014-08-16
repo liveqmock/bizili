@@ -13,7 +13,7 @@ import com.vteba.service.generic.BaseService;
 import com.vteba.user.model.Roles;
 import com.vteba.user.service.IRolesService;
 import com.vteba.utils.reflection.ReflectUtils;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 import com.vteba.web.action.PageBean;
 
 /**
@@ -23,7 +23,7 @@ import com.vteba.web.action.PageBean;
  */
 @Controller
 @RequestMapping("/users")
-public class RolesAction extends BaseAction<Roles> {
+public class RolesAction extends BasicAction<Roles> {
 
 	private IRolesService rolesServiceImpl;
 	

@@ -10,7 +10,7 @@ import com.vteba.common.service.IModuleMenuService;
 import com.vteba.security.spring.SecurityContextHolderUtils;
 import com.vteba.service.generic.BaseService;
 import com.vteba.user.model.EmpUser;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 
 /**
  * 跳转到菜单首页
@@ -19,7 +19,7 @@ import com.vteba.web.action.BaseAction;
  */
 @Controller
 @RequestMapping("/common")
-public class PlatformAction extends BaseAction<EmpUser> {
+public class PlatformAction extends BasicAction<EmpUser> {
 
 	private IModuleMenuService moduleMenuServiceImpl;
 

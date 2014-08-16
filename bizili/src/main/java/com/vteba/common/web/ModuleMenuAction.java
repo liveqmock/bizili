@@ -16,12 +16,12 @@ import com.vteba.common.model.ModuleMenu;
 import com.vteba.common.service.IModuleMenuService;
 import com.vteba.service.generic.BaseService;
 import com.vteba.utils.reflection.ReflectUtils;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 import com.vteba.web.action.PageBean;
 
 @RequestMapping("/menu")
 @Controller
-public class ModuleMenuAction extends BaseAction<ModuleMenu> {
+public class ModuleMenuAction extends BasicAction<ModuleMenu> {
 	@Inject
 	public IModuleMenuService moduleMenuServiceImpl;
 	

@@ -13,7 +13,7 @@ import com.vteba.finance.table.model.TrialBalance;
 import com.vteba.finance.table.service.ITrialBalanceService;
 import com.vteba.service.generic.BaseService;
 import com.vteba.utils.reflection.ReflectUtils;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 
 /**
  * 试算平衡表action
@@ -22,7 +22,7 @@ import com.vteba.web.action.BaseAction;
  */
 @Controller
 @RequestMapping("/table")
-public class TrialBalanceAction extends BaseAction<TrialBalance> {
+public class TrialBalanceAction extends BasicAction<TrialBalance> {
 	private ITrialBalanceService trialBalanceServiceImpl;
 	
 	@RequestMapping("/trialbalance-initial")

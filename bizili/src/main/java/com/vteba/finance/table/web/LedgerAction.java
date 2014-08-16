@@ -13,7 +13,7 @@ import com.vteba.finance.table.model.Ledger;
 import com.vteba.finance.table.service.ILedgerService;
 import com.vteba.service.generic.BaseService;
 import com.vteba.utils.reflection.ReflectUtils;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 
 /**
  * 总账action
@@ -22,7 +22,7 @@ import com.vteba.web.action.BaseAction;
  */
 @Controller
 @RequestMapping("/table")
-public class LedgerAction extends BaseAction<Ledger> {
+public class LedgerAction extends BasicAction<Ledger> {
 	private ILedgerService ledgerServiceImpl;
 	
 	@Inject

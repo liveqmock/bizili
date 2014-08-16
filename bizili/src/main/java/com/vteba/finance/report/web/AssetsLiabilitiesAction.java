@@ -19,7 +19,7 @@ import com.vteba.service.generic.BaseService;
 import com.vteba.utils.date.DateUtils;
 import com.vteba.utils.date.JodaTimeUtils;
 import com.vteba.utils.reflection.ReflectUtils;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 
 /**
  * 资产负债表action
@@ -28,7 +28,7 @@ import com.vteba.web.action.BaseAction;
  */
 @Controller
 @RequestMapping("/report")
-public class AssetsLiabilitiesAction extends BaseAction<AssetsLiabilities> {
+public class AssetsLiabilitiesAction extends BasicAction<AssetsLiabilities> {
 	private IAssetsLiabilitiesService assetsLiabilitiesServiceImpl;
 	private IAccountPeriodService accountPeriodServiceImpl;
 	

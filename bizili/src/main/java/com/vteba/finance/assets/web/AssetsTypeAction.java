@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.finance.assets.model.AssetsType;
 import com.vteba.service.generic.BaseService;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 
 /**
  * 资产分类action
@@ -16,7 +16,7 @@ import com.vteba.web.action.BaseAction;
  */
 @Controller
 @RequestMapping("/assets")
-public class AssetsTypeAction extends BaseAction<AssetsType> {
+public class AssetsTypeAction extends BasicAction<AssetsType> {
 
 	@RequestMapping("/assetstype-initial")
 	public String initial() throws Exception {

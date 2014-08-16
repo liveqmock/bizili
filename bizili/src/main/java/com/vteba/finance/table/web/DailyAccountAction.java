@@ -15,7 +15,7 @@ import com.vteba.service.generic.BaseService;
 import com.vteba.utils.common.BigDecimalUtils;
 import com.vteba.utils.date.DateUtils;
 import com.vteba.utils.reflection.ReflectUtils;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 
 /**
  * 日记账action，包括bank和cash
@@ -24,7 +24,7 @@ import com.vteba.web.action.BaseAction;
  */
 @Controller
 @RequestMapping("/table")
-public class DailyAccountAction extends BaseAction<DailyAccount> {
+public class DailyAccountAction extends BasicAction<DailyAccount> {
 	private IDailyAccountService dailyAccountServiceImpl;
 	//private String types;//日记账类型
 

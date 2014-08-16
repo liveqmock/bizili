@@ -12,7 +12,7 @@ import com.vteba.finance.setting.model.SystemParameter;
 import com.vteba.finance.setting.service.ISystemParameterService;
 import com.vteba.service.generic.BaseService;
 import com.vteba.utils.reflection.ReflectUtils;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 
 /**
  * 系统参数设定action
@@ -21,7 +21,7 @@ import com.vteba.web.action.BaseAction;
  */
 @Controller
 @RequestMapping("/setting")
-public class SystemParamAction extends BaseAction<SystemParameter> {
+public class SystemParamAction extends BasicAction<SystemParameter> {
 	private ISystemParameterService systemParameterServiceImpl;
 	
 	@Inject

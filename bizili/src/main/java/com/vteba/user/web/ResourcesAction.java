@@ -16,7 +16,7 @@ import com.vteba.common.service.IModuleMenuService;
 import com.vteba.service.generic.BaseService;
 import com.vteba.user.model.Resources;
 import com.vteba.user.service.IResourcesService;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 import com.vteba.web.action.PageBean;
 
 /**
@@ -26,7 +26,7 @@ import com.vteba.web.action.PageBean;
  */
 @Controller
 @RequestMapping("/users")
-public class ResourcesAction extends BaseAction<Resources> {
+public class ResourcesAction extends BasicAction<Resources> {
 
 	private IResourcesService resourcesServiceImpl;
 	@Inject

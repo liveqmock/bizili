@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.finance.setting.model.CodeRule;
 import com.vteba.service.generic.BaseService;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 
 /**
  * 系统编码规则action
@@ -16,7 +16,7 @@ import com.vteba.web.action.BaseAction;
  */
 @Controller
 @RequestMapping("/setting")
-public class CodeRuleAction extends BaseAction<CodeRule> {
+public class CodeRuleAction extends BasicAction<CodeRule> {
 
 	@RequestMapping("/coderule-initial")
 	public String initial() throws Exception {

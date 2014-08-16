@@ -13,7 +13,7 @@ import com.vteba.finance.report.model.CashFlow;
 import com.vteba.finance.report.service.ICashFlowService;
 import com.vteba.service.generic.BaseService;
 import com.vteba.utils.reflection.ReflectUtils;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 
 /**
  * 现金流量表action
@@ -22,7 +22,7 @@ import com.vteba.web.action.BaseAction;
  */
 @Controller
 @RequestMapping("/report")
-public class CashFlowAction extends BaseAction<CashFlow> {
+public class CashFlowAction extends BasicAction<CashFlow> {
 	
 	private ICashFlowService cashFlowServiceImpl;
 	

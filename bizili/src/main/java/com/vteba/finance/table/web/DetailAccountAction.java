@@ -13,7 +13,7 @@ import com.vteba.finance.table.model.DetailAccount;
 import com.vteba.finance.table.service.IDetailAccountService;
 import com.vteba.service.generic.BaseService;
 import com.vteba.utils.reflection.ReflectUtils;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 
 /**
  * 明细账action
@@ -22,7 +22,7 @@ import com.vteba.web.action.BaseAction;
  */
 @Controller
 @RequestMapping("/table")
-public class DetailAccountAction extends BaseAction<DetailAccount> {
+public class DetailAccountAction extends BasicAction<DetailAccount> {
 	private IDetailAccountService detailAccountServiceImpl;
 	
 	@Inject

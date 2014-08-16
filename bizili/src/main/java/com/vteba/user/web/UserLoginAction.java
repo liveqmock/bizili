@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.vteba.service.generic.BaseService;
 import com.vteba.user.model.EmpUser;
 import com.vteba.user.service.IEmpUserService;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 import com.vteba.web.action.PageBean;
 
 /**
@@ -21,7 +21,7 @@ import com.vteba.web.action.PageBean;
  */
 @Controller
 @RequestMapping("/user")
-public class UserLoginAction extends BaseAction<EmpUser> {
+public class UserLoginAction extends BasicAction<EmpUser> {
 	
 	private IEmpUserService empUserServiceImpl;
 	

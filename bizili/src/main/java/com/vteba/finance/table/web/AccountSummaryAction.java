@@ -17,7 +17,7 @@ import com.vteba.finance.table.service.IAccountSummaryService;
 import com.vteba.service.generic.BaseService;
 import com.vteba.utils.common.BigDecimalUtils;
 import com.vteba.utils.date.DateUtils;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 
 /**
  * 科目汇总表action
@@ -26,7 +26,7 @@ import com.vteba.web.action.BaseAction;
  */
 @Controller
 @RequestMapping("/table")
-public class AccountSummaryAction extends BaseAction<AccountSummary> {
+public class AccountSummaryAction extends BasicAction<AccountSummary> {
 	private IAccountSummaryService accountSummaryServiceImpl;
 	
 	@RequestMapping("/accountsummary-initial")

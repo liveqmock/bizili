@@ -26,7 +26,7 @@ import com.vteba.utils.common.ExcelImportUtils;
 import com.vteba.utils.reflection.ReflectUtils;
 import com.vteba.utils.web.RequestContextHolder;
 import com.vteba.utils.web.ServletUtils;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 import com.vteba.web.action.PageBean;
 
 /**
@@ -36,7 +36,7 @@ import com.vteba.web.action.PageBean;
  */
 @Controller
 @RequestMapping("/account")
-public class AccountSubjectAction extends BaseAction<Subject> {
+public class AccountSubjectAction extends BasicAction<Subject> {
 	private ISubjectService subjectServiceImpl;
 	private List<Subject> subjectList = new ArrayList<Subject>();
 	

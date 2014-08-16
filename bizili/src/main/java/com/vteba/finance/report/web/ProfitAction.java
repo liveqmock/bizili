@@ -14,7 +14,7 @@ import com.vteba.finance.report.model.Profit;
 import com.vteba.finance.report.service.IProfitService;
 import com.vteba.service.generic.BaseService;
 import com.vteba.utils.reflection.ReflectUtils;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 
 /**
  * 利润表action
@@ -23,7 +23,7 @@ import com.vteba.web.action.BaseAction;
  */
 @Controller
 @RequestMapping("/report")
-public class ProfitAction extends BaseAction<Profit> {
+public class ProfitAction extends BasicAction<Profit> {
 	private IProfitService profitServiceImpl;
 	private IAccountPeriodService accountPeriodServiceImpl;
 

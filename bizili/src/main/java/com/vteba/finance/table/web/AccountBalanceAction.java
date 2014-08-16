@@ -18,7 +18,7 @@ import com.vteba.user.service.IEmpUserService;
 import com.vteba.utils.common.BigDecimalUtils;
 import com.vteba.utils.ofbiz.LangUtils;
 import com.vteba.utils.reflection.ReflectUtils;
-import com.vteba.web.action.BaseAction;
+import com.vteba.web.action.BasicAction;
 
 /**
  * 科目余额表action，相关的科目余额查询等
@@ -27,7 +27,7 @@ import com.vteba.web.action.BaseAction;
  */
 @Controller
 @RequestMapping("/table")
-public class AccountBalanceAction extends BaseAction<AccountBalance> {
+public class AccountBalanceAction extends BasicAction<AccountBalance> {
 	
 	private IAccountBalanceService accountBalanceServiceImpl;
 	
