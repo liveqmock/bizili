@@ -24,7 +24,6 @@ import com.vteba.user.model.Resources;
 import com.vteba.user.service.IAuthoritiesService;
 import com.vteba.utils.json.FastJsonUtils;
 import com.vteba.utils.json.Node;
-import com.vteba.utils.ofbiz.LangUtils;
 
 /**
  * 权限service实现。
@@ -110,7 +109,7 @@ public class AuthoritiesServiceImpl extends BaseServiceImpl<Authorities, Long> i
 	public List<String> getAllAuthorities() {
 		List<String> authList = new ArrayList<String>();
 		String hql = "select a.authName from Authorities a where a.enabled = 1";
-		authList = authoritiesDaoImpl.queryForList(hql, String.class, LangUtils.toMap("enabled", 1));
+		authList = authoritiesDaoImpl.queryForList(hql, String.class);
 		return authList;
 	}
 	
