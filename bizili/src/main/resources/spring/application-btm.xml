@@ -103,6 +103,8 @@
     
 <!--     <bean id="applicationContextHolder" class="com.vteba.service.context.spring.ApplicationContextHolder"/> -->
     
+    <bean id="updateEventListener" class="com.vteba.tx.hibernate.listener.UpdateEventListener"></bean>
+    
     <!--based annotation config Hibernate sessionFactory-->
 	<bean id="biziliSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" depends-on="applicationContextHolder">
 		<property name="dataSource" ref="biziliDataSource" />
@@ -120,6 +122,9 @@
    		</property>
 		<property name="namingStrategy">
 			<bean class="org.hibernate.cfg.ImprovedNamingStrategy" />
+		</property>
+		<property name="">
+			
 		</property>
 		<property name="hibernateProperties">
 			<props>
