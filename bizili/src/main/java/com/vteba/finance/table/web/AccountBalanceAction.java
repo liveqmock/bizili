@@ -14,6 +14,7 @@ import com.skmbw.user.service.UserServcie;
 import com.vteba.finance.table.model.AccountBalance;
 import com.vteba.finance.table.service.IAccountBalanceService;
 import com.vteba.service.generic.BaseService;
+import com.vteba.user.model.EmpUser;
 import com.vteba.user.service.IEmpUserService;
 import com.vteba.utils.common.BigDecimalUtils;
 import com.vteba.utils.ofbiz.LangUtils;
@@ -110,6 +111,10 @@ public class AccountBalanceAction extends BasicAction<AccountBalance> {
 		d = System.currentTimeMillis();
 		empUserServiceImpl.getEntityList("userAccount", "tongku2008@126.com");
 		print("hibernate query list ：", d);
+		
+		EmpUser user = new EmpUser();
+		user.setEmail("asd");
+		empUserServiceImpl.save(user);
 	}
 	
 	protected void print(String type, long d) {
