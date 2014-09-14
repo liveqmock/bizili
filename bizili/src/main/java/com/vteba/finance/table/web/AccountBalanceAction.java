@@ -14,7 +14,6 @@ import com.skmbw.user.service.UserServcie;
 import com.vteba.finance.table.model.AccountBalance;
 import com.vteba.finance.table.service.IAccountBalanceService;
 import com.vteba.service.generic.BaseService;
-import com.vteba.user.model.EmpUser;
 import com.vteba.user.service.IEmpUserService;
 import com.vteba.utils.common.BigDecimalUtils;
 import com.vteba.utils.ofbiz.LangUtils;
@@ -82,39 +81,54 @@ public class AccountBalanceAction extends BasicAction<AccountBalance> {
 	}
 
 	protected void test() {
+		int loop = 100;
 		long d = System.currentTimeMillis();
-		userDao.selectByPrimaryKey(2L);
+		for (int i = 0; i < loop; i++) {
+			userDao.selectByPrimaryKey(2L);
+		}
 		//logger.info("mybatis, get by id time=[{}]", (System.currentTimeMillis() - d));
 		print("mybatis get id : ", d);
 		
 		d = System.currentTimeMillis();
-		userServcieImpl.get(3L);
+		for (int i = 0; i < loop; i++) {
+			userServcieImpl.get(3L);
+		}
 		print("spring get id : ", d);
 		
 		d = System.currentTimeMillis();
-		empUserServiceImpl.get(4L);
+		for (int i = 0; i < loop; i++) {
+			empUserServiceImpl.get(4L);
+		}
 		print("hibernate get id : ", d);
 		
 		UserBean userBean = new UserBean();
 		userBean.createCriteria().andUserAccountEqualTo("tongku2008@126.com");
 		d = System.currentTimeMillis();
-		userDao.selectByExample(userBean);
+		for (int i = 0; i < loop; i++) {
+			userDao.selectByExample(userBean);
+		}
 		print("mybatis query list : ", d);
 		
 		User entity = new User();
 		entity.setUserAccount("tongku2008@126.com");
 		d = System.currentTimeMillis();
-		userServcieImpl.query(LangUtils.toMap("user_account", "tongku2008@126.com"));
+		for (int i = 0; i < loop; i++) {
+			userServcieImpl.query(LangUtils.toMap("user_account", "tongku2008@126.com"));
+		}
 		print("spring query list : ", d);
 		
 		//String hql = "select u from EmpUser u where u.userAccount = ?1";
 		d = System.currentTimeMillis();
-		empUserServiceImpl.getEntityList("userAccount", "tongku2008@126.com");
+		for (int i = 0; i < loop; i++) {
+			empUserServiceImpl.getEntityList("userAccount", "tongku2008@126.com");
+		}
 		print("hibernate query list ：", d);
 		
-		EmpUser user = new EmpUser();
-		user.setEmail("asd");
-		empUserServiceImpl.save(user);
+//		EmpUser user = new EmpUser();
+//		user.setEmail("asd");
+//		user.setName("yinlei");
+//		user.setCreateDate(new Date());
+//		empUserServiceImpl.save(user);
 	}
 	
 	protected void print(String type, long d) {
