@@ -123,9 +123,6 @@
 		<property name="namingStrategy">
 			<bean class="org.hibernate.cfg.ImprovedNamingStrategy" />
 		</property>
-		<property name="">
-			
-		</property>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
@@ -286,7 +283,7 @@
 	    </property>
 	</bean> -->
 	
-<!-- 	<bean id="schemaInterceptor" class="com.vteba.service.multitenant.interceptor.DetermineSchemaInterceptor"/> -->
+<!-- 	<bean id="schemaInterceptor" class="com.vteba.service.tenant.interceptor.DetermineSchemaInterceptor"/> -->
 	<!--schema拦截器定义 -->
 	<!--默认是基于java interface代理，proxy-target-class="true"表示基于cglib代理。 expose-proxy="true"表示将aop放到AopContext中，供查询 -->
 <!-- 	<aop:config> -->
