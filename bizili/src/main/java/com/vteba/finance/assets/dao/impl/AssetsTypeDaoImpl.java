@@ -9,7 +9,7 @@ import com.vteba.common.constant.DataSourceConst;
 import com.vteba.finance.assets.dao.IAssetsTypeDao;
 import com.vteba.finance.assets.model.AssetsType;
 import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
-import com.vteba.service.multitenant.annotation.Schema;
+import com.vteba.service.tenant.annotation.Schema;
 
 /**
  * 固定资产分类DAO实现

@@ -6,7 +6,7 @@ import javax.inject.Named;
 import org.hibernate.SessionFactory;
 
 import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
-import com.vteba.service.multitenant.annotation.Schema;
+import com.vteba.service.tenant.annotation.Schema;
 import com.vteba.user.dao.IEmpUserDao;
 import com.vteba.user.model.EmpUser;
 

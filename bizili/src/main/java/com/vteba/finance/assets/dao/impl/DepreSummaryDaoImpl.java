@@ -9,7 +9,7 @@ import com.vteba.common.constant.DataSourceConst;
 import com.vteba.finance.assets.dao.IDepreSummaryDao;
 import com.vteba.finance.assets.model.DepreSummary;
 import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
-import com.vteba.service.multitenant.annotation.Schema;
+import com.vteba.service.tenant.annotation.Schema;
 
 /**
  * 折旧汇总表DAO实现

@@ -9,7 +9,7 @@ import com.vteba.finance.account.dao.ISubjectDao;
 import com.vteba.finance.account.model.Subject;
 import com.vteba.tx.hibernate.impl.BaseGenericDaoImpl;
 import com.vteba.tx.jdbc.spring.SpringJdbcTemplate;
-import com.vteba.service.multitenant.annotation.Schema;
+import com.vteba.service.tenant.annotation.Schema;
 
 /**
  * 科目代码DAO实现
