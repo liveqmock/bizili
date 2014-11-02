@@ -17,7 +17,7 @@ import com.vteba.service.tenant.annotation.Schema;
  * date 2012-9-4 下午9:42:54
  */
 @Named
-@Schema(schemaName = DataSourceConst.BIZILI)
+@Schema(name = DataSourceConst.BIZILI)
 public class DepreDetailsDaoImpl extends
 		BaseGenericDaoImpl<DepreDetails, String> implements IDepreDetailsDao {
 

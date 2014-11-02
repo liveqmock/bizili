@@ -17,7 +17,7 @@ import com.vteba.service.tenant.annotation.Schema;
  * date 2012-7-1 下午9:25:04
  */
 @Named
-@Schema(schemaName = "bizili")
+@Schema(name = "bizili")
 public class SubjectDaoImpl extends BaseGenericDaoImpl<Subject, String> implements
 		ISubjectDao {
 

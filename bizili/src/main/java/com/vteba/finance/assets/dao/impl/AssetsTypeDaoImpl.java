@@ -17,7 +17,7 @@ import com.vteba.service.tenant.annotation.Schema;
  * date 2012-9-4 下午9:32:34
  */
 @Named
-@Schema(schemaName = DataSourceConst.BIZILI)
+@Schema(name = DataSourceConst.BIZILI)
 public class AssetsTypeDaoImpl extends
 		BaseGenericDaoImpl<AssetsType, String> implements IAssetsTypeDao {
 

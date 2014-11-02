@@ -16,7 +16,7 @@ import com.vteba.user.model.EmpUser;
  * date 2012-4-1 下午9:23:48
  */
 @Named
-@Schema(schemaName = "skmbw")
+@Schema(name = "skmbw")
 public class EmpUserDaoImpl extends BaseGenericDaoImpl<EmpUser, Long>
 		implements IEmpUserDao {
 
