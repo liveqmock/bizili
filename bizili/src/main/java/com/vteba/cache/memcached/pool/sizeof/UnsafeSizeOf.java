@@ -20,7 +20,7 @@ import com.vteba.cache.memcached.pool.sizeof.filter.SizeOfFilter;
  * All constructors will throw UnsupportedOperationException if theUnsafe isn't accessible on this platform
  * @author Chris Dennis
  */
-//@SuppressWarnings("restriction")
+@SuppressWarnings("restriction")
 public class UnsafeSizeOf extends SizeOf {
 
 
