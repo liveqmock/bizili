@@ -402,7 +402,6 @@
 		<dependency>
 			<groupId>org.jboss</groupId>
 			<artifactId>staxmapper</artifactId>
-			<version>1.1.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.infinispan</groupId>
@@ -411,13 +410,11 @@
 		<dependency>
 			<groupId>org.infinispan</groupId>
 			<artifactId>infinispan-spring</artifactId>
-			<version>${infinispan-version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-infinispan</artifactId>
-			<version>${hibernate-version}</version>
 			<!-- <scope>provided</scope> -->
 		</dependency>
 
