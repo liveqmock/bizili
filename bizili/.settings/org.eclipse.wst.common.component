@@ -8,10 +8,16 @@
         <dependent-module archiveName="vteba-utils-1.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/vteba-utils/vteba-utils">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="mybatis-simple-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mybatis-simple/mybatis-simple">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="vteba-core-1.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/vteba-core/vteba-core">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="vteba-web-1.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/vteba-web/vteba-web">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="vteba-ext-1.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/vteba-ext/vteba-ext">
             <dependency-type>uses</dependency-type>
         </dependent-module>
 	    <property name="java-output-path" value="/target/classes"/>
