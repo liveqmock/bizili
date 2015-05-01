@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.skmbw.user.dao.UserDao;
 import com.skmbw.user.model.User;
 import com.skmbw.user.model.UserBean;
 import com.skmbw.user.service.UserServcie;
@@ -31,8 +30,8 @@ public class AccountBalanceAction extends BasicAction<AccountBalance> {
 	
 	private IAccountBalanceService accountBalanceServiceImpl;
 	
-	@Inject // mybatis
-	private UserDao userDao;
+//	@Inject // mybatis
+//	private UserDao userDao;
 	
 	@Inject // spring
 	private UserServcie userServcieImpl;
@@ -83,9 +82,9 @@ public class AccountBalanceAction extends BasicAction<AccountBalance> {
 	protected void test() {
 		int loop = 100;
 		long d = System.currentTimeMillis();
-		for (int i = 0; i < loop; i++) {
-			userDao.selectByPrimaryKey(2L);
-		}
+//		for (int i = 0; i < loop; i++) {
+//			userDao.selectByPrimaryKey(2L);
+//		}
 		//logger.info("mybatis, get by id time=[{}]", (System.currentTimeMillis() - d));
 		print("mybatis get id : ", d);
 		
@@ -104,9 +103,9 @@ public class AccountBalanceAction extends BasicAction<AccountBalance> {
 		UserBean userBean = new UserBean();
 		userBean.createCriteria().andUserAccountEqualTo("tongku2008@126.com");
 		d = System.currentTimeMillis();
-		for (int i = 0; i < loop; i++) {
-			userDao.selectByExample(userBean);
-		}
+//		for (int i = 0; i < loop; i++) {
+//			userDao.selectByExample(userBean);
+//		}
 		print("mybatis query list : ", d);
 		
 		User entity = new User();
